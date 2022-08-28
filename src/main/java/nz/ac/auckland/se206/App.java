@@ -6,6 +6,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.controllers.SceneManager;
+import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -28,6 +30,8 @@ public class App extends Application {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
+  private Scene scene;
+
   /**
    * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
    *
@@ -36,9 +40,16 @@ public class App extends Application {
    */
   @Override
   public void start(final Stage stage) throws IOException {
-    final Scene scene = new Scene(loadFxml("canvas"), 840, 680);
 
+    // Load the FXML files
+    SceneManager.addUi(AppUi.MAIN_MENU, loadFxml("mainmenu"));
+    SceneManager.addUi(AppUi.CANVAS, loadFxml("canvas"));
+    SceneManager.addUi(AppUi.HOW_TO_PLAY, loadFxml("howtoplay"));
+
+    // Set the current scene and show the stage
+    scene = new Scene(SceneManager.getUiRoot(AppUi.MAIN_MENU), 780, 868);
     stage.setScene(scene);
+    stage.setTitle("Quick, Draw! SE206 Edition");
     stage.show();
   }
 }
