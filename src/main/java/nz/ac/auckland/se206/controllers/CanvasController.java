@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.KeyFrame;
@@ -243,7 +246,11 @@ public class CanvasController {
                            */
                           if (isWordCorrect()) {
                             timeline.stop();
-                            addLine("WON");
+                            try {
+                              addLine("WON");
+                            } catch (IOException e1) {
+                              e1.printStackTrace();
+                            }
                             canvas.setOnMouseDragged((canvasEvent) -> {});
                             canvas.setDisable(true);
                             timerLabel.setText("Correct, well done!");
@@ -268,7 +275,11 @@ public class CanvasController {
                   event -> {
                     // Stop the timeline and reset the GUI to its initial state
                     timeline.stop();
-                    addLine("LOST");
+                    try {
+                      addLine("LOST");
+                    } catch (IOException e1) {
+                      e1.printStackTrace();
+                    }
                     readyButton.setDisable(false);
                     readyButton.setText("Get new word");
                     clearButton.setDisable(true);
@@ -442,13 +453,16 @@ public class CanvasController {
     ImageIO.write(getCurrentSnapshot(), "bmp", file);
   }
 
-  private void addLine(String result) {
+  private void addLine(String result) throws IOException {
+
+    // Path to text file
+    Path path = Paths.get("UserDatas.txt");
+    String example = Files.readAllLines(path).get(0);
 
     String line = currentWord + " , " + result + " , " + timerLabel.getText();
-
     FileWriter file_writer;
     try {
-      file_writer = new FileWriter("Database.txt", true);
+      file_writer = new FileWriter(example, true);
       BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
       buffered_Writer.write(line);
       buffered_Writer.newLine();
