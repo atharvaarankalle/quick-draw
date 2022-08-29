@@ -243,7 +243,7 @@ public class CanvasController {
                            */
                           if (isWordCorrect()) {
                             timeline.stop();
-                            addLine();
+                            addLine("WON");
                             canvas.setOnMouseDragged((canvasEvent) -> {});
                             canvas.setDisable(true);
                             timerLabel.setText("Correct, well done!");
@@ -268,6 +268,7 @@ public class CanvasController {
                   event -> {
                     // Stop the timeline and reset the GUI to its initial state
                     timeline.stop();
+                    addLine("LOST");
                     readyButton.setDisable(false);
                     readyButton.setText("Get new word");
                     clearButton.setDisable(true);
@@ -277,10 +278,8 @@ public class CanvasController {
 
                     // Check if the user has won and update the GUI to communicate to the user
                     if (isWordCorrect()) {
-                      addLine();
                       timerLabel.setText("Correct, well done!");
                     } else {
-                      addLine();
                       timerLabel.setText("Incorrect, better luck next time!");
                     }
                   });
@@ -443,15 +442,16 @@ public class CanvasController {
     ImageIO.write(getCurrentSnapshot(), "bmp", file);
   }
 
-  private void addLine() {
+  private void addLine(String result) {
 
-    String line = currentWord + "," + timerLabel.getText();
+    String line = currentWord + " , " + result + " , " + timerLabel.getText();
 
     FileWriter file_writer;
     try {
-      file_writer = new FileWriter("nz.ac.auckland.se206.txt", true);
+      file_writer = new FileWriter("Database.txt", true);
       BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
       buffered_Writer.write(line);
+      buffered_Writer.newLine();
       buffered_Writer.flush();
       buffered_Writer.close();
 
