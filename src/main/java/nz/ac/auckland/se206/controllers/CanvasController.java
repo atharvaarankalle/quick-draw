@@ -6,7 +6,9 @@ import ai.djl.translate.TranslateException;
 import com.opencsv.exceptions.CsvException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -150,7 +152,8 @@ public class CanvasController {
 
           // Select the pen or eraser depending on the value of the pen/eraser button text
           if (penEraserButton.getText().equals("Pen")) {
-            // To erase lines, set the mouse to clear a small rectangle at the cursor location
+            // To erase lines, set the mouse to clear a small rectangle at the cursor
+            // location
             graphic.clearRect(x, y, 10, 10);
           } else {
             // Create a line that goes from the point (currentX, currentY) and (x,y)
@@ -186,7 +189,8 @@ public class CanvasController {
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Ready")) {
 
-      // Intiliase the canvas, enable the drawing buttons and disable the save drawing button
+      // Intiliase the canvas, enable the drawing buttons and disable the save drawing
+      // button
       initializeCanvas();
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
@@ -217,7 +221,7 @@ public class CanvasController {
 
               /*
                * Initialise a timeline. This will be used to decrement the
-               * timer every  second, query the data learning
+               * timer every second, query the data learning
                * model and update the pie chart accordingly
                */
               KeyFrame keyFrame =
@@ -239,6 +243,7 @@ public class CanvasController {
                            */
                           if (isWordCorrect()) {
                             timeline.stop();
+                            addLine();
                             canvas.setOnMouseDragged((canvasEvent) -> {});
                             canvas.setDisable(true);
                             timerLabel.setText("Correct, well done!");
@@ -272,8 +277,10 @@ public class CanvasController {
 
                     // Check if the user has won and update the GUI to communicate to the user
                     if (isWordCorrect()) {
+                      addLine();
                       timerLabel.setText("Correct, well done!");
                     } else {
+                      addLine();
                       timerLabel.setText("Incorrect, better luck next time!");
                     }
                   });
@@ -312,7 +319,8 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBetweenPenAndEraser() {
-    // If the current tool is pen, change the text to reflect eraser and set the current tool to
+    // If the current tool is pen, change the text to reflect eraser and set the
+    // current tool to
     // eraser and vice versa
     if (penEraserButton.getText().equals("Eraser")) {
       penEraserButton.setText("Pen");
@@ -382,7 +390,8 @@ public class CanvasController {
    */
   private boolean isWordCorrect() {
 
-    // Check the top 3 entries in the pie chart and return true if the current word is in the top 3
+    // Check the top 3 entries in the pie chart and return true if the current word
+    // is in the top 3
     // predictions
     for (int i = 0; i < 3; i++) {
       if (modelResultsPieChart
@@ -432,5 +441,22 @@ public class CanvasController {
     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Bitmap", "*.bmp"));
     File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
     ImageIO.write(getCurrentSnapshot(), "bmp", file);
+  }
+
+  private void addLine() {
+
+    String line = currentWord + "," + timerLabel.getText();
+
+    FileWriter file_writer;
+    try {
+      file_writer = new FileWriter("nz.ac.auckland.se206.txt", true);
+      BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
+      buffered_Writer.write(line);
+      buffered_Writer.flush();
+      buffered_Writer.close();
+
+    } catch (IOException e) {
+      System.out.println("Add line failed!!" + e);
+    }
   }
 }

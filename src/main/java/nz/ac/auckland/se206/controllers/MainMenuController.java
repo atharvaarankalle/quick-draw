@@ -18,7 +18,7 @@ public class MainMenuController {
 
     // Switch to the "Canvas" scene.
     Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }
 
   /**
