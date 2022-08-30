@@ -12,6 +12,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -34,16 +36,45 @@ public class LoginController implements Initializable {
 
   @FXML
   private void loginButton(ActionEvent event) throws IOException {
-    // Switch to the "Canvas" scene.
-    addLine();
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+
+    int num = 0;
+
+    // Process in which, UserData information being received
+    String line = email_textfield.getText();
+    Path path = Paths.get("UserDatas.txt");
+    long count = Files.lines(path).count();
+
+    /// Read each line
+    for (int i = 0; i < count; i++) {
+      String vertification = Files.readAllLines(path).get(i);
+      if (vertification.equals(line)) { // Confirmation of valid user
+        Alert msg = new Alert(AlertType.CONFIRMATION);
+        num += 1;
+        msg.setTitle(email_textfield.getText());
+        msg.setContentText("Username and password matched");
+        msg.showAndWait();
+        Scene currentScene = ((Button) event.getSource()).getScene();
+        currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+        break;
+      }
+    }
+
+    if (num == 0) { // Error showing mismatch
+      Alert msg = new Alert(AlertType.ERROR);
+      msg.setTitle(email_textfield.getText());
+      msg.setContentText("No such Username : " + email_textfield.getText());
+      msg.showAndWait();
+    }
   }
 
   @FXML
   private void signupButton(ActionEvent event) throws IOException {
-    // Switch to the "Canvas" scene.
+
     addLine();
+    Alert msg = new Alert(AlertType.CONFIRMATION);
+    msg.setTitle(email_textfield.getText());
+    msg.setContentText("Registeration was succesful");
+    msg.showAndWait();
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
   }
