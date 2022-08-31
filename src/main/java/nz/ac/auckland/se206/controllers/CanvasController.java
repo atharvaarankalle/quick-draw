@@ -455,10 +455,11 @@ public class CanvasController {
 
   private void addLine(String result) throws IOException {
 
-    // Path to text file
     Path path = Paths.get("UserDatas.txt");
-    String example = Files.readAllLines(path).get(0);
+    long count = Files.lines(path).count();
+    int size = (int) count;
 
+    String example = Files.readAllLines(path).get(size - 1);
     String line = currentWord + " , " + result + " , " + timerLabel.getText();
     FileWriter file_writer;
     try {

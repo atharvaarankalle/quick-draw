@@ -119,7 +119,7 @@ public class LoginController implements Initializable {
       for (int i = 0; i < count; i++) {
         String redundant = Files.readAllLines(path).get(i);
         if (redundant.equals(line)) {
-          line = "";
+          line = redundant;
         }
       }
       buffered_Writer.write(line);
