@@ -201,116 +201,12 @@ public class CanvasController {
 
       modelResultsPieChart.setLegendVisible(true);
 
-      final AtomicInteger timeLeft = new AtomicInteger(60);
-
-      Task<Void> backgroundSpeechTask =
-          new Task<Void>() {
-
-            @Override
-            protected Void call() throws Exception {
-
-              // Use text to speech to communicate the current word to draw
-              TextToSpeech textToSpeech = new TextToSpeech();
-              textToSpeech.speak("The word to draw is" + currentWord);
-
-              return null;
-            }
-          };
-
-      Task<Void> backgroundTimingTask =
-          new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-
-              /*
-               * Initialise a timeline. This will be used to decrement the
-               * timer every second, query the data learning
-               * model and update the pie chart accordingly
-               */
-              KeyFrame keyFrame =
-                  new KeyFrame(
-                      Duration.ZERO,
-                      e -> {
-                        try {
-                          timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-
-                          // Query the DL model to make the predictions and update the pie chart
-                          makePredictions();
-
-                          /*
-                           * If at any point the word to draw is in the top three
-                           * predictions, the user has won the game. In this case
-                           * stop the timeline, communicate to the user
-                           * that they have won and allow them to choose a
-                           * new word if they wish
-                           */
-                          if (isWordCorrect()) {
-                            timeline.stop();
-                            try {
-                              addLine("WON");
-                            } catch (IOException e1) {
-                              e1.printStackTrace();
-                            }
-                            canvas.setOnMouseDragged((canvasEvent) -> {});
-                            canvas.setDisable(true);
-                            timerLabel.setText("Correct, well done!");
-                            readyButton.setDisable(false);
-                            readyButton.setText("Get new word");
-                            clearButton.setDisable(true);
-                            saveDrawingButton.setDisable(false);
-                          }
-                        } catch (TranslateException e1) {
-                          e1.printStackTrace();
-                        }
-                      });
-              timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(1)));
-              timeline.setCycleCount(60);
-
-              /*
-               * When the one minute timer elapses, stop the timeline, disable the canvas and
-               * drawing buttons, enable the save drawing button and check if the user
-               * has won the game
-               */
-              timeline.setOnFinished(
-                  event -> {
-                    // Stop the timeline and reset the GUI to its initial state
-                    timeline.stop();
-                    readyButton.setDisable(false);
-                    readyButton.setText("Get new word");
-                    clearButton.setDisable(true);
-                    canvas.setOnMouseDragged(e -> {});
-                    canvas.setDisable(true);
-                    saveDrawingButton.setDisable(false);
-
-                    // Check if the user has won and update the GUI to communicate to the user
-                    if (isWordCorrect()) {
-                      try {
-                        addLine("WON");
-                      } catch (IOException e1) {
-                        e1.printStackTrace();
-                      }
-                      timerLabel.setText("Correct, well done!");
-                    } else {
-                      try {
-                        addLine("LOST");
-                      } catch (IOException e1) {
-                        e1.printStackTrace();
-                      }
-                      timerLabel.setText("Incorrect, better luck next time!");
-                    }
-                  });
-
-              timeline.play();
-
-              return null;
-            }
-          };
-
       // Delegate the background tasks to different threads and execute these
-      Thread backgroundTimingThread = new Thread(backgroundTimingTask);
+      Thread backgroundTimingThread = new Thread(createNewTimingTask());
       backgroundTimingThread.setDaemon(true);
       backgroundTimingThread.start();
-      Thread backgroundSpeechThread = new Thread(backgroundSpeechTask);
+
+      Thread backgroundSpeechThread = new Thread(createNewSpeechTask());
       backgroundSpeechThread.setDaemon(true);
       backgroundSpeechThread.start();
     } else {
@@ -370,6 +266,124 @@ public class CanvasController {
     // Switch the scene to the main menu
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
+  }
+
+  /**
+   * This method creates a background speech task and returns the task
+   *
+   * @return a Task<Void> object, the background speech task
+   */
+  private Task<Void> createNewSpeechTask() {
+    Task<Void> backgroundSpeechTask =
+        new Task<Void>() {
+
+          @Override
+          protected Void call() throws Exception {
+
+            // Use text to speech to communicate the current word to draw
+            TextToSpeech textToSpeech = new TextToSpeech();
+            textToSpeech.speak("The word to draw is" + currentWord);
+
+            return null;
+          }
+        };
+
+    return backgroundSpeechTask;
+  }
+
+  /**
+   * This method creates a background timing task and returns the task
+   *
+   * @return a Task<Void> object, the background timing task
+   */
+  private Task<Void> createNewTimingTask() {
+    final AtomicInteger timeLeft = new AtomicInteger(60);
+    Task<Void> backgroundTimingTask =
+        new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+
+            /*
+             * Initialise a timeline. This will be used to decrement the
+             * timer every second, query the data learning
+             * model and update the pie chart accordingly
+             */
+            KeyFrame keyFrame =
+                new KeyFrame(
+                    Duration.ZERO,
+                    e -> {
+                      try {
+                        timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
+
+                        // Query the DL model to make the predictions and update the pie chart
+                        makePredictions();
+
+                        /*
+                         * If at any point the word to draw is in the top three
+                         * predictions, the user has won the game. In this case
+                         * stop the timeline, communicate to the user
+                         * that they have won and allow them to choose a
+                         * new word if they wish
+                         */
+                        if (isWordCorrect()) {
+                          timeline.stop();
+                          try {
+                            addLine("WON");
+                          } catch (IOException e1) {
+                            e1.printStackTrace();
+                          }
+                          canvas.setOnMouseDragged((canvasEvent) -> {});
+                          canvas.setDisable(true);
+                          timerLabel.setText("Correct, well done!");
+                          readyButton.setDisable(false);
+                          readyButton.setText("Get new word");
+                          clearButton.setDisable(true);
+                          saveDrawingButton.setDisable(false);
+                        }
+                      } catch (TranslateException e1) {
+                        e1.printStackTrace();
+                      }
+                    });
+            timeline.getKeyFrames().clear();
+            timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(1)));
+            timeline.setCycleCount(60);
+
+            /*
+             * When the one minute timer elapses, stop the timeline, disable the canvas and
+             * drawing buttons, enable the save drawing button and check if the user
+             * has won the game
+             */
+            timeline.setOnFinished(
+                event -> {
+                  // Stop the timeline and reset the GUI to its initial state
+                  timeline.stop();
+                  try {
+                    addLine("LOST");
+                  } catch (IOException e1) {
+                    e1.printStackTrace();
+                  }
+                  readyButton.setDisable(false);
+                  readyButton.setText("Get new word");
+                  clearButton.setDisable(true);
+                  canvas.setOnMouseDragged(e -> {});
+                  canvas.setDisable(true);
+                  saveDrawingButton.setDisable(false);
+
+                  // Check if the user has won and update the GUI to communicate to the user
+                  if (isWordCorrect()) {
+                    timerLabel.setText("Correct, well done!");
+                  } else {
+                    timerLabel.setText("Incorrect, better luck next time!");
+                  }
+                });
+
+            timeline.play();
+
+            return null;
+          }
+        };
+
+    return backgroundTimingTask;
   }
 
   /**
