@@ -275,11 +275,6 @@ public class CanvasController {
                   event -> {
                     // Stop the timeline and reset the GUI to its initial state
                     timeline.stop();
-                    try {
-                      addLine("LOST");
-                    } catch (IOException e1) {
-                      e1.printStackTrace();
-                    }
                     readyButton.setDisable(false);
                     readyButton.setText("Get new word");
                     clearButton.setDisable(true);
@@ -289,8 +284,18 @@ public class CanvasController {
 
                     // Check if the user has won and update the GUI to communicate to the user
                     if (isWordCorrect()) {
+                      try {
+                        addLine("WON");
+                      } catch (IOException e1) {
+                        e1.printStackTrace();
+                      }
                       timerLabel.setText("Correct, well done!");
                     } else {
+                      try {
+                        addLine("LOST");
+                      } catch (IOException e1) {
+                        e1.printStackTrace();
+                      }
                       timerLabel.setText("Incorrect, better luck next time!");
                     }
                   });

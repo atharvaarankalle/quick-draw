@@ -48,6 +48,7 @@ public class LoginController implements Initializable {
     for (int i = 0; i < count; i++) {
       String vertification = Files.readAllLines(path).get(i);
       if (vertification.equals(line)) { // Confirmation of valid user
+        addLine();
         Alert msg = new Alert(AlertType.CONFIRMATION);
         num += 1;
         msg.setTitle(email_textfield.getText());
@@ -109,19 +110,6 @@ public class LoginController implements Initializable {
     try {
       file_writer = new FileWriter("UserDatas.txt", true);
       BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
-      // Path to text file
-      Path path = Paths.get("UserDatas.txt");
-
-      // Counts number of line in text file
-      long count = Files.lines(path).count();
-
-      /// read each line
-      for (int i = 0; i < count; i++) {
-        String redundant = Files.readAllLines(path).get(i);
-        if (redundant.equals(line)) {
-          line = redundant;
-        }
-      }
       buffered_Writer.write(line);
       buffered_Writer.newLine();
       buffered_Writer.flush();
