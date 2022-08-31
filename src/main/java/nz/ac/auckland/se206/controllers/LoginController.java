@@ -70,13 +70,35 @@ public class LoginController implements Initializable {
   @FXML
   private void signupButton(ActionEvent event) throws IOException {
 
-    addLine();
-    Alert msg = new Alert(AlertType.CONFIRMATION);
-    msg.setTitle(email_textfield.getText());
-    msg.setContentText("Registeration was succesful");
-    msg.showAndWait();
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+    int num = 0;
+
+    // Process in which, UserData information being received
+    String line = email_textfield.getText();
+    Path path = Paths.get("UserDatas.txt");
+    long count = Files.lines(path).count();
+
+    /// Read each line
+    for (int i = 0; i < count; i++) {
+      String redundant = Files.readAllLines(path).get(i);
+      if (redundant.equals(line)) { // Confirmation of valid user
+        num++;
+        Alert msg = new Alert(AlertType.ERROR);
+        msg.setTitle(email_textfield.getText());
+        msg.setContentText("Existing username, please login");
+        msg.showAndWait();
+        break;
+      }
+    }
+
+    if (num == 0) {
+      Alert msg = new Alert(AlertType.CONFIRMATION);
+      msg.setTitle(email_textfield.getText());
+      msg.setContentText("Username and password matched");
+      msg.showAndWait();
+      addLine();
+      Scene currentScene = ((Button) event.getSource()).getScene();
+      currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+    }
   }
 
   private void addLine() throws IOException {
