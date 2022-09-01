@@ -1,5 +1,8 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
@@ -12,13 +15,18 @@ public class MainMenuController {
    * "Canvas" scene
    *
    * @param event The event that triggered this method.
+   * @throws IOException
    */
   @FXML
-  private void onStartNewGame(ActionEvent event) {
+  private void onStartNewGame(ActionEvent event) throws IOException {
 
     // Switch to the "Canvas" scene.
+    FileWriter file_writer;
+
+    file_writer = new FileWriter("UserDatas.txt", true);
+    try (BufferedWriter buffered_Writer = new BufferedWriter(file_writer)) {}
     Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }
 
   /**
