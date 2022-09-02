@@ -81,17 +81,17 @@ public class LoginController implements Initializable {
     /// Read each line
     for (int i = 0; i < count; i++) {
       String redundant = Files.readAllLines(path).get(i);
-      if (redundant.equals(line)) { // Confirmation of valid user
+      if (redundant.equals(line) || line.isBlank()) { // Cannot process registeration
         num++;
         Alert msg = new Alert(AlertType.ERROR);
         msg.setTitle(email_textfield.getText());
-        msg.setContentText("Existing username, please login");
+        msg.setContentText("Existing or not typed username, please login");
         msg.showAndWait();
         break;
       }
     }
 
-    if (num == 0) {
+    if (num == 0 && !line.isBlank()) { // Process registeration
       Alert msg = new Alert(AlertType.CONFIRMATION);
       msg.setTitle(email_textfield.getText());
       msg.setContentText("Username and password matched");
