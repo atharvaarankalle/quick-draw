@@ -266,6 +266,7 @@ public class CanvasController {
     saveDrawingButton.setDisable(false);
     targetWordLabel.setText("Get a new word to begin drawing!");
     timerLabel.setText("");
+    pgbTimer.setVisible(false);
 
     // Switch the scene to the main menu
     Scene currentScene = ((Button) event.getSource()).getScene();
@@ -301,7 +302,7 @@ public class CanvasController {
    * @return a Task<Void> object, the background timing task
    */
   private Task<Void> createNewTimingTask() {
-    final AtomicInteger timeLeft = new AtomicInteger(600);
+    final AtomicInteger timeLeft = new AtomicInteger(60);
     Task<Void> backgroundTimingTask =
         new Task<Void>() {
           @Override
@@ -318,12 +319,12 @@ public class CanvasController {
                     Duration.ZERO,
                     e -> {
                       try {
-                        timerLabel.setText(timeLeft.decrementAndGet() / 10 + " seconds left");
-                        updateProgress(600 - timeLeft.get(), 600);
+                        timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
+                        updateProgress(60 - timeLeft.get(), 60);
                         // Query the DL model to make the predictions and update the pie chart
                         makePredictions();
                         // If game reaches last 10 second, change progress bar to red
-                        if (timeLeft.get() == 100) {
+                        if (timeLeft.get() == 10) {
                           pgbTimer.setStyle("-fx-accent: red;");
                         }
                         /*
@@ -357,8 +358,8 @@ public class CanvasController {
                       }
                     });
             timeline.getKeyFrames().clear();
-            timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(0.1)));
-            timeline.setCycleCount(600);
+            timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(1)));
+            timeline.setCycleCount(60);
 
             /*
              * When the one minute timer elapses, stop the timeline, disable the canvas and
