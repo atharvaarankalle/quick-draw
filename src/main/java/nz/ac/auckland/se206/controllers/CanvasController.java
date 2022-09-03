@@ -334,7 +334,7 @@ public class CanvasController {
           @Override
           protected Void call() throws Exception {
             // Up date the task progress
-            updateProgress(600 - timeLeft.get(), 600);
+            updateProgress(60 - timeLeft.get(), 60);
             /*
              * Initialise a timeline. This will be used to decrement the
              * timer every second, query the data learning
