@@ -220,11 +220,19 @@ public class CanvasController {
       // Get a random new word to draw, set the target world label and update the GUI
       CategorySelector categorySelector = new CategorySelector();
       String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+
+      if (randomWord.startsWith("\uFEFF")) {
+        randomWord = randomWord.substring(1);
+      }
       currentWord = randomWord;
+      System.out.println(randomWord);
 
       if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
         text.clear();
         randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        if (randomWord.startsWith("\uFEFF")) {
+          randomWord = randomWord.substring(1);
+        }
         currentWord = randomWord;
       }
 
@@ -232,6 +240,9 @@ public class CanvasController {
       while (i < text.size()) {
         if (text.get(i).equals(randomWord)) {
           randomWord = categorySelector.getRandomCategory(Difficulty.E);
+          if (randomWord.startsWith("\uFEFF")) {
+            randomWord = randomWord.substring(1);
+          }
           currentWord = randomWord;
           i = 0;
         } else {
