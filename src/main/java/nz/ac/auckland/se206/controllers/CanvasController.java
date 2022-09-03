@@ -87,6 +87,8 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
+  private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
+
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
    * the drawing, and we load the ML model.
@@ -220,49 +222,27 @@ public class CanvasController {
       String randomWord = categorySelector.getRandomCategory(Difficulty.E);
       currentWord = randomWord;
 
-      ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
-      int i = 0;
+      if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
+        text.clear();
+        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        currentWord = randomWord;
+      }
+
+      int i = 0; // For easy level only
       while (i < text.size()) {
         if (text.get(i).equals(randomWord)) {
           randomWord = categorySelector.getRandomCategory(Difficulty.E);
+          currentWord = randomWord;
           i = 0;
         } else {
           i++;
         }
       }
 
-      if (i == text.size() - 1) {
-        randomWord = categorySelector.getRandomCategory(Difficulty.M);
-      }
-
-      // Map<String, String> wordAndPrice = new HashMap<>();
-      // File fileName = new
-      // File(CategorySelector.class.getResource("/category_difficulty.csv").toURI());
-      // String currentLine;
-      // try (FileReader fileReader = new FileReader(fileName,
-      // StandardCharsets.UTF_8);
-      // BufferedReader csvReader = new BufferedReader(fileReader)) {
-      // while ((currentLine = csvReader.readLine()) != null) {
-      // String[] values = currentLine.split(",");
-      // wordAndPrice.put(values[0], values[1]);
-      // }
-      // }
-
-      // remove unused words from map (use Iterator because you can get
-      // ConcurrentModification exception)
-      // Iterator<Entry<String, String>> iterator =
-      // wordAndPrice.entrySet().iterator();
-      // while (iterator.hasNext()) {
-      // if (iterator.next().getKey().equals(currentWord))
-      // iterator.remove();
-      // System.out.println(iterator.next().getKey());
-      // System.out.println(currentWord);
-      // }
-
       targetWordLabel.setText("The word to draw is: " + randomWord);
       timerLabel.setText("Click Ready To Start!");
       readyButton.setText("Ready");
-      text.add(randomWord);
+      text.add(randomWord); // Adds new randomWord, if current != random
     }
   }
 

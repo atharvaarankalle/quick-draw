@@ -50,4 +50,8 @@ public class CategorySelector {
       return csvReader.readAll();
     }
   }
+
+  public Map<Difficulty, List<String>> getDifficultyMap() {
+    return difficultyListMap;
+  }
 }
