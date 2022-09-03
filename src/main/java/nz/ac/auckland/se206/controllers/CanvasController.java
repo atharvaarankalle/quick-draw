@@ -225,7 +225,6 @@ public class CanvasController {
         randomWord = randomWord.substring(1);
       }
       currentWord = randomWord;
-      System.out.println(randomWord);
 
       if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
         text.clear();
@@ -236,18 +235,12 @@ public class CanvasController {
         currentWord = randomWord;
       }
 
-      int i = 0; // For easy level only
-      while (i < text.size()) {
-        if (text.get(i).equals(randomWord)) {
-          randomWord = categorySelector.getRandomCategory(Difficulty.E);
-          if (randomWord.startsWith("\uFEFF")) {
-            randomWord = randomWord.substring(1);
-          }
-          currentWord = randomWord;
-          i = 0;
-        } else {
-          i++;
+      while (text.contains(randomWord)) {
+        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        if (randomWord.startsWith("\uFEFF")) {
+          randomWord = randomWord.substring(1);
         }
+        currentWord = randomWord;
       }
 
       targetWordLabel.setText("The word to draw is: " + randomWord);
