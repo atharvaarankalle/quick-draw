@@ -32,6 +32,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -60,6 +61,8 @@ public class CanvasController {
   @FXML private Canvas canvas;
 
   @FXML private Label targetWordLabel;
+
+  @FXML private ProgressBar pgbTimer;
 
   @FXML private Label timerLabel;
 
@@ -102,10 +105,11 @@ public class CanvasController {
 
     // Initialise the canvas and disable it so users cannot draw on it
     initializeCanvas();
+    pgbTimer.setVisible(false);
+    pgbTimer.setStyle("-fx-accent: green;");
     canvas.setDisable(true);
-
     saveDrawingButton.setDisable(true);
-
+    pgbTimer.setVisible(false);
     model = new DoodlePrediction();
 
     targetWordLabel.setText("Get a new word to begin drawing!");
@@ -201,7 +205,7 @@ public class CanvasController {
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
-
+      pgbTimer.setVisible(true);
       modelResultsPieChart.setLegendVisible(true);
 
       // Delegate the background tasks to different threads and execute these
@@ -288,6 +292,7 @@ public class CanvasController {
     saveDrawingButton.setDisable(false);
     targetWordLabel.setText("Get a new word to begin drawing!");
     timerLabel.setText("");
+    pgbTimer.setVisible(false);
 
     // Switch the scene to the main menu
     Scene currentScene = ((Button) event.getSource()).getScene();
@@ -328,7 +333,8 @@ public class CanvasController {
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-
+            // Up date the task progress
+            updateProgress(600 - timeLeft.get(), 600);
             /*
              * Initialise a timeline. This will be used to decrement the
              * timer every second, query the data learning
@@ -340,10 +346,13 @@ public class CanvasController {
                     e -> {
                       try {
                         timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-
+                        updateProgress(60 - timeLeft.get(), 60);
                         // Query the DL model to make the predictions and update the pie chart
                         makePredictions();
-
+                        // If game reaches last 10 second, change progress bar to red
+                        if (timeLeft.get() == 10) {
+                          pgbTimer.setStyle("-fx-accent: red;");
+                        }
                         /*
                          * If at any point the word to draw is in the top three
                          * predictions, the user has won the game. In this case
@@ -351,7 +360,11 @@ public class CanvasController {
                          * that they have won and allow them to choose a
                          * new word if they wish
                          */
+
                         if (isWordCorrect()) {
+                          pgbTimer.setVisible(false);
+                          pgbTimer.setStyle("-fx-accent: green;");
+                          pgbTimer.progressProperty().unbind();
                           timeline.stop();
                           try {
                             addLine("WON");
@@ -383,6 +396,10 @@ public class CanvasController {
                 event -> {
                   // Stop the timeline and reset the GUI to its initial state
                   timeline.stop();
+                  // Unbind and set progress bar to invisible
+                  pgbTimer.setVisible(false);
+                  pgbTimer.setStyle("-fx-accent: green;");
+                  pgbTimer.progressProperty().unbind();
                   try {
                     addLine("LOST");
                   } catch (IOException e1) {
@@ -408,7 +425,7 @@ public class CanvasController {
             return null;
           }
         };
-
+    pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
     return backgroundTimingTask;
   }
 
