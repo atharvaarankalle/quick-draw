@@ -31,6 +31,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -59,6 +60,8 @@ public class CanvasController {
   @FXML private Canvas canvas;
 
   @FXML private Label targetWordLabel;
+
+  @FXML private ProgressBar pgbTimer;
 
   @FXML private Label timerLabel;
 
@@ -99,10 +102,11 @@ public class CanvasController {
 
     // Initialise the canvas and disable it so users cannot draw on it
     initializeCanvas();
+    pgbTimer.setVisible(false);
+    pgbTimer.setStyle("-fx-accent: green;");
     canvas.setDisable(true);
-
     saveDrawingButton.setDisable(true);
-
+    pgbTimer.setVisible(false);
     model = new DoodlePrediction();
 
     targetWordLabel.setText("Get a new word to begin drawing!");
@@ -198,7 +202,7 @@ public class CanvasController {
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
-
+      pgbTimer.setVisible(true);
       modelResultsPieChart.setLegendVisible(true);
 
       // Delegate the background tasks to different threads and execute these
@@ -297,12 +301,13 @@ public class CanvasController {
    * @return a Task<Void> object, the background timing task
    */
   private Task<Void> createNewTimingTask() {
-    final AtomicInteger timeLeft = new AtomicInteger(60);
+    final AtomicInteger timeLeft = new AtomicInteger(600);
     Task<Void> backgroundTimingTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
-
+            // Up date the task progress
+            updateProgress(600 - timeLeft.get(), 600);
             /*
              * Initialise a timeline. This will be used to decrement the
              * timer every second, query the data learning
@@ -313,11 +318,14 @@ public class CanvasController {
                     Duration.ZERO,
                     e -> {
                       try {
-                        timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-
+                        timerLabel.setText(timeLeft.decrementAndGet() / 10 + " seconds left");
+                        updateProgress(600 - timeLeft.get(), 600);
                         // Query the DL model to make the predictions and update the pie chart
                         makePredictions();
-
+                        // If game reaches last 10 second, change progress bar to red
+                        if (timeLeft.get() == 100) {
+                          pgbTimer.setStyle("-fx-accent: red;");
+                        }
                         /*
                          * If at any point the word to draw is in the top three
                          * predictions, the user has won the game. In this case
@@ -325,7 +333,11 @@ public class CanvasController {
                          * that they have won and allow them to choose a
                          * new word if they wish
                          */
+
                         if (isWordCorrect()) {
+                          pgbTimer.setVisible(false);
+                          pgbTimer.setStyle("-fx-accent: green;");
+                          pgbTimer.progressProperty().unbind();
                           timeline.stop();
                           try {
                             addLine("WON");
@@ -345,8 +357,8 @@ public class CanvasController {
                       }
                     });
             timeline.getKeyFrames().clear();
-            timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(1)));
-            timeline.setCycleCount(60);
+            timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(0.1)));
+            timeline.setCycleCount(600);
 
             /*
              * When the one minute timer elapses, stop the timeline, disable the canvas and
@@ -357,6 +369,10 @@ public class CanvasController {
                 event -> {
                   // Stop the timeline and reset the GUI to its initial state
                   timeline.stop();
+                  // Unbind and set progress bar to invisible
+                  pgbTimer.setVisible(false);
+                  pgbTimer.setStyle("-fx-accent: green;");
+                  pgbTimer.progressProperty().unbind();
                   try {
                     addLine("LOST");
                   } catch (IOException e1) {
@@ -382,7 +398,7 @@ public class CanvasController {
             return null;
           }
         };
-
+    pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
     return backgroundTimingTask;
   }
 
