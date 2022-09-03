@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.KeyFrame;
@@ -85,6 +86,8 @@ public class CanvasController {
   // mouse coordinates
   private double currentX;
   private double currentY;
+
+  private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
   /**
    * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
@@ -217,10 +220,33 @@ public class CanvasController {
       // Get a random new word to draw, set the target world label and update the GUI
       CategorySelector categorySelector = new CategorySelector();
       String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+
+      if (randomWord.startsWith("\uFEFF")) {
+        randomWord = randomWord.substring(1);
+      }
       currentWord = randomWord;
+
+      if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
+        text.clear();
+        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        if (randomWord.startsWith("\uFEFF")) {
+          randomWord = randomWord.substring(1);
+        }
+        currentWord = randomWord;
+      }
+
+      while (text.contains(randomWord)) {
+        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        if (randomWord.startsWith("\uFEFF")) {
+          randomWord = randomWord.substring(1);
+        }
+        currentWord = randomWord;
+      }
+
       targetWordLabel.setText("The word to draw is: " + randomWord);
       timerLabel.setText("Click Ready To Start!");
       readyButton.setText("Ready");
+      text.add(randomWord); // Adds new randomWord, if current != random
     }
   }
 
