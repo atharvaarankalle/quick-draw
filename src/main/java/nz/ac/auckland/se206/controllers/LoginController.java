@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
@@ -24,6 +25,8 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 public class LoginController implements Initializable {
 
   @FXML private TextField email_textfield;
+
+  @FXML private ListView<String> usersListView = new ListView<String>();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -95,6 +98,7 @@ public class LoginController implements Initializable {
       addLine();
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+      usersListView.getItems().add(email_textfield.getText());
     }
   }
 
