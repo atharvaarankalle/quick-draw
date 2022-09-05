@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
+<AnchorPane stylesheets="@../css/login.css" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
     <children>
         <TextField fx:id="email_textfield" layoutX="240.0" layoutY="497.0" prefHeight="34.0" prefWidth="229.0" promptText="Username" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
             <font>
@@ -24,7 +24,7 @@
                 <Font size="18.0" />
             </font>
         </Label>
-      <ListView fx:id="usersListView" layoutY="14.0" onMouseClicked="#onUserSelected" prefHeight="340.0" prefWidth="774.0" />
+      <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="15.0" layoutY="20.0" onMouseClicked="#onUserSelected" prefHeight="340.0" prefWidth="745.0" />
       <Button fx:id="mainMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="619.0" mnemonicParsing="false" onAction="#onBackToMainMenu" text="Back To Main Menu">
          <font>
             <Font size="16.0" />
