@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,9 +30,30 @@ public class LoginController implements Initializable {
 
   @FXML private ListView<String> usersListView = new ListView<String>();
 
+  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     email_textfield.getText();
+    usersListView.setItems(usersList);
+
+    // Process in which, UserData information being received
+    Path path = Paths.get("UserDatas.txt");
+    long count;
+    try {
+      count = Files.lines(path).count();
+
+      /// Read each line
+      for (int i = 0; i < count; i++) {
+        String currentUser = Files.readAllLines(path).get(i);
+
+        if (!usersList.contains(currentUser)) {
+          usersList.add(currentUser);
+        }
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @FXML
@@ -98,7 +121,7 @@ public class LoginController implements Initializable {
       addLine();
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
-      usersListView.getItems().add(email_textfield.getText());
+      usersList.add(email_textfield.getText());
     }
   }
 
