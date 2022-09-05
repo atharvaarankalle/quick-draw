@@ -58,7 +58,7 @@ public class LoginController implements Initializable {
   }
 
   @FXML
-  private void signupButton(ActionEvent event) throws IOException {
+  private void onSignUp(ActionEvent event) throws IOException {
 
     int num = 0;
 
