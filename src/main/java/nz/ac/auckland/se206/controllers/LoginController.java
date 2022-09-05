@@ -126,6 +126,20 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
+   * the "Main Menu" scene
+   *
+   * @param event The event that triggered this method.
+   */
+  @FXML
+  private void onBackToMainMenu(ActionEvent event) {
+
+    // Switch to the "Main Menu" scene.
+    Scene currentScene = ((Button) event.getSource()).getScene();
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
+  }
+
   private void addLine(String line) throws IOException {
 
     FileWriter file_writer;
