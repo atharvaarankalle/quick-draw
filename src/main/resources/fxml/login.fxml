@@ -9,26 +9,21 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#loginButton" prefHeight="699.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
     <children>
-        <TextField fx:id="email_textfield" layoutX="240.0" layoutY="526.0" prefHeight="34.0" prefWidth="229.0" promptText="Username" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
+        <TextField fx:id="email_textfield" layoutX="240.0" layoutY="527.0" prefHeight="34.0" prefWidth="229.0" promptText="Username" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
             <font>
                 <Font size="14.0" />
             </font>
         </TextField>
-        <Button layoutX="322.0" layoutY="582.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="51.0" prefWidth="131.0" text="Login" textAlignment="CENTER" textFill="#328d38">
+        <Button fx:id="signupButton" layoutX="322.0" layoutY="582.0" mnemonicParsing="false" onAction="#signupButton" prefHeight="51.0" prefWidth="131.0" text="Sign Up" textAlignment="CENTER" textFill="#328d38">
             <font>
                 <Font name="Courier New Bold" size="22.0" />
             </font>
         </Button>
-        <Label fx:id="error_lab" layoutX="304.0" layoutY="485.0" prefHeight="30.0" prefWidth="166.0" text="LOGIN PORTAL TEST" textAlignment="CENTER" textFill="#ee0c0c">
+        <Label fx:id="error_lab" layoutX="271.0" layoutY="483.0" prefHeight="30.0" prefWidth="233.0" text="Enter a username to sign up!" textAlignment="CENTER" textFill="#ee0c0c">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button layoutX="345.0" layoutY="643.0" mnemonicParsing="false" onAction="#signupButton" prefHeight="29.0" prefWidth="85.0" text="Sign up" textAlignment="CENTER" textFill="#3b21e4">
-            <font>
-                <Font name="Courier New Bold" size="15.0" />
-            </font>
-        </Button>
-      <ListView fx:id="usersListView" layoutY="14.0" prefHeight="340.0" prefWidth="774.0" />
+      <ListView fx:id="usersListView" layoutY="14.0" onMouseClicked="#onUserSelected" prefHeight="340.0" prefWidth="774.0" />
     </children>
 </AnchorPane>

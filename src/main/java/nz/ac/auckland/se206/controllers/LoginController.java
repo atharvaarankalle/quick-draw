@@ -19,6 +19,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 // Author : Ash, Nov 2, 2018 at 22:58, StackOverflow
@@ -57,40 +58,6 @@ public class LoginController implements Initializable {
   }
 
   @FXML
-  private void loginButton(ActionEvent event) throws IOException {
-
-    int num = 0;
-
-    // Process in which, UserData information being received
-    String line = email_textfield.getText();
-    Path path = Paths.get("UserDatas.txt");
-    long count = Files.lines(path).count();
-
-    /// Read each line
-    for (int i = 0; i < count; i++) {
-      String vertification = Files.readAllLines(path).get(i);
-      if (vertification.equals(line)) { // Confirmation of valid user
-        addLine();
-        Alert msg = new Alert(AlertType.CONFIRMATION);
-        num += 1;
-        msg.setTitle(email_textfield.getText());
-        msg.setContentText("Username and password matched");
-        msg.showAndWait();
-        Scene currentScene = ((Button) event.getSource()).getScene();
-        currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
-        break;
-      }
-    }
-
-    if (num == 0) { // Error showing mismatch
-      Alert msg = new Alert(AlertType.ERROR);
-      msg.setTitle(email_textfield.getText());
-      msg.setContentText("No such Username : " + email_textfield.getText());
-      msg.showAndWait();
-    }
-  }
-
-  @FXML
   private void signupButton(ActionEvent event) throws IOException {
 
     int num = 0;
@@ -118,16 +85,49 @@ public class LoginController implements Initializable {
       msg.setTitle(email_textfield.getText());
       msg.setContentText("Username and password matched");
       msg.showAndWait();
-      addLine();
+      addLine(line);
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
       usersList.add(email_textfield.getText());
     }
   }
 
-  private void addLine() throws IOException {
+  @FXML
+  private void onUserSelected(MouseEvent event) throws IOException {
+    int num = 0;
 
-    String line = email_textfield.getText();
+    // Process in which, UserData information being received
+    String userName = usersListView.getSelectionModel().getSelectedItem();
+    Path path = Paths.get("UserDatas.txt");
+    long count = Files.lines(path).count();
+
+    /// Read each line
+    for (int i = 0; i < count; i++) {
+      String vertification = Files.readAllLines(path).get(i);
+      if (vertification.equals(userName)) { // Confirmation of valid user
+        addLine(userName);
+        Alert msg = new Alert(AlertType.CONFIRMATION);
+        num += 1;
+        msg.setTitle(userName);
+        msg.setContentText("Username and password matched");
+        msg.showAndWait();
+        Scene currentScene = ((ListView) event.getSource()).getScene();
+        currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+        break;
+      }
+    }
+
+    if (num == 0) { // Error showing mismatch
+      Alert msg = new Alert(AlertType.ERROR);
+      msg.setTitle(usersListView.getSelectionModel().getSelectedItem());
+      msg.setContentText(
+          "No such Username : " + usersListView.getSelectionModel().getSelectedItem());
+      msg.showAndWait();
+    }
+  }
+
+  private void addLine(String line) throws IOException {
+
     FileWriter file_writer;
 
     try {
