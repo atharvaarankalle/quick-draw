@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -73,17 +74,21 @@ public class LoginController implements Initializable {
       if (redundant.equals(line) || line.isBlank()) { // Cannot process registeration
         num++;
         Alert msg = new Alert(AlertType.ERROR);
-        msg.setTitle(email_textfield.getText());
-        msg.setContentText("Existing or not typed username, please login");
+        msg.setTitle("Error creating user");
+        msg.setHeaderText("Error Creating User");
+        msg.setContentText("The username you entered is either blank or already exists!");
         msg.showAndWait();
         break;
       }
     }
 
     if (num == 0 && !line.isBlank()) { // Process registeration
-      Alert msg = new Alert(AlertType.CONFIRMATION);
-      msg.setTitle(email_textfield.getText());
-      msg.setContentText("Username and password matched");
+      Alert msg = new Alert(AlertType.INFORMATION);
+      msg.setTitle("Sign Up Successful");
+      msg.setHeaderText("Sign Up Successful!");
+      msg.setContentText("Successfully created new user with username: " + line);
+      msg.getButtonTypes().clear();
+      msg.getButtonTypes().addAll(ButtonType.OK);
       msg.showAndWait();
       addLine(line);
       Scene currentScene = ((Button) event.getSource()).getScene();
@@ -106,10 +111,11 @@ public class LoginController implements Initializable {
       String vertification = Files.readAllLines(path).get(i);
       if (vertification.equals(userName)) { // Confirmation of valid user
         addLine(userName);
-        Alert msg = new Alert(AlertType.CONFIRMATION);
+        Alert msg = new Alert(AlertType.INFORMATION);
         num += 1;
-        msg.setTitle(userName);
-        msg.setContentText("Username and password matched");
+        msg.setTitle("Log In Successful!");
+        msg.setHeaderText("Log In Successful!");
+        msg.setContentText("You have successfully logged in as: " + userName);
         msg.showAndWait();
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
