@@ -41,7 +41,7 @@ public class LoginController implements Initializable {
 
     // Process in which, UserData information being received
     String line = email_textfield.getText();
-    Path path = Paths.get("UserDatas.txt");
+    Path path = Paths.get("DATABASE/UserDatas.txt");
     long count = Files.lines(path).count();
 
     /// Read each line
@@ -75,7 +75,7 @@ public class LoginController implements Initializable {
 
     // Process in which, UserData information being received
     String line = email_textfield.getText();
-    Path path = Paths.get("UserDatas.txt");
+    Path path = Paths.get("DATABASE/UserDatas.txt");
     long count = Files.lines(path).count();
 
     /// Read each line
@@ -108,7 +108,7 @@ public class LoginController implements Initializable {
     FileWriter file_writer;
 
     try {
-      file_writer = new FileWriter("UserDatas.txt", true);
+      file_writer = new FileWriter("DATABASE/UserDatas.txt", true);
       BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
       buffered_Writer.write(line);
       buffered_Writer.newLine();
