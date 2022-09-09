@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,23 +20,46 @@ import javafx.scene.layout.AnchorPane;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class ScoreBoardController {
-    @FXML private Label userIDLable;
+    @FXML
+    private Label userIDLable;
 
-    @FXML private Label totalGamesLable;
+    @FXML
+    private Label totalGamesLable;
 
-    @FXML private Label gamesWonLable;
+    @FXML
+    private Label gamesWonLable;
 
-    @FXML private Label gamesLostLable;
+    @FXML
+    private Label gamesLostLable;
 
-    @FXML private Label bestRecordLable;
+    @FXML
+    private Label bestRecordWordLabel;
 
-    @FXML private Button menuButton;
+    @FXML
+    private Label bestRecordTimeLabel;
 
-    @FXML private Label noStatsLabel;
+    @FXML
+    private Button menuButton;
 
-    @FXML private ListView<String> scoreList;
+    @FXML
+    private Button toGameButton;
 
-    @FXML private AnchorPane backgroundPane;
+    @FXML
+    private Label noStatsLabel;
+
+    @FXML
+    private ListView<String> scoreList;
+
+    @FXML
+    private AnchorPane backgroundPane;
+
+    @FXML
+    private Label textLabel1;
+
+    @FXML
+    private Label textLabel2;
+
+    private Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
 
     public void initialize() {
         try {
@@ -53,6 +78,12 @@ public class ScoreBoardController {
     private void onBackToMenu(ActionEvent event) {
         Scene currentScene = ((Button) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
+    }
+
+    @FXML
+    private void onToGame(ActionEvent event) {
+        Scene currentScene = ((Button) event.getSource()).getScene();
+        currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
     }
 
     private void updateStats(String currentID) {
@@ -79,6 +110,13 @@ public class ScoreBoardController {
                         topScore = timetaken;
                         topWord = seperatedStats[0];
                     }
+                    // If the player break his/her record
+                    if (wordAndRecord.containsKey(seperatedStats[0])
+                            && wordAndRecord.get(seperatedStats[0]) < timetaken) {
+                        wordAndRecord.replace(seperatedStats[0], timetaken);
+                    } else {
+                        wordAndRecord.put(seperatedStats[0], timetaken);
+                    }
                     scoreList.getItems().add(seperatedStats[0] + "  " + timetaken + " seconds");
                 } else {
                     gameLost++;
@@ -88,19 +126,20 @@ public class ScoreBoardController {
             gamesWonLable.setText(String.valueOf(gameWon));
             gamesLostLable.setText(String.valueOf(gameLost));
             if (topWord != null) {
-                bestRecordLable
-                        .setText("Wow! Drawing a " + topWord + " only took you " + String.valueOf(topScore)
-                                + " seconds!");
+                bestRecordWordLabel.setText(topWord + "!");
+                bestRecordTimeLabel.setText(String.valueOf(topScore) + " seconds to draw one!");
             } else {
-                bestRecordLable.setText("Oops, seems like you haven't won any games yet, don't give up!");
+                textLabel1.setText("Oops, seems like you haven't won any games yet...");
+                textLabel2.setText("But don't give up! Let's try again!");
             }
         } catch (IOException e) {
-            ObservableList<Node> allNodes= backgroundPane.getChildren();
-            for(Node node : allNodes){
+            ObservableList<Node> allNodes = backgroundPane.getChildren();
+            for (Node node : allNodes) {
                 node.setVisible(false);
             }
             noStatsLabel.setVisible(true);
             menuButton.setVisible(true);
+            toGameButton.setVisible(true);
         }
     }
 }

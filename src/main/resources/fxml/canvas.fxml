@@ -52,7 +52,7 @@
               <Button fx:id="clearButton" mnemonicParsing="false" onAction="#onClear" text="Clear" />
               <Button fx:id="penEraserButton" mnemonicParsing="false" onAction="#onSwitchBetweenPenAndEraser" text="Eraser" />
               <Button fx:id="saveDrawingButton" mnemonicParsing="false" onAction="#saveCurrentSnapshotOnFile" text="Save Drawing" />
-                  <Button mnemonicParsing="false" onAction="#onToStats" text="My Stats" />
+                  <Button fx:id="myStatsButton" mnemonicParsing="false" onAction="#onToStats" text="My Stats" />
             </children>
           </HBox>
             <PieChart fx:id="modelResultsPieChart" prefWidth="592.0" title="DL Model Top Predictions" />

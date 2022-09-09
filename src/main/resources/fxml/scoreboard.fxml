@@ -7,56 +7,56 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
+<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
    <children>
       <Button fx:id="menuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToMenu" text="Back to Menu" />
-      <ListView fx:id="scoreList" layoutX="361.0" layoutY="69.0" prefHeight="292.0" prefWidth="200.0" />
-      <Label fx:id="userIDLable" layoutX="273.0" layoutY="22.0" text="Label">
+      <ListView fx:id="scoreList" layoutX="532.0" layoutY="116.0" prefHeight="646.0" prefWidth="200.0" />
+      <Label fx:id="userIDLable" layoutX="300.0" layoutY="22.0" prefHeight="34.0" prefWidth="174.0">
          <font>
             <Font size="23.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel1" layoutX="20.0" layoutY="86.0" text="Total game played: ">
+      <Label layoutX="20.0" layoutY="86.0" text="Total game played: ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel2" layoutX="20.0" layoutY="126.0" text="Games won:">
+      <Label layoutX="20.0" layoutY="126.0" text="Games won:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel3" layoutX="20.0" layoutY="170.0" text="Games lost:">
+      <Label layoutX="20.0" layoutY="170.0" text="Games lost:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="totalGamesLable" layoutX="194.0" layoutY="86.0">
+      <Label fx:id="totalGamesLable" layoutX="194.0" layoutY="86.0" prefHeight="30.0" prefWidth="89.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesWonLable" layoutX="130.0" layoutY="126.0">
+      <Label fx:id="gamesWonLable" layoutX="130.0" layoutY="126.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesLostLable" layoutX="130.0" layoutY="170.0">
+      <Label fx:id="gamesLostLable" layoutX="130.0" layoutY="170.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel4" layoutX="23.0" layoutY="215.0" text="Your best record:">
+      <Label layoutX="17.0" layoutY="229.0" text="Your best record:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bestRecordLable" layoutX="23.0" layoutY="252.0" prefHeight="34.0" prefWidth="282.0">
+      <Label fx:id="bestRecordWordLabel" layoutX="325.0" layoutY="257.0" prefHeight="34.0" prefWidth="200.0">
          <font>
-            <Font size="16.0" />
+            <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel5" layoutX="413.0" layoutY="39.0" text="Your scores">
+      <Label layoutX="584.0" layoutY="72.0" text="Your scores">
          <font>
             <Font size="19.0" />
          </font>
@@ -66,5 +66,21 @@
             <Font size="26.0" />
          </font>
       </Label>
+      <Label fx:id="textLabel1" layoutX="23.0" layoutY="259.0" prefWidth="450.0" text="It seems you are good at drawing">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="textLabel2" layoutX="23.0" layoutY="289.0" text="It only took you">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="bestRecordTimeLabel" layoutX="169.0" layoutY="289.0" prefHeight="30.0" prefWidth="228.0">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="toGameButton" layoutX="116.0" layoutY="14.0" mnemonicParsing="false" onAction="#onToGame" text="BackToGame" />
    </children>
 </AnchorPane>
