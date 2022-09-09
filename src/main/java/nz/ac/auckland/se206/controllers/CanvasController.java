@@ -26,6 +26,7 @@ import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -43,6 +44,7 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
+import javafx.fxml.FXMLLoader;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and the corresponding
@@ -535,5 +537,12 @@ public class CanvasController {
     } catch (IOException e) {
       System.out.println("Add line failed!!" + e);
     }
+  }
+
+  @FXML
+  private void onToStats(ActionEvent event) throws IOException{
+    Parent newScoreboard = new FXMLLoader(this.getClass().getResource("/fxml/scoreboard.fxml")).load();
+    Scene currentScene = ((Button) event.getSource()).getScene();
+    currentScene.setRoot(newScoreboard);
   }
 }

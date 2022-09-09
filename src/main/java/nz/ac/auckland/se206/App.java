@@ -46,6 +46,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.CANVAS, loadFxml("canvas"));
     SceneManager.addUi(AppUi.HOW_TO_PLAY, loadFxml("howtoplay"));
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
+    //SceneManager.addUi(AppUi.SCOREBOARD, loadFxml("scoreboard"));
 
     // Set the current scene and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.MAIN_MENU), 780, 868);

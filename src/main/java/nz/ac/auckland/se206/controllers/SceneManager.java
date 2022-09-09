@@ -9,7 +9,8 @@ public class SceneManager {
     MAIN_MENU,
     HOW_TO_PLAY,
     CANVAS,
-    LOGIN
+    LOGIN,
+    //SCOREBOARD
   }
 
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
