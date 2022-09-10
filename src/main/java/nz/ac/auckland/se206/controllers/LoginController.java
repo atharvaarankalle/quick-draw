@@ -130,6 +130,8 @@ public class LoginController implements Initializable {
           "No such Username : " + usersListView.getSelectionModel().getSelectedItem());
       msg.showAndWait();
     }
+
+    usersListView.getSelectionModel().clearSelection();
   }
 
   /**
