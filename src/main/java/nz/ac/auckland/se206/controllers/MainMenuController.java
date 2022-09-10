@@ -1,30 +1,16 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
-public class MainMenuController implements Initializable {
-
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
-    FileWriter file_writer;
-
-    try {
-      file_writer = new FileWriter("UserDatas.txt", true);
-      try (BufferedWriter buffered_Writer = new BufferedWriter(file_writer)) {}
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
+public class MainMenuController {
   /**
    * This method is invoked when the user clicks the "New Game" button. It loads and shows the
    * "Canvas" scene
@@ -35,6 +21,12 @@ public class MainMenuController implements Initializable {
   @FXML
   private void onStartNewGame(ActionEvent event) throws IOException {
 
+    // Create folder for user Data
+    File storageData = new File("DATABASE"); // Create a folder to store all user info
+    storageData.mkdir();
+    FileWriter file_writer;
+    file_writer = new FileWriter("DATABASE/UserDatas.txt", true);
+    try (BufferedWriter buffered_Writer = new BufferedWriter(file_writer)) {}
     // Switch to the "Canvas" scene.
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
