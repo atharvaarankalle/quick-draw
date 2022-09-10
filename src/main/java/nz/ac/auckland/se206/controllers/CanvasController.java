@@ -517,7 +517,7 @@ public class CanvasController {
 
   private void addLine(String result) throws IOException {
 
-    Path path = Paths.get("UserDatas.txt");
+    Path path = Paths.get("DATABASE/UserDatas.txt");
     long count = Files.lines(path).count();
     int size = (int) count;
 
@@ -525,7 +525,7 @@ public class CanvasController {
     String line = currentWord + " , " + result + " , " + timerLabel.getText();
     FileWriter file_writer;
     try {
-      file_writer = new FileWriter(example, true);
+      file_writer = new FileWriter("DATABASE/" + example, true);
       BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
       buffered_Writer.write(line);
       buffered_Writer.newLine();
