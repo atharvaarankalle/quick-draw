@@ -65,7 +65,7 @@ public class ScoreBoardController {
         try {
             noStatsLabel.setVisible(false);
             // First read the current user id
-            Path userDataPath = Paths.get("UserDatas.txt");
+            Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
             long lineNumber = Files.lines(userDataPath).count();
             String currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
             updateStats(currentID);
@@ -90,7 +90,7 @@ public class ScoreBoardController {
         userIDLable.setText(currentID + "'s stats");
         try {
             // Set up path and start reading user stats, save stats line by line into a list
-            Path userStatsPath = Paths.get(currentID);
+            Path userStatsPath = Paths.get("DATABASE/"+currentID);
             List<String> userStats = Files.readAllLines(userStatsPath);
             totalGamesLable.setText(String.valueOf(userStats.size()));
             // Start scanning through the user stats
