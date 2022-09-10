@@ -2,33 +2,33 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onDragDetected="#loginButton" prefHeight="699.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="774.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
     <children>
-        <TextField fx:id="email_textfield" layoutX="240.0" layoutY="220.0" prefHeight="34.0" prefWidth="229.0" promptText="Username" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
+        <TextField fx:id="email_textfield" layoutX="240.0" layoutY="497.0" prefHeight="34.0" prefWidth="229.0" promptText="Username" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0">
             <font>
                 <Font size="14.0" />
             </font>
         </TextField>
-        <PasswordField fx:id="password_textfield" layoutX="240.0" layoutY="281.0" prefHeight="34.0" prefWidth="229.0" promptText="Password" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0" />
-        <Button layoutX="332.0" layoutY="339.0" mnemonicParsing="false" onAction="#loginButton" prefHeight="51.0" prefWidth="131.0" text="Login" textAlignment="CENTER" textFill="#328d38">
+        <Button fx:id="signupButton" layoutX="322.0" layoutY="552.0" mnemonicParsing="false" onAction="#onSignUp" prefHeight="51.0" prefWidth="131.0" text="Sign Up" textAlignment="CENTER" textFill="#328d38">
             <font>
                 <Font name="Courier New Bold" size="22.0" />
             </font>
         </Button>
-        <Label fx:id="error_lab" layoutX="314.0" layoutY="173.0" prefHeight="30.0" prefWidth="166.0" text="LOGIN PORTAL TEST" textFill="#ee0c0c">
+        <Label fx:id="error_lab" layoutX="271.0" layoutY="453.0" prefHeight="30.0" prefWidth="233.0" text="Enter a username to sign up!" textAlignment="CENTER" textFill="#ee0c0c">
             <font>
                 <Font size="18.0" />
             </font>
         </Label>
-        <Button layoutX="355.0" layoutY="408.0" mnemonicParsing="false" onAction="#signupButton" prefHeight="29.0" prefWidth="85.0" text="Sign up" textAlignment="CENTER" textFill="#3b21e4">
-            <font>
-                <Font name="Courier New Bold" size="15.0" />
-            </font>
-        </Button>
+      <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="15.0" layoutY="20.0" onMouseClicked="#onUserSelected" prefHeight="340.0" prefWidth="745.0" />
+      <Button fx:id="mainMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="306.0" layoutY="619.0" mnemonicParsing="false" onAction="#onBackToMainMenu" text="Back To Main Menu">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>
