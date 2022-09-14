@@ -228,6 +228,8 @@ public class CanvasController {
   private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Ready")) {
+      //Always make sure progressbar is green at the start
+      pgbTimer.setStyle("-fx-accent: green;");
       // Disable the my stats button while player is drawing
       myStatsButton.setDisable(true);
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
@@ -326,6 +328,7 @@ public class CanvasController {
     targetWordLabel.setText("Get a new word to begin drawing!");
     timerLabel.setText("");
     pgbTimer.setVisible(false);
+    myStatsButton.setDisable(false);
 
     // Switch the scene to the main menu
     Scene currentScene = ((Button) event.getSource()).getScene();
@@ -393,7 +396,6 @@ public class CanvasController {
 
                 if (isWordCorrect()) {
                   pgbTimer.setVisible(false);
-                  pgbTimer.setStyle("-fx-accent: green;");
                   pgbTimer.progressProperty().unbind();
                   // Re-enable the my stats button
                 myStatsButton.setDisable(false);
@@ -431,7 +433,6 @@ public class CanvasController {
               timeline.stop();
               // Unbind and set progress bar to invisible
               pgbTimer.setVisible(false);
-              pgbTimer.setStyle("-fx-accent: green;");
               pgbTimer.progressProperty().unbind();
               try {
                 addLine("LOST");
