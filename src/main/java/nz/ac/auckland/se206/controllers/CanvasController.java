@@ -242,7 +242,10 @@ public class CanvasController {
       modelResultsPieChart.setLegendVisible(true);
 
       // Delegate the background tasks to different threads and execute these
-      Thread backgroundTimingThread = new Thread(createNewTimingTask());
+      Task<Void> backgroundTimingTask = createNewTimingTask();
+      System.out.println(pgbTimer.progressProperty().get());
+      pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
+      Thread backgroundTimingThread = new Thread(backgroundTimingTask);
       backgroundTimingThread.setDaemon(true);
       backgroundTimingThread.start();
 
@@ -368,18 +371,19 @@ public class CanvasController {
       @Override
       protected Void call() throws Exception {
         // Up date the task progress
-        updateProgress(0, 60);
+        updateProgress(0, 59);
         /*
          * Initialise a timeline. This will be used to decrement the
          * timer every second, query the data learning
          * model and update the pie chart accordingly
          */
         KeyFrame keyFrame = new KeyFrame(
-            Duration.ZERO,
+            Duration.seconds(1),
             e -> {
               try {
+                System.out.println(pgbTimer.progressProperty().get());
                 timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-                updateProgress(60 - timeLeft.get(), 60);
+                updateProgress(60 - timeLeft.get(), 59);
                 // Query the DL model to make the predictions and update the pie chart
                 makePredictions();
                 // If game reaches last 10 second, change progress bar to red
@@ -419,7 +423,7 @@ public class CanvasController {
               }
             });
         timeline.getKeyFrames().clear();
-        timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(1)));
+        timeline.getKeyFrames().addAll(keyFrame);
         timeline.setCycleCount(60);
 
         /*
@@ -462,7 +466,6 @@ public class CanvasController {
         return null;
       }
     };
-    pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
     return backgroundTimingTask;
   }
 
