@@ -14,7 +14,7 @@
 
 <Pane fx:id="root" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
    <children>
-      <VBox alignment="CENTER" prefHeight="868.0" prefWidth="774.0" spacing="20.0" stylesheets="@../css/canvas.css">
+      <VBox alignment="CENTER" prefHeight="850.0" prefWidth="774.0" spacing="20.0" stylesheets="@../css/canvas.css">
         <children>
             <Pane fx:id="headerPane" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="139.0" prefWidth="780.0" styleClass="headerPane">
                <children>
