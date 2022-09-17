@@ -3,8 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
@@ -49,7 +52,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="17.0" layoutY="229.0" text="Your best record:">
+      <Label layoutX="23.0" layoutY="229.0" text="Your best record:">
          <font>
             <Font size="20.0" />
          </font>
@@ -85,5 +88,33 @@
          </font>
       </Label>
       <Button fx:id="toGameButton" layoutX="116.0" layoutY="14.0" mnemonicParsing="false" onAction="#onToGame" text="BackToGame" />
+      <Pane layoutX="20.0" layoutY="399.0" prefHeight="363.0" prefWidth="485.0">
+         <children>
+            <Button layoutY="157.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="35.0" text="&lt;" />
+            <Button layoutX="451.0" layoutY="157.0" mnemonicParsing="false" prefHeight="75.0" prefWidth="35.0" text="&gt;" />
+            <Pane prefHeight="363.0" prefWidth="485.0">
+               <children>
+                  <ImageView fx:id="imageView1" fitHeight="363.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane prefHeight="363.0" prefWidth="485.0">
+               <children>
+                  <ImageView fx:id="imageView2" fitHeight="363.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+            <Pane prefHeight="363.0" prefWidth="485.0">
+               <children>
+                  <ImageView fx:id="imageView3" fitHeight="363.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </Pane>
+         </children>
+         <effect>
+            <DropShadow spread="0.17">
+               <color>
+                  <Color red="0.43421053886413574" green="0.43220028281211853" blue="0.43220028281211853" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Pane>
    </children>
 </AnchorPane>
