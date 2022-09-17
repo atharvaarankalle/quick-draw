@@ -18,9 +18,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.util.Callback;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 // Author : Ash, Nov 2, 2018 at 22:58, StackOverflow
@@ -38,7 +40,12 @@ public class LoginController implements Initializable {
   public void initialize(URL location, ResourceBundle resources) {
     email_textfield.getText();
     usersListView.setItems(usersList);
-
+    usersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+      @Override
+      public ListCell<String> call(ListView<String> param) {
+          return new loginUserCell();
+      }
+  });
     // Process in which, UserData information being received
     Path path = Paths.get("DATABASE/UserDatas.txt");
     long count;

@@ -228,6 +228,8 @@ public class CanvasController {
   private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Ready")) {
+      //Always make sure progressbar is green at the start
+      pgbTimer.setStyle("-fx-accent: green;");
       // Disable the my stats button while player is drawing
       myStatsButton.setDisable(true);
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
@@ -240,7 +242,9 @@ public class CanvasController {
       modelResultsPieChart.setLegendVisible(true);
 
       // Delegate the background tasks to different threads and execute these
-      Thread backgroundTimingThread = new Thread(createNewTimingTask());
+      Task<Void> backgroundTimingTask = createNewTimingTask();
+      pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
+      Thread backgroundTimingThread = new Thread(backgroundTimingTask);
       backgroundTimingThread.setDaemon(true);
       backgroundTimingThread.start();
 
@@ -326,6 +330,7 @@ public class CanvasController {
     targetWordLabel.setText("Get a new word to begin drawing!");
     timerLabel.setText("");
     pgbTimer.setVisible(false);
+    myStatsButton.setDisable(false);
 
     // Switch the scene to the main menu
     Scene currentScene = ((Button) event.getSource()).getScene();
@@ -365,18 +370,18 @@ public class CanvasController {
       @Override
       protected Void call() throws Exception {
         // Up date the task progress
-        updateProgress(0, 60);
+        updateProgress(0, 59);
         /*
          * Initialise a timeline. This will be used to decrement the
          * timer every second, query the data learning
          * model and update the pie chart accordingly
          */
         KeyFrame keyFrame = new KeyFrame(
-            Duration.ZERO,
+            Duration.seconds(1),
             e -> {
               try {
                 timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-                updateProgress(60 - timeLeft.get(), 60);
+                updateProgress(60 - timeLeft.get(), 59);
                 // Query the DL model to make the predictions and update the pie chart
                 makePredictions();
                 // If game reaches last 10 second, change progress bar to red
@@ -393,10 +398,9 @@ public class CanvasController {
 
                 if (isWordCorrect()) {
                   pgbTimer.setVisible(false);
-                  pgbTimer.setStyle("-fx-accent: green;");
                   pgbTimer.progressProperty().unbind();
                   // Re-enable the my stats button
-                myStatsButton.setDisable(false);
+                  myStatsButton.setDisable(false);
                   timeline.stop();
                   try {
                     addLine("WON");
@@ -417,7 +421,7 @@ public class CanvasController {
               }
             });
         timeline.getKeyFrames().clear();
-        timeline.getKeyFrames().addAll(keyFrame, new KeyFrame(Duration.seconds(1)));
+        timeline.getKeyFrames().addAll(keyFrame);
         timeline.setCycleCount(60);
 
         /*
@@ -431,7 +435,6 @@ public class CanvasController {
               timeline.stop();
               // Unbind and set progress bar to invisible
               pgbTimer.setVisible(false);
-              pgbTimer.setStyle("-fx-accent: green;");
               pgbTimer.progressProperty().unbind();
               try {
                 addLine("LOST");
@@ -461,7 +464,6 @@ public class CanvasController {
         return null;
       }
     };
-    pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
     return backgroundTimingTask;
   }
 

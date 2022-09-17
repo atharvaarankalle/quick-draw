@@ -34,17 +34,17 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="totalGamesLable" layoutX="194.0" layoutY="86.0" prefHeight="30.0" prefWidth="89.0">
+      <Label fx:id="totalGamesLable" layoutX="209.0" layoutY="85.0" prefHeight="30.0" prefWidth="89.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesWonLable" layoutX="130.0" layoutY="126.0" prefHeight="30.0" prefWidth="83.0">
+      <Label fx:id="gamesWonLable" layoutX="141.0" layoutY="125.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesLostLable" layoutX="130.0" layoutY="170.0" prefHeight="30.0" prefWidth="83.0">
+      <Label fx:id="gamesLostLable" layoutX="133.0" layoutY="169.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -54,7 +54,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bestRecordWordLabel" layoutX="325.0" layoutY="257.0" prefHeight="34.0" prefWidth="200.0">
+      <Label fx:id="bestRecordWordLabel" layoutX="350.0" layoutY="259.0" prefHeight="25.0" prefWidth="181.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -64,12 +64,12 @@
             <Font size="19.0" />
          </font>
       </Label>
-      <Label fx:id="noStatsLabel" layoutX="22.0" layoutY="181.0" prefHeight="38.0" prefWidth="567.0" text="Oops, seems like you haven't tried any words yet" visible="false">
+      <Label fx:id="noStatsLabel" layoutX="22.0" layoutY="181.0" prefHeight="38.0" prefWidth="727.0" text="Oops, seems like you haven't tried any words yet" visible="false">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel1" layoutX="23.0" layoutY="259.0" prefWidth="450.0" text="It seems you are good at drawing">
+      <Label fx:id="textLabel1" layoutX="23.0" layoutY="259.0" prefHeight="27.0" prefWidth="327.0" text="It seems you are good at drawing">
          <font>
             <Font size="20.0" />
          </font>
@@ -79,7 +79,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bestRecordTimeLabel" layoutX="169.0" layoutY="289.0" prefHeight="30.0" prefWidth="228.0">
+      <Label fx:id="bestRecordTimeLabel" layoutX="180.0" layoutY="289.0" prefHeight="25.0" prefWidth="340.0">
          <font>
             <Font size="20.0" />
          </font>
