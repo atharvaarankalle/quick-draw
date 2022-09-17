@@ -243,7 +243,6 @@ public class CanvasController {
 
       // Delegate the background tasks to different threads and execute these
       Task<Void> backgroundTimingTask = createNewTimingTask();
-      System.out.println(pgbTimer.progressProperty().get());
       pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
       Thread backgroundTimingThread = new Thread(backgroundTimingTask);
       backgroundTimingThread.setDaemon(true);
@@ -381,7 +380,6 @@ public class CanvasController {
             Duration.seconds(1),
             e -> {
               try {
-                System.out.println(pgbTimer.progressProperty().get());
                 timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
                 updateProgress(60 - timeLeft.get(), 59);
                 // Query the DL model to make the predictions and update the pie chart
@@ -402,7 +400,7 @@ public class CanvasController {
                   pgbTimer.setVisible(false);
                   pgbTimer.progressProperty().unbind();
                   // Re-enable the my stats button
-                myStatsButton.setDisable(false);
+                  myStatsButton.setDisable(false);
                   timeline.stop();
                   try {
                     addLine("WON");
