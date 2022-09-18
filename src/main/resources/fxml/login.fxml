@@ -20,6 +20,7 @@
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="5.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
                      <image>
+                        <!-- Image credited to https://in.pinterest.com/pin/783063453959174364/?nic_v3=1airpJnra  -->
                         <Image url="@../images/background.png" />
                      </image>
                   </ImageView>
@@ -48,6 +49,7 @@
                                  <children>
                                     <ImageView fitHeight="44.0" fitWidth="40.0" layoutX="10.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
+                                          <!-- Image credited to https://www.flaticon.com/free-icon/user_149071  -->
                                           <Image url="@../images/profile.png" />
                                        </image>
                                     </ImageView>
