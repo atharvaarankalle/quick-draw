@@ -228,7 +228,7 @@ public class CanvasController {
   private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Ready")) {
-      //Always make sure progressbar is green at the start
+      // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Disable the my stats button while player is drawing
       myStatsButton.setDisable(true);
@@ -320,18 +320,7 @@ public class CanvasController {
      * This is done to ensure that if a user comes back to start a new
      * game, the state of the previous game is not carried over
      */
-    timeline.stop();
-    readyButton.setDisable(false);
-    readyButton.setText("Get new word");
-    clearButton.setDisable(false);
-    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    canvas.setDisable(true);
-    saveDrawingButton.setDisable(false);
-    targetWordLabel.setText("Get a new word to begin drawing!");
-    timerLabel.setText("");
-    pgbTimer.setVisible(false);
-    myStatsButton.setDisable(false);
-
+    reset(); // All the clearing game is inside this method now
     // Switch the scene to the main menu
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
@@ -581,8 +570,23 @@ public class CanvasController {
 
   @FXML
   private void onToStats(ActionEvent event) throws IOException {
+    reset();
     Parent newScoreboard = new FXMLLoader(this.getClass().getResource("/fxml/scoreboard.fxml")).load();
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(newScoreboard);
+  }
+
+  private void reset() {
+    timeline.stop();
+    readyButton.setDisable(false);
+    readyButton.setText("Get new word");
+    clearButton.setDisable(false);
+    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    canvas.setDisable(true);
+    saveDrawingButton.setDisable(false);
+    targetWordLabel.setText("Get a new word to begin drawing!");
+    timerLabel.setText("");
+    pgbTimer.setVisible(false);
+    myStatsButton.setDisable(false);
   }
 }
