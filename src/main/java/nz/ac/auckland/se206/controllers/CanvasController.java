@@ -138,7 +138,7 @@ public class CanvasController {
     myStatsButton.setDisable(false);
 
     targetWordLabel.setText("Get a new word to begin drawing!");
-    readyButton.setText("Get new word");
+    readyButton.setText("Start");
 
     // Initialise the data list for the model results pie chart
     data = FXCollections.observableArrayList(
@@ -401,7 +401,7 @@ public class CanvasController {
                   canvas.setDisable(true);
                   timerLabel.setText("Correct, well done!");
                   readyButton.setDisable(false);
-                  readyButton.setText("Get new word");
+                  readyButton.setText("Ready");
                   clearButton.setDisable(true);
                   saveDrawingButton.setDisable(false);
                 }
@@ -431,7 +431,7 @@ public class CanvasController {
                 e1.printStackTrace();
               }
               readyButton.setDisable(false);
-              readyButton.setText("Get new word");
+              readyButton.setText("Ready");
               clearButton.setDisable(true);
               canvas.setOnMouseDragged(e -> {
               });

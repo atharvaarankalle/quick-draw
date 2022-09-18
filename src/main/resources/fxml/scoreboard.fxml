@@ -7,17 +7,25 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
+<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" style="-fx-background-color: #A7C7E7;" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
    <children>
-      <Pane layoutY="-5.0" prefHeight="64.0" prefWidth="774.0" styleClass="headerPane" stylesheets="@css/canvas.css">
+      <Pane layoutY="-5.0" prefHeight="64.0" prefWidth="785.0" style="-fx-background-color: #05445E;" styleClass="headerPane" stylesheets="@css/canvas.css">
          <children>
             <Label fx:id="userIDLable" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+            <Button fx:id="toGameButton" layoutX="142.0" layoutY="20.0" mnemonicParsing="false" onAction="#onToGame" text="BackToGame">
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
+            </Button>
          </children></Pane>
-      <Button fx:id="menuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToMenu" text="Back to Menu" />
+      <Button fx:id="menuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToMenu" text="Back to Menu">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
       <ListView fx:id="scoreList" layoutX="532.0" layoutY="116.0" prefHeight="646.0" prefWidth="200.0" />
       <Label layoutX="20.0" layoutY="86.0" text="Total game played: ">
          <font>
@@ -84,6 +92,5 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="toGameButton" layoutX="116.0" layoutY="14.0" mnemonicParsing="false" onAction="#onToGame" text="BackToGame" />
    </children>
 </AnchorPane>
