@@ -52,6 +52,8 @@ public class ScoreBoardController {
 
   @FXML private ImageView imageView;
 
+  @FXML private Label imageDescriptorLabel;
+
   private List<String> scoreListSorted = new ArrayList<String>();
 
   private Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
@@ -152,6 +154,9 @@ public class ScoreBoardController {
                   + scoreListSorted.get(0).split("[0-9]")[0].strip()
                   + ".png"));
 
+      imageDescriptorLabel.setText(
+          "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
+
     } catch (IOException e) {
       ObservableList<Node> allNodes = backgroundPane.getChildren();
       for (Node node : allNodes) {
@@ -174,6 +179,8 @@ public class ScoreBoardController {
                       + scoreListSorted.get(1).split("[0-9]")[0].strip()
                       + ".png"));
           imageDisplayed = 1;
+          imageDescriptorLabel.setText(
+              "Your second best drawing: " + scoreListSorted.get(1).split("[0-9]")[0].strip());
         }
         break;
       case 1:
@@ -184,6 +191,8 @@ public class ScoreBoardController {
                       + scoreListSorted.get(2).split("[0-9]")[0].strip()
                       + ".png"));
           imageDisplayed = 2;
+          imageDescriptorLabel.setText(
+              "Your third best drawing: " + scoreListSorted.get(2).split("[0-9]")[0].strip());
         } else if (scoreListSorted.size() == 2) {
           imageView.setImage(
               new Image(
@@ -191,6 +200,8 @@ public class ScoreBoardController {
                       + scoreListSorted.get(0).split("[0-9]")[0].strip()
                       + ".png"));
           imageDisplayed = 0;
+          imageDescriptorLabel.setText(
+              "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         }
         break;
       case 2:
@@ -200,6 +211,8 @@ public class ScoreBoardController {
                     + scoreListSorted.get(0).split("[0-9]")[0].strip()
                     + ".png"));
         imageDisplayed = 0;
+        imageDescriptorLabel.setText(
+            "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
     }
   }
@@ -215,6 +228,8 @@ public class ScoreBoardController {
                       + scoreListSorted.get(2).split("[0-9]")[0].strip()
                       + ".png"));
           imageDisplayed = 2;
+          imageDescriptorLabel.setText(
+              "Your third best drawing: " + scoreListSorted.get(2).split("[0-9]")[0].strip());
         } else if (scoreListSorted.size() == 2) {
           imageView.setImage(
               new Image(
@@ -222,6 +237,8 @@ public class ScoreBoardController {
                       + scoreListSorted.get(1).split("[0-9]")[0].strip()
                       + ".png"));
           imageDisplayed = 1;
+          imageDescriptorLabel.setText(
+              "Your second best drawing: " + scoreListSorted.get(1).split("[0-9]")[0].strip());
         }
         break;
       case 1:
@@ -231,6 +248,8 @@ public class ScoreBoardController {
                     + scoreListSorted.get(0).split("[0-9]")[0].strip()
                     + ".png"));
         imageDisplayed = 0;
+        imageDescriptorLabel.setText(
+            "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
       case 2:
         imageView.setImage(
@@ -239,6 +258,8 @@ public class ScoreBoardController {
                     + scoreListSorted.get(1).split("[0-9]")[0].strip()
                     + ".png"));
         imageDisplayed = 1;
+        imageDescriptorLabel.setText(
+            "Your second best drawing: " + scoreListSorted.get(1).split("[0-9]")[0].strip());
         break;
     }
   }
