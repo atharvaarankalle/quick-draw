@@ -138,7 +138,7 @@ public class CanvasController {
     myStatsButton.setDisable(false);
 
     targetWordLabel.setText("Get a new word to begin drawing!");
-    readyButton.setText("Start");
+    readyButton.setText("Ready");
 
     // Initialise the data list for the model results pie chart
     data = FXCollections.observableArrayList(
@@ -227,7 +227,7 @@ public class CanvasController {
   @FXML
   private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
     // If the user is ready to draw, enable the canvas and save drawing button
-    if (readyButton.getText().equals("Ready")) {
+    if (readyButton.getText().equals("Start")) {
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Disable the my stats button while player is drawing
@@ -283,8 +283,8 @@ public class CanvasController {
       }
 
       targetWordLabel.setText("The word to draw is: " + randomWord);
-      timerLabel.setText("Click Ready To Start!");
-      readyButton.setText("Ready");
+      timerLabel.setText("Press Start to start drawing!");
+      readyButton.setText("Start");
       text.add(randomWord); // Adds new randomWord, if current != random
     }
   }
@@ -579,7 +579,7 @@ public class CanvasController {
   private void reset() {
     timeline.stop();
     readyButton.setDisable(false);
-    readyButton.setText("Get new word");
+    readyButton.setText("Ready");
     clearButton.setDisable(false);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     canvas.setDisable(true);
