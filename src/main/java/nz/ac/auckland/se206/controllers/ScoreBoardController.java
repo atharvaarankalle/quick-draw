@@ -167,20 +167,31 @@ public class ScoreBoardController {
   private void onNextImage() {
     switch (imageDisplayed) {
       case 0:
-        imageView.setImage(
-            new Image(
-                "file:DATABASE/autosaves/"
-                    + scoreListSorted.get(1).split("[0-9]")[0].strip()
-                    + ".png"));
-        imageDisplayed = 1;
+        if (scoreListSorted.size() >= 2) {
+          imageView.setImage(
+              new Image(
+                  "file:DATABASE/autosaves/"
+                      + scoreListSorted.get(1).split("[0-9]")[0].strip()
+                      + ".png"));
+          imageDisplayed = 1;
+        }
         break;
       case 1:
-        imageView.setImage(
-            new Image(
-                "file:DATABASE/autosaves/"
-                    + scoreListSorted.get(2).split("[0-9]")[0].strip()
-                    + ".png"));
-        imageDisplayed = 2;
+        if (scoreListSorted.size() >= 3) {
+          imageView.setImage(
+              new Image(
+                  "file:DATABASE/autosaves/"
+                      + scoreListSorted.get(2).split("[0-9]")[0].strip()
+                      + ".png"));
+          imageDisplayed = 2;
+        } else if (scoreListSorted.size() == 2) {
+          imageView.setImage(
+              new Image(
+                  "file:DATABASE/autosaves/"
+                      + scoreListSorted.get(0).split("[0-9]")[0].strip()
+                      + ".png"));
+          imageDisplayed = 0;
+        }
         break;
       case 2:
         imageView.setImage(
@@ -197,12 +208,21 @@ public class ScoreBoardController {
   private void onPreviousImage() {
     switch (imageDisplayed) {
       case 0:
-        imageView.setImage(
-            new Image(
-                "file:DATABASE/autosaves/"
-                    + scoreListSorted.get(2).split("[0-9]")[0].strip()
-                    + ".png"));
-        imageDisplayed = 2;
+        if (scoreListSorted.size() >= 3) {
+          imageView.setImage(
+              new Image(
+                  "file:DATABASE/autosaves/"
+                      + scoreListSorted.get(2).split("[0-9]")[0].strip()
+                      + ".png"));
+          imageDisplayed = 2;
+        } else if (scoreListSorted.size() == 2) {
+          imageView.setImage(
+              new Image(
+                  "file:DATABASE/autosaves/"
+                      + scoreListSorted.get(1).split("[0-9]")[0].strip()
+                      + ".png"));
+          imageDisplayed = 1;
+        }
         break;
       case 1:
         imageView.setImage(
