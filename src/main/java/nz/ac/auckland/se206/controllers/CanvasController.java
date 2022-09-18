@@ -25,6 +25,7 @@ import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -44,7 +45,6 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
-import javafx.fxml.FXMLLoader;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and
@@ -393,6 +393,7 @@ public class CanvasController {
                   timeline.stop();
                   try {
                     addLine("WON");
+                    autoSaveDrawing();
                   } catch (IOException e1) {
                     e1.printStackTrace();
                   }
@@ -401,7 +402,7 @@ public class CanvasController {
                   canvas.setDisable(true);
                   timerLabel.setText("Correct, well done!");
                   readyButton.setDisable(false);
-                  readyButton.setText("Ready");
+                  readyButton.setText("Get new word");
                   clearButton.setDisable(true);
                   saveDrawingButton.setDisable(false);
                 }
@@ -427,6 +428,7 @@ public class CanvasController {
               pgbTimer.progressProperty().unbind();
               try {
                 addLine("LOST");
+                autoSaveDrawing();
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
@@ -566,6 +568,19 @@ public class CanvasController {
     } catch (IOException e) {
       System.out.println("Add line failed!!" + e);
     }
+  }
+
+  private void autoSaveDrawing() throws IOException {
+
+    final File autoSaveDrawingsFolder = new File("DATABASE/autosaves");
+
+    if (!autoSaveDrawingsFolder.exists()) {
+      autoSaveDrawingsFolder.mkdir();
+    }
+
+    final File canvasScreenshot = new File(("DATABASE/autosaves/" + currentWord) + ".png");
+
+    ImageIO.write(getCurrentSnapshot(), "png", canvasScreenshot);
   }
 
   @FXML
