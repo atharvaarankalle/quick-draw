@@ -38,7 +38,7 @@
                               <Font name="Baskerville Old Face" size="16.0" />
                            </font>
                         </Button>
-                        <Label fx:id="error_lab" layoutX="168.0" layoutY="14.0" prefHeight="36.0" prefWidth="54.0" text="Login" textAlignment="CENTER">
+                        <Label fx:id="error_lab" layoutX="165.0" layoutY="14.0" prefHeight="36.0" prefWidth="82.0" text="Login" textAlignment="CENTER">
                            <font>
                               <Font name="Arial Black" size="18.0" />
                            </font>
