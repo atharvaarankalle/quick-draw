@@ -356,7 +356,8 @@ public class CanvasController {
   }
 
   /** 
-   * 
+   * This method scan through the pixels on canvas
+   * Return true when canvas is blank, otherwise false
   */
   private Boolean isCanvasBlank(){
     Image canvasContent = canvas.snapshot(null, null);
@@ -398,6 +399,8 @@ public class CanvasController {
                 if (timeLeft.get() == 10) {
                   pgbTimer.setStyle("-fx-accent: red;");
                 }
+                //First check if the canvas is blank or not, if it's blank, reset the piechart
+                //Otherwise, carryout predictions and update piechart
                 if(!isCanvasBlank()){
                 // Query the DL model to make the predictions and update the pie chart
                 makePredictions();
@@ -431,7 +434,6 @@ public class CanvasController {
                   saveDrawingButton.setDisable(false);
                 }
               } else {
-                System.out.println("canvas is blank");
                 resetPieChart();
               }
               } catch (TranslateException e1) {
