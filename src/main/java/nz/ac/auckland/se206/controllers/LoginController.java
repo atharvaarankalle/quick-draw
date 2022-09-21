@@ -30,11 +30,14 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class LoginController implements Initializable {
 
-  @FXML private TextField email_textfield;
+  @FXML
+  private TextField email_textfield;
 
-  @FXML private ListView<String> usersListView = new ListView<String>();
+  @FXML
+  private ListView<String> usersListView = new ListView<String>();
 
-  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML
+  private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -43,9 +46,9 @@ public class LoginController implements Initializable {
     usersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
       @Override
       public ListCell<String> call(ListView<String> param) {
-          return new loginUserCell();
+        return new loginUserCell();
       }
-  });
+    });
     // Process in which, UserData information being received
     Path path = Paths.get("DATABASE/UserDatas.txt");
     long count;
@@ -101,6 +104,7 @@ public class LoginController implements Initializable {
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
       usersList.add(email_textfield.getText());
+      email_textfield.clear();
     }
   }
 
@@ -142,7 +146,8 @@ public class LoginController implements Initializable {
   }
 
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
+   * This method is invoked when the user clicks the "Back to Main Menu" button.
+   * It loads and shows
    * the "Main Menu" scene
    *
    * @param event The event that triggered this method.

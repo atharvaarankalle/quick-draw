@@ -1,44 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainMenuController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainMenuController">
    <children>
-      <Label layoutX="196.0" layoutY="40.0" text="Quick, Draw! SE206 Edition">
-         <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
-      <!-- Logo credited to Speedy Sketchers, https://softeng206design.digitaledu.ac.nz/project/  -->
-      <ImageView fx:id="logo" fitHeight="373.0" fitWidth="528.0" layoutX="201.0" layoutY="119.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/logo-speedy-sketchers.png" />
-         </image>
-      </ImageView>
-      <VBox alignment="CENTER" layoutX="322.0" layoutY="520.0" spacing="20.0">
+      <VBox alignment="CENTER" layoutX="-132.0" layoutY="465.0" spacing="20.0" />
+      <Pane prefHeight="434.0" prefWidth="788.0" style="-fx-background-color: #5885AF;">
          <children>
-            <Button fx:id="newGameButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" text="New Game">
+            <ImageView fitHeight="327.0" fitWidth="500.0" layoutX="292.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <!-- Image credited to https://oddthing.co.nz/store/the-long-light  -->
+                  <Image url="@../images/signage.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="newGameButton" alignment="CENTER" contentDisplay="CENTER" layoutX="29.0" layoutY="362.0" mnemonicParsing="false" onAction="#onStartNewGame" prefHeight="44.0" prefWidth="149.0" style="-fx-background-color: #000000;" text="Start New Game" textFill="WHITE" textOverrun="CLIP">
                <font>
-                  <Font size="16.0" />
+                  <Font name="Berlin Sans FB" size="16.0" />
+               </font>
+               <effect>
+                  <InnerShadow />
+               </effect>
+               <cursor>
+                  <Cursor fx:constant="E_RESIZE" />
+               </cursor>
+            </Button>
+            <ImageView fitHeight="100.0" fitWidth="65.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <!-- Logo credited to https://www.pngwing.com/en/free-png-vioma -->
+                  <Image url="@../images/logo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="29.0" layoutY="93.0" prefHeight="85.0" prefWidth="266.0" text="QUICK DRAWING GAME" textFill="#fff6f6">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="178.0" prefHeight="29.0" prefWidth="302.0" text="Challenge yourself to be the best drawing artist!" textFill="WHITE">
+               <font>
+                  <Font name="Cooper Black" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="203.0" prefHeight="29.0" prefWidth="302.0" text="Try to get into top three to become a winner!" textFill="WHITE">
+               <font>
+                  <Font name="Cooper Black" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="232.0" prefHeight="29.0" prefWidth="302.0" text="For further information, please click the" textFill="WHITE">
+               <font>
+                  <Font name="Cooper Black" size="12.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="261.0" prefHeight="29.0" prefWidth="302.0" text="information button below, else let's start!" textFill="WHITE">
+               <font>
+                  <Font name="Cooper Black" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="-1.0" layoutY="434.0" prefHeight="434.0" prefWidth="774.0" style="-fx-background-color: #DEDEDE;">
+         <children>
+            <ImageView fitHeight="434.0" fitWidth="774.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <!-- Gif credited to https://oddthing.co.nz/store/the-long-light  -->
+                  <Image url="@../images/animation.gif" />
+               </image>
+            </ImageView>
+            <Button fx:id="howToPlayButton" alignment="CENTER" contentDisplay="CENTER" layoutX="485.0" layoutY="300.0" mnemonicParsing="false" onAction="#onDisplayInstructions" style="-fx-background-color: #ADD8E6;" text="Information" textFill="WHITE">
+               <font>
+                  <Font name="Arial Black" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="howToPlayButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDisplayInstructions" text="How To Play">
+            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" layoutX="147.0" layoutY="300.0" mnemonicParsing="false" onAction="#onExit" style="-fx-background-color: #ADD8E6;" text="Exit To Desktop">
                <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onExit" text="Exit To Desktop">
-               <font>
-                  <Font size="16.0" />
+                  <Font name="Arial Black" size="16.0" />
                </font>
             </Button>
          </children>
-      </VBox>
+      </Pane>
    </children>
 </Pane>
