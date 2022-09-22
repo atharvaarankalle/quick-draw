@@ -34,6 +34,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -96,6 +97,12 @@ public class CanvasController {
 
   @FXML
   private Button myStatsButton;
+
+  @FXML
+  private Label leaderBoardLabel;
+
+  @FXML
+  private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
 

@@ -7,9 +7,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -56,8 +57,6 @@ public class ScoreBoardController {
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
-  private Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
-
   private int imageDisplayed = 0;
 
   public void initialize() {
@@ -88,45 +87,21 @@ public class ScoreBoardController {
   private void updateStats(String currentID) {
     userIDLable.setText(currentID + "'s stats");
     try {
-      // Set up path and start reading user stats, save stats line by line into a list
-      Path userStatsPath = Paths.get("DATABASE/" + currentID);
-      List<String> userStats = Files.readAllLines(userStatsPath);
-      totalGamesLable.setText(String.valueOf(userStats.size()));
-      // Start scanning through the user stats
-      int gameWon = 0;
-      int gameLost = 0;
-      int topScore = 60;
-      String topWord = null;
-      int timetaken;
-      String[] seperatedStats;
-      for (String line : userStats) {
-        seperatedStats = line.split(" , ");
-        if (seperatedStats[1].equals("WON")) {
-          gameWon++;
-          // Calculate the time taken:
-          timetaken = 60 - Integer.valueOf(seperatedStats[2].split(" ")[0]);
-          if (timetaken <= topScore) {
-            topScore = timetaken;
-            topWord = seperatedStats[0];
-          }
-          // If the player break his/her record
-          if (wordAndRecord.containsKey(seperatedStats[0])
-              && wordAndRecord.get(seperatedStats[0]) < timetaken) {
-            wordAndRecord.replace(seperatedStats[0], timetaken);
-          } else {
-            wordAndRecord.put(seperatedStats[0], timetaken);
-          }
-          scoreList.getItems().add(seperatedStats[0] + "  " + timetaken + " seconds");
-        } else {
-          gameLost++;
-        }
+      statsManager.readUserStats(currentID);
+      statsManager.manageStats();
+      totalGamesLable.setText(String.valueOf(statsManager.getNumberOfGames()));
+      Map<String,Integer> wonRecords = statsManager.getWordAndRecord();
+      Set<String>words = wonRecords.keySet();
+      for(String word : words){
+      scoreList.getItems().add(word + "  " + wonRecords.get(word) + " seconds");
       }
+      String topWord = statsManager.getTopWord();
       // After the scan, update all information
-      gamesWonLable.setText(String.valueOf(gameWon));
-      gamesLostLable.setText(String.valueOf(gameLost));
+      gamesWonLable.setText(String.valueOf(statsManager.getGameWon()));
+      gamesLostLable.setText(String.valueOf(statsManager.getGameLost()));
       if (topWord != null) {
         bestRecordWordLabel.setText(topWord + "!");
-        bestRecordTimeLabel.setText(String.valueOf(topScore) + " seconds to draw one!");
+        bestRecordTimeLabel.setText(String.valueOf(statsManager.getTopScore()) + " seconds to draw one!");
       } else {
         textLabel1.setText("Oops, seems like you haven't won any games yet...");
         textLabel2.setText("But don't give up! Let's try again!");
