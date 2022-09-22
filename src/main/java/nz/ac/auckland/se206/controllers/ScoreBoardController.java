@@ -22,38 +22,57 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class ScoreBoardController {
-  @FXML private Label userIDLable;
+  @FXML
+  private Label userIDLable;
 
-  @FXML private Label totalGamesLable;
+  @FXML
+  private Label totalGamesLable;
 
-  @FXML private Label gamesWonLable;
+  @FXML
+  private Label gamesWonLable;
 
-  @FXML private Label gamesLostLable;
+  @FXML
+  private Label gamesLostLable;
 
-  @FXML private Label bestRecordWordLabel;
+  @FXML
+  private Label bestRecordWordLabel;
 
-  @FXML private Label bestRecordTimeLabel;
+  @FXML
+  private Label bestRecordTimeLabel;
 
-  @FXML private Button menuButton;
+  @FXML
+  private Button menuButton;
 
-  @FXML private Button toGameButton;
+  @FXML
+  private Button toGameButton;
 
-  @FXML private Label noStatsLabel;
+  @FXML
+  private Label noStatsLabel;
 
-  @FXML private ListView<String> scoreList;
+  @FXML
+  private ListView<String> scoreList;
 
-  @FXML private AnchorPane backgroundPane;
+  @FXML
+  private AnchorPane backgroundPane;
 
-  @FXML private Label textLabel1;
+  @FXML
+  private Label textLabel1;
 
-  @FXML private Label textLabel2;
+  @FXML
+  private Label textLabel2;
 
-  @FXML private ImageView imageView;
+  @FXML
+  private ImageView imageView;
 
-  @FXML private Label imageDescriptorLabel;
+  @FXML
+  private Label imageDescriptorLabel;
+
+  @FXML
+  private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
@@ -108,30 +127,32 @@ public class ScoreBoardController {
       }
 
       ObservableList<String> scoreListItems = scoreList.getItems();
+      if (!scoreListItems.isEmpty()) {
+        for (String string : scoreListItems) {
+          scoreListSorted.add(string);
+        }
 
-      for (String string : scoreListItems) {
-        scoreListSorted.add(string);
+        Collections.sort(
+            scoreListSorted,
+            new Comparator<String>() {
+              public int compare(String firstString, String secondString) {
+                int firstInteger = Integer.parseInt(firstString.replaceAll("\\D", ""));
+                int secondInteger = Integer.parseInt(secondString.replaceAll("\\D", ""));
+                return Integer.compare(firstInteger, secondInteger);
+              }
+            });
+
+        imageView.setImage(
+            new Image(
+                "file:DATABASE/autosaves/"
+                    + scoreListSorted.get(0).split("[0-9]")[0].strip()
+                    + ".png"));
+
+        imageDescriptorLabel.setText(
+            "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
+      } else{
+        imagePane.setVisible(false);
       }
-
-      Collections.sort(
-          scoreListSorted,
-          new Comparator<String>() {
-            public int compare(String firstString, String secondString) {
-              int firstInteger = Integer.parseInt(firstString.replaceAll("\\D", ""));
-              int secondInteger = Integer.parseInt(secondString.replaceAll("\\D", ""));
-              return Integer.compare(firstInteger, secondInteger);
-            }
-          });
-
-      imageView.setImage(
-          new Image(
-              "file:DATABASE/autosaves/"
-                  + scoreListSorted.get(0).split("[0-9]")[0].strip()
-                  + ".png"));
-
-      imageDescriptorLabel.setText(
-          "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
-
     } catch (IOException e) {
       ObservableList<Node> allNodes = backgroundPane.getChildren();
       for (Node node : allNodes) {
@@ -141,6 +162,7 @@ public class ScoreBoardController {
       menuButton.setVisible(true);
       toGameButton.setVisible(true);
     }
+
   }
 
   @FXML
