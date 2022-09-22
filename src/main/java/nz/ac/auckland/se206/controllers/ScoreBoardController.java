@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -61,6 +59,8 @@ public class ScoreBoardController {
 
   public void initialize() {
     try {
+      
+
       noStatsLabel.setVisible(false);
       // First read the current user id
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
@@ -88,12 +88,10 @@ public class ScoreBoardController {
     userIDLable.setText(currentID + "'s stats");
     try {
       statsManager.readUserStats(currentID);
-      statsManager.manageStats();
       totalGamesLable.setText(String.valueOf(statsManager.getNumberOfGames()));
-      Map<String,Integer> wonRecords = statsManager.getWordAndRecord();
-      Set<String>words = wonRecords.keySet();
-      for(String word : words){
-      scoreList.getItems().add(word + "  " + wonRecords.get(word) + " seconds");
+      List<Score> wonRecords = statsManager.getRecords();
+      for(Score record:wonRecords){
+        scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
       }
       String topWord = statsManager.getTopWord();
       // After the scan, update all information

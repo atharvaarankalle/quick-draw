@@ -141,6 +141,8 @@ public class CanvasController {
     saveDrawingButton.setDisable(true);
     pgbTimer.setVisible(false);
     model = new DoodlePrediction();
+    leaderBoardLabel.setVisible(false);
+    leaderBoardList.setVisible(false);
     // Enable mystats button
     myStatsButton.setDisable(false);
 
@@ -247,7 +249,9 @@ public class CanvasController {
       clearButton.setDisable(false);
       pgbTimer.setVisible(true);
       modelResultsPieChart.setLegendVisible(true);
-
+      //Disable leaderboard
+      leaderBoardLabel.setVisible(false);
+      leaderBoardList.setVisible(false);
       // Delegate the background tasks to different threads and execute these
       Task<Void> backgroundTimingTask = createNewTimingTask();
       pgbTimer.progressProperty().bind(backgroundTimingTask.progressProperty());
@@ -412,8 +416,10 @@ public class CanvasController {
                   readyButton.setText("Get new word");
                   clearButton.setDisable(true);
                   saveDrawingButton.setDisable(false);
+                  //Update leaderboard
+                  updateLeaderBoard();
                 }
-              } catch (TranslateException e1) {
+              } catch (TranslateException | IOException e1) {
                 e1.printStackTrace();
               }
             });
@@ -454,6 +460,12 @@ public class CanvasController {
                 timerLabel.setText("Incorrect, better luck next time!");
                 // Re-enable the my stats button
                 myStatsButton.setDisable(false);
+                //Update leaderboard
+                try {
+                  updateLeaderBoard();
+                } catch (IOException e1) {
+                  e1.printStackTrace();
+                }
               }
             });
 
@@ -598,6 +610,25 @@ public class CanvasController {
     currentScene.setRoot(newScoreboard);
   }
 
+  @FXML
+  private void updateLeaderBoard() throws IOException{
+    leaderBoardList.getItems().clear();
+    leaderBoardLabel.setVisible(true);
+    leaderBoardList.setVisible(true);
+    leaderBoardLabel.setText("Top artists of "+ currentWord);
+    ArrayList<Score> allScores = new ArrayList<Score>();
+    allScores = statsManager.getLeaderBoard(currentWord);
+    Score currentScore;
+    for(int i=0; i<10;i++){
+      if(i<allScores.size()){
+      currentScore = allScores.get(i);
+      leaderBoardList.getItems().add(currentScore.getID()+"  "+currentScore.getTime());
+      } else {
+        break;
+      }
+    }
+  }
+
   private void reset() {
     timeline.stop();
     readyButton.setDisable(false);
@@ -610,5 +641,7 @@ public class CanvasController {
     timerLabel.setText("");
     pgbTimer.setVisible(false);
     myStatsButton.setDisable(false);
+    leaderBoardLabel.setVisible(false);
+    leaderBoardList.setVisible(false);
   }
 }
