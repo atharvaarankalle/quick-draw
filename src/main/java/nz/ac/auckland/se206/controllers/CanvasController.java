@@ -147,7 +147,7 @@ public class CanvasController {
     myStatsButton.setDisable(false);
 
     targetWordLabel.setText("Get a new word to begin drawing!");
-    readyButton.setText("Ready");
+    readyButton.setText("Ready?");
     // Initialise the data list for the model results pie chart
     data = FXCollections.observableArrayList(
         new PieChart.Data("", 0),
@@ -167,8 +167,8 @@ public class CanvasController {
     modelResultsPieChart.setLegendVisible(false);
   }
 
-  private void resetPieChart(){
-    for(PieChart.Data data:modelResultsPieChart.getData()){
+  private void resetPieChart() {
+    for (PieChart.Data data : modelResultsPieChart.getData()) {
       data.setName("");
       data.setPieValue(0);
     }
@@ -242,7 +242,7 @@ public class CanvasController {
   @FXML
   private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
     // If the user is ready to draw, enable the canvas and save drawing button
-    if (readyButton.getText().equals("Start")) {
+    if (readyButton.getText().equals("Start!")) {
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Disable the my stats button while player is drawing
@@ -256,7 +256,7 @@ public class CanvasController {
       clearButton.setDisable(false);
       pgbTimer.setVisible(true);
       modelResultsPieChart.setLegendVisible(true);
-      //Disable leaderboard
+      // Disable leaderboard
       leaderBoardLabel.setVisible(false);
       leaderBoardList.setVisible(false);
       // Delegate the background tasks to different threads and execute these
@@ -302,7 +302,7 @@ public class CanvasController {
 
       targetWordLabel.setText("The word to draw is: " + randomWord);
       timerLabel.setText("Press Start to start drawing!");
-      readyButton.setText("Start");
+      readyButton.setText("Start!");
       text.add(randomWord); // Adds new randomWord, if current != random
     }
   }
@@ -366,16 +366,16 @@ public class CanvasController {
     return backgroundSpeechTask;
   }
 
-  /** 
+  /**
    * This method scan through the pixels on canvas
    * Return true when canvas is blank, otherwise false
-  */
-  private Boolean isCanvasBlank(){
+   */
+  private Boolean isCanvasBlank() {
     Image canvasContent = canvas.snapshot(null, null);
-    for(int i=0;i<canvas.getHeight();i++){
-      for(int j=0;j<canvas.getWidth();j++){
-        if(canvasContent.getPixelReader().getArgb(j, i)!=-1){
-          //If there is pixels that isn't blank, return false
+    for (int i = 0; i < canvas.getHeight(); i++) {
+      for (int j = 0; j < canvas.getWidth(); j++) {
+        if (canvasContent.getPixelReader().getArgb(j, i) != -1) {
+          // If there is pixels that isn't blank, return false
           return false;
         }
       }
@@ -410,50 +410,50 @@ public class CanvasController {
                 if (timeLeft.get() == 10) {
                   pgbTimer.setStyle("-fx-accent: red;");
                 }
-                //First check if the canvas is blank or not, if it's blank, reset the piechart
-                //Otherwise, carryout predictions and update piechart
-                if(!isCanvasBlank()){
-                // Query the DL model to make the predictions and update the pie chart
-                makePredictions();
-                /*
-                 * If at any point the word to draw is in the top three
-                 * predictions, the user has won the game. In this case
-                 * stop the timeline, communicate to the user
-                 * that they have won and allow them to choose a
-                 * new word if they wish
-                 */
+                // First check if the canvas is blank or not, if it's blank, reset the piechart
+                // Otherwise, carryout predictions and update piechart
+                if (!isCanvasBlank()) {
+                  // Query the DL model to make the predictions and update the pie chart
+                  makePredictions();
+                  /*
+                   * If at any point the word to draw is in the top three
+                   * predictions, the user has won the game. In this case
+                   * stop the timeline, communicate to the user
+                   * that they have won and allow them to choose a
+                   * new word if they wish
+                   */
 
-                if (isWordCorrect()) {
-                  pgbTimer.setVisible(false);
-                  pgbTimer.progressProperty().unbind();
-                  // Re-enable the my stats button
-                  myStatsButton.setDisable(false);
-                  timeline.stop();
-                  try {
-                    addLine("WON");
-                    autoSaveDrawing();
-                  } catch (IOException e1) {
-                    e1.printStackTrace();
+                  if (isWordCorrect()) {
+                    pgbTimer.setVisible(false);
+                    pgbTimer.progressProperty().unbind();
+                    // Re-enable the my stats button
+                    myStatsButton.setDisable(false);
+                    timeline.stop();
+                    try {
+                      addLine("WON");
+                      autoSaveDrawing();
+                    } catch (IOException e1) {
+                      e1.printStackTrace();
+                    }
+                    canvas.setOnMouseDragged((canvasEvent) -> {
+                    });
+                    canvas.setDisable(true);
+                    timerLabel.setText("Correct, well done!");
+                    readyButton.setDisable(false);
+                    readyButton.setText("Ready?");
+                    clearButton.setDisable(true);
+                    saveDrawingButton.setDisable(false);
+                    // Update leaderboard
+                    updateLeaderBoard();
                   }
-                  canvas.setOnMouseDragged((canvasEvent) -> {
-                  });
-                  canvas.setDisable(true);
-                  timerLabel.setText("Correct, well done!");
-                  readyButton.setDisable(false);
-                  readyButton.setText("Get new word");
-                  clearButton.setDisable(true);
-                  saveDrawingButton.setDisable(false);
-                  //Update leaderboard
-                  updateLeaderBoard();
+                } else {
+                  resetPieChart();
                 }
-              } else {
-                resetPieChart();
-              }
               } catch (TranslateException | IOException e1) {
                 e1.printStackTrace();
               }
             });
-            
+
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().addAll(keyFrame);
         timeline.setCycleCount(60);
@@ -477,7 +477,7 @@ public class CanvasController {
                 e1.printStackTrace();
               }
               readyButton.setDisable(false);
-              readyButton.setText("Ready");
+              readyButton.setText("Ready?");
               clearButton.setDisable(true);
               canvas.setOnMouseDragged(e -> {
               });
@@ -491,7 +491,7 @@ public class CanvasController {
                 timerLabel.setText("Incorrect, better luck next time!");
                 // Re-enable the my stats button
                 myStatsButton.setDisable(false);
-                //Update leaderboard
+                // Update leaderboard
                 try {
                   updateLeaderBoard();
                 } catch (IOException e1) {
@@ -549,12 +549,13 @@ public class CanvasController {
     // is in the top 3
     // predictions
     for (int i = 0; i < 3; i++) {
-      if (modelResultsPieChart
-          .getData()
-          .get(i)
-          .getName()
-          .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-          .equals(currentWord)) {
+      if (!isCanvasBlank() &&
+          modelResultsPieChart
+              .getData()
+              .get(i)
+              .getName()
+              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+              .equals(currentWord)) {
         return true;
       }
     }
@@ -642,18 +643,18 @@ public class CanvasController {
   }
 
   @FXML
-  private void updateLeaderBoard() throws IOException{
+  private void updateLeaderBoard() throws IOException {
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
     leaderBoardList.setVisible(true);
-    leaderBoardLabel.setText("Top artists of \n"+currentWord);
+    leaderBoardLabel.setText("Top artists of \n" + currentWord);
     ArrayList<Score> allScores = new ArrayList<Score>();
     allScores = statsManager.getLeaderBoard(currentWord);
     Score currentScore;
-    for(int i=0; i<10;i++){
-      if(i<allScores.size()){
-      currentScore = allScores.get(i);
-      leaderBoardList.getItems().add(currentScore.getID()+"  "+currentScore.getTime()+" s");
+    for (int i = 0; i < 10; i++) {
+      if (i < allScores.size()) {
+        currentScore = allScores.get(i);
+        leaderBoardList.getItems().add(currentScore.getID() + "  " + currentScore.getTime() + " s");
       } else {
         break;
       }
@@ -663,7 +664,7 @@ public class CanvasController {
   private void reset() {
     timeline.stop();
     readyButton.setDisable(false);
-    readyButton.setText("Ready");
+    readyButton.setText("Ready?");
     clearButton.setDisable(false);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     canvas.setDisable(true);
