@@ -148,7 +148,6 @@ public class CanvasController {
 
     targetWordLabel.setText("Get a new word to begin drawing!");
     readyButton.setText("Ready");
-
     // Initialise the data list for the model results pie chart
     data = FXCollections.observableArrayList(
         new PieChart.Data("", 0),
@@ -166,6 +165,13 @@ public class CanvasController {
     modelResultsPieChart.setData(data);
     modelResultsPieChart.setLegendSide(Side.LEFT);
     modelResultsPieChart.setLegendVisible(false);
+  }
+
+  private void resetPieChart(){
+    for(PieChart.Data data:modelResultsPieChart.getData()){
+      data.setName("");
+      data.setPieValue(0);
+    }
   }
 
   /** This method initialises the canvas at the start of the game */
@@ -244,6 +250,7 @@ public class CanvasController {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       initializeCanvas();
+      resetPieChart();
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
@@ -359,6 +366,23 @@ public class CanvasController {
     return backgroundSpeechTask;
   }
 
+  /** 
+   * This method scan through the pixels on canvas
+   * Return true when canvas is blank, otherwise false
+  */
+  private Boolean isCanvasBlank(){
+    Image canvasContent = canvas.snapshot(null, null);
+    for(int i=0;i<canvas.getHeight();i++){
+      for(int j=0;j<canvas.getWidth();j++){
+        if(canvasContent.getPixelReader().getArgb(j, i)!=-1){
+          //If there is pixels that isn't blank, return false
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   /**
    * This method creates a background timing task and returns the task
    *
@@ -382,12 +406,15 @@ public class CanvasController {
               try {
                 timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
                 updateProgress(60 - timeLeft.get(), 59);
-                // Query the DL model to make the predictions and update the pie chart
-                makePredictions();
                 // If game reaches last 10 second, change progress bar to red
                 if (timeLeft.get() == 10) {
                   pgbTimer.setStyle("-fx-accent: red;");
                 }
+                //First check if the canvas is blank or not, if it's blank, reset the piechart
+                //Otherwise, carryout predictions and update piechart
+                if(!isCanvasBlank()){
+                // Query the DL model to make the predictions and update the pie chart
+                makePredictions();
                 /*
                  * If at any point the word to draw is in the top three
                  * predictions, the user has won the game. In this case
@@ -419,10 +446,14 @@ public class CanvasController {
                   //Update leaderboard
                   updateLeaderBoard();
                 }
+              } else {
+                resetPieChart();
+              }
               } catch (TranslateException | IOException e1) {
                 e1.printStackTrace();
               }
             });
+            
         timeline.getKeyFrames().clear();
         timeline.getKeyFrames().addAll(keyFrame);
         timeline.setCycleCount(60);

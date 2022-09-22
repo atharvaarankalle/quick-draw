@@ -99,7 +99,7 @@
       </Label>
       <Pane layoutX="23.0" layoutY="466.0" prefHeight="363.0" prefWidth="485.0">
          <children>
-            <Pane prefHeight="363.0" prefWidth="485.0">
+            <Pane fx:id="imagePane" prefHeight="363.0" prefWidth="485.0">
                <children>
                   <ImageView fx:id="imageView" fitHeight="363.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
                   <Button fx:id="previousButton" layoutY="117.0" mnemonicParsing="false" onAction="#onPreviousImage" prefHeight="75.0" prefWidth="35.0" text="&lt;" />
