@@ -36,6 +36,7 @@ public class statsManager {
         // Set up path and start reading user stats, save stats line by line into a list
         Path userStatsPath = Paths.get("DATABASE/" + currentID);
         userStats = Files.readAllLines(userStatsPath);
+        topWord = null;
         manageStats(currentID);
     }
 
