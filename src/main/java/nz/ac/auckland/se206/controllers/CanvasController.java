@@ -615,14 +615,14 @@ public class CanvasController {
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
     leaderBoardList.setVisible(true);
-    leaderBoardLabel.setText("Top artists of "+ currentWord);
+    leaderBoardLabel.setText("Top artists of \n"+currentWord);
     ArrayList<Score> allScores = new ArrayList<Score>();
     allScores = statsManager.getLeaderBoard(currentWord);
     Score currentScore;
     for(int i=0; i<10;i++){
       if(i<allScores.size()){
       currentScore = allScores.get(i);
-      leaderBoardList.getItems().add(currentScore.getID()+"  "+currentScore.getTime());
+      leaderBoardList.getItems().add(currentScore.getID()+"  "+currentScore.getTime()+" s");
       } else {
         break;
       }
