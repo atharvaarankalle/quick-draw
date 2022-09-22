@@ -242,6 +242,7 @@ public class CanvasController {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       initializeCanvas();
+      resetPieChart();
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
