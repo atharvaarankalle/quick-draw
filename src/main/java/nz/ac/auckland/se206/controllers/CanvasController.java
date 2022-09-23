@@ -654,7 +654,11 @@ public class CanvasController {
     for (int i = 0; i < 10; i++) {
       if (i < allScores.size()) {
         currentScore = allScores.get(i);
+        if (currentScore.getTime() == 61) {
+          leaderBoardList.getItems().add(currentScore.getID() + "  LOST");
+        } else {
         leaderBoardList.getItems().add(currentScore.getID() + "  " + currentScore.getTime() + " s");
+        }
       } else {
         break;
       }

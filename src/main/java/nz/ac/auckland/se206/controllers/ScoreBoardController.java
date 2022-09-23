@@ -78,7 +78,6 @@ public class ScoreBoardController {
 
   public void initialize() {
     try {
-      
 
       noStatsLabel.setVisible(false);
       // First read the current user id
@@ -109,8 +108,12 @@ public class ScoreBoardController {
       statsManager.readUserStats(currentID);
       totalGamesLable.setText(String.valueOf(statsManager.getNumberOfGames()));
       List<Score> wonRecords = statsManager.getRecords();
-      for(Score record:wonRecords){
-        scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
+      for (Score record : wonRecords) {
+        if (record.getTime() == 61) {
+          scoreList.getItems().add(record.getWord() + "  LOST");
+        } else {
+          scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
+        }
       }
       String topWord = statsManager.getTopWord();
       // After the scan, update all information
@@ -127,28 +130,34 @@ public class ScoreBoardController {
       ObservableList<String> scoreListItems = scoreList.getItems();
       if (!scoreListItems.isEmpty()) {
         for (String string : scoreListItems) {
-          scoreListSorted.add(string);
+          // Only add records that aren't lost to the list to be sorted
+          if (!string.split("  ")[1].equals("LOST")) {
+            scoreListSorted.add(string);
+          }
         }
+        if (!scoreListSorted.isEmpty()) {
+          Collections.sort(
+              scoreListSorted,
+              new Comparator<String>() {
+                public int compare(String firstString, String secondString) {
+                  int firstInteger = Integer.parseInt(firstString.replaceAll("\\D", ""));
+                  int secondInteger = Integer.parseInt(secondString.replaceAll("\\D", ""));
+                  return Integer.compare(firstInteger, secondInteger);
+                }
+              });
 
-        Collections.sort(
-            scoreListSorted,
-            new Comparator<String>() {
-              public int compare(String firstString, String secondString) {
-                int firstInteger = Integer.parseInt(firstString.replaceAll("\\D", ""));
-                int secondInteger = Integer.parseInt(secondString.replaceAll("\\D", ""));
-                return Integer.compare(firstInteger, secondInteger);
-              }
-            });
+          imageView.setImage(
+              new Image(
+                  "file:DATABASE/autosaves/"
+                      + scoreListSorted.get(0).split("[0-9]")[0].strip()
+                      + ".png"));
 
-        imageView.setImage(
-            new Image(
-                "file:DATABASE/autosaves/"
-                    + scoreListSorted.get(0).split("[0-9]")[0].strip()
-                    + ".png"));
-
-        imageDescriptorLabel.setText(
-            "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
-      } else{
+          imageDescriptorLabel.setText(
+              "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
+        } else {
+          imagePane.setVisible(false);
+        }
+      } else {
         imagePane.setVisible(false);
       }
     } catch (IOException e) {

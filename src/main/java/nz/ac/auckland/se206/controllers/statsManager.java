@@ -66,6 +66,9 @@ public class statsManager {
                     wordAndRecord.put(seperatedStats[0], timetaken);
                 }
             } else {
+                if(!wordAndRecord.containsKey(seperatedStats[0])){
+                    wordAndRecord.put(seperatedStats[0], 61);
+                }
                 gameLost++;
             }
         }
