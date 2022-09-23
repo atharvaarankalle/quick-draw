@@ -1,6 +1,5 @@
 package nz.ac.auckland.se206.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,10 +17,6 @@ public class MainMenuController {
    */
   @FXML
   private void onStartNewGame(ActionEvent event) throws IOException {
-
-    // Create folder for user Data
-    File storageData = new File("DATABASE/UserDatas.txt"); // Create a folder to store all user info
-    storageData.mkdir();
     // Switch to the "Canvas" scene.
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
