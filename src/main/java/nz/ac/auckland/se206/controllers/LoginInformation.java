@@ -22,13 +22,13 @@ import javafx.scene.layout.Priority;
  * 2013 at 20:02
  * https://stackoverflow.com/questions/15661500/javafx-listview-item-with-an-image-button
  */
-public class LoginUserCell extends ListCell<String> {
+public class LoginInformation extends ListCell<String> {
   private HBox hbox = new HBox();
   private Label label = new Label("Null");
   private Pane pane = new Pane();
   private Button button = new Button("Stats");
 
-  public LoginUserCell() {
+  public LoginInformation() {
     super();
     hbox.getChildren().addAll(label, pane, button);
     HBox.setHgrow(pane, Priority.ALWAYS);
