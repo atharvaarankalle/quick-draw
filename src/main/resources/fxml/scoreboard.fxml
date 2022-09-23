@@ -14,7 +14,7 @@
    <children>
       <Pane layoutY="-5.0" prefHeight="64.0" prefWidth="785.0" style="-fx-background-color: #05445E;" styleClass="headerPane" stylesheets="@css/canvas.css">
          <children>
-            <Label fx:id="userIDLable" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
+            <Label fx:id="userIDLabel" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -47,17 +47,17 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="totalGamesLable" layoutX="209.0" layoutY="85.0" prefHeight="30.0" prefWidth="89.0">
+      <Label fx:id="totalGamesLabel" layoutX="209.0" layoutY="85.0" prefHeight="30.0" prefWidth="89.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesWonLable" layoutX="141.0" layoutY="125.0" prefHeight="30.0" prefWidth="83.0">
+      <Label fx:id="gamesWonLabel" layoutX="141.0" layoutY="125.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesLostLable" layoutX="133.0" layoutY="169.0" prefHeight="30.0" prefWidth="83.0">
+      <Label fx:id="gamesLostLabel" layoutX="133.0" layoutY="169.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
