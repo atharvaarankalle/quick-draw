@@ -37,6 +37,8 @@ public class statsManager {
         Path userStatsPath = Paths.get("DATABASE/" + currentID);
         userStats = Files.readAllLines(userStatsPath);
         topWord = null;
+        gameLost=0;
+        gameWon=0;
         manageStats(currentID);
     }
 
@@ -56,13 +58,17 @@ public class statsManager {
                     topWord = seperatedStats[0];
                 }
                 // If the player break his/her record
-                if (wordAndRecord.containsKey(seperatedStats[0])
-                        && wordAndRecord.get(seperatedStats[0]) < timetaken) {
-                    wordAndRecord.replace(seperatedStats[0], timetaken);
+                if (wordAndRecord.containsKey(seperatedStats[0])){
+                    if(wordAndRecord.get(seperatedStats[0]) > timetaken) {
+                        wordAndRecord.replace(seperatedStats[0], timetaken);
+                    }
                 } else {
                     wordAndRecord.put(seperatedStats[0], timetaken);
                 }
             } else {
+                if(!wordAndRecord.containsKey(seperatedStats[0])){
+                    wordAndRecord.put(seperatedStats[0], 61);
+                }
                 gameLost++;
             }
         }
@@ -96,14 +102,18 @@ public class statsManager {
      * @throws IOException
      */
 
-    public static ArrayList<Score> getLeaderBoard(String word) throws IOException{
+    public static ArrayList<Score> getLeaderBoard(String word) throws IOException {
     ArrayList<Score> allScores = new ArrayList<Score>();
-    List<String> allUsers = getUserList();
+    List<String> allUsers;
+        allUsers = getUserList();
     for(String id : allUsers){
+        try{
         readUserStats(id);
         Score score = getRecord(word);
         if(score!=null){
             allScores.add(score);
+        }
+        } catch (IOException e){
         }
     }
     Collections.sort(allScores);
