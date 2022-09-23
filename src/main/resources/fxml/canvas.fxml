@@ -29,7 +29,7 @@
                      </font></Button>
                </children>
             </Pane>
-            <Label fx:id="targetWordLabel" alignment="CENTER" prefHeight="23.0" prefWidth="355.0" textAlignment="CENTER">
+            <Label fx:id="targetWordLabel" alignment="CENTER" prefHeight="46.0" prefWidth="382.0" textAlignment="CENTER">
                <font>
                   <Font size="18.0" />
                </font>
@@ -52,7 +52,7 @@
                      </children>
                   </Pane>
                   <ListView fx:id="leaderBoardList" layoutX="27.0" layoutY="24.0" prefHeight="209.0" prefWidth="110.0" />
-                  <Label fx:id="leaderBoardLabel" layoutX="27.0" layoutY="-36.0" prefHeight="60.0" prefWidth="156.0" text="word" textFill="WHITE">
+                  <Label fx:id="leaderBoardLabel" layoutX="27.0" layoutY="-36.0" prefHeight="60.0" prefWidth="156.0" text="Word" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -61,24 +61,24 @@
             </Pane>
             <Pane prefHeight="103.0" prefWidth="780.0">
                <children>
-              <Button fx:id="readyButton" layoutX="49.0" mnemonicParsing="false" onAction="#onReady" prefHeight="25.0" prefWidth="67.0" text="Ready">
+              <Button fx:id="readyButton" layoutX="31.0" mnemonicParsing="false" onAction="#onReady" prefHeight="25.0" prefWidth="67.0" text="Ready">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Button>
-              <Button fx:id="clearButton" layoutX="209.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="55.0" text="Clear">
+              <Button fx:id="clearButton" layoutX="191.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="55.0" text="Clear">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font></Button>
-              <Button fx:id="penEraserButton" layoutX="300.0" mnemonicParsing="false" onAction="#onSwitchBetweenPenAndEraser" prefHeight="25.0" prefWidth="67.0" text="Eraser">
+              <Button fx:id="penEraserButton" layoutX="267.0" mnemonicParsing="false" onAction="#onSwitchBetweenPenAndEraser" prefHeight="25.0" prefWidth="67.0" text="Eraser">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font></Button>
-              <Button fx:id="saveDrawingButton" layoutX="447.0" mnemonicParsing="false" onAction="#saveCurrentSnapshotOnFile" prefHeight="25.0" prefWidth="110.0" text="Save Drawing">
+              <Button fx:id="saveDrawingButton" layoutX="447.0" mnemonicParsing="false" onAction="#onSaveCurrentSnapshotOnFile" prefHeight="25.0" prefWidth="110.0" text="Save Drawing">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font></Button>
-                  <Button fx:id="myStatsButton" layoutX="667.0" mnemonicParsing="false" onAction="#onToStats" prefHeight="25.0" prefWidth="82.0" text="My Stats">
+                  <Button fx:id="myStatsButton" layoutX="680.0" mnemonicParsing="false" onAction="#onToStats" prefHeight="25.0" prefWidth="82.0" text="My Stats">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font></Button>

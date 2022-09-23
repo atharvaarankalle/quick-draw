@@ -55,7 +55,7 @@
                                     </ImageView>
                                  </children>
                               </Pane>
-                              <TextField fx:id="email_textfield" prefHeight="38.0" prefWidth="264.0" promptText="Username">
+                              <TextField fx:id="emailTextField" prefHeight="38.0" prefWidth="264.0" promptText="Username">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

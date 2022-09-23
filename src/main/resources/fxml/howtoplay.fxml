@@ -6,33 +6,33 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="774.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.HowToPlayController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="699.0" prefWidth="774.0" style="-fx-background-color: #A7C7E7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.HowToPlayController">
    <children>
       <Label layoutX="196.0" layoutY="40.0" text="Quick, Draw! SE206 Edition">
          <font>
             <Font name="System Bold" size="30.0" />
          </font>
       </Label>
-      <Label layoutX="321.0" layoutY="94.0" text="How To Play">
+      <Label layoutX="310.0" layoutY="94.0" text="How To Play?" textFill="WHITE">
          <font>
-            <Font size="24.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
       <VBox alignment="CENTER" layoutX="306.0" layoutY="522.0" spacing="20.0">
          <children>
-            <Button fx:id="newGameButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" text="New Game">
+            <Button fx:id="newGameButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onStartNewGame" style="-fx-background-color: #6082B6;" text="New Game" textFill="WHITE">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="mainMenuButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBackToMainMenu" text="Back To Main Menu">
+            <Button fx:id="mainMenuButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onBackToMainMenu" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: #6082B6;" text="Back To Main Menu" textFill="WHITE">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onExit" text="Exit To Desktop">
+            <Button fx:id="exitButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onExit" style="-fx-background-color: #6082B6;" text="Exit To Desktop" textFill="WHITE">
                <font>
-                  <Font size="16.0" />
+                  <Font name="System Bold" size="16.0" />
                </font>
             </Button>
          </children>

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,53 +23,37 @@ import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class ScoreBoardController {
-  @FXML
-  private Label userIDLable;
+  @FXML private Label userIDLabel;
 
-  @FXML
-  private Label totalGamesLable;
+  @FXML private Label totalGamesLabel;
 
-  @FXML
-  private Label gamesWonLable;
+  @FXML private Label gamesWonLabel;
 
-  @FXML
-  private Label gamesLostLable;
+  @FXML private Label gamesLostLabel;
 
-  @FXML
-  private Label bestRecordWordLabel;
+  @FXML private Label bestRecordWordLabel;
 
-  @FXML
-  private Label bestRecordTimeLabel;
+  @FXML private Label bestRecordTimeLabel;
 
-  @FXML
-  private Button menuButton;
+  @FXML private Button menuButton;
 
-  @FXML
-  private Button toGameButton;
+  @FXML private Button toGameButton;
 
-  @FXML
-  private Label noStatsLabel;
+  @FXML private Label noStatsLabel;
 
-  @FXML
-  private ListView<String> scoreList;
+  @FXML private ListView<String> scoreList;
 
-  @FXML
-  private AnchorPane backgroundPane;
+  @FXML private AnchorPane backgroundPane;
 
-  @FXML
-  private Label textLabel1;
+  @FXML private Label textLabel1;
 
-  @FXML
-  private Label textLabel2;
+  @FXML private Label textLabel2;
 
-  @FXML
-  private ImageView imageView;
+  @FXML private ImageView imageView;
 
-  @FXML
-  private Label imageDescriptorLabel;
+  @FXML private Label imageDescriptorLabel;
 
-  @FXML
-  private Pane imagePane;
+  @FXML private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
@@ -84,7 +67,7 @@ public class ScoreBoardController {
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
       long lineNumber = Files.lines(userDataPath).count();
       String currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
-      updateStats(currentID);
+      updateStatistics(currentID);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -102,11 +85,11 @@ public class ScoreBoardController {
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
   }
 
-  private void updateStats(String currentID) {
-    userIDLable.setText(currentID + "'s stats");
+  private void updateStatistics(String currentID) {
+    userIDLabel.setText(currentID + "'s stats");
     try {
       statsManager.readUserStats(currentID);
-      totalGamesLable.setText(String.valueOf(statsManager.getNumberOfGames()));
+      totalGamesLabel.setText(String.valueOf(statsManager.getNumberOfGames()));
       List<Score> wonRecords = statsManager.getRecords();
       for (Score record : wonRecords) {
         if (record.getTime() == 61) {
@@ -117,11 +100,12 @@ public class ScoreBoardController {
       }
       String topWord = statsManager.getTopWord();
       // After the scan, update all information
-      gamesWonLable.setText(String.valueOf(statsManager.getGameWon()));
-      gamesLostLable.setText(String.valueOf(statsManager.getGameLost()));
+      gamesWonLabel.setText(String.valueOf(statsManager.getGameWon()));
+      gamesLostLabel.setText(String.valueOf(statsManager.getGameLost()));
       if (topWord != null) {
         bestRecordWordLabel.setText(topWord + "!");
-        bestRecordTimeLabel.setText(String.valueOf(statsManager.getTopScore()) + " seconds to draw one!");
+        bestRecordTimeLabel.setText(
+            String.valueOf(statsManager.getTopScore()) + " seconds to draw one!");
       } else {
         textLabel1.setText("Oops, seems like you haven't won any games yet...");
         textLabel2.setText("But don't give up! Let's try again!");
@@ -169,13 +153,20 @@ public class ScoreBoardController {
       menuButton.setVisible(true);
       toGameButton.setVisible(true);
     }
-
   }
 
   @FXML
   private void onNextImage() {
+
+    /*
+     * Switch between the images displayed on the imageView
+     * For each image, ensure it is able to handle the cases where
+     * the next image is null (has not been drawn yet) or the cases
+     * for looping the slideshow infinitely
+     */
     switch (imageDisplayed) {
       case 0:
+        // Switch to the next image if and only if the scoreListSorted size is greater than 2
         if (scoreListSorted.size() >= 2) {
           imageView.setImage(
               new Image(
@@ -188,6 +179,8 @@ public class ScoreBoardController {
         }
         break;
       case 1:
+        // Switch to the next image if and only if the scoreListSorted size is greater than or equal
+        // to 3
         if (scoreListSorted.size() >= 3) {
           imageView.setImage(
               new Image(
@@ -197,6 +190,8 @@ public class ScoreBoardController {
           imageDisplayed = 2;
           imageDescriptorLabel.setText(
               "Your third best drawing: " + scoreListSorted.get(2).split("[0-9]")[0].strip());
+          // Otherwise if the end of the array has been reached and the size is 2, loop back to the
+          // start
         } else if (scoreListSorted.size() == 2) {
           imageView.setImage(
               new Image(
@@ -209,6 +204,8 @@ public class ScoreBoardController {
         }
         break;
       case 2:
+        // Set the image to the first image in the case that the 3rd image is already being
+        // displayed
         imageView.setImage(
             new Image(
                 "file:DATABASE/autosaves/"
@@ -223,8 +220,17 @@ public class ScoreBoardController {
 
   @FXML
   private void onPreviousImage() {
+
+    /*
+     * Switch between the images displayed on the imageView
+     * For each image, ensure it is able to handle the cases where
+     * the previous image is null (has not been drawn yet) or the cases
+     * for looping the slideshow infinitely
+     */
     switch (imageDisplayed) {
       case 0:
+        // Switch to the third image if and only if the scoreListSorted size is greater than or
+        // equal to 3
         if (scoreListSorted.size() >= 3) {
           imageView.setImage(
               new Image(
@@ -234,6 +240,7 @@ public class ScoreBoardController {
           imageDisplayed = 2;
           imageDescriptorLabel.setText(
               "Your third best drawing: " + scoreListSorted.get(2).split("[0-9]")[0].strip());
+          // Switch to the second image if and only if the scoreListSorted size is equal to 2
         } else if (scoreListSorted.size() == 2) {
           imageView.setImage(
               new Image(
@@ -246,6 +253,8 @@ public class ScoreBoardController {
         }
         break;
       case 1:
+        // Set the image to the first image in the case that the second image is already being
+        // displayed
         imageView.setImage(
             new Image(
                 "file:DATABASE/autosaves/"
@@ -255,6 +264,8 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
+        // Set the image to the second image in the case that the third image is already being
+        // displayed
       case 2:
         imageView.setImage(
             new Image(
