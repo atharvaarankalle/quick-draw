@@ -82,7 +82,7 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel1" layoutX="23.0" layoutY="259.0" prefHeight="27.0" prefWidth="327.0" text="It seems you are good at drawing">
+      <Label fx:id="textLabel1" layoutX="23.0" layoutY="259.0" prefHeight="27.0" prefWidth="501.0" text="It seems you are good at drawing">
          <font>
             <Font size="20.0" />
          </font>
