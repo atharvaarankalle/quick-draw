@@ -30,25 +30,23 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class LoginController implements Initializable {
 
-  @FXML
-  private TextField email_textfield;
+  @FXML private TextField emailTextField;
 
-  @FXML
   private ListView<String> usersListView = new ListView<String>();
 
-  @FXML
-  private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-    email_textfield.getText();
+    emailTextField.getText();
     usersListView.setItems(usersList);
-    usersListView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-      @Override
-      public ListCell<String> call(ListView<String> param) {
-        return new loginUserCell();
-      }
-    });
+    usersListView.setCellFactory(
+        new Callback<ListView<String>, ListCell<String>>() {
+          @Override
+          public ListCell<String> call(ListView<String> param) {
+            return new LoginUserCell();
+          }
+        });
     // Process in which, UserData information being received
     Path path = Paths.get("DATABASE/UserDatas.txt");
     long count;
@@ -74,7 +72,7 @@ public class LoginController implements Initializable {
     int num = 0;
 
     // Process in which, UserData information being received
-    String line = email_textfield.getText();
+    String line = emailTextField.getText();
     Path path = Paths.get("DATABASE/UserDatas.txt");
     long count = Files.lines(path).count();
 
@@ -103,8 +101,8 @@ public class LoginController implements Initializable {
       addLine(line);
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
-      usersList.add(email_textfield.getText());
-      email_textfield.clear();
+      usersList.add(emailTextField.getText());
+      emailTextField.clear();
     }
   }
 
@@ -146,8 +144,7 @@ public class LoginController implements Initializable {
   }
 
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button.
-   * It loads and shows
+   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
    * the "Main Menu" scene
    *
    * @param event The event that triggered this method.
@@ -162,15 +159,19 @@ public class LoginController implements Initializable {
 
   private void addLine(String line) throws IOException {
 
-    FileWriter file_writer;
+    FileWriter fileWriter;
 
+    /*
+     * Write the line to the file. If an IOException is raised, then
+     * print out an error message to the console
+     */
     try {
-      file_writer = new FileWriter("DATABASE/UserDatas.txt", true);
-      BufferedWriter buffered_Writer = new BufferedWriter(file_writer);
-      buffered_Writer.write(line);
-      buffered_Writer.newLine();
-      buffered_Writer.flush();
-      buffered_Writer.close();
+      fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
+      BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+      bufferedWriter.write(line);
+      bufferedWriter.newLine();
+      bufferedWriter.flush();
+      bufferedWriter.close();
 
     } catch (IOException e) {
       System.out.println("Add line failed!!" + e);

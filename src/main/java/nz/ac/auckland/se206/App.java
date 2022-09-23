@@ -1,9 +1,9 @@
 package nz.ac.auckland.se206;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.BufferedWriter;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,8 +13,7 @@ import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 /**
- * This is the entry point of the JavaFX application, while you can change this
- * class, it should
+ * This is the entry point of the JavaFX application, while you can change this class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
@@ -22,10 +21,9 @@ public class App extends Application {
   public static void initalize() throws IOException {
     File storageData = new File("DATABASE"); // Create a folder to store all user info
     storageData.mkdir();
-    FileWriter file_writer;
-    file_writer = new FileWriter("DATABASE/UserDatas.txt", true);
-    try (BufferedWriter buffered_Writer = new BufferedWriter(file_writer)) {
-    }
+    FileWriter fileWriter;
+    fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
+    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
   }
 
   public static void main(final String[] args) throws IOException {
@@ -34,8 +32,7 @@ public class App extends Application {
   }
 
   /**
-   * Returns the node associated to the input file. The method expects that the
-   * file is located in
+   * Returns the node associated to the input file. The method expects that the file is located in
    * "src/main/resources/fxml".
    *
    * @param fxml The name of the FXML file (without extension).
@@ -49,8 +46,7 @@ public class App extends Application {
   private Scene scene;
 
   /**
-   * This method is invoked when the application starts. It loads and shows the
-   * "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
@@ -63,7 +59,6 @@ public class App extends Application {
     SceneManager.addUi(AppUi.CANVAS, loadFxml("canvas"));
     SceneManager.addUi(AppUi.HOW_TO_PLAY, loadFxml("howtoplay"));
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
-    // SceneManager.addUi(AppUi.SCOREBOARD, loadFxml("scoreboard"));
 
     // Set the current scene and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.MAIN_MENU), 780, 868);
