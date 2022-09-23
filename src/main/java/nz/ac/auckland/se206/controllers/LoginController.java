@@ -32,7 +32,7 @@ public class LoginController implements Initializable {
 
   @FXML private TextField emailTextField;
 
-  private ListView<String> usersListView = new ListView<String>();
+  @FXML private ListView<String> usersListView = new ListView<String>();
 
   @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
 
@@ -44,7 +44,7 @@ public class LoginController implements Initializable {
         new Callback<ListView<String>, ListCell<String>>() {
           @Override
           public ListCell<String> call(ListView<String> param) {
-            return new LoginUserCell();
+            return new LoginInformation();
           }
         });
     // Process in which, UserData information being received
