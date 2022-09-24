@@ -10,10 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class statsManager {
+public class StatsManager {
     private static List<String> userStats;
-    // private static Map<String, Integer> wordAndRecord = new HashMap<String,
-    // Integer>();
     private static List<Score> records;
     private static int gameWon = 0;
     private static int gameLost = 0;
@@ -21,10 +19,12 @@ public class statsManager {
     private static String topWord = null;
 
     public static ArrayList<String> getUserList() throws IOException {
-        Path userIDPath = Paths.get("DATABASE/UserDatas.txt");
-        List<String> allUserID = Files.readAllLines(userIDPath);
+        // Collects all the user information from specific stored
+        // "DATABASE/UserDatas.txt"
+        Path userNamePath = Paths.get("DATABASE/UserDatas.txt");
+        List<String> allUserName = Files.readAllLines(userNamePath);
         ArrayList<String> userList = new ArrayList<String>();
-        for (String id : allUserID) {
+        for (String id : allUserName) { // Checking if the specific user id exist inside userlist
             if (!userList.contains(id)) {
                 userList.add(id);
             }
@@ -32,17 +32,18 @@ public class statsManager {
         return userList;
     }
 
-    public static void readUserStats(String currentID) throws IOException {
+    public static void readUserStatistics(String currentID) throws IOException {
         // Set up path and start reading user stats, save stats line by line into a list
         Path userStatsPath = Paths.get("DATABASE/" + currentID);
         userStats = Files.readAllLines(userStatsPath);
         topWord = null;
-        gameLost=0;
-        gameWon=0;
-        manageStats(currentID);
+        gameLost = 0;
+        gameWon = 0;
+        updateUserStatistics(currentID);
     }
 
-    public static void manageStats(String currentID) {
+    private static void updateUserStatistics(String currentID) {
+        // Updating the statistics inside stats fxml file, for each users
         records = new ArrayList<Score>();
         int timetaken;
         String[] seperatedStats;
@@ -58,15 +59,15 @@ public class statsManager {
                     topWord = seperatedStats[0];
                 }
                 // If the player break his/her record
-                if (wordAndRecord.containsKey(seperatedStats[0])){
-                    if(wordAndRecord.get(seperatedStats[0]) > timetaken) {
+                if (wordAndRecord.containsKey(seperatedStats[0])) {
+                    if (wordAndRecord.get(seperatedStats[0]) > timetaken) {
                         wordAndRecord.replace(seperatedStats[0], timetaken);
                     }
                 } else {
                     wordAndRecord.put(seperatedStats[0], timetaken);
                 }
             } else {
-                if(!wordAndRecord.containsKey(seperatedStats[0])){
+                if (!wordAndRecord.containsKey(seperatedStats[0])) {
                     wordAndRecord.put(seperatedStats[0], 61);
                 }
                 gameLost++;
@@ -78,16 +79,19 @@ public class statsManager {
         }
         Collections.sort(records);
     }
+
     /**
      * Differ from get records, which returns all record of the current user
-     * This method returns the record corresponding to a specific word of the current user if he/she has it
+     * This method returns the record corresponding to a specific word of the
+     * current user if he/she has it
      * Return null if the user doesn't have that record
+     * 
      * @param word the specific word
      * @return
      */
-    public static Score getRecord(String word){
-        for(Score record : records){
-            if(record.getWord().equals(word)){
+    public static Score getRecord(String word) {
+        for (Score record : records) {
+            if (record.getWord().equals(word)) {
                 return record;
             }
         }
@@ -103,21 +107,22 @@ public class statsManager {
      */
 
     public static ArrayList<Score> getLeaderBoard(String word) throws IOException {
-    ArrayList<Score> allScores = new ArrayList<Score>();
-    List<String> allUsers;
+        ArrayList<Score> allScores = new ArrayList<Score>();
+        List<String> allUsers;
         allUsers = getUserList();
-    for(String id : allUsers){
-        try{
-        readUserStats(id);
-        Score score = getRecord(word);
-        if(score!=null){
-            allScores.add(score);
+        for (String id : allUsers) {
+            try {
+                readUserStatistics(id);
+                Score score = getRecord(word);
+                if (score != null) {
+                    allScores.add(score);
+                }
+            } catch (IOException ioException) {
+                // To catch any exceptions
+            }
         }
-        } catch (IOException e){
-        }
-    }
-    Collections.sort(allScores);
-    return allScores;
+        Collections.sort(allScores);
+        return allScores;
     }
 
     public static int getNumberOfGames() {
