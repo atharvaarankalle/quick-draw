@@ -14,7 +14,7 @@
    <children>
       <Pane layoutY="-5.0" prefHeight="64.0" prefWidth="785.0" style="-fx-background-color: #05445E;" styleClass="headerPane" stylesheets="@css/canvas.css">
          <children>
-            <Label fx:id="userIDLabel" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
+            <Label fx:id="userNameLabel" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
