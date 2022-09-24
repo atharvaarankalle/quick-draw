@@ -36,6 +36,10 @@ public class LoginController implements Initializable {
 
   @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
 
+  /**
+   * JavaFX calls this method once the GUI elements are loaded. In our case we create a login page
+   * and brings users details
+   */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     emailTextField.getText();
