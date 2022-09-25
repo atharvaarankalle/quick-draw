@@ -23,7 +23,7 @@ import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class ScoreBoardController {
-  @FXML private Label userIDLabel;
+  @FXML private Label userNameLabel;
 
   @FXML private Label totalGamesLabel;
 
@@ -61,7 +61,6 @@ public class ScoreBoardController {
 
   public void initialize() {
     try {
-
       noStatsLabel.setVisible(false);
       // First read the current user id
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
@@ -85,12 +84,13 @@ public class ScoreBoardController {
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
   }
 
+  // Updates all the statistic details of the player won/loss
   private void updateStatistics(String currentID) {
-    userIDLabel.setText(currentID + "'s stats");
+    userNameLabel.setText(currentID + "'s stats");
     try {
-      statsManager.readUserStats(currentID);
-      totalGamesLabel.setText(String.valueOf(statsManager.getNumberOfGames()));
-      List<Score> wonRecords = statsManager.getRecords();
+      StatsManager.readUserStatistics(currentID);
+      totalGamesLabel.setText(String.valueOf(StatsManager.getNumberOfGames()));
+      List<Score> wonRecords = StatsManager.getRecords();
       for (Score record : wonRecords) {
         if (record.getTime() == 61) {
           scoreList.getItems().add(record.getWord() + "  LOST");
@@ -98,14 +98,14 @@ public class ScoreBoardController {
           scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
         }
       }
-      String topWord = statsManager.getTopWord();
+      String topWord = StatsManager.getTopWord();
       // After the scan, update all information
-      gamesWonLabel.setText(String.valueOf(statsManager.getGameWon()));
-      gamesLostLabel.setText(String.valueOf(statsManager.getGameLost()));
+      gamesWonLabel.setText(String.valueOf(StatsManager.getGameWon()));
+      gamesLostLabel.setText(String.valueOf(StatsManager.getGameLost()));
       if (topWord != null) {
         bestRecordWordLabel.setText(topWord + "!");
         bestRecordTimeLabel.setText(
-            String.valueOf(statsManager.getTopScore()) + " seconds to draw one!");
+            String.valueOf(StatsManager.getTopScore()) + " seconds to draw one!");
       } else {
         textLabel1.setText("Oops, seems like you haven't won any games yet...");
         textLabel2.setText("But don't give up! Let's try again!");
@@ -166,7 +166,8 @@ public class ScoreBoardController {
      */
     switch (imageDisplayed) {
       case 0:
-        // Switch to the next image if and only if the scoreListSorted size is greater than 2
+        // Switch to the next image if and only if the scoreListSorted size is greater
+        // than 2
         if (scoreListSorted.size() >= 2) {
           imageView.setImage(
               new Image(
@@ -179,7 +180,8 @@ public class ScoreBoardController {
         }
         break;
       case 1:
-        // Switch to the next image if and only if the scoreListSorted size is greater than or equal
+        // Switch to the next image if and only if the scoreListSorted size is greater
+        // than or equal
         // to 3
         if (scoreListSorted.size() >= 3) {
           imageView.setImage(
@@ -190,7 +192,8 @@ public class ScoreBoardController {
           imageDisplayed = 2;
           imageDescriptorLabel.setText(
               "Your third best drawing: " + scoreListSorted.get(2).split("[0-9]")[0].strip());
-          // Otherwise if the end of the array has been reached and the size is 2, loop back to the
+          // Otherwise if the end of the array has been reached and the size is 2, loop
+          // back to the
           // start
         } else if (scoreListSorted.size() == 2) {
           imageView.setImage(
@@ -204,7 +207,8 @@ public class ScoreBoardController {
         }
         break;
       case 2:
-        // Set the image to the first image in the case that the 3rd image is already being
+        // Set the image to the first image in the case that the 3rd image is already
+        // being
         // displayed
         imageView.setImage(
             new Image(
@@ -229,7 +233,8 @@ public class ScoreBoardController {
      */
     switch (imageDisplayed) {
       case 0:
-        // Switch to the third image if and only if the scoreListSorted size is greater than or
+        // Switch to the third image if and only if the scoreListSorted size is greater
+        // than or
         // equal to 3
         if (scoreListSorted.size() >= 3) {
           imageView.setImage(
@@ -240,7 +245,8 @@ public class ScoreBoardController {
           imageDisplayed = 2;
           imageDescriptorLabel.setText(
               "Your third best drawing: " + scoreListSorted.get(2).split("[0-9]")[0].strip());
-          // Switch to the second image if and only if the scoreListSorted size is equal to 2
+          // Switch to the second image if and only if the scoreListSorted size is equal
+          // to 2
         } else if (scoreListSorted.size() == 2) {
           imageView.setImage(
               new Image(
@@ -253,7 +259,8 @@ public class ScoreBoardController {
         }
         break;
       case 1:
-        // Set the image to the first image in the case that the second image is already being
+        // Set the image to the first image in the case that the second image is already
+        // being
         // displayed
         imageView.setImage(
             new Image(
@@ -264,7 +271,8 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
-        // Set the image to the second image in the case that the third image is already being
+        // Set the image to the second image in the case that the third image is already
+        // being
         // displayed
       case 2:
         imageView.setImage(

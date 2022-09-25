@@ -417,7 +417,6 @@ public class CanvasController {
                             readyButton.setText("Ready?");
                             clearButton.setDisable(true);
                             saveDrawingButton.setDisable(false);
-                            // Update leaderboard
                             updateLeaderBoard();
                           }
                         } else {
@@ -562,7 +561,8 @@ public class CanvasController {
   @FXML
   private void onSaveCurrentSnapshotOnFile() throws IOException {
 
-    // Open a save dialogue and allow the user to name the file and save it in a custom location
+    // Open a save dialogue and allow the user to name the file and save it in a
+    // custom location
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Drawing");
     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Bitmap", "*.bmp"));
@@ -612,6 +612,11 @@ public class CanvasController {
     ImageIO.write(getCurrentSnapshot(), "png", canvasScreenshot);
   }
 
+  /**
+   * Changed the scene to stats page and resets the canvas
+   *
+   * @throws IOException If the scene transition failed
+   */
   @FXML
   private void onToStats(ActionEvent event) throws IOException {
     reset();
@@ -621,14 +626,20 @@ public class CanvasController {
     currentScene.setRoot(newScoreboard);
   }
 
+  /**
+   * Updates the leaderboard to constantly change user stats
+   *
+   * @throws IOException If the updating leaderboard failed
+   */
   @FXML
   private void updateLeaderBoard() throws IOException {
+    // Updates the leaderboard
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
     leaderBoardList.setVisible(true);
     leaderBoardLabel.setText("Top artists of \n" + currentWord);
-    ArrayList<Score> allScores = new ArrayList<Score>();
-    allScores = statsManager.getLeaderBoard(currentWord);
+    ArrayList<Score> allScores;
+    allScores = StatsManager.getLeaderBoard(currentWord);
     Score currentScore;
     for (int i = 0; i < 10; i++) {
       if (i < allScores.size()) {
@@ -636,7 +647,9 @@ public class CanvasController {
         if (currentScore.getTime() == 61) {
           leaderBoardList.getItems().add(currentScore.getID() + "  LOST");
         } else {
-        leaderBoardList.getItems().add(currentScore.getID() + "  " + currentScore.getTime() + " s");
+          leaderBoardList
+              .getItems()
+              .add(currentScore.getID() + "  " + currentScore.getTime() + " s");
         }
       } else {
         break;
@@ -644,6 +657,7 @@ public class CanvasController {
     }
   }
 
+  // Resets the canvas automatically as well as the buttons
   private void reset() {
     timeline.stop();
     readyButton.setDisable(false);
