@@ -65,9 +65,9 @@
             </Label>
          </children>
       </Pane>
-      <Pane layoutX="-1.0" layoutY="434.0" prefHeight="434.0" prefWidth="774.0" style="-fx-background-color: #DEDEDE;">
+      <Pane layoutX="-1.0" layoutY="434.0" prefHeight="447.0" prefWidth="788.0" style="-fx-background-color: #DEDEDE;">
          <children>
-            <ImageView fitHeight="434.0" fitWidth="774.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="396.0" fitWidth="788.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <!-- Gif credited to https://oddthing.co.nz/store/the-long-light  -->
                   <Image url="@../images/animation.gif" />
