@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class StatsManager {
+public class StatisticsManager {
   private static List<String> userStats;
   private static List<Score> records;
   private static int gameWon = 0;
