@@ -640,7 +640,7 @@ public class CanvasController {
     leaderBoardList.setVisible(true);
     leaderBoardLabel.setText("Top artists of \n" + currentWord);
     ArrayList<Score> allScores;
-    allScores = StatsManager.getLeaderBoard(currentWord);
+    allScores = StatisticsManager.getLeaderBoard(currentWord);
     Score currentScore;
     for (int i = 0; i < 10; i++) { // Iterated to add new records to leaderboard
       if (i < allScores.size()) {

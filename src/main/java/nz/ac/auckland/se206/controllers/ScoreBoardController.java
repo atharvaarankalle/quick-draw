@@ -89,9 +89,9 @@ public class ScoreBoardController {
     // Initally starts by taking in which player information/statistics to store
     userNameLabel.setText(currentID + "'s stats");
     try {
-      StatsManager.readUserStatistics(currentID);
-      totalGamesLabel.setText(String.valueOf(StatsManager.getNumberOfGames()));
-      List<Score> wonRecords = StatsManager.getRecords();
+      StatisticsManager.readUserStatistics(currentID);
+      totalGamesLabel.setText(String.valueOf(StatisticsManager.getNumberOfGames()));
+      List<Score> wonRecords = StatisticsManager.getRecords();
       for (Score record :
           wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
         if (record.getTime() == 61) {
@@ -100,14 +100,14 @@ public class ScoreBoardController {
           scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
         }
       }
-      String topWord = StatsManager.getTopWord();
+      String topWord = StatisticsManager.getTopWord();
       // After the scan, update all information
-      gamesWonLabel.setText(String.valueOf(StatsManager.getGameWon()));
-      gamesLostLabel.setText(String.valueOf(StatsManager.getGameLost()));
+      gamesWonLabel.setText(String.valueOf(StatisticsManager.getGameWon()));
+      gamesLostLabel.setText(String.valueOf(StatisticsManager.getGameLost()));
       if (topWord != null) {
         bestRecordWordLabel.setText(topWord + "!");
         bestRecordTimeLabel.setText(
-            String.valueOf(StatsManager.getTopScore()) + " seconds to draw one!");
+            String.valueOf(StatisticsManager.getTopScore()) + " seconds to draw one!");
       } else {
         textLabel1.setText("Oops, seems like you haven't won any games yet...");
         textLabel2.setText("But don't give up! Let's try again!");
