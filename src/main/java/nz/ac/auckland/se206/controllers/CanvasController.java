@@ -613,13 +613,13 @@ public class CanvasController {
   }
 
   /**
-   * Changed the scene to stats page and resets the canvas
+   * Changed the scene to stats page and resets the canvas Also resets the whole canvas played game
    *
    * @throws IOException If the scene transition failed
    */
   @FXML
   private void onToStats(ActionEvent event) throws IOException {
-    reset();
+    reset(); // Before entering the stats page, resets the canvas
     Parent newScoreboard =
         new FXMLLoader(this.getClass().getResource("/fxml/scoreboard.fxml")).load();
     Scene currentScene = ((Button) event.getSource()).getScene();
@@ -627,13 +627,14 @@ public class CanvasController {
   }
 
   /**
-   * Updates the leaderboard to constantly change user stats
+   * Updates the leaderboard to constantly change user stats Worked as continous append to previous
+   * leaderboard
    *
    * @throws IOException If the updating leaderboard failed
    */
   @FXML
   private void updateLeaderBoard() throws IOException {
-    // Updates the leaderboard
+    // Updates the leaderboard and receive previous leaderboard information
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
     leaderBoardList.setVisible(true);
@@ -641,7 +642,7 @@ public class CanvasController {
     ArrayList<Score> allScores;
     allScores = StatsManager.getLeaderBoard(currentWord);
     Score currentScore;
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++) { // Iterated to add new records to leaderboard
       if (i < allScores.size()) {
         currentScore = allScores.get(i);
         if (currentScore.getTime() == 61) {
@@ -659,6 +660,8 @@ public class CanvasController {
 
   // Resets the canvas automatically as well as the buttons
   private void reset() {
+    // Time stops, button enable/disabled, leaderboard and canvas update to new
+    // value
     timeline.stop();
     readyButton.setDisable(false);
     readyButton.setText("Ready?");

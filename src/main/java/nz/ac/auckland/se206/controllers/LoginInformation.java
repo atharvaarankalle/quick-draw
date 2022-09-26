@@ -3,7 +3,9 @@ package nz.ac.auckland.se206.controllers;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -69,12 +71,14 @@ public class LoginInformation extends ListCell<String> {
           }
         });
   }
+
   // Override the updateItem method
   @Override
   protected void updateItem(String item, boolean empty) {
     super.updateItem(item, empty);
 
-    // If the cell is empty, set the graphic to null. Otherwise, set the label text accordingly
+    // If the cell is empty, set the graphic to null. Otherwise, set the label text
+    // accordingly
     if (empty) {
       setGraphic(null);
     } else {

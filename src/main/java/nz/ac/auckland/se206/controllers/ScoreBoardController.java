@@ -86,12 +86,14 @@ public class ScoreBoardController {
 
   // Updates all the statistic details of the player won/loss
   private void updateStatistics(String currentID) {
+    // Initally starts by taking in which player information/statistics to store
     userNameLabel.setText(currentID + "'s stats");
     try {
       StatsManager.readUserStatistics(currentID);
       totalGamesLabel.setText(String.valueOf(StatsManager.getNumberOfGames()));
       List<Score> wonRecords = StatsManager.getRecords();
-      for (Score record : wonRecords) {
+      for (Score record :
+          wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
         if (record.getTime() == 61) {
           scoreList.getItems().add(record.getWord() + "  LOST");
         } else {

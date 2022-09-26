@@ -42,10 +42,13 @@ public class LoginController implements Initializable {
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+    // Initally initalize the whole login page
     emailTextField.getText();
     usersListView.setItems(usersList);
     usersListView.setCellFactory(
-        new Callback<ListView<String>, ListCell<String>>() {
+        new Callback<
+            ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
+          // to work parallel for login/register/storing datas
           @Override
           public ListCell<String> call(ListView<String> param) {
             return new LoginInformation();
