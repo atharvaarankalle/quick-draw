@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" style="-fx-background-color: #ADD8E6;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
+<Pane fx:id="root" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
    <children>
       <VBox alignment="CENTER" prefHeight="850.0" prefWidth="774.0" spacing="20.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css">
         <children>
