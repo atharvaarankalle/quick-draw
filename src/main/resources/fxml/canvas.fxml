@@ -18,7 +18,7 @@
         <children>
             <Pane fx:id="headerPane" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="139.0" prefWidth="780.0" style="-fx-background-color: #05445E;" styleClass="headerPane">
                <children>
-                <Label alignment="CENTER" layoutX="14.0" layoutY="16.0" prefHeight="35.0" prefWidth="385.0" text="Quick, Draw Game Beta Version!" textAlignment="CENTER" textFill="WHITE">
+                <Label layoutX="11.0" layoutY="16.0" prefHeight="35.0" prefWidth="385.0" text="Quick, Draw! SE206 Edition" textAlignment="CENTER" textFill="WHITE">
                   <font>
                     <Font name="System Bold" size="24.0" />
                   </font>

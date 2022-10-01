@@ -38,7 +38,7 @@
                   <Image url="@../images/logo.png" />
                </image>
             </ImageView>
-            <Label layoutX="29.0" layoutY="93.0" prefHeight="85.0" prefWidth="266.0" text="QUICK DRAWING GAME" textFill="#fff6f6">
+            <Label layoutX="13.0" layoutY="93.0" prefHeight="85.0" prefWidth="288.0" text="Quick, Draw! SE206 Edition" textFill="#fff6f6">
                <font>
                   <Font name="Berlin Sans FB" size="24.0" />
                </font>
