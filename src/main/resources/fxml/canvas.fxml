@@ -57,28 +57,28 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
+              <Button fx:id="penEraserButton" layoutX="600.0" layoutY="62.0" mnemonicParsing="false" onAction="#onSwitchBetweenPenAndEraser" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Eraser">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Button>
+              <Button fx:id="clearButton" layoutX="606.0" layoutY="129.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="55.0" styleClass="gameButtons" text="Clear">
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font></Button>
                </children>
             </Pane>
             <Pane prefHeight="103.0" prefWidth="780.0">
                <children>
-              <Button fx:id="readyButton" layoutX="31.0" mnemonicParsing="false" onAction="#onReady" prefHeight="25.0" prefWidth="67.0" text="Ready">
+              <Button fx:id="readyButton" layoutX="191.0" mnemonicParsing="false" onAction="#onReady" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" text="Ready">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font>
                   </Button>
-              <Button fx:id="clearButton" layoutX="191.0" mnemonicParsing="false" onAction="#onClear" prefHeight="25.0" prefWidth="55.0" text="Clear">
+              <Button fx:id="saveDrawingButton" layoutX="335.0" mnemonicParsing="false" onAction="#onSaveCurrentSnapshotOnFile" prefHeight="25.0" prefWidth="110.0" styleClass="gameButtons" text="Save Drawing">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font></Button>
-              <Button fx:id="penEraserButton" layoutX="267.0" mnemonicParsing="false" onAction="#onSwitchBetweenPenAndEraser" prefHeight="25.0" prefWidth="67.0" text="Eraser">
-                     <font>
-                        <Font name="Arial Black" size="12.0" />
-                     </font></Button>
-              <Button fx:id="saveDrawingButton" layoutX="447.0" mnemonicParsing="false" onAction="#onSaveCurrentSnapshotOnFile" prefHeight="25.0" prefWidth="110.0" text="Save Drawing">
-                     <font>
-                        <Font name="Arial Black" size="12.0" />
-                     </font></Button>
-                  <Button fx:id="myStatsButton" layoutX="680.0" mnemonicParsing="false" onAction="#onToStats" prefHeight="25.0" prefWidth="82.0" text="My Stats">
+                  <Button fx:id="myStatsButton" layoutX="509.0" mnemonicParsing="false" onAction="#onToStats" prefHeight="25.0" prefWidth="82.0" styleClass="gameButtons" text="My Stats">
                      <font>
                         <Font name="Arial Black" size="12.0" />
                      </font></Button>
