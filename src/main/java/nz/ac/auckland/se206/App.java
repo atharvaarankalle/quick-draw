@@ -66,7 +66,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.TEST, loadFxml("testing"));
 
     // Set the current scene and show the stage
-    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 450);
+    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 590);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
     stage.show();

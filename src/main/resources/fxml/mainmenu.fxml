@@ -67,6 +67,12 @@
       </Pane>
       <Pane layoutX="-1.0" layoutY="434.0" prefHeight="447.0" prefWidth="788.0" style="-fx-background-color: #DEDEDE;">
          <children>
+            <ImageView fitHeight="396.0" fitWidth="788.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <!-- Gif credited to https://oddthing.co.nz/store/the-long-light  -->
+                  <Image url="@../images/animation.gif" />
+               </image>
+            </ImageView>
             <Button fx:id="howToPlayButton" alignment="CENTER" contentDisplay="CENTER" layoutX="485.0" layoutY="300.0" mnemonicParsing="false" onAction="#onDisplayInstructions" style="-fx-background-color: #ADD8E6;" text="Information" textFill="WHITE">
                <font>
                   <Font name="Arial Black" size="16.0" />

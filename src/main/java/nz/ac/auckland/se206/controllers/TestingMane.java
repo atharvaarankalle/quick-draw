@@ -22,25 +22,25 @@ public class TestingMane implements Initializable {
     }
 
     @FXML
-    private void a(ActionEvent event) throws IOException {
+    private void onHome(ActionEvent event) throws IOException {
         Parent view = loadFxml("testing");
         Test.setCenter(view);
     }
 
     @FXML
-    private void b(ActionEvent event) throws IOException {
+    private void onGame(ActionEvent event) throws IOException {
         Parent view = loadFxml("canvas");
         Test.setCenter(view);
     }
 
     @FXML
-    private void c(ActionEvent event) throws IOException {
+    private void onInfo(ActionEvent event) throws IOException {
         Parent view = loadFxml("howtoplay");
         Test.setCenter(view);
     }
 
     @FXML
-    private void d(ActionEvent event) throws IOException {
+    private void onStatistic(ActionEvent event) throws IOException {
         Parent view = loadFxml("scoreboard");
         Test.setCenter(view);
     }

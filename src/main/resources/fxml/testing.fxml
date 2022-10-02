@@ -10,79 +10,91 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.TestingMane">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="590.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.TestingMane">
    <children>
-      <AnchorPane layoutY="-3.0" prefHeight="58.0" prefWidth="900.0" style="-fx-background-color: #00264C;">
+      <AnchorPane layoutY="30.0" prefHeight="435.0" prefWidth="146.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="60.0">
          <children>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="836.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../images/MAINBOARD/exit.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="7.0" layoutY="14.0">
-               <image>
-                  <Image url="@../images/MAINBOARD/burger.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutY="55.0" prefHeight="442.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
-         <children>
-            <VBox layoutY="14.0" prefHeight="446.0" prefWidth="0.0" spacing="10.0" AnchorPane.topAnchor="14.0">
+            <VBox layoutY="-63.0" prefHeight="496.0" prefWidth="135.0" spacing="15.0" style="-fx-background-color: #800020;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="11.0">
                <children>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/MAINBOARD/home.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/MAINBOARD/user.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/MAINBOARD/add.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/MAINBOARD/data.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/MAINBOARD/setting.png" />
-                     </image>
-                  </ImageView>
-                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/MAINBOARD/backup.png" />
-                     </image>
-                  </ImageView>
+                  <Button mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="130.0" text="Home">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/Home.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="130.0" text="Game">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/game.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onInfo" prefHeight="40.0" prefWidth="130.0" text="Instruction">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/Information.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#onStatistic" prefHeight="40.0" prefWidth="130.0" text="Statistics">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/statistics.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Settings">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/Settings.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Download">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/Download.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Music">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/Music.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="130.0" text="Exit">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/Logout.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </VBox>
-            <AnchorPane layoutX="50.0" layoutY="14.0" prefHeight="360.0" prefWidth="154.0" AnchorPane.bottomAnchor="86.0" AnchorPane.topAnchor="16.0">
-               <children>
-                  <VBox prefHeight="360.0" prefWidth="154.0" spacing="10.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#a" prefHeight="50.0" prefWidth="154.0" text="Dashboard" />
-                        <Button mnemonicParsing="false" onAction="#b" prefHeight="50.0" prefWidth="154.0" text="User Profile" />
-                        <Button mnemonicParsing="false" onAction="#c" prefHeight="50.0" prefWidth="154.0" text="Instructions" />
-                        <Button mnemonicParsing="false" onAction="#d" prefHeight="50.0" prefWidth="154.0" text="Statistics" />
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="169.0" text="Settings" />
-                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="169.0" text="Download Image" />
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutY="372.0" prefHeight="41.0" prefWidth="900.0" style="-fx-background-color: #00264C;" />
          </children>
       </AnchorPane>
-      <BorderPane fx:id="Test" layoutX="206.0" layoutY="55.0" prefHeight="354.0" prefWidth="694.0" AnchorPane.bottomAnchor="38.0" AnchorPane.topAnchor="56.0">
+      <BorderPane fx:id="Test" layoutX="134.0" prefHeight="550.0" prefWidth="766.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <Pane prefHeight="367.0" prefWidth="694.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
+            <Pane prefHeight="0.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="265.0" fitWidth="387.0" layoutX="292.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -123,5 +135,10 @@
             </Pane>
          </center>
       </BorderPane>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="139.0" layoutY="-82.0">
+         <image>
+            <Image url="@../images/MAINBOARD/Tab.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

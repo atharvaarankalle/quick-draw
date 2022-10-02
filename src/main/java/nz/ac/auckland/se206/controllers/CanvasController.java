@@ -48,42 +48,61 @@ import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /**
- * This is the controller of the canvas. You are free to modify this class and the corresponding
- * FXML file as you see fit. For example, you might no longer need the "Predict" button because the
+ * This is the controller of the canvas. You are free to modify this class and
+ * the corresponding
+ * FXML file as you see fit. For example, you might no longer need the "Predict"
+ * button because the
  * DL model should be automatically queried in the background every second.
  *
- * <p>!! IMPORTANT !!
+ * <p>
+ * !! IMPORTANT !!
  *
- * <p>Although we added the scale of the image, you need to be careful when changing the size of the
- * drawable canvas and the brush size. If you make the brush too big or too small with respect to
- * the canvas size, the ML model will not work correctly. So be careful. If you make some changes in
+ * <p>
+ * Although we added the scale of the image, you need to be careful when
+ * changing the size of the
+ * drawable canvas and the brush size. If you make the brush too big or too
+ * small with respect to
+ * the canvas size, the ML model will not work correctly. So be careful. If you
+ * make some changes in
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class CanvasController {
 
-  @FXML private Canvas canvas;
+  @FXML
+  private Canvas canvas;
 
-  @FXML private Label targetWordLabel;
+  @FXML
+  private Label targetWordLabel;
 
-  @FXML private ProgressBar pgbTimer;
+  @FXML
+  private ProgressBar pgbTimer;
 
-  @FXML private Label timerLabel;
+  @FXML
+  private Label timerLabel;
 
-  @FXML private Button readyButton;
+  @FXML
+  private Button readyButton;
 
-  @FXML private Button clearButton;
+  @FXML
+  private Button clearButton;
 
-  @FXML private Button penEraserButton;
+  @FXML
+  private Button penEraserButton;
 
-  @FXML private Button saveDrawingButton;
+  @FXML
+  private Button saveDrawingButton;
 
-  @FXML private PieChart modelResultsPieChart;
+  @FXML
+  private PieChart modelResultsPieChart;
 
-  @FXML private Button myStatsButton;
+  @FXML
+  private Button myStatsButton;
 
-  @FXML private Label leaderBoardLabel;
+  @FXML
+  private Label leaderBoardLabel;
 
-  @FXML private ListView<String> leaderBoardList;
+  @FXML
+  private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
 
@@ -102,11 +121,13 @@ public class CanvasController {
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
+   * JavaFX calls this method once the GUI elements are loaded. In our case we
+   * create a listener for
    * the drawing, and we load the ML model.
    *
-   * @throws ModelException If there is an error in reading the input/output of the DL model.
-   * @throws IOException If the model cannot be found on the file system.
+   * @throws ModelException     If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws IOException        If the model cannot be found on the file system.
    * @throws URISyntaxException
    * @throws CsvException
    */
@@ -128,18 +149,17 @@ public class CanvasController {
     targetWordLabel.setText("Get a new word to begin drawing!");
     readyButton.setText("Ready?");
     // Initialise the data list for the model results pie chart
-    data =
-        FXCollections.observableArrayList(
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0));
+    data = FXCollections.observableArrayList(
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0));
 
     // Set the data list for the model results pie chart and initialise the legend
     modelResultsPieChart.setData(data);
@@ -204,14 +224,20 @@ public class CanvasController {
   }
 
   /**
-   * This method executes when the user clicks the "Ready" button. Every second, it gets the current
-   * drawing, queries the DL model and updates the pie chart with the top 10 predictions of the DL
+   * This method executes when the user clicks the "Ready" button. Every second,
+   * it gets the current
+   * drawing, queries the DL model and updates the pie chart with the top 10
+   * predictions of the DL
    * model along with the percentage certainty the model has in each prediction
    *
-   * @throws TranslateException If there is an error in reading the input/output of the DL model.
-   * @throws URISyntaxException If a string could not be parsed as a URI reference.
-   * @throws IOException If there is an error in reading the input/output of the DL model.
-   * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
+   * @throws TranslateException If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws URISyntaxException If a string could not be parsed as a URI
+   *                            reference.
+   * @throws IOException        If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws CsvException       If there is an error regarding the CSV files
+   *                            opened using OpenCSV
    */
   @FXML
   private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
@@ -282,7 +308,8 @@ public class CanvasController {
   }
 
   /**
-   * This method executes when the user clicks the button to switch between pen and eraser It
+   * This method executes when the user clicks the button to switch between pen
+   * and eraser It
    * changes the text of the button to reflect the current tool
    */
   @FXML
@@ -298,7 +325,8 @@ public class CanvasController {
   }
 
   /**
-   * This method executes when the user clicks the "Quit To Main Menu" button It resets the GUI to
+   * This method executes when the user clicks the "Quit To Main Menu" button It
+   * resets the GUI to
    * its initial state, stops the timeline and switches the scene to the main menu
    *
    * @param event The event that triggered this method.
@@ -322,25 +350,25 @@ public class CanvasController {
    * @return a Task<Void> object, the background speech task
    */
   private Task<Void> createNewSpeechTask() {
-    Task<Void> backgroundSpeechTask =
-        new Task<Void>() {
+    Task<Void> backgroundSpeechTask = new Task<Void>() {
 
-          @Override
-          protected Void call() throws Exception {
+      @Override
+      protected Void call() throws Exception {
 
-            // Use text to speech to communicate the current word to draw
-            TextToSpeech textToSpeech = new TextToSpeech();
-            textToSpeech.speak("The word to draw is" + currentWord);
+        // Use text to speech to communicate the current word to draw
+        TextToSpeech textToSpeech = new TextToSpeech();
+        textToSpeech.speak("The word to draw is" + currentWord);
 
-            return null;
-          }
-        };
+        return null;
+      }
+    };
 
     return backgroundSpeechTask;
   }
 
   /**
-   * This method scan through the pixels on canvas Return true when canvas is blank, otherwise false
+   * This method scan through the pixels on canvas Return true when canvas is
+   * blank, otherwise false
    */
   private Boolean isCanvasBlank() {
     Image canvasContent = canvas.snapshot(null, null);
@@ -362,129 +390,131 @@ public class CanvasController {
    */
   private Task<Void> createNewTimingTask() {
     final AtomicInteger timeLeft = new AtomicInteger(60);
-    Task<Void> backgroundTimingTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
-            // Up date the task progress
-            updateProgress(0, 59);
-            /*
-             * Initialise a timeline. This will be used to decrement the
-             * timer every second, query the data learning
-             * model and update the pie chart accordingly
-             */
-            KeyFrame keyFrame =
-                new KeyFrame(
-                    Duration.seconds(1),
-                    e -> {
-                      try {
-                        timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-                        updateProgress(60 - timeLeft.get(), 59);
-                        // If game reaches last 10 second, change progress bar to red
-                        if (timeLeft.get() == 10) {
-                          pgbTimer.setStyle("-fx-accent: red;");
-                        }
-                        // First check if the canvas is blank or not, if it's blank, reset the
-                        // piechart
-                        // Otherwise, carryout predictions and update piechart
-                        if (!isCanvasBlank()) {
-                          // Query the DL model to make the predictions and update the pie chart
-                          makePredictions();
-                          /*
-                           * If at any point the word to draw is in the top three
-                           * predictions, the user has won the game. In this case
-                           * stop the timeline, communicate to the user
-                           * that they have won and allow them to choose a
-                           * new word if they wish
-                           */
+    Task<Void> backgroundTimingTask = new Task<Void>() {
+      @Override
+      protected Void call() throws Exception {
+        // Up date the task progress
+        updateProgress(0, 59);
+        /*
+         * Initialise a timeline. This will be used to decrement the
+         * timer every second, query the data learning
+         * model and update the pie chart accordingly
+         */
+        KeyFrame keyFrame = new KeyFrame(
+            Duration.seconds(1),
+            e -> {
+              try {
+                timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
+                updateProgress(60 - timeLeft.get(), 59);
+                // If game reaches last 10 second, change progress bar to red
+                if (timeLeft.get() == 10) {
+                  pgbTimer.setStyle("-fx-accent: red;");
+                }
+                // First check if the canvas is blank or not, if it's blank, reset the
+                // piechart
+                // Otherwise, carryout predictions and update piechart
+                if (!isCanvasBlank()) {
+                  // Query the DL model to make the predictions and update the pie chart
+                  makePredictions();
+                  /*
+                   * If at any point the word to draw is in the top three
+                   * predictions, the user has won the game. In this case
+                   * stop the timeline, communicate to the user
+                   * that they have won and allow them to choose a
+                   * new word if they wish
+                   */
 
-                          if (isWordCorrect()) {
-                            pgbTimer.setVisible(false);
-                            pgbTimer.progressProperty().unbind();
-                            // Re-enable the my stats button
-                            myStatsButton.setDisable(false);
-                            timeline.stop();
-                            try {
-                              addLine("WON");
-                              autoSaveDrawing();
-                            } catch (IOException e1) {
-                              e1.printStackTrace();
-                            }
-                            canvas.setOnMouseDragged((canvasEvent) -> {});
-                            canvas.setDisable(true);
-                            timerLabel.setText("Correct, well done!");
-                            readyButton.setDisable(false);
-                            readyButton.setText("Ready?");
-                            clearButton.setDisable(true);
-                            saveDrawingButton.setDisable(false);
-                            updateLeaderBoard();
-                          }
-                        } else {
-                          resetPieChart();
-                        }
-                      } catch (TranslateException | IOException e1) {
-                        e1.printStackTrace();
-                      }
-                    });
-
-            timeline.getKeyFrames().clear();
-            timeline.getKeyFrames().addAll(keyFrame);
-            timeline.setCycleCount(60);
-
-            /*
-             * When the one minute timer elapses, stop the timeline, disable the canvas and
-             * drawing buttons, enable the save drawing button and check if the user
-             * has won the game
-             */
-            timeline.setOnFinished(
-                event -> {
-                  // Stop the timeline and reset the GUI to its initial state
-                  timeline.stop();
-                  // Unbind and set progress bar to invisible
-                  pgbTimer.setVisible(false);
-                  pgbTimer.progressProperty().unbind();
-                  try {
-                    addLine("LOST");
-                    autoSaveDrawing();
-                  } catch (IOException e1) {
-                    e1.printStackTrace();
-                  }
-                  readyButton.setDisable(false);
-                  readyButton.setText("Ready?");
-                  clearButton.setDisable(true);
-                  canvas.setOnMouseDragged(e -> {});
-                  canvas.setDisable(true);
-                  saveDrawingButton.setDisable(false);
-
-                  // Check if the user has won and update the GUI to communicate to the user
                   if (isWordCorrect()) {
-                    timerLabel.setText("Correct, well done!");
-                  } else {
-                    timerLabel.setText("Incorrect, better luck next time!");
+                    pgbTimer.setVisible(false);
+                    pgbTimer.progressProperty().unbind();
                     // Re-enable the my stats button
                     myStatsButton.setDisable(false);
-                    // Update leaderboard
+                    timeline.stop();
                     try {
-                      updateLeaderBoard();
+                      addLine("WON");
+                      autoSaveDrawing();
                     } catch (IOException e1) {
                       e1.printStackTrace();
                     }
+                    canvas.setOnMouseDragged((canvasEvent) -> {
+                    });
+                    canvas.setDisable(true);
+                    timerLabel.setText("Correct, well done!");
+                    readyButton.setDisable(false);
+                    readyButton.setText("Ready?");
+                    clearButton.setDisable(true);
+                    saveDrawingButton.setDisable(false);
+                    updateLeaderBoard();
                   }
-                });
+                } else {
+                  resetPieChart();
+                }
+              } catch (TranslateException | IOException e1) {
+                e1.printStackTrace();
+              }
+            });
 
-            timeline.play();
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().addAll(keyFrame);
+        timeline.setCycleCount(60);
 
-            return null;
-          }
-        };
+        /*
+         * When the one minute timer elapses, stop the timeline, disable the canvas and
+         * drawing buttons, enable the save drawing button and check if the user
+         * has won the game
+         */
+        timeline.setOnFinished(
+            event -> {
+              // Stop the timeline and reset the GUI to its initial state
+              timeline.stop();
+              // Unbind and set progress bar to invisible
+              pgbTimer.setVisible(false);
+              pgbTimer.progressProperty().unbind();
+              try {
+                addLine("LOST");
+                autoSaveDrawing();
+              } catch (IOException e1) {
+                e1.printStackTrace();
+              }
+              readyButton.setDisable(false);
+              readyButton.setText("Ready?");
+              clearButton.setDisable(true);
+              canvas.setOnMouseDragged(e -> {
+              });
+              canvas.setDisable(true);
+              saveDrawingButton.setDisable(false);
+
+              // Check if the user has won and update the GUI to communicate to the user
+              if (isWordCorrect()) {
+                timerLabel.setText("Correct, well done!");
+              } else {
+                timerLabel.setText("Incorrect, better luck next time!");
+                // Re-enable the my stats button
+                myStatsButton.setDisable(false);
+                // Update leaderboard
+                try {
+                  updateLeaderBoard();
+                } catch (IOException e1) {
+                  e1.printStackTrace();
+                }
+              }
+            });
+
+        timeline.play();
+
+        return null;
+      }
+    };
     return backgroundTimingTask;
   }
 
   /**
-   * This method queries the data learning model to make the predictions and updates the pie chart
+   * This method queries the data learning model to make the predictions and
+   * updates the pie chart
    * accordingly with the top 10 predictions made
    *
-   * @throws TranslateException If there is an error in reading the input/output of the DL model.
+   * @throws TranslateException If there is an error in reading the input/output
+   *                            of the DL model.
    */
   private void makePredictions() throws TranslateException {
     // Query the data learning model and get the top ten predictions
@@ -506,10 +536,12 @@ public class CanvasController {
   }
 
   /**
-   * This method checks if the user has won the game by checking if the word to draw is in the top
+   * This method checks if the user has won the game by checking if the word to
+   * draw is in the top
    * three predictions
    *
-   * @return a boolean, true if the current word is in the top three predictions, false otherwise
+   * @return a boolean, true if the current word is in the top three predictions,
+   *         false otherwise
    */
   private boolean isWordCorrect() {
 
@@ -540,8 +572,8 @@ public class CanvasController {
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
     // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+    final BufferedImage imageBinary = new BufferedImage(image.getWidth(), image.getHeight(),
+        BufferedImage.TYPE_BYTE_BINARY);
 
     final Graphics2D graphics = imageBinary.createGraphics();
 
@@ -613,21 +645,22 @@ public class CanvasController {
   }
 
   /**
-   * Changed the scene to stats page and resets the canvas Also resets the whole canvas played game
+   * Changed the scene to stats page and resets the canvas Also resets the whole
+   * canvas played game
    *
    * @throws IOException If the scene transition failed
    */
   @FXML
   private void onToStats(ActionEvent event) throws IOException {
     reset(); // Before entering the stats page, resets the canvas
-    Parent newScoreboard =
-        new FXMLLoader(this.getClass().getResource("/fxml/scoreboard.fxml")).load();
+    Parent newScoreboard = new FXMLLoader(this.getClass().getResource("/fxml/scoreboard.fxml")).load();
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(newScoreboard);
   }
 
   /**
-   * Updates the leaderboard to constantly change user stats Worked as continous append to previous
+   * Updates the leaderboard to constantly change user stats Worked as continous
+   * append to previous
    * leaderboard
    *
    * @throws IOException If the updating leaderboard failed
