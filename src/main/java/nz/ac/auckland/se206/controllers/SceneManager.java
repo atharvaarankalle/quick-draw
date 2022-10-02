@@ -9,7 +9,8 @@ public class SceneManager {
     MAIN_MENU,
     HOW_TO_PLAY,
     CANVAS,
-    LOGIN
+    LOGIN,
+    TEST
   }
 
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
@@ -17,7 +18,7 @@ public class SceneManager {
   /**
    * Loads the specified scene into the sceneMap.
    *
-   * @param appUi The AppUi enum value of the scene to load.
+   * @param appUi  The AppUi enum value of the scene to load.
    * @param uiRoot The root node of the scene to load.
    */
   public static void addUi(AppUi appUi, Parent uiRoot) {

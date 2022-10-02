@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.TestingMane">
+   <children>
+      <AnchorPane layoutY="-3.0" prefHeight="58.0" prefWidth="900.0" style="-fx-background-color: #00264C;">
+         <children>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="836.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/MAINBOARD/exit.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="7.0" layoutY="14.0">
+               <image>
+                  <Image url="@../images/MAINBOARD/burger.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutY="55.0" prefHeight="442.0" prefWidth="206.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <VBox layoutY="14.0" prefHeight="446.0" prefWidth="0.0" spacing="10.0" AnchorPane.topAnchor="14.0">
+               <children>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/MAINBOARD/home.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/MAINBOARD/user.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/MAINBOARD/add.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/MAINBOARD/data.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/MAINBOARD/setting.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/MAINBOARD/backup.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+            <AnchorPane layoutX="50.0" layoutY="14.0" prefHeight="360.0" prefWidth="154.0" AnchorPane.bottomAnchor="86.0" AnchorPane.topAnchor="16.0">
+               <children>
+                  <VBox prefHeight="360.0" prefWidth="154.0" spacing="10.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#a" prefHeight="50.0" prefWidth="154.0" text="Dashboard" />
+                        <Button mnemonicParsing="false" onAction="#b" prefHeight="50.0" prefWidth="154.0" text="User Profile" />
+                        <Button mnemonicParsing="false" onAction="#c" prefHeight="50.0" prefWidth="154.0" text="Instructions" />
+                        <Button mnemonicParsing="false" onAction="#d" prefHeight="50.0" prefWidth="154.0" text="Statistics" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="169.0" text="Settings" />
+                        <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="169.0" text="Download Image" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutY="372.0" prefHeight="41.0" prefWidth="900.0" style="-fx-background-color: #00264C;" />
+         </children>
+      </AnchorPane>
+      <BorderPane fx:id="Test" layoutX="206.0" layoutY="55.0" prefHeight="354.0" prefWidth="694.0" AnchorPane.bottomAnchor="38.0" AnchorPane.topAnchor="56.0">
+         <center>
+            <Pane prefHeight="367.0" prefWidth="694.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView fitHeight="265.0" fitWidth="387.0" layoutX="292.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/signage.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="100.0" fitWidth="65.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/logo.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="13.0" layoutY="93.0" prefHeight="85.0" prefWidth="288.0" text="Quick, Draw! SE206 Edition" textFill="#fff6f6">
+                     <font>
+                        <Font name="Berlin Sans FB" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="178.0" prefHeight="29.0" prefWidth="302.0" text="Challenge yourself to be the best drawing artist!" textFill="WHITE">
+                     <font>
+                        <Font name="Cooper Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="203.0" prefHeight="29.0" prefWidth="302.0" text="Try to get into top three to become a winner!" textFill="WHITE">
+                     <font>
+                        <Font name="Cooper Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="232.0" prefHeight="29.0" prefWidth="302.0" text="For further information, please click the" textFill="WHITE">
+                     <font>
+                        <Font name="Cooper Black" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="261.0" prefHeight="29.0" prefWidth="302.0" text="information button below, else let's start!" textFill="WHITE">
+                     <font>
+                        <Font name="Cooper Black" size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

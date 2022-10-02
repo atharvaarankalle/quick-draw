@@ -12,11 +12,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
    <children>
-      <HBox layoutX="15.0" layoutY="399.0" prefHeight="323.0" prefWidth="745.0" style="-fx-background-color: #FFFFFF;">
+      <HBox layoutX="-3.0" layoutY="95.0" prefHeight="301.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF;">
          <children>
-            <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A7C7E7;">
+            <Pane prefHeight="261.0" prefWidth="171.0" style="-fx-background-color: #A7C7E7;">
                <children>
                   <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="5.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -29,9 +29,9 @@
                   <Glow />
                </effect>
             </Pane>
-            <AnchorPane prefHeight="323.0" prefWidth="545.0">
+            <AnchorPane prefHeight="273.0" prefWidth="398.0">
                <children>
-                  <Pane layoutX="69.0" layoutY="18.0" prefHeight="286.0" prefWidth="407.0">
+                  <Pane layoutX="14.0" layoutY="34.0" prefHeight="266.0" prefWidth="374.0">
                      <children>
                         <Button fx:id="mainMenuButton" alignment="CENTER" contentDisplay="CENTER" layoutX="117.0" layoutY="208.0" mnemonicParsing="false" onAction="#onBackToMainMenu" style="-fx-background-color: #6082B6;" text="Back To Main Menu" textFill="WHITE">
                            <font>
@@ -78,20 +78,16 @@
             </AnchorPane>
          </children>
       </HBox>
-      <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="15.0" layoutY="55.0" onMouseClicked="#onUserSelected" prefHeight="335.0" prefWidth="745.0" />
-      <Label fx:id="error_lab2" layoutX="271.0" layoutY="14.0" prefHeight="36.0" prefWidth="232.0" text="Existing Member Portal" textAlignment="CENTER">
+      <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="567.0" layoutY="95.0" onMouseClicked="#onUserSelected" prefHeight="302.0" prefWidth="232.0" />
+      <Label fx:id="error_lab2" layoutX="596.0" layoutY="59.0" prefHeight="36.0" prefWidth="174.0" text="Existing Member" textAlignment="CENTER">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <Pane layoutX="14.0" layoutY="722.0" prefHeight="40.0" prefWidth="746.0" style="-fx-background-color: #000075;">
-         <children>
-            <Label fx:id="error_lab3" layoutX="19.0" layoutY="5.0" lineSpacing="5.0" prefHeight="30.0" prefWidth="720.0" text="Home     About     Contact us" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Berlin Sans FB" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
+      <Label fx:id="error_lab21" layoutX="313.0" layoutY="59.0" prefHeight="36.0" prefWidth="174.0" text="Registeration" textAlignment="CENTER">
+         <font>
+            <Font name="Arial Black" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
