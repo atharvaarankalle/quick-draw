@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" prefHeight="593.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
+<Pane fx:id="root" prefHeight="590.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
    <children>
       <PieChart fx:id="modelResultsPieChart" layoutX="62.0" layoutY="358.0" prefHeight="226.0" prefWidth="612.0" title="DL Model Top Predictions" />
       <AnchorPane layoutY="-6.0" prefHeight="42.0" prefWidth="766.0">
