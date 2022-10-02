@@ -23,7 +23,7 @@ public class TestingMane implements Initializable {
 
     @FXML
     private void onHome(ActionEvent event) throws IOException {
-        Parent view = loadFxml("testing");
+        Parent view = loadFxml("mainmenu");
         Test.setCenter(view);
     }
 

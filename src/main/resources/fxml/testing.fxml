@@ -94,7 +94,7 @@
       </AnchorPane>
       <BorderPane fx:id="Test" layoutX="134.0" prefHeight="590.0" prefWidth="766.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <Pane prefHeight="0.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
+            <Pane prefHeight="590.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="265.0" fitWidth="387.0" layoutX="372.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
