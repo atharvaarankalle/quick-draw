@@ -96,9 +96,6 @@ public class CanvasController {
   private PieChart modelResultsPieChart;
 
   @FXML
-  private Button myStatsButton;
-
-  @FXML
   private Label leaderBoardLabel;
 
   @FXML
@@ -143,8 +140,6 @@ public class CanvasController {
     model = new DoodlePrediction();
     leaderBoardLabel.setVisible(false);
     leaderBoardList.setVisible(false);
-    // Enable mystats button
-    myStatsButton.setDisable(false);
 
     targetWordLabel.setText("Get a new word to begin drawing!");
     readyButton.setText("Ready?");
@@ -245,8 +240,6 @@ public class CanvasController {
     if (readyButton.getText().equals("Start!")) {
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
-      // Disable the my stats button while player is drawing
-      myStatsButton.setDisable(true);
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       initializeCanvas();
@@ -427,8 +420,6 @@ public class CanvasController {
                   if (isWordCorrect()) {
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
-                    // Re-enable the my stats button
-                    myStatsButton.setDisable(false);
                     timeline.stop();
                     try {
                       addLine("WON");
@@ -489,8 +480,6 @@ public class CanvasController {
                 timerLabel.setText("Correct, well done!");
               } else {
                 timerLabel.setText("Incorrect, better luck next time!");
-                // Re-enable the my stats button
-                myStatsButton.setDisable(false);
                 // Update leaderboard
                 try {
                   updateLeaderBoard();
@@ -645,20 +634,6 @@ public class CanvasController {
   }
 
   /**
-   * Changed the scene to stats page and resets the canvas Also resets the whole
-   * canvas played game
-   *
-   * @throws IOException If the scene transition failed
-   */
-  @FXML
-  private void onToStats(ActionEvent event) throws IOException {
-    reset(); // Before entering the stats page, resets the canvas
-    Parent newScoreboard = new FXMLLoader(this.getClass().getResource("/fxml/scoreboard.fxml")).load();
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(newScoreboard);
-  }
-
-  /**
    * Updates the leaderboard to constantly change user stats Worked as continous
    * append to previous
    * leaderboard
@@ -705,7 +680,6 @@ public class CanvasController {
     targetWordLabel.setText("Get a new word to begin drawing!");
     timerLabel.setText("");
     pgbTimer.setVisible(false);
-    myStatsButton.setDisable(false);
     leaderBoardLabel.setVisible(false);
     leaderBoardList.setVisible(false);
   }
