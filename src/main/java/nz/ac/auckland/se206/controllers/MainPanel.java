@@ -56,7 +56,7 @@ public class MainPanel implements Initializable {
      * @param event The event that triggered this method.
      */
     @FXML
-    private void onLogin(ActionEvent event) {
+    private void onLogOut(ActionEvent event) {
 
         // Switch to the "Main Menu" scene.
         Scene currentScene = ((Button) event.getSource()).getScene();
