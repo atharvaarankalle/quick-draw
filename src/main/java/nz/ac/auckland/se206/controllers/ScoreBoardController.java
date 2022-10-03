@@ -23,37 +23,47 @@ import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class ScoreBoardController {
-  @FXML private Label userNameLabel;
+  @FXML
+  private Label userNameLabel;
 
-  @FXML private Label totalGamesLabel;
+  @FXML
+  private Label totalGamesLabel;
 
-  @FXML private Label gamesWonLabel;
+  @FXML
+  private Label gamesWonLabel;
 
-  @FXML private Label gamesLostLabel;
+  @FXML
+  private Label gamesLostLabel;
 
-  @FXML private Label bestRecordWordLabel;
+  @FXML
+  private Label bestRecordWordLabel;
 
-  @FXML private Label bestRecordTimeLabel;
+  @FXML
+  private Label bestRecordTimeLabel;
 
-  @FXML private Button menuButton;
+  @FXML
+  private Label noStatsLabel;
 
-  @FXML private Button toGameButton;
+  @FXML
+  private ListView<String> scoreList;
 
-  @FXML private Label noStatsLabel;
+  @FXML
+  private AnchorPane backgroundPane;
 
-  @FXML private ListView<String> scoreList;
+  @FXML
+  private Label textLabel1;
 
-  @FXML private AnchorPane backgroundPane;
+  @FXML
+  private Label textLabel2;
 
-  @FXML private Label textLabel1;
+  @FXML
+  private ImageView imageView;
 
-  @FXML private Label textLabel2;
+  @FXML
+  private Label imageDescriptorLabel;
 
-  @FXML private ImageView imageView;
-
-  @FXML private Label imageDescriptorLabel;
-
-  @FXML private Pane imagePane;
+  @FXML
+  private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
@@ -72,18 +82,6 @@ public class ScoreBoardController {
     }
   }
 
-  @FXML
-  private void onBackToMenu(ActionEvent event) {
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
-  }
-
-  @FXML
-  private void onToGame(ActionEvent event) {
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
-  }
-
   // Updates all the statistic details of the player won/loss
   private void updateStatistics(String currentID) {
     // Initally starts by taking in which player information/statistics to store
@@ -92,8 +90,7 @@ public class ScoreBoardController {
       StatisticsManager.readUserStatistics(currentID);
       totalGamesLabel.setText(String.valueOf(StatisticsManager.getNumberOfGames()));
       List<Score> wonRecords = StatisticsManager.getRecords();
-      for (Score record :
-          wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
+      for (Score record : wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
         if (record.getTime() == 61) {
           scoreList.getItems().add(record.getWord() + "  LOST");
         } else {
@@ -152,8 +149,6 @@ public class ScoreBoardController {
         node.setVisible(false);
       }
       noStatsLabel.setVisible(true);
-      menuButton.setVisible(true);
-      toGameButton.setVisible(true);
     }
   }
 
@@ -273,9 +268,9 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
-        // Set the image to the second image in the case that the third image is already
-        // being
-        // displayed
+      // Set the image to the second image in the case that the third image is already
+      // being
+      // displayed
       case 2:
         imageView.setImage(
             new Image(
