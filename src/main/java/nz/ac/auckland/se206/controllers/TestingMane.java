@@ -45,6 +45,11 @@ public class TestingMane implements Initializable {
         Test.setCenter(view);
     }
 
+    @FXML
+    private void onExit(ActionEvent event) throws IOException {
+        System.exit(0);
+    }
+
     private static Parent loadFxml(final String fxml) throws IOException {
         return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
     }
