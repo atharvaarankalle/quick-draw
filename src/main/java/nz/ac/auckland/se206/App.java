@@ -59,11 +59,11 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
 
     // Load the FXML files
-    SceneManager.addUi(AppUi.MAIN_MENU, loadFxml("mainmenu"));
+    SceneManager.addUi(AppUi.HOME_PAGE, loadFxml("homepage"));
     SceneManager.addUi(AppUi.CANVAS, loadFxml("canvas"));
     SceneManager.addUi(AppUi.HOW_TO_PLAY, loadFxml("howtoplay"));
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
-    SceneManager.addUi(AppUi.TEST, loadFxml("testing"));
+    SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
     // Set the current scene and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);

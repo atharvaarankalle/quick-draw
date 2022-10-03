@@ -12,7 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import nz.ac.auckland.se206.App;
 
-public class TestingMane implements Initializable {
+public class MainPanel implements Initializable {
 
     @FXML
     private BorderPane Test;
@@ -23,7 +23,7 @@ public class TestingMane implements Initializable {
 
     @FXML
     private void onHome(ActionEvent event) throws IOException {
-        Parent view = loadFxml("mainmenu");
+        Parent view = loadFxml("homepage");
         Test.setCenter(view);
     }
 

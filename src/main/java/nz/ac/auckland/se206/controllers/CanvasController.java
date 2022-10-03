@@ -318,26 +318,6 @@ public class CanvasController {
   }
 
   /**
-   * This method executes when the user clicks the "Quit To Main Menu" button It
-   * resets the GUI to
-   * its initial state, stops the timeline and switches the scene to the main menu
-   *
-   * @param event The event that triggered this method.
-   */
-  @FXML
-  private void onQuitGame(ActionEvent event) {
-    /*
-     * Stop the timeline and reset the GUI to its initial state
-     * This is done to ensure that if a user comes back to start a new
-     * game, the state of the previous game is not carried over
-     */
-    reset(); // All the clearing game is inside this method now
-    // Switch the scene to the main menu
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
-  }
-
-  /**
    * This method creates a background speech task and returns the task
    *
    * @return a Task<Void> object, the background speech task

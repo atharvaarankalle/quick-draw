@@ -6,11 +6,11 @@ import javafx.scene.Parent;
 public class SceneManager {
 
   public enum AppUi {
-    MAIN_MENU,
+    HOME_PAGE,
     HOW_TO_PLAY,
     CANVAS,
     LOGIN,
-    TEST
+    MAIN
   }
 
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();

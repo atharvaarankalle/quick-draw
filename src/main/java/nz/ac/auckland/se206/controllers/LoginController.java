@@ -110,7 +110,7 @@ public class LoginController implements Initializable {
       msg.showAndWait();
       addLine(line);
       Scene currentScene = ((Button) event.getSource()).getScene();
-      currentScene.setRoot(SceneManager.getUiRoot(AppUi.TEST));
+      currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
       usersList.add(emailTextField.getText());
       emailTextField.clear();
     }
@@ -137,7 +137,7 @@ public class LoginController implements Initializable {
         msg.setContentText("You have successfully logged in as: " + userName);
         msg.showAndWait();
         Scene currentScene = ((ListView) event.getSource()).getScene();
-        currentScene.setRoot(SceneManager.getUiRoot(AppUi.TEST));
+        currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
         break;
       }
     }
@@ -165,7 +165,7 @@ public class LoginController implements Initializable {
 
     // Switch to the "Main Menu" scene.
     Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.TEST));
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
   }
 
   private void addLine(String line) throws IOException {
