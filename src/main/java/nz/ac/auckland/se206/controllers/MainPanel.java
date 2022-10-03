@@ -5,12 +5,15 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import nz.ac.auckland.se206.App;
+import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class MainPanel implements Initializable {
 
@@ -43,6 +46,21 @@ public class MainPanel implements Initializable {
     private void onStatistic(ActionEvent event) throws IOException {
         Parent view = loadFxml("scoreboard");
         Test.setCenter(view);
+    }
+
+    /**
+     * This method is invoked when the user clicks the "Back to Main Menu" button.
+     * It loads and shows
+     * the "Main Menu" scene
+     *
+     * @param event The event that triggered this method.
+     */
+    @FXML
+    private void onLogin(ActionEvent event) {
+
+        // Switch to the "Main Menu" scene.
+        Scene currentScene = ((Button) event.getSource()).getScene();
+        currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
     }
 
     @FXML
