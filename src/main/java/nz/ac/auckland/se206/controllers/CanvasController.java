@@ -37,7 +37,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
-import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -643,7 +642,7 @@ public class CanvasController {
   }
 
   // Resets the canvas automatically as well as the buttons
-  private void reset() {
+  void reset() {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
     timeline.stop();

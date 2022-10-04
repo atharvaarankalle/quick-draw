@@ -18,7 +18,10 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 public class MainPanel implements Initializable {
 
     @FXML
-    private BorderPane Test;
+    private BorderPane CurrentScene;
+
+    @FXML
+    private Button GameButton;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -27,25 +30,31 @@ public class MainPanel implements Initializable {
     @FXML
     private void onHome(ActionEvent event) throws IOException {
         Parent view = loadFxml("homepage");
-        Test.setCenter(view);
+        CurrentScene.setCenter(view);
+        GameButton.setDisable(false);
     }
 
     @FXML
     private void onGame(ActionEvent event) throws IOException {
+        CurrentScene.setCenter(null);
         Parent view = loadFxml("canvas");
-        Test.setCenter(view);
+        CurrentScene.setCenter(view);
+        GameButton.setDisable(true);
     }
 
     @FXML
     private void onInfo(ActionEvent event) throws IOException {
         Parent view = loadFxml("howtoplay");
-        Test.setCenter(view);
+        CurrentScene.setCenter(view);
+        GameButton.setDisable(false);
     }
 
     @FXML
     private void onStatistic(ActionEvent event) throws IOException {
+        CurrentScene.setCenter(null);
         Parent view = loadFxml("scoreboard");
-        Test.setCenter(view);
+        CurrentScene.setCenter(view);
+        GameButton.setDisable(false);
     }
 
     /**
@@ -54,11 +63,15 @@ public class MainPanel implements Initializable {
      * the "Main Menu" scene
      *
      * @param event The event that triggered this method.
+     * @throws IOException
      */
     @FXML
-    private void onLogOut(ActionEvent event) {
+    private void onLogOut(ActionEvent event) throws IOException {
 
         // Switch to the "Main Menu" scene.
+        Parent view = loadFxml("homepage");
+        CurrentScene.setCenter(view);
+        GameButton.setDisable(false);
         Scene currentScene = ((Button) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
     }

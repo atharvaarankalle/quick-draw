@@ -25,7 +25,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: white;" text="Game">
+                  <Button fx:id="GameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: white;" text="Game">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -101,7 +101,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <BorderPane fx:id="Test" layoutX="134.0" prefHeight="595.0" prefWidth="766.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
+      <BorderPane fx:id="CurrentScene" layoutX="134.0" prefHeight="595.0" prefWidth="766.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
          <center>
             <Pane prefHeight="606.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
