@@ -173,4 +173,14 @@ public class LoginController implements Initializable {
       System.out.println("Add line failed!!" + e);
     }
   }
+
+  @FXML
+  private void onGuestMode(ActionEvent event) throws IOException {
+
+    String line = "GUEST";
+    addLine(line);
+    Scene currentScene = ((Button) event.getSource()).getScene();
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
+    emailTextField.clear();
+  }
 }
