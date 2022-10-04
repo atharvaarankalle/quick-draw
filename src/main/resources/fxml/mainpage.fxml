@@ -101,9 +101,9 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <BorderPane fx:id="CurrentScene" layoutX="134.0" prefHeight="595.0" prefWidth="766.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
+      <BorderPane fx:id="CurrentScene" layoutX="134.0" prefHeight="591.0" prefWidth="766.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
          <center>
-            <Pane prefHeight="606.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
+            <Pane prefHeight="558.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="265.0" fitWidth="387.0" layoutX="372.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -135,6 +135,11 @@
                         <Font name="Cooper Black" size="12.0" />
                      </font>
                   </Label>
+                  <ImageView fitHeight="330.0" fitWidth="760.0" layoutX="3.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/teachers-day.gif" />
+                     </image>
+                  </ImageView>
                </children>
             </Pane>
          </center>

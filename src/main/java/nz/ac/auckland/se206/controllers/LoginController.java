@@ -181,6 +181,5 @@ public class LoginController implements Initializable {
     addLine(line);
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
-    emailTextField.clear();
   }
 }
