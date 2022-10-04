@@ -132,7 +132,6 @@ public class CanvasController {
     canvas.setDisable(true);
     saveDrawingButton.setDisable(true);
     pgbTimer.setVisible(false);
-    model = new DoodlePrediction();
     leaderBoardLabel.setVisible(false);
     leaderBoardList.setVisible(false);
 
@@ -228,9 +227,10 @@ public class CanvasController {
    *                            of the DL model.
    * @throws CsvException       If there is an error regarding the CSV files
    *                            opened using OpenCSV
+   * @throws ModelException
    */
   @FXML
-  private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException {
+  private void onReady() throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       // Always make sure progressbar is green at the start
@@ -258,6 +258,7 @@ public class CanvasController {
       backgroundSpeechThread.setDaemon(true);
       backgroundSpeechThread.start();
     } else {
+      model = new DoodlePrediction();
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
       saveDrawingButton.setDisable(true);
