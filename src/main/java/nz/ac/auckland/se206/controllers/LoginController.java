@@ -69,6 +69,10 @@ public class LoginController implements Initializable {
 
         if (!usersList.contains(currentUser)) {
           usersList.add(currentUser);
+
+          if (usersList.contains("GUEST")) {
+            usersList.remove("GUEST");
+          }
         }
       }
     } catch (IOException e) {
