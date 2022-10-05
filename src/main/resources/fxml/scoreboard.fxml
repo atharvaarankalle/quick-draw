@@ -17,6 +17,7 @@
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
+            <Button layoutX="711.0" layoutY="12.0" mnemonicParsing="false" onAction="#onMain" text="Back" />
          </children>
       </Pane>
       <ListView fx:id="scoreList" layoutX="549.0" layoutY="100.0" prefHeight="488.0" prefWidth="200.0" />
