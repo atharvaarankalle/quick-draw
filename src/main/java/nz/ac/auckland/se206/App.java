@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -29,8 +32,16 @@ public class App extends Application {
   }
 
   public static void main(final String[] args) throws IOException {
+
     initalize();
     launch();
+
+    // Check if GUEST exists, if does, then delete the file
+    Path path = Paths.get("DATABASE/GUEST");
+    if (Files.exists(path)) {
+      Files.delete(path);
+      System.exit(0);
+    }
   }
 
   /**
