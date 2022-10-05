@@ -59,7 +59,11 @@ public class GameSettingsController implements Initializable {
         () -> {
           Stage stage = (Stage) settingsRoot.getScene().getWindow();
 
-          accuracySlider.setValue((double) stage.getUserData());
+          Settings gameSettings = (Settings) stage.getUserData();
+
+          System.out.println(gameSettings.getAccuracyLevel());
+
+          accuracySlider.setValue(gameSettings.getAccuracyLevel());
         });
   }
 
@@ -80,7 +84,11 @@ public class GameSettingsController implements Initializable {
 
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
 
-                stage.setUserData(newValue.doubleValue());
+                Settings gameSettings = (Settings) stage.getUserData();
+
+                gameSettings.setAccuracyLevel(newValue.doubleValue());
+
+                stage.setUserData(gameSettings);
               }
             });
 
@@ -98,9 +106,14 @@ public class GameSettingsController implements Initializable {
                   sliderValue == accuracySlider.getMin() || sliderValue == accuracySlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
+
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
 
-                stage.setUserData(accuracySlider.getValue());
+                Settings gameSettings = (Settings) stage.getUserData();
+
+                gameSettings.setAccuracyLevel(accuracySlider.getValue());
+
+                stage.setUserData(gameSettings);
               }
             });
   }

@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.Settings;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -72,11 +73,13 @@ public class App extends Application {
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
+    Settings gameSettings = new Settings();
+
     // Set the current scene and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
-    stage.setUserData(0.0);
+    stage.setUserData(gameSettings);
     stage.show();
   }
 }

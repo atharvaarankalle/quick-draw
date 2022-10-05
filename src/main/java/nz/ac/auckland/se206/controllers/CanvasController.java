@@ -486,7 +486,9 @@ public class CanvasController {
   private boolean isWordCorrect() {
     Stage stage = (Stage) root.getScene().getWindow();
 
-    int accuracyLevel = (int) stage.getUserData();
+    Settings gameSettings = (Settings) stage.getUserData();
+
+    int accuracyLevel = (int) gameSettings.getAccuracyLevel();
 
     switch (accuracyLevel) {
       case 0:
