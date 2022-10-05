@@ -13,7 +13,13 @@
          </font>
       </Label>
       <Slider fx:id="accuracySlider" layoutX="291.0" layoutY="150.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" onDragDetected="#onAccuracyDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Label fx:id="accuracyLabel" layoutX="343.0" layoutY="123.0" text="Accuracy:">
+      <Label fx:id="accuracyLabel" layoutX="348.0" layoutY="123.0" text="Accuracy">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Slider fx:id="wordsSlider" layoutX="291.0" layoutY="252.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onWordsDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Label fx:id="wordsLabel" layoutX="357.0" layoutY="225.0" text="Words">
          <font>
             <Font size="18.0" />
          </font>

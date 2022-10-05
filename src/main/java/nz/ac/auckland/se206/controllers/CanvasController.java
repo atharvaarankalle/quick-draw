@@ -243,36 +243,12 @@ public class CanvasController {
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
       saveDrawingButton.setDisable(true);
 
-      // Get a random new word to draw, set the target world label and update the GUI
-      CategorySelector categorySelector = new CategorySelector();
-      String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      selectWord();
 
-      if (randomWord.startsWith("\uFEFF")) {
-        randomWord = randomWord.substring(1);
-      }
-      currentWord = randomWord;
-
-      if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
-        text.clear();
-        randomWord = categorySelector.getRandomCategory(Difficulty.E);
-        if (randomWord.startsWith("\uFEFF")) {
-          randomWord = randomWord.substring(1);
-        }
-        currentWord = randomWord;
-      }
-
-      while (text.contains(randomWord)) {
-        randomWord = categorySelector.getRandomCategory(Difficulty.E);
-        if (randomWord.startsWith("\uFEFF")) {
-          randomWord = randomWord.substring(1);
-        }
-        currentWord = randomWord;
-      }
-
-      targetWordLabel.setText("The word to draw is: " + randomWord);
+      targetWordLabel.setText("The word to draw is: " + currentWord);
       timerLabel.setText("Press Start to start drawing!");
       readyButton.setText("Start!");
-      text.add(randomWord); // Adds new randomWord, if current != random
+      text.add(currentWord); // Adds new randomWord, if current != random
     }
   }
 
@@ -313,6 +289,87 @@ public class CanvasController {
         };
 
     return backgroundSpeechTask;
+  }
+
+  private void selectWord() throws CsvException, IOException, URISyntaxException {
+
+    Stage stage = (Stage) root.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
+    int wordsLevel = (int) gameSettings.getWordsLevel();
+
+    System.out.println("Word Level: " + wordsLevel);
+
+    // Get a random new word to draw, set the target world label and update the GUI
+    CategorySelector categorySelector = new CategorySelector();
+    String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    int randomNumber;
+
+    switch (wordsLevel) {
+      case 0:
+        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        break;
+      case 1:
+        randomNumber = (int) (Math.random() * (2 - 0) + 0);
+
+        System.out.println(randomNumber);
+
+        switch (randomNumber) {
+          case 0:
+            randomWord = categorySelector.getRandomCategory(Difficulty.E);
+            break;
+          case 1:
+            randomWord = categorySelector.getRandomCategory(Difficulty.M);
+            break;
+        }
+        break;
+      case 2:
+        randomNumber = (int) (Math.random() * (3 - 0) + 0);
+
+        System.out.println(randomNumber);
+
+        switch (randomNumber) {
+          case 0:
+            randomWord = categorySelector.getRandomCategory(Difficulty.E);
+            break;
+          case 1:
+            randomWord = categorySelector.getRandomCategory(Difficulty.M);
+            break;
+          case 2:
+            randomWord = categorySelector.getRandomCategory(Difficulty.H);
+            break;
+        }
+        break;
+      case 3:
+        randomWord = categorySelector.getRandomCategory(Difficulty.H);
+        break;
+      default:
+        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        break;
+    }
+
+    if (randomWord.startsWith("\uFEFF")) {
+      randomWord = randomWord.substring(1);
+    }
+    currentWord = randomWord;
+
+    if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
+      text.clear();
+      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      if (randomWord.startsWith("\uFEFF")) {
+        randomWord = randomWord.substring(1);
+      }
+      currentWord = randomWord;
+    }
+
+    while (text.contains(randomWord)) {
+      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      if (randomWord.startsWith("\uFEFF")) {
+        randomWord = randomWord.substring(1);
+      }
+      currentWord = randomWord;
+    }
   }
 
   /**
