@@ -33,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -56,6 +57,8 @@ import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class CanvasController {
+
+  @FXML private Pane root;
 
   @FXML private Canvas canvas;
 
@@ -208,13 +211,6 @@ public class CanvasController {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
-
-    Stage stage = (Stage) readyButton.getScene().getWindow();
-
-    int number = (int) stage.getUserData();
-
-    System.out.println(number);
-
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       // Always make sure progressbar is green at the start
@@ -488,22 +484,76 @@ public class CanvasController {
    * @return a boolean, true if the current word is in the top three predictions, false otherwise
    */
   private boolean isWordCorrect() {
+    Stage stage = (Stage) root.getScene().getWindow();
 
-    // Check the top 3 entries in the pie chart and return true if the current word
-    // is in the top 3
-    // predictions
-    for (int i = 0; i < 3; i++) {
-      if (!isCanvasBlank()
-          && modelResultsPieChart
-              .getData()
-              .get(i)
-              .getName()
-              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-              .equals(currentWord)) {
-        return true;
-      }
+    int accuracyLevel = (int) stage.getUserData();
+
+    switch (accuracyLevel) {
+      case 0:
+        // Check the top 3 entries in the pie chart and return true if the current word
+        // is in the top 3
+        // predictions
+        for (int i = 0; i < 3; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+      case 1:
+        // Check the top 3 entries in the pie chart and return true if the current word
+        // is in the top 3
+        // predictions
+        for (int i = 0; i < 2; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+      case 2:
+        // Check the top 3 entries in the pie chart and return true if the current word
+        // is in the top 3
+        // predictions
+        for (int i = 0; i < 1; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+      default:
+        // Check the top 3 entries in the pie chart and return true if the current word
+        // is in the top 3
+        // predictions
+        for (int i = 0; i < 3; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
     }
-    return false;
   }
 
   /**

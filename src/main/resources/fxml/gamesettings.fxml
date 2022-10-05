@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GameSettingsController">
+<Pane fx:id="settingsRoot" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GameSettingsController">
    <children>
       <Label contentDisplay="CENTER" layoutX="306.0" layoutY="21.0" text="Game Settings" textAlignment="CENTER">
          <font>

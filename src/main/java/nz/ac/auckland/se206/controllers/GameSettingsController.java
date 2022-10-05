@@ -2,10 +2,12 @@ package nz.ac.auckland.se206.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
@@ -13,11 +15,12 @@ public class GameSettingsController implements Initializable {
 
   @FXML private Slider accuracySlider;
 
+  @FXML private Pane settingsRoot;
+
   @FXML private Label accuracyLabel;
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
     /*
      * Code adapted from:
      * https://stackoverflow.com/questions/18447963/javafx-slider-text-as-tick-label
@@ -51,6 +54,13 @@ public class GameSettingsController implements Initializable {
             }
           }
         });
+
+    Platform.runLater(
+        () -> {
+          Stage stage = (Stage) settingsRoot.getScene().getWindow();
+
+          accuracySlider.setValue((double) stage.getUserData());
+        });
   }
 
   @FXML
@@ -70,7 +80,7 @@ public class GameSettingsController implements Initializable {
 
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
 
-                stage.setUserData(newValue.intValue());
+                stage.setUserData(newValue.doubleValue());
               }
             });
 
@@ -90,7 +100,7 @@ public class GameSettingsController implements Initializable {
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
 
-                stage.setUserData((int) accuracySlider.getValue());
+                stage.setUserData(accuracySlider.getValue());
               }
             });
   }

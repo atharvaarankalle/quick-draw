@@ -76,7 +76,7 @@ public class App extends Application {
     scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
-    stage.setUserData(1);
+    stage.setUserData(0.0);
     stage.show();
   }
 }
