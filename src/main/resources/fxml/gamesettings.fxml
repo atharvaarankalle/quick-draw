@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -9,6 +10,12 @@
       <Label contentDisplay="CENTER" layoutX="306.0" layoutY="21.0" text="Game Settings" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
+         </font>
+      </Label>
+      <Slider fx:id="accuracySlider" layoutX="291.0" layoutY="150.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" onDragDetected="#onAccuracyDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Label fx:id="accuracyLabel" layoutX="343.0" layoutY="123.0" text="Accuracy:">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>
