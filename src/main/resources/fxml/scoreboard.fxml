@@ -3,76 +3,65 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="868.0" prefWidth="774.0" style="-fx-background-color: #A7C7E7;" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
+<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
    <children>
-      <Pane layoutY="-5.0" prefHeight="64.0" prefWidth="785.0" style="-fx-background-color: #05445E;" styleClass="headerPane" stylesheets="@css/canvas.css">
+      <Pane layoutY="-5.0" prefHeight="45.0" prefWidth="766.0" style="-fx-background-color: #05445E;" styleClass="headerPane" stylesheets="@css/canvas.css">
          <children>
             <Label fx:id="userNameLabel" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
             </Label>
-            <Button fx:id="toGameButton" layoutX="142.0" layoutY="20.0" mnemonicParsing="false" onAction="#onToGame" text="Back To Game">
-               <font>
-                  <Font name="Arial Black" size="12.0" />
-               </font>
-            </Button>
+            <Button layoutX="711.0" layoutY="12.0" mnemonicParsing="false" onAction="#onMain" text="Back" />
          </children>
       </Pane>
-      <Button fx:id="menuButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onBackToMenu" text="Back to Menu">
-         <font>
-            <Font name="Arial Black" size="12.0" />
-         </font>
-      </Button>
-      <ListView fx:id="scoreList" layoutX="532.0" layoutY="116.0" prefHeight="646.0" prefWidth="200.0" />
-      <Label layoutX="20.0" layoutY="86.0" text="Total game played: ">
+      <ListView fx:id="scoreList" layoutX="549.0" layoutY="100.0" prefHeight="488.0" prefWidth="200.0" />
+      <Label layoutX="13.0" layoutY="61.0" text="Total game played: ">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="20.0" layoutY="126.0" text="Games won:">
+      <Label layoutX="13.0" layoutY="96.0" text="Games won:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="20.0" layoutY="170.0" text="Games lost:">
+      <Label layoutX="13.0" layoutY="128.0" text="Games lost:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="totalGamesLabel" layoutX="209.0" layoutY="85.0" prefHeight="30.0" prefWidth="89.0">
+      <Label fx:id="totalGamesLabel" layoutX="193.0" layoutY="166.0" prefHeight="30.0" prefWidth="89.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesWonLabel" layoutX="141.0" layoutY="125.0" prefHeight="30.0" prefWidth="83.0">
+      <Label fx:id="gamesWonLabel" layoutX="129.0" layoutY="92.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="gamesLostLabel" layoutX="133.0" layoutY="169.0" prefHeight="30.0" prefWidth="83.0">
+      <Label fx:id="gamesLostLabel" layoutX="129.0" layoutY="125.0" prefHeight="30.0" prefWidth="83.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="23.0" layoutY="229.0" text="Your best record:">
+      <Label layoutX="13.0" layoutY="169.0" text="Total Game Played:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bestRecordWordLabel" layoutX="350.0" layoutY="259.0" prefHeight="25.0" prefWidth="181.0">
+      <Label fx:id="bestRecordWordLabel" layoutX="350.0" layoutY="234.0" prefHeight="25.0" prefWidth="181.0">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="584.0" layoutY="72.0" text="Your scores">
+      <Label layoutX="601.0" layoutY="61.0" text="Your scores">
          <font>
             <Font size="19.0" />
          </font>
@@ -82,12 +71,12 @@
             <Font size="26.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel1" layoutX="23.0" layoutY="259.0" prefHeight="27.0" prefWidth="501.0" text="It seems you are good at drawing">
+      <Label fx:id="textLabel1" layoutX="13.0" layoutY="201.0" prefHeight="27.0" prefWidth="402.0" text="Great Drawing!">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel2" layoutX="23.0" layoutY="289.0" text="It only took you">
+      <Label fx:id="textLabel2" layoutX="13.0" layoutY="235.0" prefHeight="24.0" prefWidth="326.0" text="It only took you">
          <font>
             <Font size="20.0" />
          </font>
@@ -97,32 +86,21 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Pane layoutX="23.0" layoutY="466.0" prefHeight="363.0" prefWidth="485.0">
+      <Pane fx:id="imagePane" layoutX="13.0" layoutY="276.0" prefHeight="312.0" prefWidth="486.0">
          <children>
-            <Pane fx:id="imagePane" prefHeight="363.0" prefWidth="485.0">
+            <ImageView fx:id="imageView" fitHeight="305.0" fitWidth="486.0" pickOnBounds="true" preserveRatio="true" />
+            <Button fx:id="previousButton" layoutY="117.0" mnemonicParsing="false" onAction="#onPreviousImage" prefHeight="75.0" prefWidth="35.0" text="&lt;" />
+            <Button fx:id="nextButton" layoutX="451.0" layoutY="117.0" mnemonicParsing="false" onAction="#onNextImage" prefHeight="75.0" prefWidth="35.0" text="&gt;" />
+            <Pane layoutX="-1.0" layoutY="-7.0" prefHeight="45.0" prefWidth="486.0" style="-fx-background-color: #055C9D;" styleClass="headerPane">
                <children>
-                  <ImageView fx:id="imageView" fitHeight="363.0" fitWidth="485.0" pickOnBounds="true" preserveRatio="true" />
-                  <Button fx:id="previousButton" layoutY="117.0" mnemonicParsing="false" onAction="#onPreviousImage" prefHeight="75.0" prefWidth="35.0" text="&lt;" />
-                  <Button fx:id="nextButton" layoutX="451.0" layoutY="117.0" mnemonicParsing="false" onAction="#onNextImage" prefHeight="75.0" prefWidth="35.0" text="&gt;" />
-                  <Pane layoutX="-1.0" layoutY="-7.0" prefHeight="45.0" prefWidth="486.0" style="-fx-background-color: #055C9D;" styleClass="headerPane">
-                     <children>
-                        <Label fx:id="imageDescriptorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="8.0" prefHeight="25.0" prefWidth="447.0" style="-fx-background-color: #003060;" styleClass="headerPane" textAlignment="CENTER" textFill="WHITE">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
+                  <Label fx:id="imageDescriptorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="20.0" layoutY="8.0" prefHeight="25.0" prefWidth="447.0" style="-fx-background-color: #003060;" styleClass="headerPane" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>
-         <effect>
-            <DropShadow spread="0.17">
-               <color>
-                  <Color red="0.43421053886413574" green="0.43220028281211853" blue="0.43220028281211853" />
-               </color>
-            </DropShadow>
-         </effect>
       </Pane>
    </children>
 </AnchorPane>

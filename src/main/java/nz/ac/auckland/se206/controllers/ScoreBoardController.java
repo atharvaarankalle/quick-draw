@@ -13,7 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -21,39 +20,50 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import javafx.scene.control.Button;
 
 public class ScoreBoardController {
-  @FXML private Label userNameLabel;
+  @FXML
+  private Label userNameLabel;
 
-  @FXML private Label totalGamesLabel;
+  @FXML
+  private Label totalGamesLabel;
 
-  @FXML private Label gamesWonLabel;
+  @FXML
+  private Label gamesWonLabel;
 
-  @FXML private Label gamesLostLabel;
+  @FXML
+  private Label gamesLostLabel;
 
-  @FXML private Label bestRecordWordLabel;
+  @FXML
+  private Label bestRecordWordLabel;
 
-  @FXML private Label bestRecordTimeLabel;
+  @FXML
+  private Label bestRecordTimeLabel;
 
-  @FXML private Button menuButton;
+  @FXML
+  private Label noStatsLabel;
 
-  @FXML private Button toGameButton;
+  @FXML
+  private ListView<String> scoreList;
 
-  @FXML private Label noStatsLabel;
+  @FXML
+  private AnchorPane backgroundPane;
 
-  @FXML private ListView<String> scoreList;
+  @FXML
+  private Label textLabel1;
 
-  @FXML private AnchorPane backgroundPane;
+  @FXML
+  private Label textLabel2;
 
-  @FXML private Label textLabel1;
+  @FXML
+  private ImageView imageView;
 
-  @FXML private Label textLabel2;
+  @FXML
+  private Label imageDescriptorLabel;
 
-  @FXML private ImageView imageView;
-
-  @FXML private Label imageDescriptorLabel;
-
-  @FXML private Pane imagePane;
+  @FXML
+  private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
@@ -72,16 +82,20 @@ public class ScoreBoardController {
     }
   }
 
+  /**
+   * This method is invoked when the user clicks the "Back to Main Menu" button.
+   * It loads and shows
+   * the "Main Menu" scene
+   *
+   * @param event The event that triggered this method.
+   * @throws IOException
+   */
   @FXML
-  private void onBackToMenu(ActionEvent event) {
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
-  }
+  private void onMain(ActionEvent event) throws IOException {
 
-  @FXML
-  private void onToGame(ActionEvent event) {
+    // Switch to the "Main Menu" scene.
     Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }
 
   // Updates all the statistic details of the player won/loss
@@ -92,8 +106,7 @@ public class ScoreBoardController {
       StatisticsManager.readUserStatistics(currentID);
       totalGamesLabel.setText(String.valueOf(StatisticsManager.getNumberOfGames()));
       List<Score> wonRecords = StatisticsManager.getRecords();
-      for (Score record :
-          wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
+      for (Score record : wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
         if (record.getTime() == 61) {
           scoreList.getItems().add(record.getWord() + "  LOST");
         } else {
@@ -152,8 +165,6 @@ public class ScoreBoardController {
         node.setVisible(false);
       }
       noStatsLabel.setVisible(true);
-      menuButton.setVisible(true);
-      toGameButton.setVisible(true);
     }
   }
 
@@ -273,9 +284,9 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
-        // Set the image to the second image in the case that the third image is already
-        // being
-        // displayed
+      // Set the image to the second image in the case that the third image is already
+      // being
+      // displayed
       case 2:
         imageView.setImage(
             new Image(

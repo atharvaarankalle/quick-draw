@@ -30,14 +30,18 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class LoginController implements Initializable {
 
-  @FXML private TextField emailTextField;
+  @FXML
+  private TextField emailTextField;
 
-  @FXML private ListView<String> usersListView = new ListView<String>();
+  @FXML
+  private ListView<String> usersListView = new ListView<String>();
 
-  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML
+  private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a login page
+   * JavaFX calls this method once the GUI elements are loaded. In our case we
+   * create a login page
    * and brings users details
    */
   @Override
@@ -46,8 +50,7 @@ public class LoginController implements Initializable {
     emailTextField.getText();
     usersListView.setItems(usersList);
     usersListView.setCellFactory(
-        new Callback<
-            ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
+        new Callback<ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
           // to work parallel for login/register/storing datas
           @Override
           public ListCell<String> call(ListView<String> param) {
@@ -66,6 +69,10 @@ public class LoginController implements Initializable {
 
         if (!usersList.contains(currentUser)) {
           usersList.add(currentUser);
+
+          if (usersList.contains("GUEST")) {
+            usersList.remove("GUEST");
+          }
         }
       }
     } catch (IOException e) {
@@ -107,7 +114,7 @@ public class LoginController implements Initializable {
       msg.showAndWait();
       addLine(line);
       Scene currentScene = ((Button) event.getSource()).getScene();
-      currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+      currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
       usersList.add(emailTextField.getText());
       emailTextField.clear();
     }
@@ -134,7 +141,7 @@ public class LoginController implements Initializable {
         msg.setContentText("You have successfully logged in as: " + userName);
         msg.showAndWait();
         Scene currentScene = ((ListView) event.getSource()).getScene();
-        currentScene.setRoot(SceneManager.getUiRoot(AppUi.CANVAS));
+        currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
         break;
       }
     }
@@ -148,20 +155,6 @@ public class LoginController implements Initializable {
     }
 
     usersListView.getSelectionModel().clearSelection();
-  }
-
-  /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
-   * the "Main Menu" scene
-   *
-   * @param event The event that triggered this method.
-   */
-  @FXML
-  private void onBackToMainMenu(ActionEvent event) {
-
-    // Switch to the "Main Menu" scene.
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN_MENU));
   }
 
   private void addLine(String line) throws IOException {
@@ -183,5 +176,14 @@ public class LoginController implements Initializable {
     } catch (IOException e) {
       System.out.println("Add line failed!!" + e);
     }
+  }
+
+  @FXML
+  private void onGuestMode(ActionEvent event) throws IOException {
+
+    String line = "GUEST";
+    addLine(line);
+    Scene currentScene = ((Button) event.getSource()).getScene();
+    currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
   }
 }

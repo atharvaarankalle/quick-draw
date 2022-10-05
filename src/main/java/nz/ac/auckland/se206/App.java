@@ -4,6 +4,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,7 +16,8 @@ import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 /**
- * This is the entry point of the JavaFX application, while you can change this class, it should
+ * This is the entry point of the JavaFX application, while you can change this
+ * class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
@@ -23,16 +27,26 @@ public class App extends Application {
     storageData.mkdir();
     FileWriter fileWriter;
     fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
-    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
+    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+    }
   }
 
   public static void main(final String[] args) throws IOException {
+
     initalize();
     launch();
+
+    // Check if GUEST exists, if does, then delete the file
+    Path path = Paths.get("DATABASE/GUEST");
+    if (Files.exists(path)) {
+      Files.delete(path);
+      System.exit(0);
+    }
   }
 
   /**
-   * Returns the node associated to the input file. The method expects that the file is located in
+   * Returns the node associated to the input file. The method expects that the
+   * file is located in
    * "src/main/resources/fxml".
    *
    * @param fxml The name of the FXML file (without extension).
@@ -46,7 +60,8 @@ public class App extends Application {
   private Scene scene;
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the
+   * "Canvas" scene.
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
@@ -55,13 +70,14 @@ public class App extends Application {
   public void start(final Stage stage) throws IOException {
 
     // Load the FXML files
-    SceneManager.addUi(AppUi.MAIN_MENU, loadFxml("mainmenu"));
+    SceneManager.addUi(AppUi.HOME_PAGE, loadFxml("homepage"));
     SceneManager.addUi(AppUi.CANVAS, loadFxml("canvas"));
     SceneManager.addUi(AppUi.HOW_TO_PLAY, loadFxml("howtoplay"));
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
+    SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
     // Set the current scene and show the stage
-    scene = new Scene(SceneManager.getUiRoot(AppUi.MAIN_MENU), 780, 868);
+    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
     stage.show();
