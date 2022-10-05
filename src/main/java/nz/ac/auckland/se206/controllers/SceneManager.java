@@ -18,7 +18,7 @@ public class SceneManager {
   /**
    * Loads the specified scene into the sceneMap.
    *
-   * @param appUi  The AppUi enum value of the scene to load.
+   * @param appUi The AppUi enum value of the scene to load.
    * @param uiRoot The root node of the scene to load.
    */
   public static void addUi(AppUi appUi, Parent uiRoot) {
