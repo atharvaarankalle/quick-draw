@@ -8,6 +8,8 @@ public class Settings {
 
   private double timeLevel = 0.0;
 
+  private double confidenceLevel = 0.0;
+
   public void setAccuracyLevel(double level) {
     this.accuracyLevel = level;
   }
@@ -18,6 +20,10 @@ public class Settings {
 
   public void setTimeLevel(double level) {
     this.timeLevel = level;
+  }
+
+  public void setConfidenceLevel(double level) {
+    this.confidenceLevel = level;
   }
 
   public double getAccuracyLevel() {
@@ -45,5 +51,9 @@ public class Settings {
 
   public double getTimeSliderPosition() {
     return this.timeLevel;
+  }
+
+  public double getConfidenceSliderPosition() {
+    return this.confidenceLevel;
   }
 }

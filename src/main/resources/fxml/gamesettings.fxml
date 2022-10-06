@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="settingsRoot" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GameSettingsController">
@@ -12,23 +13,33 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Slider fx:id="accuracySlider" layoutX="291.0" layoutY="150.0" majorTickUnit="1.0" max="2.0" minorTickCount="0" onDragDetected="#onAccuracyDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Label fx:id="accuracyLabel" layoutX="348.0" layoutY="123.0" text="Accuracy">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Slider fx:id="wordsSlider" layoutX="291.0" layoutY="252.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onWordsDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Label fx:id="wordsLabel" layoutX="357.0" layoutY="225.0" text="Words">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Slider fx:id="timeSlider" layoutX="291.0" layoutY="356.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onTimeDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
-      <Label fx:id="timeLabel" layoutX="364.0" layoutY="329.0" text="Time">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
+      <VBox alignment="CENTER" layoutX="288.0" layoutY="127.0" prefHeight="342.0" prefWidth="190.0">
+         <children>
+            <Label fx:id="accuracyLabel" text="Accuracy">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Slider fx:id="accuracySlider" majorTickUnit="1.0" max="2.0" minorTickCount="0" onDragDetected="#onAccuracyDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Label fx:id="wordsLabel" text="Words">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Slider fx:id="wordsSlider" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onWordsDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Label fx:id="timeLabel" text="Time">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Slider fx:id="timeSlider" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onTimeDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Label fx:id="confidenceLabel" text="Confidence">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Slider fx:id="confidenceSlider" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onConfidenceDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+         </children>
+      </VBox>
    </children>
 </Pane>

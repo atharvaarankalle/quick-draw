@@ -27,6 +27,10 @@ public class GameSettingsController implements Initializable {
 
   @FXML private Label timeLabel;
 
+  @FXML private Slider confidenceSlider;
+
+  @FXML private Label confidenceLabel;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
     /*
@@ -135,6 +139,42 @@ public class GameSettingsController implements Initializable {
           }
         });
 
+    confidenceSlider.setLabelFormatter(
+        new StringConverter<Double>() {
+          @Override
+          public String toString(Double sliderValue) {
+            if (sliderValue < 0.5) {
+              return "Easy";
+            }
+
+            if (sliderValue < 1.5) {
+              return "Medium";
+            }
+
+            if (sliderValue < 2.5) {
+              return "Hard";
+            }
+
+            return "Master";
+          }
+
+          @Override
+          public Double fromString(String string) {
+            switch (string) {
+              case "Easy":
+                return 1d;
+              case "Medium":
+                return 2d;
+              case "Hard":
+                return 3d;
+              case "Master":
+                return 4d;
+              default:
+                return 1d;
+            }
+          }
+        });
+
     Platform.runLater(
         () -> {
           Stage stage = (Stage) settingsRoot.getScene().getWindow();
@@ -144,6 +184,7 @@ public class GameSettingsController implements Initializable {
           accuracySlider.setValue(gameSettings.getAccuracyLevel());
           wordsSlider.setValue(gameSettings.getWordsLevel());
           timeSlider.setValue(gameSettings.getTimeSliderPosition());
+          confidenceSlider.setValue(gameSettings.getConfidenceSliderPosition());
         });
   }
 
@@ -290,6 +331,57 @@ public class GameSettingsController implements Initializable {
                 Settings gameSettings = (Settings) stage.getUserData();
 
                 gameSettings.setTimeLevel(timeSlider.getValue());
+
+                stage.setUserData(gameSettings);
+              }
+            });
+  }
+
+  @FXML
+  private void onConfidenceDragDetected() {
+    /*
+     * Code adapted from:
+     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-being-called-before-it-snaps-to-the-nearest-tick
+     */
+    confidenceSlider
+        .valueProperty()
+        .addListener(
+            (obs, oldValue, newValue) -> {
+              if (newValue != null
+                  && !newValue.equals(oldValue)
+                  && !confidenceSlider.isValueChanging()) {
+
+                Stage stage = (Stage) confidenceLabel.getScene().getWindow();
+
+                Settings gameSettings = (Settings) stage.getUserData();
+
+                gameSettings.setConfidenceLevel(newValue.doubleValue());
+
+                stage.setUserData(gameSettings);
+              }
+            });
+
+    /*
+     * Code adapted from:
+     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-valuepropertys-changelistener-for-min-and-max-values
+     */
+    confidenceSlider
+        .valueChangingProperty()
+        .addListener(
+            (obs, oldValue, newValue) -> {
+              double sliderValue = confidenceSlider.getValue();
+              boolean stoppedUpdating = oldValue && !newValue;
+              boolean isSliderValueAtMinOrMax =
+                  sliderValue == confidenceSlider.getMin()
+                      || sliderValue == confidenceSlider.getMax();
+
+              if (stoppedUpdating && isSliderValueAtMinOrMax) {
+
+                Stage stage = (Stage) confidenceLabel.getScene().getWindow();
+
+                Settings gameSettings = (Settings) stage.getUserData();
+
+                gameSettings.setConfidenceLevel(confidenceSlider.getValue());
 
                 stage.setUserData(gameSettings);
               }
