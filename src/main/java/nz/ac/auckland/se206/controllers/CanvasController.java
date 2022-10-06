@@ -292,14 +292,11 @@ public class CanvasController {
   }
 
   private void selectWord() throws CsvException, IOException, URISyntaxException {
-
     Stage stage = (Stage) root.getScene().getWindow();
 
     Settings gameSettings = (Settings) stage.getUserData();
 
     int wordsLevel = (int) gameSettings.getWordsLevel();
-
-    System.out.println("Word Level: " + wordsLevel);
 
     // Get a random new word to draw, set the target world label and update the GUI
     CategorySelector categorySelector = new CategorySelector();
@@ -394,13 +391,15 @@ public class CanvasController {
    * @return a Task<Void> object, the background timing task
    */
   private Task<Void> createNewTimingTask() {
-    final AtomicInteger timeLeft = new AtomicInteger(60);
+
+    final AtomicInteger timeLeft = new AtomicInteger(getMaximumTime());
     Task<Void> backgroundTimingTask =
         new Task<Void>() {
           @Override
           protected Void call() throws Exception {
+
             // Up date the task progress
-            updateProgress(0, 59);
+            updateProgress(0, getMaximumTime() - 1);
             /*
              * Initialise a timeline. This will be used to decrement the
              * timer every second, query the data learning
@@ -412,7 +411,7 @@ public class CanvasController {
                     e -> {
                       try {
                         timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-                        updateProgress(60 - timeLeft.get(), 59);
+                        updateProgress(getMaximumTime() - timeLeft.get(), getMaximumTime() - 1);
                         // If game reaches last 10 second, change progress bar to red
                         if (timeLeft.get() == 10) {
                           pgbTimer.setStyle("-fx-accent: red;");
@@ -434,6 +433,8 @@ public class CanvasController {
                           if (isWordCorrect()) {
                             pgbTimer.setVisible(false);
                             pgbTimer.progressProperty().unbind();
+                            Stage stage = (Stage) root.getScene().getWindow();
+                            StatisticsManager.setGameStage(stage);
                             timeline.stop();
                             try {
                               addLine("WON");
@@ -460,7 +461,7 @@ public class CanvasController {
 
             timeline.getKeyFrames().clear();
             timeline.getKeyFrames().addAll(keyFrame);
-            timeline.setCycleCount(60);
+            timeline.setCycleCount(getMaximumTime());
 
             /*
              * When the one minute timer elapses, stop the timeline, disable the canvas and
@@ -471,6 +472,9 @@ public class CanvasController {
                 event -> {
                   // Stop the timeline and reset the GUI to its initial state
                   timeline.stop();
+                  Stage stage = (Stage) root.getScene().getWindow();
+                  StatisticsManager.setGameStage(stage);
+
                   // Unbind and set progress bar to invisible
                   pgbTimer.setVisible(false);
                   pgbTimer.progressProperty().unbind();
@@ -507,6 +511,14 @@ public class CanvasController {
           }
         };
     return backgroundTimingTask;
+  }
+
+  private int getMaximumTime() {
+    Stage stage = (Stage) root.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
+    return gameSettings.getTimeLevel();
   }
 
   /**
@@ -708,6 +720,9 @@ public class CanvasController {
    */
   @FXML
   private void updateLeaderBoard() throws IOException {
+    Stage stage = (Stage) root.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
     // Updates the leaderboard and receive previous leaderboard information
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
@@ -719,7 +734,7 @@ public class CanvasController {
     for (int i = 0; i < 10; i++) { // Iterated to add new records to leaderboard
       if (i < allScores.size()) {
         currentScore = allScores.get(i);
-        if (currentScore.getTime() == 61) {
+        if (currentScore.getTime() == gameSettings.getTimeLevel() + 1) {
           leaderBoardList.getItems().add(currentScore.getID() + "  LOST");
         } else {
           leaderBoardList

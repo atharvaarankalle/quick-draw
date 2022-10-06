@@ -24,5 +24,11 @@
             <Font size="18.0" />
          </font>
       </Label>
+      <Slider fx:id="timeSlider" layoutX="291.0" layoutY="356.0" majorTickUnit="1.0" max="3.0" minorTickCount="0" onDragDetected="#onTimeDragDetected" prefHeight="57.0" prefWidth="184.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+      <Label fx:id="timeLabel" layoutX="364.0" layoutY="329.0" text="Time">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </Pane>

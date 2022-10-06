@@ -8,66 +8,56 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
-import javafx.scene.control.Button;
 
 public class ScoreBoardController {
-  @FXML
-  private Label userNameLabel;
+  @FXML private Label userNameLabel;
 
-  @FXML
-  private Label totalGamesLabel;
+  @FXML private Label totalGamesLabel;
 
-  @FXML
-  private Label gamesWonLabel;
+  @FXML private Label gamesWonLabel;
 
-  @FXML
-  private Label gamesLostLabel;
+  @FXML private Label gamesLostLabel;
 
-  @FXML
-  private Label bestRecordWordLabel;
+  @FXML private Label bestRecordWordLabel;
 
-  @FXML
-  private Label bestRecordTimeLabel;
+  @FXML private Label bestRecordTimeLabel;
 
-  @FXML
-  private Label noStatsLabel;
+  @FXML private Label noStatsLabel;
 
-  @FXML
-  private ListView<String> scoreList;
+  @FXML private ListView<String> scoreList;
 
-  @FXML
-  private AnchorPane backgroundPane;
+  @FXML private AnchorPane backgroundPane;
 
-  @FXML
-  private Label textLabel1;
+  @FXML private Label textLabel1;
 
-  @FXML
-  private Label textLabel2;
+  @FXML private Label textLabel2;
 
-  @FXML
-  private ImageView imageView;
+  @FXML private ImageView imageView;
 
-  @FXML
-  private Label imageDescriptorLabel;
+  @FXML private Label imageDescriptorLabel;
 
-  @FXML
-  private Pane imagePane;
+  @FXML private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
   private int imageDisplayed = 0;
+
+  private Settings gameSettings;
 
   public void initialize() {
     try {
@@ -76,15 +66,24 @@ public class ScoreBoardController {
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
       long lineNumber = Files.lines(userDataPath).count();
       String currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
-      updateStatistics(currentID);
+
+      Platform.runLater(
+          () -> {
+            Stage stage = (Stage) scoreList.getScene().getWindow();
+
+            this.gameSettings = (Settings) stage.getUserData();
+
+            StatisticsManager.setGameStage(stage);
+
+            updateStatistics(currentID);
+          });
     } catch (IOException e) {
       e.printStackTrace();
     }
   }
 
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button.
-   * It loads and shows
+   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
    * the "Main Menu" scene
    *
    * @param event The event that triggered this method.
@@ -106,8 +105,9 @@ public class ScoreBoardController {
       StatisticsManager.readUserStatistics(currentID);
       totalGamesLabel.setText(String.valueOf(StatisticsManager.getNumberOfGames()));
       List<Score> wonRecords = StatisticsManager.getRecords();
-      for (Score record : wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
-        if (record.getTime() == 61) {
+      for (Score record :
+          wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
+        if (record.getTime() == gameSettings.getTimeLevel() + 1) {
           scoreList.getItems().add(record.getWord() + "  LOST");
         } else {
           scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
@@ -284,9 +284,9 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
-      // Set the image to the second image in the case that the third image is already
-      // being
-      // displayed
+        // Set the image to the second image in the case that the third image is already
+        // being
+        // displayed
       case 2:
         imageView.setImage(
             new Image(
