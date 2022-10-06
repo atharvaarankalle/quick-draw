@@ -49,6 +49,21 @@ public class Settings {
     }
   }
 
+  public double getPredictionLevel() {
+    switch ((int) this.confidenceLevel) {
+      case 0:
+        return 0.01;
+      case 1:
+        return 0.1;
+      case 2:
+        return 0.25;
+      case 3:
+        return 0.50;
+      default:
+        return 0.01;
+    }
+  }
+
   public double getTimeSliderPosition() {
     return this.timeLevel;
   }

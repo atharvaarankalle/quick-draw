@@ -559,6 +559,8 @@ public class CanvasController {
 
     int accuracyLevel = (int) gameSettings.getAccuracyLevel();
 
+    double predictionLevel = gameSettings.getPredictionLevel();
+
     switch (accuracyLevel) {
       case 0:
         // Check the top 3 entries in the pie chart and return true if the current word
@@ -571,7 +573,8 @@ public class CanvasController {
                   .get(i)
                   .getName()
                   .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-                  .equals(currentWord)) {
+                  .equals(currentWord)
+              && modelResultsPieChart.getData().get(i).getPieValue() >= predictionLevel) {
             return true;
           }
         }
@@ -587,7 +590,8 @@ public class CanvasController {
                   .get(i)
                   .getName()
                   .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-                  .equals(currentWord)) {
+                  .equals(currentWord)
+              && modelResultsPieChart.getData().get(i).getPieValue() >= predictionLevel) {
             return true;
           }
         }
@@ -603,7 +607,8 @@ public class CanvasController {
                   .get(i)
                   .getName()
                   .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-                  .equals(currentWord)) {
+                  .equals(currentWord)
+              && modelResultsPieChart.getData().get(i).getPieValue() >= predictionLevel) {
             return true;
           }
         }
@@ -619,7 +624,8 @@ public class CanvasController {
                   .get(i)
                   .getName()
                   .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-                  .equals(currentWord)) {
+                  .equals(currentWord)
+              && modelResultsPieChart.getData().get(i).getPieValue() >= predictionLevel) {
             return true;
           }
         }

@@ -61,7 +61,7 @@ public class StatisticsManager {
         if (!seenWords.contains(seperatedStats[0])) {
           timesTaken.add(
               gameSettings.getTimeLevel() - Integer.valueOf(seperatedStats[2].split(" ")[0]));
-          if (timesTaken.get(i) <= topScore) {
+          if (timesTaken.get(i) <= topScore && timesTaken.get(i) >= 0) {
             topScore = timesTaken.get(i);
             topWord = seperatedStats[0];
           }
@@ -69,7 +69,7 @@ public class StatisticsManager {
         }
         // If the player break his/her record
         if (wordAndRecord.containsKey(seperatedStats[0])) {
-          if (wordAndRecord.get(seperatedStats[0]) > timesTaken.get(i)) {
+          if (wordAndRecord.get(seperatedStats[0]) > timesTaken.get(i) && timesTaken.get(i) >= 0) {
             wordAndRecord.replace(seperatedStats[0], timesTaken.get(i));
           }
         } else {
