@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -31,8 +32,21 @@ public class GameSettingsController implements Initializable {
 
   @FXML private Label confidenceLabel;
 
+  @FXML private Tooltip accuracyTooltip;
+
+  @FXML private Tooltip wordsTooltip;
+
+  @FXML private Tooltip timeTooltip;
+
+  @FXML private Tooltip confidenceTooltip;
+
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+    accuracyLabel.setTooltip(accuracyTooltip);
+    wordsLabel.setTooltip(wordsTooltip);
+    timeLabel.setTooltip(timeTooltip);
+    confidenceLabel.setTooltip(confidenceTooltip);
     /*
      * Code adapted from:
      * https://stackoverflow.com/questions/18447963/javafx-slider-text-as-tick-label
@@ -185,6 +199,71 @@ public class GameSettingsController implements Initializable {
           wordsSlider.setValue(gameSettings.getWordsLevel());
           timeSlider.setValue(gameSettings.getTimeSliderPosition());
           confidenceSlider.setValue(gameSettings.getConfidenceSliderPosition());
+
+          switch ((int) accuracySlider.getValue()) {
+            case 0:
+              accuracySlider.setStyle("-fx-control-inner-background: green");
+              break;
+            case 1:
+              accuracySlider.setStyle("-fx-control-inner-background: yellow");
+              break;
+            case 2:
+              accuracySlider.setStyle("-fx-control-inner-background: red");
+              break;
+            default:
+              accuracySlider.setStyle("-fx-control-inner-background: green");
+          }
+
+          switch ((int) wordsSlider.getValue()) {
+            case 0:
+              wordsSlider.setStyle("-fx-control-inner-background: green");
+              break;
+            case 1:
+              wordsSlider.setStyle("-fx-control-inner-background: yellow");
+              break;
+            case 2:
+              wordsSlider.setStyle("-fx-control-inner-background: orange");
+              break;
+            case 3:
+              wordsSlider.setStyle("-fx-control-inner-background: red");
+              break;
+            default:
+              wordsSlider.setStyle("-fx-control-inner-background: green");
+          }
+
+          switch ((int) timeSlider.getValue()) {
+            case 0:
+              timeSlider.setStyle("-fx-control-inner-background: green");
+              break;
+            case 1:
+              timeSlider.setStyle("-fx-control-inner-background: yellow");
+              break;
+            case 2:
+              timeSlider.setStyle("-fx-control-inner-background: orange");
+              break;
+            case 3:
+              timeSlider.setStyle("-fx-control-inner-background: red");
+              break;
+            default:
+              timeSlider.setStyle("-fx-control-inner-background: green");
+          }
+
+          switch ((int) confidenceSlider.getValue()) {
+            case 0:
+              confidenceSlider.setStyle("-fx-control-inner-background: green");
+              break;
+            case 1:
+              confidenceSlider.setStyle("-fx-control-inner-background: yellow");
+              break;
+            case 2:
+              confidenceSlider.setStyle("-fx-control-inner-background: orange");
+              break;
+            case 3:
+              confidenceSlider.setStyle("-fx-control-inner-background: red");
+              break;
+            default:
+              confidenceSlider.setStyle("-fx-control-inner-background: green");
+          }
         });
   }
 
@@ -210,6 +289,18 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setAccuracyLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                switch (newValue.intValue()) {
+                  case 0:
+                    accuracySlider.setStyle("-fx-control-inner-background: green");
+                    break;
+                  case 1:
+                    accuracySlider.setStyle("-fx-control-inner-background: yellow");
+                    break;
+                  case 2:
+                    accuracySlider.setStyle("-fx-control-inner-background: red");
+                    break;
+                }
               }
             });
 
@@ -235,6 +326,12 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setAccuracyLevel(accuracySlider.getValue());
 
                 stage.setUserData(gameSettings);
+
+                if (sliderValue == accuracySlider.getMin()) {
+                  accuracySlider.setStyle("-fx-control-inner-background: green");
+                } else if (sliderValue == accuracySlider.getMax()) {
+                  accuracySlider.setStyle("-fx-control-inner-background: red");
+                }
               }
             });
   }
@@ -260,6 +357,21 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setWordsLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                switch (newValue.intValue()) {
+                  case 0:
+                    wordsSlider.setStyle("-fx-control-inner-background: green");
+                    break;
+                  case 1:
+                    wordsSlider.setStyle("-fx-control-inner-background: yellow");
+                    break;
+                  case 2:
+                    wordsSlider.setStyle("-fx-control-inner-background: orange");
+                    break;
+                  case 3:
+                    wordsSlider.setStyle("-fx-control-inner-background: red");
+                    break;
+                }
               }
             });
 
@@ -285,6 +397,12 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setWordsLevel(wordsSlider.getValue());
 
                 stage.setUserData(gameSettings);
+
+                if (sliderValue == wordsSlider.getMin()) {
+                  wordsSlider.setStyle("-fx-control-inner-background: green");
+                } else if (sliderValue == wordsSlider.getMax()) {
+                  wordsSlider.setStyle("-fx-control-inner-background: red");
+                }
               }
             });
   }
@@ -308,6 +426,21 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setTimeLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                switch (newValue.intValue()) {
+                  case 0:
+                    timeSlider.setStyle("-fx-control-inner-background: green");
+                    break;
+                  case 1:
+                    timeSlider.setStyle("-fx-control-inner-background: yellow");
+                    break;
+                  case 2:
+                    timeSlider.setStyle("-fx-control-inner-background: orange");
+                    break;
+                  case 3:
+                    timeSlider.setStyle("-fx-control-inner-background: red");
+                    break;
+                }
               }
             });
 
@@ -333,6 +466,12 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setTimeLevel(timeSlider.getValue());
 
                 stage.setUserData(gameSettings);
+
+                if (sliderValue == timeSlider.getMin()) {
+                  timeSlider.setStyle("-fx-control-inner-background: green");
+                } else if (sliderValue == timeSlider.getMax()) {
+                  timeSlider.setStyle("-fx-control-inner-background: red");
+                }
               }
             });
   }
@@ -358,6 +497,21 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setConfidenceLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                switch (newValue.intValue()) {
+                  case 0:
+                    confidenceSlider.setStyle("-fx-control-inner-background: green");
+                    break;
+                  case 1:
+                    confidenceSlider.setStyle("-fx-control-inner-background: yellow");
+                    break;
+                  case 2:
+                    confidenceSlider.setStyle("-fx-control-inner-background: orange");
+                    break;
+                  case 3:
+                    confidenceSlider.setStyle("-fx-control-inner-background: red");
+                    break;
+                }
               }
             });
 
@@ -384,6 +538,12 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setConfidenceLevel(confidenceSlider.getValue());
 
                 stage.setUserData(gameSettings);
+
+                if (sliderValue == confidenceSlider.getMin()) {
+                  confidenceSlider.setStyle("-fx-control-inner-background: green");
+                } else if (sliderValue == confidenceSlider.getMax()) {
+                  confidenceSlider.setStyle("-fx-control-inner-background: red");
+                }
               }
             });
   }
