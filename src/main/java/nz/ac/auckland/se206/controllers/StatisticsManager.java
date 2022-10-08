@@ -53,7 +53,7 @@ public class StatisticsManager {
     records = new ArrayList<Score>();
     String[] seperatedStats;
     Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
-    for (int i = 0; i < userStats.size(); i++) {
+    for (int i = 1; i < userStats.size(); i++) {
       seperatedStats = userStats.get(i).split(" , ");
       if (seperatedStats[1].equals("WON")) {
         gameWon++;
@@ -134,7 +134,7 @@ public class StatisticsManager {
   }
 
   public static int getNumberOfGames() {
-    return userStats.size();
+    return userStats.size() - 1;
   }
 
   public static int getGameWon() {

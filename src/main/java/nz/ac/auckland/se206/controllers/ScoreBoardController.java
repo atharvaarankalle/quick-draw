@@ -107,10 +107,13 @@ public class ScoreBoardController {
       List<Score> wonRecords = StatisticsManager.getRecords();
       for (Score record :
           wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
-        if (record.getTime() == gameSettings.getTimeLevel() + 1) {
-          scoreList.getItems().add(record.getWord() + "  LOST");
-        } else {
-          scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
+
+        if (!(record.getWord().equals("Initial Write"))) {
+          if (record.getTime() == gameSettings.getTimeLevel() + 1) {
+            scoreList.getItems().add(record.getWord() + "  LOST");
+          } else {
+            scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
+          }
         }
       }
       String topWord = StatisticsManager.getTopWord();
