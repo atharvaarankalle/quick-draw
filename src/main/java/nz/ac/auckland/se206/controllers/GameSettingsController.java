@@ -1,6 +1,12 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -191,14 +197,38 @@ public class GameSettingsController implements Initializable {
 
     Platform.runLater(
         () -> {
-          Stage stage = (Stage) settingsRoot.getScene().getWindow();
+          // Stage stage = (Stage) settingsRoot.getScene().getWindow();
 
-          Settings gameSettings = (Settings) stage.getUserData();
+          // Settings gameSettings = (Settings) stage.getUserData();
 
-          accuracySlider.setValue(gameSettings.getAccuracyLevel());
-          wordsSlider.setValue(gameSettings.getWordsLevel());
-          timeSlider.setValue(gameSettings.getTimeSliderPosition());
-          confidenceSlider.setValue(gameSettings.getConfidenceSliderPosition());
+          Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
+          long lineNumber;
+          String currentID;
+          String currentLine;
+          String lastLine = "";
+          String[] separatedUserInfo = {""};
+          try {
+            lineNumber = Files.lines(userDataPath).count();
+            currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
+
+            BufferedReader bufferedReader =
+                new BufferedReader(new FileReader("DATABASE/" + currentID));
+
+            while ((currentLine = bufferedReader.readLine()) != null) {
+              lastLine = currentLine;
+            }
+
+            bufferedReader.close();
+
+            separatedUserInfo = lastLine.split(" , ");
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+
+          accuracySlider.setValue(Double.parseDouble(separatedUserInfo[3]));
+          wordsSlider.setValue(Double.parseDouble(separatedUserInfo[4]));
+          timeSlider.setValue(Double.parseDouble(separatedUserInfo[5]));
+          confidenceSlider.setValue(Double.parseDouble(separatedUserInfo[6]));
 
           switch ((int) accuracySlider.getValue()) {
             case 0:

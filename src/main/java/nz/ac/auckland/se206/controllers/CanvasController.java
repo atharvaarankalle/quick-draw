@@ -310,8 +310,6 @@ public class CanvasController {
       case 1:
         randomNumber = (int) (Math.random() * (2 - 0) + 0);
 
-        System.out.println(randomNumber);
-
         switch (randomNumber) {
           case 0:
             randomWord = categorySelector.getRandomCategory(Difficulty.E);
@@ -678,6 +676,10 @@ public class CanvasController {
 
   private void addLine(String result) throws IOException {
 
+    Stage stage = (Stage) root.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
     // Count the number of lines in the UserDatas.txt file
     Path path = Paths.get("DATABASE/UserDatas.txt");
     long count = Files.lines(path).count();
@@ -695,7 +697,16 @@ public class CanvasController {
     try {
       fileWriter = new FileWriter("DATABASE/" + linesCount, true);
       BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-      bufferedWriter.write(line);
+      bufferedWriter.write(
+          line
+              + " , "
+              + gameSettings.getAccuracyLevel()
+              + " , "
+              + gameSettings.getWordsLevel()
+              + " , "
+              + gameSettings.getTimeSliderPosition()
+              + " , "
+              + gameSettings.getConfidenceSliderPosition());
       bufferedWriter.newLine();
       bufferedWriter.flush();
       bufferedWriter.close();
