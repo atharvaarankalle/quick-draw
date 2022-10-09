@@ -26,6 +26,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -88,6 +89,9 @@ public class ZenMode {
   @FXML
   private PieChart modelResultsPieChart;
 
+  @FXML
+  private ColorPicker myColorPicker;
+
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
@@ -117,7 +121,7 @@ public class ZenMode {
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
 
     // Initialise the canvas and disable it so users cannot draw on it
-    initializeCanvas();
+    initializeCanvas(colorPicker());
     canvas.setDisable(true);
     saveDrawingButton.setDisable(true);
     targetWordLabel.setText("Get a new word to begin drawing!");
@@ -153,7 +157,8 @@ public class ZenMode {
    * 
    * @throws TranslateException
    */
-  private void initializeCanvas() throws TranslateException {
+  private void initializeCanvas(Color palletColor) throws TranslateException {
+
     graphic = canvas.getGraphicsContext2D();
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     graphic = canvas.getGraphicsContext2D();
@@ -174,7 +179,7 @@ public class ZenMode {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          graphic.setFill(Color.BLACK);
+          graphic.setFill(palletColor);
           graphic.setLineWidth(size);
 
           // Select the pen or eraser depending on the value of the pen/eraser button text
@@ -225,7 +230,7 @@ public class ZenMode {
     if (readyButton.getText().equals("Start!")) {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
-      initializeCanvas();
+      initializeCanvas(colorPicker());
       resetPieChart();
 
       readyButton.setDisable(true);
@@ -476,7 +481,7 @@ public class ZenMode {
 
     Task<Void> backgroundTask = new Task<Void>() {
 
-      int seconds = 1000000000;
+      int clock = 1000000000;
 
       @Override
       protected Void call() throws Exception {
@@ -491,7 +496,7 @@ public class ZenMode {
                * predictions and key features on button is disabled/enabled
                */
               public void handle(ActionEvent event) {
-                seconds--;
+                clock--;
                 try {
                   makePredictions();
                   if (isCanvasBlank()) {
@@ -501,7 +506,7 @@ public class ZenMode {
                   e2.printStackTrace();
                 }
 
-                if (seconds == 0) { // Once counter reach 0, every feature disabled except
+                if (clock == 0) { // Once counter reach 0, every feature disabled except
                   time.stop();
                 }
               }
@@ -522,4 +527,13 @@ public class ZenMode {
     return backgroundTask;
   }
 
+  @FXML
+  private Color colorPicker() {
+    Color myColor = myColorPicker.getValue();
+
+    if (myColor == null) {
+      myColor = Color.BLACK;
+    }
+    return myColor;
+  }
 }
