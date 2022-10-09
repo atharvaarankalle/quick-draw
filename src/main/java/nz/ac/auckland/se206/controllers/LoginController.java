@@ -23,6 +23,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
@@ -30,6 +32,8 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 // https://stackoverflow.com/questions/53020451/how-to-create-javafx-save-read-information-from-text-file-and-letting-user-to-e
 
 public class LoginController implements Initializable {
+
+  @FXML private AnchorPane loginRoot;
 
   @FXML private TextField emailTextField;
 
@@ -157,11 +161,15 @@ public class LoginController implements Initializable {
 
   private void addLine(String line) throws IOException {
 
+    Stage stage = (Stage) loginRoot.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
     FileWriter fileWriter;
 
     FileWriter fileWriterUserFile;
 
-    boolean userFileExists = new File("DATABASE/" + line).isFile();
+    boolean userFileExists = new File("DATABASE/usersettings/" + line).isFile();
 
     /*
      * Write the line to the file. If an IOException is raised, then
@@ -169,20 +177,28 @@ public class LoginController implements Initializable {
      */
     try {
       fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
-      fileWriterUserFile = new FileWriter("DATABASE/" + line, true);
       BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
       bufferedWriter.write(line);
       bufferedWriter.newLine();
       bufferedWriter.flush();
       bufferedWriter.close();
 
+      final File userSettingsFolder = new File("DATABASE/usersettings");
+
+      if (!userSettingsFolder.exists()) {
+        userSettingsFolder.mkdir();
+      }
+
       if (!userFileExists) {
+        fileWriterUserFile = new FileWriter("DATABASE/usersettings/" + line, true);
         BufferedWriter bufferedWriterUserFile = new BufferedWriter(fileWriterUserFile);
-        bufferedWriterUserFile.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0");
+        bufferedWriterUserFile.write("0.0 , 0.0 , 0.0 , 0.0");
         bufferedWriterUserFile.newLine();
         bufferedWriterUserFile.flush();
         bufferedWriterUserFile.close();
       }
+
+      gameSettings.setCurrentUser(line);
 
     } catch (IOException e) {
       System.out.println("Add line failed!!" + e);

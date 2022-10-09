@@ -112,7 +112,7 @@ public class ScoreBoardController {
           if (record.getTime() == gameSettings.getTimeLevel() + 1) {
             scoreList.getItems().add(record.getWord() + "  LOST");
           } else {
-            scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
+            scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds ");
           }
         }
       }

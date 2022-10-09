@@ -10,6 +10,8 @@ public class Settings {
 
   private double confidenceLevel = 0.0;
 
+  private String currentUser = "";
+
   public void setAccuracyLevel(double level) {
     this.accuracyLevel = level;
   }
@@ -24,6 +26,10 @@ public class Settings {
 
   public void setConfidenceLevel(double level) {
     this.confidenceLevel = level;
+  }
+
+  public void setCurrentUser(String username) {
+    this.currentUser = username;
   }
 
   public double getAccuracyLevel() {
@@ -70,5 +76,9 @@ public class Settings {
 
   public double getConfidenceSliderPosition() {
     return this.confidenceLevel;
+  }
+
+  public String getCurrentUser() {
+    return this.currentUser;
   }
 }
