@@ -11,10 +11,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Side;
 import javafx.scene.canvas.Canvas;
@@ -27,6 +32,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
 import javax.imageio.ImageIO;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
@@ -225,12 +232,17 @@ public class ZenMode {
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
       modelResultsPieChart.setLegendVisible(true);
-      // Delegate the background tasks to different threads and execute these
-      showPiechartView();
 
+      // Delegate the background tasks to different threads and execute these
       Thread backgroundSpeechThread = new Thread(createNewSpeechTask());
       backgroundSpeechThread.setDaemon(true);
       backgroundSpeechThread.start();
+
+      // Pie Chart prediction thread
+      Thread backgroundTask = new Thread(showPrediction());
+      backgroundTask.setDaemon(true);
+      backgroundTask.start();
+
     } else {
       model = new DoodlePrediction();
       // Clear the canvas, disable the save drawing button and clear the pie chart
@@ -242,12 +254,6 @@ public class ZenMode {
       text.add(currentWord); // Adds new randomWord, if current != random
     }
 
-  }
-
-  private void showPiechartView() throws TranslateException {
-    while (!isCanvasBlank()) {
-      makePredictions();
-    }
   }
 
   /**
@@ -464,6 +470,56 @@ public class ZenMode {
     canvas.setDisable(true);
     saveDrawingButton.setDisable(false);
     targetWordLabel.setText("Get a new word to begin drawing!");
+  }
+
+  private Task<Void> showPrediction() throws TranslateException {
+
+    Task<Void> backgroundTask = new Task<Void>() {
+
+      int seconds = 1000000000;
+
+      @Override
+      protected Void call() throws Exception {
+        Timeline time = new Timeline();
+        KeyFrame frame = new KeyFrame(
+            Duration.seconds(1),
+            new EventHandler<ActionEvent>() {
+
+              /**
+               * This method is invoked to activate the count down timer Every time seconds
+               * --, the integer value is converted to text in GUI Also, the top 10
+               * predictions and key features on button is disabled/enabled
+               */
+              public void handle(ActionEvent event) {
+                seconds--;
+                try {
+                  makePredictions();
+                  if (isCanvasBlank()) {
+                    resetPieChart();
+                  }
+                } catch (TranslateException e2) {
+                  e2.printStackTrace();
+                }
+
+                if (seconds == 0) { // Once counter reach 0, every feature disabled except
+                  time.stop();
+                }
+              }
+            });
+
+        time.setCycleCount(Timeline.INDEFINITE);
+        time.getKeyFrames().add(frame);
+        if (time != null) {
+          time.stop();
+        }
+        time.play();
+        {
+          return null;
+        }
+      }
+    };
+
+    return backgroundTask;
   }
 
 }
