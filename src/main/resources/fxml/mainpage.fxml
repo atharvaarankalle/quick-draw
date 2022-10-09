@@ -16,7 +16,7 @@
          <children>
             <VBox layoutY="7.0" prefHeight="471.0" prefWidth="134.0" spacing="20.0" style="-fx-background-color: black;">
                <children>
-                  <Button mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="142.0" style="-fx-background-color: white;" text="Home">
+                  <Button fx:id="homeButton" mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="142.0" style="-fx-background-color: white;" text="Home">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -25,7 +25,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="GameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: white;" text="Game">
+                  <Button fx:id="gameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: white;" text="Game">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -34,7 +34,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onInfo" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: white;" text="Instruction">
+                  <Button fx:id="infoButton" mnemonicParsing="false" onAction="#onInfo" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: white;" text="Instruction">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -43,7 +43,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onStatistic" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: white;" text="Statistics">
+                  <Button fx:id="statsButton" mnemonicParsing="false" onAction="#onStatistic" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: white;" text="Statistics">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -52,7 +52,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onGameSettings" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: white;" text="Settings">
+                  <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onGameSettings" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: white;" text="Settings">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -70,7 +70,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="206.0" style="-fx-background-color: white;" text="Music">
+                  <Button fx:id="musicButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="206.0" style="-fx-background-color: white;" text="Music">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
