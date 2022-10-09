@@ -1,7 +1,9 @@
 package nz.ac.auckland.se206;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -14,10 +16,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.Settings;
 
 /**
- * This is the entry point of the JavaFX application, while you can change this
- * class, it should
+ * This is the entry point of the JavaFX application, while you can change this class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
@@ -27,8 +29,7 @@ public class App extends Application {
     storageData.mkdir();
     FileWriter fileWriter;
     fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
-    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
-    }
+    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
   }
 
   public static void main(final String[] args) throws IOException {
@@ -45,8 +46,7 @@ public class App extends Application {
   }
 
   /**
-   * Returns the node associated to the input file. The method expects that the
-   * file is located in
+   * Returns the node associated to the input file. The method expects that the file is located in
    * "src/main/resources/fxml".
    *
    * @param fxml The name of the FXML file (without extension).
@@ -60,8 +60,7 @@ public class App extends Application {
   private Scene scene;
 
   /**
-   * This method is invoked when the application starts. It loads and shows the
-   * "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
@@ -76,10 +75,49 @@ public class App extends Application {
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
+    Settings gameSettings = new Settings();
+
     // Set the current scene and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
+    stage.setUserData(gameSettings);
+    setSliderPositions(stage);
     stage.show();
+  }
+
+  private void setSliderPositions(Stage stage) {
+    Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
+    long lineNumber;
+    String currentID;
+    String currentLine;
+    String lastLine = "";
+    String[] separatedUserInfo = {""};
+    try {
+      lineNumber = Files.lines(userDataPath).count();
+
+      if (lineNumber > 0) {
+        currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("DATABASE/" + currentID));
+
+        while ((currentLine = bufferedReader.readLine()) != null) {
+          lastLine = currentLine;
+        }
+
+        bufferedReader.close();
+
+        separatedUserInfo = lastLine.split(" , ");
+
+        Settings gameSettings = (Settings) stage.getUserData();
+
+        gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[3]));
+        gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[4]));
+        gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[5]));
+        gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[6]));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

@@ -1,6 +1,7 @@
 package nz.ac.auckland.se206.controllers;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -30,18 +31,14 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class LoginController implements Initializable {
 
-  @FXML
-  private TextField emailTextField;
+  @FXML private TextField emailTextField;
 
-  @FXML
-  private ListView<String> usersListView = new ListView<String>();
+  @FXML private ListView<String> usersListView = new ListView<String>();
 
-  @FXML
-  private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we
-   * create a login page
+   * JavaFX calls this method once the GUI elements are loaded. In our case we create a login page
    * and brings users details
    */
   @Override
@@ -50,7 +47,8 @@ public class LoginController implements Initializable {
     emailTextField.getText();
     usersListView.setItems(usersList);
     usersListView.setCellFactory(
-        new Callback<ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
+        new Callback<
+            ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
           // to work parallel for login/register/storing datas
           @Override
           public ListCell<String> call(ListView<String> param) {
@@ -161,17 +159,30 @@ public class LoginController implements Initializable {
 
     FileWriter fileWriter;
 
+    FileWriter fileWriterUserFile;
+
+    boolean userFileExists = new File("DATABASE/" + line).isFile();
+
     /*
      * Write the line to the file. If an IOException is raised, then
      * print out an error message to the console
      */
     try {
       fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
+      fileWriterUserFile = new FileWriter("DATABASE/" + line, true);
       BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
       bufferedWriter.write(line);
       bufferedWriter.newLine();
       bufferedWriter.flush();
       bufferedWriter.close();
+
+      if (!userFileExists) {
+        BufferedWriter bufferedWriterUserFile = new BufferedWriter(fileWriterUserFile);
+        bufferedWriterUserFile.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0");
+        bufferedWriterUserFile.newLine();
+        bufferedWriterUserFile.flush();
+        bufferedWriterUserFile.close();
+      }
 
     } catch (IOException e) {
       System.out.println("Add line failed!!" + e);

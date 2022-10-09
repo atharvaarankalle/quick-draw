@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.stage.Stage;
 
 public class StatisticsManager {
   private static List<String> userStats;
@@ -17,6 +18,10 @@ public class StatisticsManager {
   private static int gameLost = 0;
   private static int topScore = 60;
   private static String topWord = null;
+  private static Stage gameStage;
+  private static List<String> seenWords = new ArrayList<String>();
+  private static List<Integer> timesTaken = new ArrayList<Integer>();
+  private static String previousUserID = "";
 
   public static ArrayList<String> getUserList() throws IOException {
     // Collects all the user information from specific stored
@@ -43,41 +48,71 @@ public class StatisticsManager {
   }
 
   private static void updateUserStatistics(String currentID) {
+
+    Settings gameSettings = (Settings) gameStage.getUserData();
     // Updating the statistics inside stats fxml file, for each users
     records = new ArrayList<Score>();
-    int timetaken;
     String[] seperatedStats;
     Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
-    for (String line : userStats) {
-      seperatedStats = line.split(" , ");
+
+    if (!(previousUserID.equals(currentID))) {
+      timesTaken.clear();
+      seenWords.clear();
+      previousUserID = currentID;
+    }
+    for (int i = 0; i < userStats.size(); i++) {
+      seperatedStats = userStats.get(i).split(" , ");
       if (seperatedStats[1].equals("WON")) {
         gameWon++;
         // Calculate the time taken:
-        timetaken = 60 - Integer.valueOf(seperatedStats[2].split(" ")[0]);
-        if (timetaken <= topScore) {
-          topScore = timetaken;
-          topWord = seperatedStats[0];
+        if (!seenWords.contains(seperatedStats[0])) {
+          timesTaken.add(
+              getWordTimeDifficulty(seperatedStats)
+                  - Integer.valueOf(seperatedStats[2].split(" ")[0]));
+          if (timesTaken.get(i - 1) <= topScore && timesTaken.get(i - 1) >= 0) {
+            topScore = timesTaken.get(i - 1);
+            topWord = seperatedStats[0];
+          }
+          seenWords.add(seperatedStats[0]);
         }
+
         // If the player break his/her record
         if (wordAndRecord.containsKey(seperatedStats[0])) {
-          if (wordAndRecord.get(seperatedStats[0]) > timetaken) {
-            wordAndRecord.replace(seperatedStats[0], timetaken);
+          if (wordAndRecord.get(seperatedStats[0]) > timesTaken.get(i - 1)
+              && timesTaken.get(i - 1) >= 0) {
+            wordAndRecord.replace(seperatedStats[0], timesTaken.get(i - 1));
           }
         } else {
-          wordAndRecord.put(seperatedStats[0], timetaken);
+          wordAndRecord.put(seperatedStats[0], timesTaken.get(i - 1));
         }
-      } else {
-        if (!wordAndRecord.containsKey(seperatedStats[0])) {
-          wordAndRecord.put(seperatedStats[0], 61);
+      } else if (seperatedStats[1].equals("LOST")) {
+        wordAndRecord.put(seperatedStats[0], gameSettings.getTimeLevel() + 1);
+        if (!seenWords.contains(seperatedStats[0])) {
+          timesTaken.add(-1);
+          seenWords.add(seperatedStats[0]);
         }
         gameLost++;
       }
     }
-
     for (String word : wordAndRecord.keySet()) {
       records.add(new Score(word, wordAndRecord.get(word), currentID));
     }
     Collections.sort(records);
+  }
+
+  private static int getWordTimeDifficulty(String[] seperatedStats) {
+    switch ((int) Double.parseDouble(seperatedStats[5])) {
+      case 0:
+        return 60;
+      case 1:
+        return 45;
+      case 2:
+        return 30;
+      case 3:
+        return 15;
+      default:
+        return 60;
+    }
   }
 
   /**
@@ -124,7 +159,7 @@ public class StatisticsManager {
   }
 
   public static int getNumberOfGames() {
-    return userStats.size();
+    return userStats.size() - 1;
   }
 
   public static int getGameWon() {
@@ -145,5 +180,9 @@ public class StatisticsManager {
 
   public static int getTopScore() {
     return topScore;
+  }
+
+  public static void setGameStage(Stage stage) {
+    gameStage = stage;
   }
 }
