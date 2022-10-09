@@ -1,7 +1,9 @@
 package nz.ac.auckland.se206;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -80,6 +82,42 @@ public class App extends Application {
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
     stage.setUserData(gameSettings);
+    setSliderPositions(stage);
     stage.show();
+  }
+
+  private void setSliderPositions(Stage stage) {
+    Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
+    long lineNumber;
+    String currentID;
+    String currentLine;
+    String lastLine = "";
+    String[] separatedUserInfo = {""};
+    try {
+      lineNumber = Files.lines(userDataPath).count();
+
+      if (lineNumber > 0) {
+        currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
+
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("DATABASE/" + currentID));
+
+        while ((currentLine = bufferedReader.readLine()) != null) {
+          lastLine = currentLine;
+        }
+
+        bufferedReader.close();
+
+        separatedUserInfo = lastLine.split(" , ");
+
+        Settings gameSettings = (Settings) stage.getUserData();
+
+        gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[3]));
+        gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[4]));
+        gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[5]));
+        gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[6]));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }
