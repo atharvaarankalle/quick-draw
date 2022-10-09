@@ -67,10 +67,10 @@ public class StatisticsManager {
         // Calculate the time taken:
         if (!seenWords.contains(seperatedStats[0])) {
           timesTaken.add(
-              getWordTimeDifficulty(seperatedStats)
+              Integer.valueOf(seperatedStats[3])
                   - Integer.valueOf(seperatedStats[2].split(" ")[0]));
-          if (timesTaken.get(i - 1) <= topScore && timesTaken.get(i - 1) >= 0) {
-            topScore = timesTaken.get(i - 1);
+          if (timesTaken.get(i) <= topScore && timesTaken.get(i) >= 0) {
+            topScore = timesTaken.get(i);
             topWord = seperatedStats[0];
           }
           seenWords.add(seperatedStats[0]);
@@ -78,12 +78,11 @@ public class StatisticsManager {
 
         // If the player break his/her record
         if (wordAndRecord.containsKey(seperatedStats[0])) {
-          if (wordAndRecord.get(seperatedStats[0]) > timesTaken.get(i - 1)
-              && timesTaken.get(i - 1) >= 0) {
-            wordAndRecord.replace(seperatedStats[0], timesTaken.get(i - 1));
+          if (wordAndRecord.get(seperatedStats[0]) > timesTaken.get(i) && timesTaken.get(i) >= 0) {
+            wordAndRecord.replace(seperatedStats[0], timesTaken.get(i));
           }
         } else {
-          wordAndRecord.put(seperatedStats[0], timesTaken.get(i - 1));
+          wordAndRecord.put(seperatedStats[0], timesTaken.get(i));
         }
       } else if (seperatedStats[1].equals("LOST")) {
         wordAndRecord.put(seperatedStats[0], gameSettings.getTimeLevel() + 1);
@@ -98,21 +97,6 @@ public class StatisticsManager {
       records.add(new Score(word, wordAndRecord.get(word), currentID));
     }
     Collections.sort(records);
-  }
-
-  private static int getWordTimeDifficulty(String[] seperatedStats) {
-    switch ((int) Double.parseDouble(seperatedStats[5])) {
-      case 0:
-        return 60;
-      case 1:
-        return 45;
-      case 2:
-        return 30;
-      case 3:
-        return 15;
-      default:
-        return 60;
-    }
   }
 
   /**
@@ -159,7 +143,7 @@ public class StatisticsManager {
   }
 
   public static int getNumberOfGames() {
-    return userStats.size() - 1;
+    return userStats.size();
   }
 
   public static int getGameWon() {

@@ -99,7 +99,8 @@ public class App extends Application {
       if (lineNumber > 0) {
         currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("DATABASE/" + currentID));
+        BufferedReader bufferedReader =
+            new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
 
         while ((currentLine = bufferedReader.readLine()) != null) {
           lastLine = currentLine;
@@ -111,10 +112,10 @@ public class App extends Application {
 
         Settings gameSettings = (Settings) stage.getUserData();
 
-        gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[3]));
-        gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[4]));
-        gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[5]));
-        gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[6]));
+        gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[0]));
+        gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[1]));
+        gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[2]));
+        gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[3]));
       }
     } catch (IOException e) {
       e.printStackTrace();
