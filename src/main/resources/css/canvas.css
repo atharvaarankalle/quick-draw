@@ -10,7 +10,11 @@
 }
 
 .gameButtons {
-    -fx-background-color: #CBE5FF;
+    -fx-background-color: #4368DC;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
     -fx-background-radius: 5;
+}
+
+.gameButtons:hover {
+    -fx-background-color: #507CFF;
 }

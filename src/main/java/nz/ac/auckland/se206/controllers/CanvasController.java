@@ -780,7 +780,7 @@ public class CanvasController {
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
     leaderBoardList.setVisible(true);
-    leaderBoardLabel.setText("Top artists of \n" + currentWord);
+    leaderBoardLabel.setText("Top artists");
     ArrayList<Score> allScores;
     allScores = StatisticsManager.getLeaderBoard(currentWord);
     Score currentScore;
