@@ -7,20 +7,15 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="774.0" style="-fx-background-color: #A7C7E7;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="196.0" layoutY="40.0" text="Quick, Draw! SE206 Edition">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="233.0" layoutY="22.0" text="How To Play" textAlignment="CENTER">
          <font>
-            <Font name="System Bold" size="30.0" />
-         </font>
-      </Label>
-      <Label layoutX="310.0" layoutY="94.0" text="How To Play?" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Lucida Handwriting Italic" size="45.0" />
          </font>
       </Label>
       <VBox alignment="CENTER" layoutX="306.0" layoutY="522.0" spacing="20.0" />
-      <Label layoutX="134.0" layoutY="154.0" text="Welcome to Quick, Draw! SE206 Edition!&#10;&#10;This is a drawing game that tests how accurately you can draw&#10;random words on a canvas&#10;The aim of the game is to draw a given word accurately enough&#10;for a data learning model to guess the word you have drawn!&#10;&#10;But the name of the game is Quick, Draw! So you will only have&#10;one minute to draw the word each round!&#10;&#10;Will you be able to prove your undeniable skills as an artist?&#10;&#10;" textAlignment="CENTER">
+      <Label layoutX="32.0" layoutY="167.0" text="Welcome to Quick, Draw! SE206 Edition!&#10;&#10;&#10;This is a drawing game that tests how accurately you can draw&#10;random words on a canvas&#10;&#10;The aim of the game is to draw a given word accurately enough&#10;for a data learning model to guess the word you have drawn!&#10;&#10;But the name of the game is Quick, Draw! So you will only have&#10;a limited amount of time to draw the word each round!&#10;&#10;Make sure to check out the statistics page to see your drawing&#10;history and how much you have improved!&#10;&#10;&#10;Will you be able to prove your undeniable skills as an artist?&#10;&#10;" textAlignment="CENTER">
          <font>
-            <Font size="18.0" />
+            <Font name="Lucida Fax Regular" size="22.0" />
          </font>
       </Label>
    </children>
