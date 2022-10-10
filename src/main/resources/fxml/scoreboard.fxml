@@ -10,14 +10,13 @@
 
 <AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
    <children>
-      <Pane layoutY="-5.0" prefHeight="45.0" prefWidth="766.0" style="-fx-background-color: #05445E;" styleClass="headerPane" stylesheets="@css/canvas.css">
+      <Pane layoutY="-5.0" prefHeight="45.0" prefWidth="766.0" style="-fx-background-color: #055C9D;" styleClass="headerPane" stylesheets="@css/canvas.css">
          <children>
-            <Label fx:id="userNameLabel" layoutX="300.0" layoutY="15.0" prefHeight="34.0" prefWidth="174.0" textFill="WHITE">
+            <Label fx:id="userNameLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="202.0" layoutY="5.0" prefHeight="39.0" prefWidth="362.0" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="24.0" />
+                  <Font name="Lucida Fax Demibold" size="27.0" />
                </font>
             </Label>
-            <Button layoutX="711.0" layoutY="12.0" mnemonicParsing="false" onAction="#onMain" text="Back" />
          </children>
       </Pane>
       <ListView fx:id="scoreList" layoutX="549.0" layoutY="100.0" prefHeight="488.0" prefWidth="200.0" />
