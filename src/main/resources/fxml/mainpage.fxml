@@ -76,11 +76,11 @@
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Hidden Mode">
+                  <Button mnemonicParsing="false" onAction="#onZenMode" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: white;" text="Zen Mode">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/MAINBOARD/Hidden%20Word.png" />
+                              <Image url="@../images/MAINBOARD/zen%20mode.png" />
                            </image>
                         </ImageView>
                      </graphic>

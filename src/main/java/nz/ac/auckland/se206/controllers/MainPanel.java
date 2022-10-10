@@ -19,12 +19,15 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class MainPanel implements Initializable {
 
-  @FXML private BorderPane CurrentScene;
+  @FXML
+  private BorderPane CurrentScene;
 
-  @FXML private Button GameButton;
+  @FXML
+  private Button GameButton;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+  }
 
   @FXML
   private void onHome(ActionEvent event) throws IOException {
@@ -63,8 +66,17 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(false);
   }
 
+  @FXML
+  private void onZenMode(ActionEvent event) throws IOException {
+    CurrentScene.setCenter(null);
+    Parent view = loadFxml("zenmode");
+    CurrentScene.setCenter(view);
+    GameButton.setDisable(false);
+  }
+
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
+   * This method is invoked when the user clicks the "Back to Main Menu" button.
+   * It loads and shows
    * the "Main Menu" scene
    *
    * @param event The event that triggered this method.
