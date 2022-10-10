@@ -12,19 +12,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="root" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
+<Pane fx:id="root" prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.CanvasController">
    <children>
-      <PieChart fx:id="modelResultsPieChart" layoutX="62.0" layoutY="358.0" prefHeight="235.0" prefWidth="612.0" title="DL Model Top Predictions" />
-      <AnchorPane layoutY="-6.0" prefHeight="42.0" prefWidth="766.0">
+      <PieChart fx:id="modelResultsPieChart" layoutX="70.0" layoutY="394.0" legendSide="LEFT" prefHeight="341.0" prefWidth="696.0" style="-fx-background-color: #A7C7E7;" />
+      <AnchorPane layoutY="-6.0" prefHeight="91.0" prefWidth="766.0">
          <children>
-            <Label fx:id="targetWordLabel" layoutX="14.0" layoutY="17.0" prefHeight="32.0" prefWidth="387.0">
+            <Label fx:id="targetWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="30.0" prefHeight="32.0" prefWidth="766.0" textAlignment="CENTER">
                <font>
-                  <Font name="Lucida Fax Regular" size="20.0" />
+                  <Font name="Lucida Fax Regular" size="25.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutY="42.0" prefHeight="65.0" prefWidth="766.0">
+      <AnchorPane layoutY="75.0" prefHeight="65.0" prefWidth="766.0">
          <children>
             <ProgressBar fx:id="pgbTimer" layoutX="256.0" layoutY="36.0" prefHeight="30.0" prefWidth="254.0" progress="0.0" />
             <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="237.0" layoutY="-1.0" prefHeight="30.0" prefWidth="292.0" textAlignment="CENTER">
@@ -34,8 +34,8 @@
             </Label>
          </children>
       </AnchorPane>
-      <ListView fx:id="leaderBoardList" layoutX="14.0" layoutY="136.0" prefHeight="209.0" prefWidth="110.0" />
-      <VBox layoutX="594.0" layoutY="152.0" prefHeight="170.0" prefWidth="122.0" spacing="20.0">
+      <ListView fx:id="leaderBoardList" layoutX="14.0" layoutY="176.0" prefHeight="209.0" prefWidth="110.0" />
+      <VBox layoutX="602.0" layoutY="187.0" prefHeight="170.0" prefWidth="122.0" spacing="20.0">
          <children>
         <Button fx:id="readyButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onReady" prefHeight="28.0" prefWidth="126.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Ready" textAlignment="CENTER" textFill="WHITE">
                <font>
@@ -59,11 +59,11 @@
             </Button>
          </children>
       </VBox>
-      <Label fx:id="leaderBoardLabel" layoutX="17.0" layoutY="112.0" prefHeight="19.0" prefWidth="102.0" text="Word">
+      <Label fx:id="leaderBoardLabel" layoutX="17.0" layoutY="152.0" prefHeight="19.0" prefWidth="102.0" text="Word">
          <font>
             <Font name="Lucida Fax Regular" size="14.0" />
          </font></Label>
-      <Pane layoutX="168.0" layoutY="115.0" prefHeight="243.0" prefWidth="400.0" style="-fx-background-color: white;">
+      <Pane layoutX="183.0" layoutY="152.0" prefHeight="243.0" prefWidth="400.0" style="-fx-background-color: white;">
          <children>
           <Canvas fx:id="canvas" height="243.0" width="400.0">
             <cursor>
@@ -72,5 +72,6 @@
           </Canvas>
          </children>
       </Pane>
+      <Pane layoutY="394.0" prefHeight="341.0" prefWidth="71.0" style="-fx-background-color: #A7C7E7;" />
    </children>
 </Pane>

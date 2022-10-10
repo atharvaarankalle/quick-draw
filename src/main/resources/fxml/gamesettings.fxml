@@ -7,14 +7,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="settingsRoot" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/gamesettings.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GameSettingsController">
+<Pane fx:id="settingsRoot" prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/gamesettings.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.GameSettingsController">
    <children>
+      <Pane layoutY="535.0" prefHeight="200.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="205.0" layoutY="14.0" text="Game Settings" textAlignment="CENTER">
          <font>
             <Font name="Lucida Handwriting Italic" size="45.0" />
          </font>
       </Label>
-      <VBox alignment="CENTER" layoutX="182.0" layoutY="180.0" prefHeight="401.0" prefWidth="402.0" spacing="10.0">
+      <VBox alignment="CENTER" layoutX="143.0" layoutY="197.0" prefHeight="482.0" prefWidth="480.0" spacing="10.0">
          <children>
             <Label fx:id="accuracyLabel" text="Accuracy">
                <font>

@@ -78,7 +78,7 @@ public class App extends Application {
     Settings gameSettings = new Settings();
 
     // Set the current scene and show the stage
-    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);
+    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 770);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
     stage.setUserData(gameSettings);

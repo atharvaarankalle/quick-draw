@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
+<AnchorPane fx:id="loginRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="900.0" style="-fx-background-color: #A9A9A9;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
    <children>
-      <HBox layoutX="-3.0" layoutY="95.0" prefHeight="301.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF;">
+      <HBox layoutX="14.0" layoutY="225.0" prefHeight="301.0" prefWidth="548.0" style="-fx-background-color: #FFFFFF;">
          <children>
             <Pane prefHeight="261.0" prefWidth="171.0" style="-fx-background-color: #A7C7E7;">
                <children>
@@ -78,18 +78,18 @@
             </AnchorPane>
          </children>
       </HBox>
-      <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="567.0" layoutY="95.0" onMouseClicked="#onUserSelected" prefHeight="502.0" prefWidth="332.0" />
-      <Label fx:id="error_lab2" layoutX="646.0" layoutY="59.0" prefHeight="36.0" prefWidth="174.0" text="Existing Member" textAlignment="CENTER" textFill="WHITE">
+      <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="567.0" layoutY="225.0" onMouseClicked="#onUserSelected" prefHeight="502.0" prefWidth="332.0" />
+      <Label fx:id="error_lab2" layoutX="646.0" layoutY="182.0" prefHeight="36.0" prefWidth="174.0" text="Existing Member" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="error_lab21" layoutX="256.0" layoutY="59.0" prefHeight="36.0" prefWidth="138.0" text="Registeration" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="error_lab21" layoutX="213.0" layoutY="182.0" prefHeight="36.0" prefWidth="138.0" text="Registeration" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Arial Black" size="18.0" />
          </font>
       </Label>
       <AnchorPane layoutX="-1.0" prefHeight="36.0" prefWidth="900.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" />
-      <AnchorPane layoutX="-5.0" layoutY="598.0" prefHeight="36.0" prefWidth="908.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="-5.0" AnchorPane.rightAnchor="-1.0" />
+      <AnchorPane layoutX="-3.0" layoutY="727.0" prefHeight="36.0" prefWidth="908.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-3.0" />
    </children>
 </AnchorPane>
