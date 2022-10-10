@@ -511,14 +511,12 @@ public class ZenMode {
   // And Converts into R , G , B integer value
   private String colorToHex() throws TranslateException {
 
-    String hexC = Integer.toHexString(myColorPicker.getValue().hashCode()).substring(0, 6).toUpperCase();
-    int r = Integer.valueOf(hexC.substring(0, 2), 16);
-    int g = Integer.valueOf(hexC.substring(2, 4), 16);
-    int b = Integer.valueOf(hexC.substring(4, 6), 16);
-    return hexC;
+    String colourString = myColorPicker.getValue().toString();
+    return colourString.substring(2, 8);
   }
 
   private int getRed() throws NumberFormatException, TranslateException {
+
     int r = Integer.valueOf(colorToHex().substring(0, 2), 16);
     return r;
   }
