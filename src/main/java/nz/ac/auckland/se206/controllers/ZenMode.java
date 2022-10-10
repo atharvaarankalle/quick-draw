@@ -31,7 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -159,7 +159,6 @@ public class ZenMode {
    * 
    * @throws TranslateException
    */
-  @FXML
   private void initializeCanvas() throws TranslateException {
 
     graphic = canvas.getGraphicsContext2D();
@@ -255,6 +254,80 @@ public class ZenMode {
       text.add(currentWord); // Adds new randomWord, if current != random
     }
 
+  }
+
+  @FXML
+  private void onDraw() throws TranslateException {
+
+    graphic = canvas.getGraphicsContext2D();
+
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
+
+    canvas.setOnMouseDragged(
+        e -> {
+          // Brush size (you can change this, it should not be too small or too large).
+          final double size = 6;
+
+          final double x = e.getX() - size / 2;
+          final double y = e.getY() - size / 2;
+
+          // This is the colour of the brush.
+          try {
+            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+          } catch (NumberFormatException | TranslateException e1) {
+            e1.printStackTrace();
+          }
+          graphic.setLineWidth(size);
+          graphic.fillRect(x, y, size, size);
+
+          // update the coordinates
+          currentX = x;
+          currentY = y;
+        });
+
+    canvas.setDisable(false);
+  }
+
+  @FXML
+  private void onErase() throws TranslateException {
+
+    graphic = canvas.getGraphicsContext2D();
+
+    // save coordinates when mouse is pressed on the canvas
+    canvas.setOnMousePressed(
+        e -> {
+          currentX = e.getX();
+          currentY = e.getY();
+        });
+
+    canvas.setOnMouseDragged(
+        e -> {
+          // Brush size (you can change this, it should not be too small or too large).
+          final double size = 6;
+
+          final double x = e.getX() - size / 2;
+          final double y = e.getY() - size / 2;
+
+          // This is the colour of the brush.
+          try {
+            graphic.setFill(Color.rgb(255, 255, 255));
+          } catch (NumberFormatException e1) {
+            e1.printStackTrace();
+          }
+          graphic.setLineWidth(size);
+          graphic.fillRect(x, y, size, size);
+
+          // update the coordinates
+          currentX = x;
+          currentY = y;
+        });
+
+    canvas.setDisable(false);
   }
 
   /**
