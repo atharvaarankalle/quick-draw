@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="root" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ZenMode">
@@ -59,7 +60,10 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <ColorPicker fx:id="myColorPicker" style="-fx-background-color: white;" />
+            <ColorPicker fx:id="myColorPicker" style="-fx-background-color: white;">
+               <value>
+                  <Color />
+               </value></ColorPicker>
          </children>
       </VBox>
       <Pane layoutX="126.0" layoutY="85.0" prefHeight="243.0" prefWidth="400.0" style="-fx-background-color: white;">

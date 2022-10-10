@@ -31,11 +31,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import javax.imageio.ImageIO;
+
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -178,7 +180,12 @@ public class ZenMode {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          graphic.setFill(Color.YELLOW);
+          try {
+            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+          } catch (NumberFormatException | TranslateException e1) {
+            e1.printStackTrace();
+          }
+          graphic.setLineWidth(size);
           graphic.fillRect(x, y, size, size);
 
           // update the coordinates
@@ -471,7 +478,7 @@ public class ZenMode {
                 clock--;
                 try {
                   makePredictions();
-                  colorToHex(myColorPicker.getValue());
+                  colorToHex();
                   if (isCanvasBlank()) {
                     resetPieChart();
                   }
@@ -500,35 +507,30 @@ public class ZenMode {
     return backgroundTask;
   }
 
-  String colorToHex(Color color) {
-    String hex1;
-    String hex2;
+  // A method that converts colour code into readable 6 digit hexadecimal code
+  // And Converts into R , G , B integer value
+  private String colorToHex() throws TranslateException {
 
-    hex1 = Integer.toHexString(color.hashCode()).toUpperCase();
-
-    switch (hex1.length()) {
-      case 2:
-        hex2 = "000000";
-        break;
-      case 3:
-        hex2 = String.format("00000%s", hex1.substring(0, 1));
-        break;
-      case 4:
-        hex2 = String.format("0000%s", hex1.substring(0, 2));
-        break;
-      case 5:
-        hex2 = String.format("000%s", hex1.substring(0, 3));
-        break;
-      case 6:
-        hex2 = String.format("00%s", hex1.substring(0, 4));
-        break;
-      case 7:
-        hex2 = String.format("0%s", hex1.substring(0, 5));
-        break;
-      default:
-        hex2 = hex1.substring(0, 6);
-    }
-    System.out.println(hex2);
-    return hex2;
+    String hexC = Integer.toHexString(myColorPicker.getValue().hashCode()).substring(0, 6).toUpperCase();
+    int r = Integer.valueOf(hexC.substring(0, 2), 16);
+    int g = Integer.valueOf(hexC.substring(2, 4), 16);
+    int b = Integer.valueOf(hexC.substring(4, 6), 16);
+    return hexC;
   }
+
+  private int getRed() throws NumberFormatException, TranslateException {
+    int r = Integer.valueOf(colorToHex().substring(0, 2), 16);
+    return r;
+  }
+
+  private int getGreen() throws NumberFormatException, TranslateException {
+    int g = Integer.valueOf(colorToHex().substring(2, 4), 16);
+    return g;
+  }
+
+  private int getBlue() throws NumberFormatException, TranslateException {
+    int b = Integer.valueOf(colorToHex().substring(4, 6), 16);
+    return b;
+  }
+
 }
