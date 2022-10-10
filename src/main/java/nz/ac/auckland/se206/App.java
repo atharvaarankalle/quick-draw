@@ -19,7 +19,8 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.Settings;
 
 /**
- * This is the entry point of the JavaFX application, while you can change this class, it should
+ * This is the entry point of the JavaFX application, while you can change this
+ * class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
@@ -29,7 +30,8 @@ public class App extends Application {
     storageData.mkdir();
     FileWriter fileWriter;
     fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
-    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
+    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+    }
   }
 
   public static void main(final String[] args) throws IOException {
@@ -40,13 +42,17 @@ public class App extends Application {
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");
     if (Files.exists(path)) {
-      Files.delete(path);
-      System.exit(0);
+      BufferedWriter writer = Files.newBufferedWriter(path);
+      writer.write("");
+      writer.flush();
+      writer.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0");
+      writer.close();
     }
   }
 
   /**
-   * Returns the node associated to the input file. The method expects that the file is located in
+   * Returns the node associated to the input file. The method expects that the
+   * file is located in
    * "src/main/resources/fxml".
    *
    * @param fxml The name of the FXML file (without extension).
@@ -60,7 +66,8 @@ public class App extends Application {
   private Scene scene;
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the
+   * "Canvas" scene.
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
@@ -92,7 +99,7 @@ public class App extends Application {
     String currentID;
     String currentLine;
     String lastLine = "";
-    String[] separatedUserInfo = {""};
+    String[] separatedUserInfo = { "" };
     try {
       lineNumber = Files.lines(userDataPath).count();
 
