@@ -1,0 +1,10 @@
+.menuButton {
+    -fx-background-color: #4368DC;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 5, 0, 0, 0);
+    -fx-background-radius: 10;
+    -fx-text-fill: #FFFFFF;
+}
+
+.menuButton:hover {
+    -fx-background-color: #507CFF;
+}
