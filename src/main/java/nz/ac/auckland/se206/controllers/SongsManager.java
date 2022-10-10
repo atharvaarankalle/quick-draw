@@ -14,4 +14,11 @@ public class SongsManager {
         buttonSound1 = new Media(App.class.getResource("/sounds/woodenButton.mp3").toURI().toString());
         buttonPlayer1 = new MediaPlayer(buttonSound1);
     }
+
+    public static void playButton1(){
+        if (buttonPlayer1.getStatus() == MediaPlayer.Status.PLAYING) {
+			buttonPlayer1.stop();
+		}
+        buttonPlayer1.play();
+    }
 }

@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
@@ -36,6 +35,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onHome(ActionEvent event) throws IOException {
+    SongsManager.playButton1();
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
     enableButtons();
@@ -44,10 +44,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onGame(ActionEvent event) throws IOException {
-    if (SongsManager.buttonPlayer1.getStatus() == MediaPlayer.Status.PLAYING) {
-			SongsManager.buttonPlayer1.stop();
-		}
-    SongsManager.buttonPlayer1.play();
+    SongsManager.playButton1();
     CurrentScene.setCenter(null);
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
@@ -57,6 +54,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onInfo(ActionEvent event) throws IOException {
+    SongsManager.playButton1();
     Parent view = loadFxml("howtoplay");
     CurrentScene.setCenter(view);
     enableButtons();
@@ -65,6 +63,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onStatistic(ActionEvent event) throws IOException {
+    SongsManager.playButton1();
     CurrentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
     CurrentScene.setCenter(view);
@@ -74,6 +73,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
+    SongsManager.playButton1();
     Parent view = loadFxml("gamesettings");
     CurrentScene.setCenter(view);
     enableButtons();
