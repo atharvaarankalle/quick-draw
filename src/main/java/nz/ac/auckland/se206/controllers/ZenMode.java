@@ -121,7 +121,7 @@ public class ZenMode {
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
 
     // Initialise the canvas and disable it so users cannot draw on it
-    initializeCanvas(colorPicker());
+    initializeCanvas();
     canvas.setDisable(true);
     saveDrawingButton.setDisable(true);
     targetWordLabel.setText("Get a new word to begin drawing!");
@@ -157,10 +157,9 @@ public class ZenMode {
    * 
    * @throws TranslateException
    */
-  private void initializeCanvas(Color palletColor) throws TranslateException {
+  @FXML
+  private void initializeCanvas() throws TranslateException {
 
-    graphic = canvas.getGraphicsContext2D();
-    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     graphic = canvas.getGraphicsContext2D();
 
     // save coordinates when mouse is pressed on the canvas
@@ -179,18 +178,8 @@ public class ZenMode {
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
-          graphic.setFill(palletColor);
-          graphic.setLineWidth(size);
-
-          // Select the pen or eraser depending on the value of the pen/eraser button text
-          if (penEraserButton.getText().equals("Pen")) {
-            // To erase lines, set the mouse to clear a small rectangle at the cursor
-            // location
-            graphic.clearRect(x, y, 10, 10);
-          } else {
-            // Create a line that goes from the point (currentX, currentY) and (x,y)
-            graphic.strokeLine(currentX, currentY, x, y);
-          }
+          graphic.setFill(Color.YELLOW);
+          graphic.fillRect(x, y, size, size);
 
           // update the coordinates
           currentX = x;
@@ -230,7 +219,7 @@ public class ZenMode {
     if (readyButton.getText().equals("Start!")) {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
-      initializeCanvas(colorPicker());
+      initializeCanvas();
       resetPieChart();
 
       readyButton.setDisable(true);
@@ -259,23 +248,6 @@ public class ZenMode {
       text.add(currentWord); // Adds new randomWord, if current != random
     }
 
-  }
-
-  /**
-   * This method executes when the user clicks the button to switch between pen
-   * and eraser It
-   * changes the text of the button to reflect the current tool
-   */
-  @FXML
-  private void onSwitchBetweenPenAndEraser() {
-    // If the current tool is pen, change the text to reflect eraser and set the
-    // current tool to
-    // eraser and vice versa
-    if (penEraserButton.getText().equals("Eraser")) {
-      penEraserButton.setText("Pen");
-    } else {
-      penEraserButton.setText("Eraser");
-    }
   }
 
   /**
@@ -499,6 +471,7 @@ public class ZenMode {
                 clock--;
                 try {
                   makePredictions();
+                  colorToHex(myColorPicker.getValue());
                   if (isCanvasBlank()) {
                     resetPieChart();
                   }
@@ -527,13 +500,35 @@ public class ZenMode {
     return backgroundTask;
   }
 
-  @FXML
-  private Color colorPicker() {
-    Color myColor = myColorPicker.getValue();
+  String colorToHex(Color color) {
+    String hex1;
+    String hex2;
 
-    if (myColor == null) {
-      myColor = Color.BLACK;
+    hex1 = Integer.toHexString(color.hashCode()).toUpperCase();
+
+    switch (hex1.length()) {
+      case 2:
+        hex2 = "000000";
+        break;
+      case 3:
+        hex2 = String.format("00000%s", hex1.substring(0, 1));
+        break;
+      case 4:
+        hex2 = String.format("0000%s", hex1.substring(0, 2));
+        break;
+      case 5:
+        hex2 = String.format("000%s", hex1.substring(0, 3));
+        break;
+      case 6:
+        hex2 = String.format("00%s", hex1.substring(0, 4));
+        break;
+      case 7:
+        hex2 = String.format("0%s", hex1.substring(0, 5));
+        break;
+      default:
+        hex2 = hex1.substring(0, 6);
     }
-    return myColor;
+    System.out.println(hex2);
+    return hex2;
   }
 }
