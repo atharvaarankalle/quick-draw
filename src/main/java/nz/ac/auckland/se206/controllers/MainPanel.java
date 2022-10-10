@@ -2,6 +2,9 @@ package nz.ac.auckland.se206.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,6 +84,15 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
+
+    // Check if GUEST exists, if does, then delete the file
+    Path path = Paths.get("DATABASE/GUEST");
+    Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
+    if (Files.exists(path) || Files.exists(guestSettingsPath)) {
+      Files.delete(path);
+      Files.delete(guestSettingsPath);
+      System.exit(0);
+    }
 
     // Switch to the "Main Menu" scene.
     Parent view = loadFxml("homepage");
