@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.media.MediaPlayer;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
@@ -43,6 +44,10 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onGame(ActionEvent event) throws IOException {
+    if (SongsManager.buttonPlayer1.getStatus() == MediaPlayer.Status.PLAYING) {
+			SongsManager.buttonPlayer1.stop();
+		}
+    SongsManager.buttonPlayer1.play();
     CurrentScene.setCenter(null);
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
