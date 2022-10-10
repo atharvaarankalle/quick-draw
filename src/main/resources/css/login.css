@@ -6,7 +6,11 @@
     -fx-background-color: rgb(255, 255, 255);
 }
 
+.list-view .list-cell {
+    -fx-font-size: 20.0;
+    -fx-font-family: "Lucida Fax"
+}
+
 .list-view .list-cell:hover {
-    -fx-background-color: #A7C7E7;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #507CFF;
 }

@@ -208,7 +208,12 @@ public class LoginController implements Initializable {
   @FXML
   private void onGuestMode(ActionEvent event) throws IOException {
 
+    Stage stage = (Stage) loginRoot.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
     String line = "GUEST";
+    gameSettings.setCurrentUser(line);
     addLine(line);
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));

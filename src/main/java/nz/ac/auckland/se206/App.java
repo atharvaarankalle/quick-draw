@@ -39,8 +39,10 @@ public class App extends Application {
 
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");
-    if (Files.exists(path)) {
+    Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
+    if (Files.exists(path) || Files.exists(guestSettingsPath)) {
       Files.delete(path);
+      Files.delete(guestSettingsPath);
       System.exit(0);
     }
   }
@@ -99,24 +101,27 @@ public class App extends Application {
       if (lineNumber > 0) {
         currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
 
-        BufferedReader bufferedReader =
-            new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
+        if (!currentID.equals("GUEST")) {
+          BufferedReader bufferedReader =
+              new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
 
-        while ((currentLine = bufferedReader.readLine()) != null) {
-          lastLine = currentLine;
+          while ((currentLine = bufferedReader.readLine()) != null) {
+            lastLine = currentLine;
+          }
+
+          bufferedReader.close();
+
+          separatedUserInfo = lastLine.split(" , ");
+
+          Settings gameSettings = (Settings) stage.getUserData();
+
+          gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[0]));
+          gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[1]));
+          gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[2]));
+          gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[3]));
         }
-
-        bufferedReader.close();
-
-        separatedUserInfo = lastLine.split(" , ");
-
-        Settings gameSettings = (Settings) stage.getUserData();
-
-        gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[0]));
-        gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[1]));
-        gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[2]));
-        gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[3]));
       }
+
     } catch (IOException e) {
       e.printStackTrace();
     }
