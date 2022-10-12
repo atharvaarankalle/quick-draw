@@ -86,12 +86,24 @@ public class SoundsManager {
                     victoryPlayer.stop();
                 }
                 victoryPlayer.play();
+                victoryPlayer.setOnEndOfMedia(new Runnable(){
+                    @Override
+                    public void run(){
+                        playBGM(bgm.MAINPANEL);
+                    }
+                });
                 break;
             case FAIL:
                 if (failurePlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                     failurePlayer.stop();
                 }
                 failurePlayer.play();
+                failurePlayer.setOnEndOfMedia(new Runnable(){
+                    @Override
+                    public void run(){
+                        playBGM(bgm.MAINPANEL);
+                    }
+                });
                 break;
             case BEEP:
                 if (beepPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -157,7 +169,11 @@ public class SoundsManager {
                 break;
         }
     }
-
+    public static void stopWinAndLoseSFX(){
+        victoryPlayer.stop();
+        failurePlayer.stop();
+        playBGM(bgm.MAINPANEL);
+    }
     public static void stopAllBGM() {
         zenPlayer.stop();
         mainPanelPlayer.stop();

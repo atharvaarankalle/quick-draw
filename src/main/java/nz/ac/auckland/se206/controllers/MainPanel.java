@@ -91,6 +91,7 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
+    SoundsManager.stopWinAndLoseSFX();
     SoundsManager.stopAllBGM();
     // Switch to the "Main Menu" scene.
     Parent view = loadFxml("homepage");
