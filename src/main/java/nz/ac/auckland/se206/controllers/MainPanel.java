@@ -82,6 +82,15 @@ public class MainPanel implements Initializable {
     settingsButton.setDisable(true);
   }
 
+  @FXML
+  private void onSoundSettings(ActionEvent event) throws IOException{
+    SoundsManager.playSFX(sfx.BUTTON1);
+    Parent view = loadFxml("soundsettings");
+    CurrentScene.setCenter(view);
+    enableButtons();
+    musicButton.setDisable(true);
+  }
+
   /**
    * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
    * the "Main Menu" scene

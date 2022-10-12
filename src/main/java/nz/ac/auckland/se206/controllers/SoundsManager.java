@@ -20,22 +20,23 @@ public class SoundsManager {
     private static MediaPlayer beepPlayer;
     private static Media tapSound;
     private static MediaPlayer tapPlayer;
+    private static Media pencilSound;
+    private static MediaPlayer pencilPlayer;
+    private static Media eraserSound;
+    private static MediaPlayer eraserPlayer;
 
     private static Media mainPanelBGM; // Currently PVZ
     private static MediaPlayer mainPanelPlayer;
     private static Media zenBGM; // Currently PVZ
     private static MediaPlayer zenPlayer;
-    private static Media pencilBGM;
-    private static MediaPlayer pencilPlayer;
-    private static Media eraserBGM;
-    private static MediaPlayer eraserPlayer;
+
 
     public enum sfx {
-        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP
+        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP,PENCIL, ERASER
     }
 
     public enum bgm {
-        MAINPANEL, INGAME, ZEN, HIDDEN, PENCIL, ERASER
+        MAINPANEL, INGAME, ZEN, HIDDEN
     }
 
     public static void loadSFX() throws URISyntaxException {
@@ -58,10 +59,10 @@ public class SoundsManager {
         mainPanelPlayer = new MediaPlayer(mainPanelBGM);
         zenBGM = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
         zenPlayer = new MediaPlayer(zenBGM);
-        pencilBGM = new Media(App.class.getResource("/sounds/pencil.mp3").toURI().toString());
-        pencilPlayer = new MediaPlayer(pencilBGM);
-        eraserBGM = new Media(App.class.getResource("/sounds/eraser.mp3").toURI().toString());
-        eraserPlayer = new MediaPlayer(eraserBGM);
+        pencilSound = new Media(App.class.getResource("/sounds/pencil.mp3").toURI().toString());
+        pencilPlayer = new MediaPlayer(pencilSound);
+        eraserSound = new Media(App.class.getResource("/sounds/eraser.mp3").toURI().toString());
+        eraserPlayer = new MediaPlayer(eraserSound);
     }
 
     /*
@@ -117,6 +118,26 @@ public class SoundsManager {
                 }
                 tapPlayer.play();
                 break;
+                case PENCIL:
+                pencilPlayer.play();
+                pencilPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        pencilPlayer.seek(Duration.ZERO);
+                        pencilPlayer.play();
+                    }
+                });
+                break;
+            case ERASER:
+                eraserPlayer.play();
+                eraserPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        eraserPlayer.seek(Duration.ZERO);
+                        eraserPlayer.play();
+                    }
+                });
+                break;
         }
 
     }
@@ -147,38 +168,35 @@ public class SoundsManager {
                 break;
             case INGAME:
                 break;
-            case PENCIL:
-                pencilPlayer.play();
-                pencilPlayer.setOnEndOfMedia(new Runnable() {
-                    @Override
-                    public void run() {
-                        pencilPlayer.seek(Duration.ZERO);
-                        pencilPlayer.play();
-                    }
-                });
-                break;
-            case ERASER:
-                eraserPlayer.play();
-                eraserPlayer.setOnEndOfMedia(new Runnable() {
-                    @Override
-                    public void run() {
-                        eraserPlayer.seek(Duration.ZERO);
-                        eraserPlayer.play();
-                    }
-                });
-                break;
         }
     }
+    /**
+     * This method stops the win/lose sfx, and resume to the looping of main panel bgm after stopping
+     */
     public static void stopWinAndLoseSFX(){
         victoryPlayer.stop();
         failurePlayer.stop();
         playBGM(bgm.MAINPANEL);
     }
+
+    public static void stopPencilOrEraserSFX(sfx pencilOrEraser){
+        if(pencilOrEraser == sfx.PENCIL){
+            pencilPlayer.stop();
+        } else {
+            eraserPlayer.stop();
+        }
+    }
+    /**
+     * This method stops all curretly playing bgm
+     */
     public static void stopAllBGM() {
         zenPlayer.stop();
         mainPanelPlayer.stop();
     }
-
+    /**
+     * This method stops a specific BGM
+     * @param bgmType The specific BGM to be terminated
+     */
     public static void stopBGM(bgm bgmType) {
         switch (bgmType) {
             case MAINPANEL:
@@ -191,20 +209,26 @@ public class SoundsManager {
                 break;
             case INGAME:
                 break;
-            case PENCIL:
-                pencilPlayer.stop();
-                break;
-            case ERASER:
-                eraserPlayer.stop();
-                break;
         }
     }
-
-    public static void changeSFXVolume(int volume) {
+    /**
+     * This method takes a double as input and change the volume level of all SFX to corresponding value
+     * @param volume
+     */
+    public static void changeSFXVolume(double volume) {
+        buttonPlayer1.setVolume(volume);
+        buttonPlayer2.setVolume(volume);
+        victoryPlayer.setVolume(volume);
+        failurePlayer.setVolume(volume);
+        beepPlayer.setVolume(volume);
+        tapPlayer.setVolume(volume);
+        pencilPlayer.setVolume(volume);
+        eraserPlayer.setVolume(volume);
 
     }
 
-    public static void changeBGMVolume(int volume) {
-
+    public static void changeBGMVolume(double volume) {
+        mainPanelPlayer.setVolume(volume);
+        zenPlayer.setVolume(volume);
     }
 }

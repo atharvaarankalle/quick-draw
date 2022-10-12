@@ -181,7 +181,7 @@ public class LoginController implements Initializable {
 
       if (!userFileExists) {
         BufferedWriter bufferedWriterUserFile = new BufferedWriter(fileWriterUserFile);
-        bufferedWriterUserFile.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0");
+        bufferedWriterUserFile.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0 , 75.0 , 75.0");
         bufferedWriterUserFile.newLine();
         bufferedWriterUserFile.flush();
         bufferedWriterUserFile.close();

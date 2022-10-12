@@ -10,6 +10,10 @@ public class Settings {
 
   private double confidenceLevel = 0.0;
 
+  private double sfxVolume = 75.0;
+
+  private double bgmVolume = 75.0;
+
   public void setAccuracyLevel(double level) {
     this.accuracyLevel = level;
   }
@@ -24,6 +28,14 @@ public class Settings {
 
   public void setConfidenceLevel(double level) {
     this.confidenceLevel = level;
+  }
+
+  public void setSfxVolume(double sfxVolume) {
+      this.sfxVolume = sfxVolume;
+  }
+
+  public void setBgmVolume(double bgmVolume) {
+      this.bgmVolume = bgmVolume;
   }
 
   public double getAccuracyLevel() {
@@ -62,6 +74,14 @@ public class Settings {
       default:
         return 0.01;
     }
+  }
+
+  public double getSfxVolume() {
+      return sfxVolume;
+  }
+
+  public double getBgmVolume() {
+      return bgmVolume;
   }
 
   public double getTimeSliderPosition() {

@@ -212,16 +212,16 @@ public class CanvasController {
     //Looping sound effects for pen/eraser
     canvas.setOnDragDetected(e ->{
       if (penEraserButton.getText().equals("Pen")) {
-        SoundsManager.playBGM(bgm.ERASER);
+        SoundsManager.playSFX(sfx.ERASER);
       } else {
-        SoundsManager.playBGM(bgm.PENCIL);
+        SoundsManager.playSFX(sfx.PENCIL);
       }
     });
     canvas.setOnMouseReleased(e ->{
       if (penEraserButton.getText().equals("Pen")) {
-        SoundsManager.stopBGM(bgm.ERASER);
+        SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
       } else {
-        SoundsManager.stopBGM(bgm.PENCIL);
+        SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
       }
     });
     canvas.setDisable(false);
@@ -771,7 +771,11 @@ public class CanvasController {
               + " , "
               + gameSettings.getTimeSliderPosition()
               + " , "
-              + gameSettings.getConfidenceSliderPosition());
+              + gameSettings.getConfidenceSliderPosition()
+              +" , "
+              + gameSettings.getSfxVolume()
+              +" , "
+              +gameSettings.getBgmVolume());
       bufferedWriter.newLine();
       bufferedWriter.flush();
       bufferedWriter.close();
