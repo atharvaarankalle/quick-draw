@@ -92,10 +92,12 @@ public class MainPanel implements Initializable {
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");
     Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
-    if (Files.exists(path) || Files.exists(guestSettingsPath)) {
+    if (Files.exists(path)) {
       Files.delete(path);
+    }
+
+    if (Files.exists(guestSettingsPath)) {
       Files.delete(guestSettingsPath);
-      System.exit(0);
     }
 
     // Switch to the "Main Menu" scene.
@@ -108,6 +110,18 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onExit(ActionEvent event) throws IOException {
+
+    // Check if GUEST exists, if does, then delete the file
+    Path path = Paths.get("DATABASE/GUEST");
+    Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
+    if (Files.exists(path)) {
+      Files.delete(path);
+    }
+
+    if (Files.exists(guestSettingsPath)) {
+      Files.delete(guestSettingsPath);
+    }
+
     System.exit(0);
   }
 
