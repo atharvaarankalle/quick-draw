@@ -17,7 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
-import nz.ac.auckland.se206.controllers.SongsManager;
+import nz.ac.auckland.se206.controllers.SoundsManager;
 import nz.ac.auckland.se206.controllers.Settings;
 
 /**
@@ -79,8 +79,8 @@ public class App extends Application {
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
     //Initialize all sound effects
-    SongsManager.loadSFX();
-    SongsManager.loadBGM();
+    SoundsManager.loadSFX();
+    SoundsManager.loadBGM();
     Settings gameSettings = new Settings();
     
     // Set the current scene and show the stage

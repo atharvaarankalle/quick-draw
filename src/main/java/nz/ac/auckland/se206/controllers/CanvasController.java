@@ -43,8 +43,8 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
-import nz.ac.auckland.se206.controllers.SongsManager.bgm;
-import nz.ac.auckland.se206.controllers.SongsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and
@@ -209,14 +209,28 @@ public class CanvasController {
           currentX = x;
           currentY = y;
         });
-
+    //Looping sound effects for pen/eraser
+    canvas.setOnDragDetected(e ->{
+      if (penEraserButton.getText().equals("Pen")) {
+        SoundsManager.playBGM(bgm.ERASER);
+      } else {
+        SoundsManager.playBGM(bgm.PENCIL);
+      }
+    });
+    canvas.setOnMouseReleased(e ->{
+      if (penEraserButton.getText().equals("Pen")) {
+        SoundsManager.stopBGM(bgm.ERASER);
+      } else {
+        SoundsManager.stopBGM(bgm.PENCIL);
+      }
+    });
     canvas.setDisable(false);
   }
 
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
-    SongsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.playSFX(sfx.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
@@ -240,11 +254,11 @@ public class CanvasController {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
-        SongsManager.playSFX(sfx.BUTTON2);
+        SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
-      SongsManager.stopBGM();
-      SongsManager.playBGM(bgm.ZEN);
+      SoundsManager.stopAllBGM();
+      SoundsManager.playBGM(bgm.ZEN);
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
@@ -291,7 +305,7 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBetweenPenAndEraser() {
-    SongsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.playSFX(sfx.BUTTON2);
     // If the current tool is pen, change the text to reflect eraser and set the
     // current tool to
     // eraser and vice versa
@@ -463,8 +477,8 @@ public class CanvasController {
                    */
 
                   if (isWordCorrect()) {
-                    SongsManager.stopBGM();
-                    SongsManager.playSFX(sfx.VICTORY);
+                    SoundsManager.stopAllBGM();
+                    SoundsManager.playSFX(sfx.VICTORY);
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
                     Stage stage = (Stage) root.getScene().getWindow();
@@ -496,8 +510,8 @@ public class CanvasController {
         KeyFrame beepFrame = new KeyFrame(
             Duration.seconds(1),
             e -> {
-              if (timeLeft.get() <= 10) {
-                SongsManager.playSFX(sfx.BEEP);
+              if (timeLeft.get() <= 10&&timeLeft.get()>0) {
+                SoundsManager.playSFX(sfx.BEEP);
               }
             });
         timeline.getKeyFrames().clear();
@@ -525,8 +539,8 @@ public class CanvasController {
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
-              SongsManager.stopBGM();
-              SongsManager.playSFX(sfx.FAIL);
+              SoundsManager.stopAllBGM();
+              SoundsManager.playSFX(sfx.FAIL);
               readyButton.setDisable(false);
               readyButton.setText("Ready?");
               clearButton.setDisable(true);

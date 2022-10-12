@@ -7,11 +7,11 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 
-public class SongsManager {
-    public static Media buttonSound1; // Wooden
-    public static MediaPlayer buttonPlayer1; // Wooden
-    public static Media buttonSound2; // Pop
-    public static MediaPlayer buttonPlayer2; // Pop
+public class SoundsManager {
+    public static Media buttonSound1; // Wooden click sound
+    public static MediaPlayer buttonPlayer1;
+    public static Media buttonSound2; // Pop sound
+    public static MediaPlayer buttonPlayer2;
     private static Media victorySound;
     private static MediaPlayer victoryPlayer;
     private static Media failureSound;
@@ -19,17 +19,21 @@ public class SongsManager {
     private static Media beepSound;
     private static MediaPlayer beepPlayer;
 
-    private static Media mainPanelBGM; // PVZ
+    private static Media mainPanelBGM; // Currently PVZ
     private static MediaPlayer mainPanelPlayer;
-    private static Media zenBGM; // PVZ
+    private static Media zenBGM; // Currently PVZ
     private static MediaPlayer zenPlayer;
+    private static Media pencilBGM;
+    private static MediaPlayer pencilPlayer;
+    private static Media eraserBGM;
+    private static MediaPlayer eraserPlayer;
 
     public enum sfx {
         BUTTON1, BUTTON2, VICTORY, FAIL, BEEP
     }
 
     public enum bgm {
-        MAINPANEL, INGAME, ZEN, HIDDEN
+        MAINPANEL, INGAME, ZEN, HIDDEN, PENCIL, ERASER
     }
 
     public static void loadSFX() throws URISyntaxException {
@@ -50,15 +54,15 @@ public class SongsManager {
         mainPanelPlayer = new MediaPlayer(mainPanelBGM);
         zenBGM = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
         zenPlayer = new MediaPlayer(zenBGM);
+        pencilBGM = new Media(App.class.getResource("/sounds/pencil.mp3").toURI().toString());
+        pencilPlayer = new MediaPlayer(pencilBGM);
+        eraserBGM = new Media(App.class.getResource("/sounds/eraser.mp3").toURI().toString());
+        eraserPlayer = new MediaPlayer(eraserBGM);
     }
 
-    public static void t() {
-        if (buttonPlayer2.getStatus() == MediaPlayer.Status.PLAYING) {
-            buttonPlayer2.stop();
-        }
-        buttonPlayer2.play();
-    }
-
+    /*
+     * 
+     */
     public static void playSFX(sfx sfxType) {
         switch (sfxType) {
             case BUTTON1:
@@ -98,42 +102,83 @@ public class SongsManager {
     public static void playBGM(bgm bgmType) {
         switch (bgmType) {
             case MAINPANEL:
-            mainPanelPlayer.play();
-            mainPanelPlayer.setOnEndOfMedia(new Runnable(){
-                @Override
-                public void run(){
-                mainPanelPlayer.seek(Duration.ZERO);
                 mainPanelPlayer.play();
-                }
-            });
-            break;
+                mainPanelPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainPanelPlayer.seek(Duration.ZERO);
+                        mainPanelPlayer.play();
+                    }
+                });
+                break;
             case ZEN:
-            zenPlayer.play();
-            zenPlayer.setOnEndOfMedia(new Runnable(){
-                @Override
-                public void run(){
-                zenPlayer.seek(Duration.ZERO);
                 zenPlayer.play();
-                }
-            });
-            break;
+                zenPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        zenPlayer.seek(Duration.ZERO);
+                        zenPlayer.play();
+                    }
+                });
+                break;
             case HIDDEN:
                 break;
             case INGAME:
                 break;
+            case PENCIL:
+                pencilPlayer.play();
+                pencilPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        pencilPlayer.seek(Duration.ZERO);
+                        pencilPlayer.play();
+                    }
+                });
+                break;
+            case ERASER:
+                eraserPlayer.play();
+                eraserPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        eraserPlayer.seek(Duration.ZERO);
+                        eraserPlayer.play();
+                    }
+                });
+                break;
         }
     }
 
-    public static void stopBGM() {
+    public static void stopAllBGM() {
         zenPlayer.stop();
         mainPanelPlayer.stop();
     }
 
-    public static void changeSFXVolume(int volume){
+    public static void stopBGM(bgm bgmType) {
+        switch (bgmType) {
+            case MAINPANEL:
+                mainPanelPlayer.play();
+                break;
+            case ZEN:
+                zenPlayer.stop();
+                break;
+            case HIDDEN:
+                break;
+            case INGAME:
+                break;
+            case PENCIL:
+                pencilPlayer.stop();
+                break;
+            case ERASER:
+                eraserPlayer.stop();
+                break;
+        }
+    }
+
+    public static void changeSFXVolume(int volume) {
 
     }
 
-    public static void changeBGMVolume(int volume){
-        
+    public static void changeBGMVolume(int volume) {
+
     }
 }
