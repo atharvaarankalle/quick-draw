@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" styleClass="..\css\gamesettings.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SoundSettingsController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="195.0" layoutY="23.0" text="Sound Settings" textAlignment="CENTER">
+         <font>
+            <Font name="Lucida Handwriting Italic" size="45.0" />
+         </font>
+      </Label>
+      <Label layoutX="329.0" layoutY="153.0" text="Music">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Label layoutX="255.0" layoutY="298.0" text="Sound effects">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Slider layoutX="242.0" layoutY="230.0" prefHeight="14.0" prefWidth="283.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #bb98f1;" />
+      <Slider layoutX="244.0" layoutY="389.0" prefHeight="14.0" prefWidth="283.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #bb98f1;" />
+   </children>
+</AnchorPane>
