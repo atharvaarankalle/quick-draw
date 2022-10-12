@@ -18,6 +18,8 @@ public class SoundsManager {
     private static MediaPlayer failurePlayer;
     private static Media beepSound;
     private static MediaPlayer beepPlayer;
+    private static Media tapSound;
+    private static MediaPlayer tapPlayer;
 
     private static Media mainPanelBGM; // Currently PVZ
     private static MediaPlayer mainPanelPlayer;
@@ -29,7 +31,7 @@ public class SoundsManager {
     private static MediaPlayer eraserPlayer;
 
     public enum sfx {
-        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP
+        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP
     }
 
     public enum bgm {
@@ -47,6 +49,8 @@ public class SoundsManager {
         failurePlayer = new MediaPlayer(failureSound);
         beepSound = new Media(App.class.getResource("/sounds/beep.mp3").toURI().toString());
         beepPlayer = new MediaPlayer(beepSound);
+        tapSound = new Media(App.class.getResource("/sounds/tap.mp3").toURI().toString());
+        tapPlayer = new MediaPlayer(tapSound);
     }
 
     public static void loadBGM() throws URISyntaxException {
@@ -94,6 +98,12 @@ public class SoundsManager {
                     beepPlayer.stop();
                 }
                 beepPlayer.play();
+                break;
+            case TAP:
+                if (tapPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                    tapPlayer.stop();
+                }
+                tapPlayer.play();
                 break;
         }
 
