@@ -43,6 +43,7 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.controllers.SongsManager.bgm;
 import nz.ac.auckland.se206.controllers.SongsManager.sfx;
 
 /**
@@ -242,6 +243,8 @@ public class CanvasController {
         SongsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
+      SongsManager.stopBGM();
+      SongsManager.playBGM(bgm.ZEN);
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
@@ -460,6 +463,7 @@ public class CanvasController {
                    */
 
                   if (isWordCorrect()) {
+                    SongsManager.stopBGM();
                     SongsManager.playSFX(sfx.VICTORY);
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
@@ -521,6 +525,7 @@ public class CanvasController {
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
+              SongsManager.stopBGM();
               SongsManager.playSFX(sfx.FAIL);
               readyButton.setDisable(false);
               readyButton.setText("Ready?");

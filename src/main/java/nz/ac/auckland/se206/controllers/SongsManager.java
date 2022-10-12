@@ -19,8 +19,17 @@ public class SongsManager {
     private static Media beepSound;
     private static MediaPlayer beepPlayer;
 
+    private static Media mainPanelBGM; // PVZ
+    private static MediaPlayer mainPanelPlayer;
+    private static Media zenBGM; // PVZ
+    private static MediaPlayer zenPlayer;
+
     public enum sfx {
         BUTTON1, BUTTON2, VICTORY, FAIL, BEEP
+    }
+
+    public enum bgm {
+        MAINPANEL, INGAME, ZEN, HIDDEN
     }
 
     public static void loadSFX() throws URISyntaxException {
@@ -36,7 +45,14 @@ public class SongsManager {
         beepPlayer = new MediaPlayer(beepSound);
     }
 
-    public static void t (){
+    public static void loadBGM() throws URISyntaxException {
+        mainPanelBGM = new Media(App.class.getResource("/sounds/pvzMainMenu.mp3").toURI().toString());
+        mainPanelPlayer = new MediaPlayer(mainPanelBGM);
+        zenBGM = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
+        zenPlayer = new MediaPlayer(zenBGM);
+    }
+
+    public static void t() {
         if (buttonPlayer2.getStatus() == MediaPlayer.Status.PLAYING) {
             buttonPlayer2.stop();
         }
@@ -79,18 +95,45 @@ public class SongsManager {
 
     }
 
-    public static void playBGM(){
-        victoryPlayer.play();
-        victoryPlayer.setOnEndOfMedia(new Runnable(){
-            @Override
-            public void run(){
-            victoryPlayer.seek(Duration.ZERO);
-            victoryPlayer.play();
-            }
-        });
+    public static void playBGM(bgm bgmType) {
+        switch (bgmType) {
+            case MAINPANEL:
+            mainPanelPlayer.play();
+            mainPanelPlayer.setOnEndOfMedia(new Runnable(){
+                @Override
+                public void run(){
+                mainPanelPlayer.seek(Duration.ZERO);
+                mainPanelPlayer.play();
+                }
+            });
+            break;
+            case ZEN:
+            zenPlayer.play();
+            zenPlayer.setOnEndOfMedia(new Runnable(){
+                @Override
+                public void run(){
+                zenPlayer.seek(Duration.ZERO);
+                zenPlayer.play();
+                }
+            });
+            break;
+            case HIDDEN:
+                break;
+            case INGAME:
+                break;
+        }
     }
 
-    public static void stopBGM(){
-        victoryPlayer.stop();
+    public static void stopBGM() {
+        zenPlayer.stop();
+        mainPanelPlayer.stop();
+    }
+
+    public static void changeSFXVolume(int volume){
+
+    }
+
+    public static void changeBGMVolume(int volume){
+        
     }
 }

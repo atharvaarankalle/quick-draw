@@ -80,7 +80,7 @@ public class App extends Application {
 
     //Initialize all sound effects
     SongsManager.loadSFX();
-
+    SongsManager.loadBGM();
     Settings gameSettings = new Settings();
     
     // Set the current scene and show the stage
