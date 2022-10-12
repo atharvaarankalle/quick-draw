@@ -105,7 +105,7 @@ public class MainPanel implements Initializable {
     // Switch to the "Main Menu" scene.
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
-    gameButton.setDisable(false);
+    enableButtons();
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }

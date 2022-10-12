@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,14 +33,18 @@ import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
 
 public class LoginController implements Initializable {
 
-  @FXML private TextField emailTextField;
+  @FXML
+  private TextField emailTextField;
 
-  @FXML private ListView<String> usersListView = new ListView<String>();
+  @FXML
+  private ListView<String> usersListView = new ListView<String>();
 
-  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML
+  private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a login page
+   * JavaFX calls this method once the GUI elements are loaded. In our case we
+   * create a login page
    * and brings users details
    */
   @Override
@@ -48,8 +53,7 @@ public class LoginController implements Initializable {
     emailTextField.getText();
     usersListView.setItems(usersList);
     usersListView.setCellFactory(
-        new Callback<
-            ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
+        new Callback<ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
           // to work parallel for login/register/storing datas
           @Override
           public ListCell<String> call(ListView<String> param) {
@@ -140,6 +144,10 @@ public class LoginController implements Initializable {
         msg.setHeaderText("Log In Successful!");
         msg.setContentText("You have successfully logged in as: " + userName);
         msg.showAndWait();
+        if (checkMuteStatus(userName)==1) {
+          SoundsManager.changeBGMVolume(0);
+          SoundsManager.changeSFXVolume(0);
+        }
         SoundsManager.playBGM(bgm.MAINPANEL);
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
@@ -181,7 +189,7 @@ public class LoginController implements Initializable {
 
       if (!userFileExists) {
         BufferedWriter bufferedWriterUserFile = new BufferedWriter(fileWriterUserFile);
-        bufferedWriterUserFile.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0 , 75.0 , 75.0");
+        bufferedWriterUserFile.write("Initial Write , Initial Write , 0 , 0.0 , 0.0 , 0.0 , 0.0 , 75.0 , 75.0 , 0");
         bufferedWriterUserFile.newLine();
         bufferedWriterUserFile.flush();
         bufferedWriterUserFile.close();
@@ -197,9 +205,15 @@ public class LoginController implements Initializable {
 
     String line = "GUEST";
     addLine(line);
-    //Start playing background bgm
+    // Start playing background bgm
     SoundsManager.playBGM(bgm.MAINPANEL);
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
+  }
+
+  private int checkMuteStatus(String userName) throws IOException{
+    Path userStatsPath = Paths.get("DATABASE/" + userName);
+    List<String>userStats = Files.readAllLines(userStatsPath);
+    return Integer.valueOf(userStats.get(userStats.size()-1).split(" , ")[9]);
   }
 }

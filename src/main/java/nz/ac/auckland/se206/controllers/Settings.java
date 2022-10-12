@@ -14,6 +14,8 @@ public class Settings {
 
   private double bgmVolume = 75.0;
 
+  private int muteStatus = 0;
+
   public void setAccuracyLevel(double level) {
     this.accuracyLevel = level;
   }
@@ -36,6 +38,10 @@ public class Settings {
 
   public void setBgmVolume(double bgmVolume) {
       this.bgmVolume = bgmVolume;
+  }
+
+  public void setMuteStatus(int muteStatus) {
+      this.muteStatus = muteStatus;
   }
 
   public double getAccuracyLevel() {
@@ -83,6 +89,10 @@ public class Settings {
   public double getBgmVolume() {
       return bgmVolume;
   }
+
+public int getMuteStatus() {
+    return muteStatus;
+}
 
   public double getTimeSliderPosition() {
     return this.timeLevel;

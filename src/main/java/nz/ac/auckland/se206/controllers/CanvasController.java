@@ -775,7 +775,9 @@ public class CanvasController {
               +" , "
               + gameSettings.getSfxVolume()
               +" , "
-              +gameSettings.getBgmVolume());
+              +gameSettings.getBgmVolume()
+              +" , "
+              +gameSettings.getMuteStatus());
       bufferedWriter.newLine();
       bufferedWriter.flush();
       bufferedWriter.close();
