@@ -41,48 +41,71 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import javafx.animation.TranslateTransition;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /**
- * This is the controller of the canvas. You are free to modify this class and the corresponding
- * FXML file as you see fit. For example, you might no longer need the "Predict" button because the
+ * This is the controller of the canvas. You are free to modify this class and
+ * the corresponding
+ * FXML file as you see fit. For example, you might no longer need the "Predict"
+ * button because the
  * DL model should be automatically queried in the background every second.
  *
- * <p>!! IMPORTANT !!
+ * <p>
+ * !! IMPORTANT !!
  *
- * <p>Although we added the scale of the image, you need to be careful when changing the size of the
- * drawable canvas and the brush size. If you make the brush too big or too small with respect to
- * the canvas size, the ML model will not work correctly. So be careful. If you make some changes in
+ * <p>
+ * Although we added the scale of the image, you need to be careful when
+ * changing the size of the
+ * drawable canvas and the brush size. If you make the brush too big or too
+ * small with respect to
+ * the canvas size, the ML model will not work correctly. So be careful. If you
+ * make some changes in
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class CanvasController {
 
-  @FXML private Pane root;
+  @FXML
+  private Pane root;
 
-  @FXML private Canvas canvas;
+  @FXML
+  private Canvas canvas;
 
-  @FXML private Label targetWordLabel;
+  @FXML
+  private Label targetWordLabel;
 
-  @FXML private ProgressBar pgbTimer;
+  @FXML
+  private ProgressBar pgbTimer;
 
-  @FXML private Label timerLabel;
+  @FXML
+  private Label timerLabel;
 
-  @FXML private Button readyButton;
+  @FXML
+  private Button readyButton;
 
-  @FXML private Button clearButton;
+  @FXML
+  private Button clearButton;
 
-  @FXML private Button penEraserButton;
+  @FXML
+  private Button penEraserButton;
 
-  @FXML private Button saveDrawingButton;
+  @FXML
+  private Button saveDrawingButton;
 
-  @FXML private PieChart modelResultsPieChart;
+  @FXML
+  private PieChart modelResultsPieChart;
 
-  @FXML private Label leaderBoardLabel;
+  @FXML
+  private Label leaderBoardLabel;
 
-  @FXML private ListView<String> leaderBoardList;
+  @FXML
+  private Button arrowUp;
+
+  @FXML
+  private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
 
@@ -98,14 +121,18 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
+  TranslateTransition movement = new TranslateTransition();
+
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
+   * JavaFX calls this method once the GUI elements are loaded. In our case we
+   * create a listener for
    * the drawing, and we load the ML model.
    *
-   * @throws ModelException If there is an error in reading the input/output of the DL model.
-   * @throws IOException If the model cannot be found on the file system.
+   * @throws ModelException     If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws IOException        If the model cannot be found on the file system.
    * @throws URISyntaxException
    * @throws CsvException
    */
@@ -124,18 +151,17 @@ public class CanvasController {
     targetWordLabel.setText("Get a new word to begin drawing!");
     readyButton.setText("Ready?");
     // Initialise the data list for the model results pie chart
-    data =
-        FXCollections.observableArrayList(
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0));
+    data = FXCollections.observableArrayList(
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0));
 
     // Set the data list for the model results pie chart and initialise the legend
     modelResultsPieChart.setData(data);
@@ -200,14 +226,20 @@ public class CanvasController {
   }
 
   /**
-   * This method executes when the user clicks the "Ready" button. Every second, it gets the current
-   * drawing, queries the DL model and updates the pie chart with the top 10 predictions of the DL
+   * This method executes when the user clicks the "Ready" button. Every second,
+   * it gets the current
+   * drawing, queries the DL model and updates the pie chart with the top 10
+   * predictions of the DL
    * model along with the percentage certainty the model has in each prediction
    *
-   * @throws TranslateException If there is an error in reading the input/output of the DL model.
-   * @throws URISyntaxException If a string could not be parsed as a URI reference.
-   * @throws IOException If there is an error in reading the input/output of the DL model.
-   * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
+   * @throws TranslateException If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws URISyntaxException If a string could not be parsed as a URI
+   *                            reference.
+   * @throws IOException        If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws CsvException       If there is an error regarding the CSV files
+   *                            opened using OpenCSV
    * @throws ModelException
    */
   @FXML
@@ -255,7 +287,8 @@ public class CanvasController {
   }
 
   /**
-   * This method executes when the user clicks the button to switch between pen and eraser It
+   * This method executes when the user clicks the button to switch between pen
+   * and eraser It
    * changes the text of the button to reflect the current tool
    */
   @FXML
@@ -276,19 +309,18 @@ public class CanvasController {
    * @return a Task<Void> object, the background speech task
    */
   private Task<Void> createNewSpeechTask() {
-    Task<Void> backgroundSpeechTask =
-        new Task<Void>() {
+    Task<Void> backgroundSpeechTask = new Task<Void>() {
 
-          @Override
-          protected Void call() throws Exception {
+      @Override
+      protected Void call() throws Exception {
 
-            // Use text to speech to communicate the current word to draw
-            TextToSpeech textToSpeech = new TextToSpeech();
-            textToSpeech.speak("The word to draw is" + currentWord);
+        // Use text to speech to communicate the current word to draw
+        TextToSpeech textToSpeech = new TextToSpeech();
+        textToSpeech.speak("The word to draw is" + currentWord);
 
-            return null;
-          }
-        };
+        return null;
+      }
+    };
 
     return backgroundSpeechTask;
   }
@@ -370,7 +402,8 @@ public class CanvasController {
   }
 
   /**
-   * This method scan through the pixels on canvas Return true when canvas is blank, otherwise false
+   * This method scan through the pixels on canvas Return true when canvas is
+   * blank, otherwise false
    */
   private Boolean isCanvasBlank() {
     Image canvasContent = canvas.snapshot(null, null);
@@ -393,123 +426,128 @@ public class CanvasController {
   private Task<Void> createNewTimingTask() {
 
     final AtomicInteger timeLeft = new AtomicInteger(getMaximumTime());
-    Task<Void> backgroundTimingTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
+    Task<Void> backgroundTimingTask = new Task<Void>() {
+      @Override
+      protected Void call() throws Exception {
 
-            // Up date the task progress
-            updateProgress(0, getMaximumTime() - 1);
-            /*
-             * Initialise a timeline. This will be used to decrement the
-             * timer every second, query the data learning
-             * model and update the pie chart accordingly
-             */
-            KeyFrame keyFrame =
-                new KeyFrame(
-                    Duration.seconds(1),
-                    e -> {
-                      try {
-                        timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-                        updateProgress(getMaximumTime() - timeLeft.get(), getMaximumTime() - 1);
-                        // If game reaches last 10 second, change progress bar to red
-                        if (timeLeft.get() == 10) {
-                          pgbTimer.setStyle("-fx-accent: red;");
-                        }
-                        // First check if the canvas is blank or not, if it's blank, reset the
-                        // piechart
-                        // Otherwise, carryout predictions and update piechart
-                        if (!isCanvasBlank()) {
-                          // Query the DL model to make the predictions and update the pie chart
-                          makePredictions();
-                          /*
-                           * If at any point the word to draw is in the top three
-                           * predictions, the user has won the game. In this case
-                           * stop the timeline, communicate to the user
-                           * that they have won and allow them to choose a
-                           * new word if they wish
-                           */
+        // Up date the task progress
+        updateProgress(0, getMaximumTime() - 1);
+        /*
+         * Initialise a timeline. This will be used to decrement the
+         * timer every second, query the data learning
+         * model and update the pie chart accordingly
+         */
+        KeyFrame keyFrame = new KeyFrame(
+            Duration.seconds(1),
+            e -> {
+              try {
+                timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
+                updateProgress(getMaximumTime() - timeLeft.get(), getMaximumTime() - 1);
+                // If game reaches last 10 second, change progress bar to red
+                if (timeLeft.get() == 10) {
+                  pgbTimer.setStyle("-fx-accent: red;");
+                }
+                // First check if the canvas is blank or not, if it's blank, reset the
+                // piechart
+                // Otherwise, carryout predictions and update piechart
+                if (!isCanvasBlank()) {
+                  // Query the DL model to make the predictions and update the pie chart
+                  makePredictions();
+                  arrowSpeed();
+                  arrowMotionControl();
+                  /*
+                   * If at any point the word to draw is in the top three
+                   * predictions, the user has won the game. In this case
+                   * stop the timeline, communicate to the user
+                   * that they have won and allow them to choose a
+                   * new word if they wish
+                   */
 
-                          if (isWordCorrect()) {
-                            pgbTimer.setVisible(false);
-                            pgbTimer.progressProperty().unbind();
-                            Stage stage = (Stage) root.getScene().getWindow();
-                            StatisticsManager.setGameStage(stage);
-                            timeline.stop();
-                            try {
-                              addLine("WON");
-                              autoSaveDrawing();
-                            } catch (IOException e1) {
-                              e1.printStackTrace();
-                            }
-                            canvas.setOnMouseDragged((canvasEvent) -> {});
-                            canvas.setDisable(true);
-                            timerLabel.setText("Correct, well done!");
-                            readyButton.setDisable(false);
-                            readyButton.setText("Ready?");
-                            clearButton.setDisable(true);
-                            saveDrawingButton.setDisable(false);
-                            updateLeaderBoard();
-                          }
-                        } else {
-                          resetPieChart();
-                        }
-                      } catch (TranslateException | IOException e1) {
-                        e1.printStackTrace();
-                      }
-                    });
-
-            timeline.getKeyFrames().clear();
-            timeline.getKeyFrames().addAll(keyFrame);
-            timeline.setCycleCount(getMaximumTime());
-
-            /*
-             * When the one minute timer elapses, stop the timeline, disable the canvas and
-             * drawing buttons, enable the save drawing button and check if the user
-             * has won the game
-             */
-            timeline.setOnFinished(
-                event -> {
-                  // Stop the timeline and reset the GUI to its initial state
-                  timeline.stop();
-                  Stage stage = (Stage) root.getScene().getWindow();
-                  StatisticsManager.setGameStage(stage);
-
-                  // Unbind and set progress bar to invisible
-                  pgbTimer.setVisible(false);
-                  pgbTimer.progressProperty().unbind();
-                  try {
-                    addLine("LOST");
-                    autoSaveDrawing();
-                  } catch (IOException e1) {
-                    e1.printStackTrace();
-                  }
-                  readyButton.setDisable(false);
-                  readyButton.setText("Ready?");
-                  clearButton.setDisable(true);
-                  canvas.setOnMouseDragged(e -> {});
-                  canvas.setDisable(true);
-                  saveDrawingButton.setDisable(false);
-
-                  // Check if the user has won and update the GUI to communicate to the user
                   if (isWordCorrect()) {
-                    timerLabel.setText("Correct, well done!");
-                  } else {
-                    timerLabel.setText("Incorrect, better luck next time!");
-                    // Update leaderboard
+                    pgbTimer.setVisible(false);
+                    pgbTimer.progressProperty().unbind();
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    StatisticsManager.setGameStage(stage);
+                    movement.setNode(arrowUp);
+                    movement.setByY(0);
+                    movement.setCycleCount(0);
+                    timeline.stop();
                     try {
-                      updateLeaderBoard();
+                      addLine("WON");
+                      autoSaveDrawing();
                     } catch (IOException e1) {
                       e1.printStackTrace();
                     }
+                    canvas.setOnMouseDragged((canvasEvent) -> {
+                    });
+                    canvas.setDisable(true);
+                    timerLabel.setText("Correct, well done!");
+                    readyButton.setDisable(false);
+                    readyButton.setText("Ready?");
+                    clearButton.setDisable(true);
+                    saveDrawingButton.setDisable(false);
+                    updateLeaderBoard();
                   }
-                });
+                } else {
+                  resetPieChart();
+                }
+              } catch (TranslateException | IOException e1) {
+                e1.printStackTrace();
+              }
+            });
 
-            timeline.play();
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().addAll(keyFrame);
+        timeline.setCycleCount(getMaximumTime());
 
-            return null;
-          }
-        };
+        /*
+         * When the one minute timer elapses, stop the timeline, disable the canvas and
+         * drawing buttons, enable the save drawing button and check if the user
+         * has won the game
+         */
+        timeline.setOnFinished(
+            event -> {
+              // Stop the timeline and reset the GUI to its initial state
+              timeline.stop();
+              Stage stage = (Stage) root.getScene().getWindow();
+              StatisticsManager.setGameStage(stage);
+
+              // Unbind and set progress bar to invisible
+              pgbTimer.setVisible(false);
+              pgbTimer.progressProperty().unbind();
+              try {
+                addLine("LOST");
+                autoSaveDrawing();
+              } catch (IOException e1) {
+                e1.printStackTrace();
+              }
+              readyButton.setDisable(false);
+              readyButton.setText("Ready?");
+              clearButton.setDisable(true);
+              canvas.setOnMouseDragged(e -> {
+              });
+              canvas.setDisable(true);
+              saveDrawingButton.setDisable(false);
+
+              // Check if the user has won and update the GUI to communicate to the user
+              if (isWordCorrect()) {
+                timerLabel.setText("Correct, well done!");
+              } else {
+                timerLabel.setText("Incorrect, better luck next time!");
+                // Update leaderboard
+                try {
+                  updateLeaderBoard();
+                } catch (IOException e1) {
+                  e1.printStackTrace();
+                }
+              }
+            });
+
+        timeline.play();
+
+        return null;
+      }
+    };
     return backgroundTimingTask;
   }
 
@@ -522,10 +560,12 @@ public class CanvasController {
   }
 
   /**
-   * This method queries the data learning model to make the predictions and updates the pie chart
+   * This method queries the data learning model to make the predictions and
+   * updates the pie chart
    * accordingly with the top 10 predictions made
    *
-   * @throws TranslateException If there is an error in reading the input/output of the DL model.
+   * @throws TranslateException If there is an error in reading the input/output
+   *                            of the DL model.
    */
   private void makePredictions() throws TranslateException {
     // Query the data learning model and get the top ten predictions
@@ -547,10 +587,12 @@ public class CanvasController {
   }
 
   /**
-   * This method checks if the user has won the game by checking if the word to draw is in the top
+   * This method checks if the user has won the game by checking if the word to
+   * draw is in the top
    * three predictions
    *
-   * @return a boolean, true if the current word is in the top three predictions, false otherwise
+   * @return a boolean, true if the current word is in the top three predictions,
+   *         false otherwise
    */
   private boolean isWordCorrect() {
     Stage stage = (Stage) root.getScene().getWindow();
@@ -643,8 +685,8 @@ public class CanvasController {
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
     // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+    final BufferedImage imageBinary = new BufferedImage(image.getWidth(), image.getHeight(),
+        BufferedImage.TYPE_BYTE_BINARY);
 
     final Graphics2D graphics = imageBinary.createGraphics();
 
@@ -684,11 +726,10 @@ public class CanvasController {
 
     String currentLine;
     String lastLine = "";
-    String[] separatedUserInfo = {""};
+    String[] separatedUserInfo = { "" };
 
-    BufferedReader bufferedReader =
-        new BufferedReader(
-            new FileReader("DATABASE/usersettings/" + gameSettings.getCurrentUser()));
+    BufferedReader bufferedReader = new BufferedReader(
+        new FileReader("DATABASE/usersettings/" + gameSettings.getCurrentUser()));
 
     while ((currentLine = bufferedReader.readLine()) != null) {
       lastLine = currentLine;
@@ -725,14 +766,13 @@ public class CanvasController {
 
     // Format the line to be inputted into the file
     String linesCount = Files.readAllLines(path).get(size - 1);
-    String line =
-        currentWord
-            + " , "
-            + result
-            + " , "
-            + timerLabel.getText()
-            + " , "
-            + Integer.toString(maximumTime);
+    String line = currentWord
+        + " , "
+        + result
+        + " , "
+        + timerLabel.getText()
+        + " , "
+        + Integer.toString(maximumTime);
     FileWriter fileWriter;
 
     /*
@@ -766,7 +806,8 @@ public class CanvasController {
   }
 
   /**
-   * Updates the leaderboard to constantly change user stats Worked as continous append to previous
+   * Updates the leaderboard to constantly change user stats Worked as continous
+   * append to previous
    * leaderboard
    *
    * @throws IOException If the updating leaderboard failed
@@ -805,6 +846,9 @@ public class CanvasController {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
     timeline.stop();
+    movement.setNode(arrowUp);
+    movement.setByY(0);
+    movement.setCycleCount(0);
     readyButton.setDisable(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
@@ -816,5 +860,51 @@ public class CanvasController {
     pgbTimer.setVisible(false);
     leaderBoardLabel.setVisible(false);
     leaderBoardList.setVisible(false);
+  }
+
+  private void arrowMotionControl() {
+    movement.setDuration(Duration.seconds(arrowSpeed()));
+    movement.setNode(arrowUp);
+    movement.setToY(-100);
+    movement.setAutoReverse(false);
+    movement.setCycleCount(10);
+    movement.play();
+  }
+
+  private int arrowSpeed() {
+    for (int i = 7; i < 10; i++) {
+      if (!isCanvasBlank()
+          && modelResultsPieChart
+              .getData()
+              .get(i)
+              .getName()
+              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+              .equals(currentWord)) {
+        return 3;
+      }
+    }
+    for (int i = 4; i < 7; i++) {
+      if (!isCanvasBlank()
+          && modelResultsPieChart
+              .getData()
+              .get(i)
+              .getName()
+              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+              .equals(currentWord)) {
+        return 2;
+      }
+    }
+    for (int i = 0; i <= 4; i++) {
+      if (!isCanvasBlank()
+          && modelResultsPieChart
+              .getData()
+              .get(i)
+              .getName()
+              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+              .equals(currentWord)) {
+        return 1;
+      }
+    }
+    return 0;
   }
 }
