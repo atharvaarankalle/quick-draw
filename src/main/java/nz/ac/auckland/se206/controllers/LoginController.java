@@ -138,6 +138,7 @@ public class LoginController implements Initializable {
         msg.setHeaderText("Log In Successful!");
         msg.setContentText("You have successfully logged in as: " + userName);
         msg.showAndWait();
+        SongsManager.playBGM();
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
         break;
@@ -194,6 +195,8 @@ public class LoginController implements Initializable {
 
     String line = "GUEST";
     addLine(line);
+    //Start playing background bgm
+    SongsManager.playBGM();
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
   }

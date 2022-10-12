@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.SongsManager.sfx;
 
 public class MainPanel implements Initializable {
 
@@ -31,11 +32,12 @@ public class MainPanel implements Initializable {
   @FXML private Button settingsButton;
 
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+  }
 
   @FXML
   private void onHome(ActionEvent event) throws IOException {
-    SongsManager.playButton1();
+    SongsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
     enableButtons();
@@ -44,7 +46,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onGame(ActionEvent event) throws IOException {
-    SongsManager.playButton1();
+    SongsManager.playSFX(sfx.BEEP);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
@@ -54,7 +56,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onInfo(ActionEvent event) throws IOException {
-    SongsManager.playButton1();
+    SongsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("howtoplay");
     CurrentScene.setCenter(view);
     enableButtons();
@@ -63,7 +65,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onStatistic(ActionEvent event) throws IOException {
-    SongsManager.playButton1();
+    SongsManager.playSFX(sfx.BUTTON1);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
     CurrentScene.setCenter(view);
@@ -73,7 +75,7 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
-    SongsManager.playButton1();
+    SongsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("gamesettings");
     CurrentScene.setCenter(view);
     enableButtons();
@@ -89,7 +91,7 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
-
+    SongsManager.stopBGM();
     // Switch to the "Main Menu" scene.
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
