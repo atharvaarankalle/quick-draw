@@ -34,6 +34,9 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+
+import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -90,6 +93,12 @@ public class ZenMode {
   @FXML
   private ColorPicker myColorPicker;
 
+  @FXML
+  private Button drawButton;
+
+  @FXML
+  private Button eraseButton;
+
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
@@ -97,6 +106,8 @@ public class ZenMode {
   private String currentWord;
 
   private ObservableList<PieChart.Data> data;
+
+  private Boolean penOrEraser;
 
   // mouse coordinates
   private double currentX;
@@ -166,7 +177,9 @@ public class ZenMode {
   private void initializeCanvas() throws TranslateException {
 
     graphic = canvas.getGraphicsContext2D();
-
+    //Disable draw and erase button
+    drawButton.setDisable(true);
+    eraseButton.setDisable(true);
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -195,6 +208,22 @@ public class ZenMode {
           currentX = x;
           currentY = y;
         });
+    penOrEraser = true;
+    // Looping sound effects for pen/eraser
+    canvas.setOnDragDetected(e -> {
+      if (penOrEraser) {
+        SoundsManager.playSFX(sfx.PENCIL);
+      } else {
+        SoundsManager.playSFX(sfx.ERASER);
+      }
+    });
+    canvas.setOnMouseReleased(e -> {
+      if (penOrEraser) {
+        SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
+      } else {
+        SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
+      }
+    });
 
     canvas.setDisable(false);
   }
@@ -202,6 +231,7 @@ public class ZenMode {
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
+    SoundsManager.playSFX(sfx.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
@@ -225,13 +255,19 @@ public class ZenMode {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
+    // Play pop button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       initializeCanvas();
+      //Enable the erase button, since the game is started with drawing ability
+      eraseButton.setDisable(false);
       resetPieChart();
-
+      // Play the senmode BGM
+      SoundsManager.stopBGM(bgm.MAINPANEL);
+      SoundsManager.playBGM(bgm.ZEN);
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
@@ -248,6 +284,11 @@ public class ZenMode {
       backgroundTask.start();
 
     } else {
+      SoundsManager.stopWinAndLoseSFX();
+      //If zen mode bgm is not playing, then its safe to interrupt and play mainpanel bgm
+      if (!SoundsManager.isZenBGMPlaying()) {
+        SoundsManager.playBGM(bgm.MAINPANEL);
+      }
       model = new DoodlePrediction();
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -268,7 +309,11 @@ public class ZenMode {
    */
   @FXML
   private void onDraw() throws TranslateException {
-
+    // Play pop button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
+    drawButton.setDisable(true);
+    eraseButton.setDisable(false);
+    penOrEraser = true;
     graphic = canvas.getGraphicsContext2D();
 
     // save coordinates when mouse is pressed on the canvas
@@ -312,7 +357,11 @@ public class ZenMode {
    */
   @FXML
   private void onErase() throws TranslateException {
-
+    // Play pop button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
+    drawButton.setDisable(false);
+    eraseButton.setDisable(true);
+    penOrEraser = false;
     graphic = canvas.getGraphicsContext2D();
 
     // save coordinates when mouse is pressed on the canvas
@@ -567,6 +616,11 @@ public class ZenMode {
   private void onRestart() {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
+    // Play button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
+    //Disable both draw/erase buttons
+    drawButton.setDisable(true);
+    eraseButton.setDisable(true);
     readyButton.setDisable(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
@@ -637,6 +691,12 @@ public class ZenMode {
 
     return backgroundTask;
   }
+
+  @FXML
+  private void onMouseClicked(){
+    SoundsManager.playSFX(sfx.BUTTON1);
+  }
+
 
   /**
    * This method converts the colour code into readable 6 digit hexadecimal code

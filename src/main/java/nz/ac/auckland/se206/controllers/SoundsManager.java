@@ -31,6 +31,8 @@ public class SoundsManager {
     private static MediaPlayer mainPanelPlayer;
     private static Media zenBGM; // Currently PVZ
     private static MediaPlayer zenPlayer;
+    private static Media ingameBGM;
+    private static MediaPlayer ingamePlayer;
 
     public enum sfx {
         BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP, PENCIL, ERASER, LOGIN;
@@ -76,6 +78,8 @@ public class SoundsManager {
         mainPanelPlayer = new MediaPlayer(mainPanelBGM);
         zenBGM = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
         zenPlayer = new MediaPlayer(zenBGM);
+        ingameBGM = new Media(App.class.getResource("/sounds/ingame.mp3").toURI().toString());
+        ingamePlayer = new MediaPlayer(ingameBGM);
     }
 
     /**
@@ -197,6 +201,14 @@ public class SoundsManager {
             case HIDDEN:
                 break;
             case INGAME:
+                ingamePlayer.play();
+                ingamePlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        ingamePlayer.seek(Duration.ZERO);
+                        ingamePlayer.play();
+                    }
+                });
                 break;
         }
     }
@@ -208,7 +220,6 @@ public class SoundsManager {
     public static void stopWinAndLoseSFX() {
         victoryPlayer.stop();
         failurePlayer.stop();
-        playBGM(bgm.MAINPANEL);
     }
 
     /**
@@ -234,6 +245,7 @@ public class SoundsManager {
     public static void stopAllBGM() {
         zenPlayer.stop();
         mainPanelPlayer.stop();
+        ingamePlayer.stop();
     }
 
     /**
@@ -244,7 +256,7 @@ public class SoundsManager {
     public static void stopBGM(bgm bgmType) {
         switch (bgmType) {
             case MAINPANEL:
-                mainPanelPlayer.play();
+                mainPanelPlayer.stop();
                 break;
             case ZEN:
                 zenPlayer.stop();
@@ -252,6 +264,7 @@ public class SoundsManager {
             case HIDDEN:
                 break;
             case INGAME:
+                ingamePlayer.stop();
                 break;
         }
     }
@@ -320,5 +333,9 @@ public class SoundsManager {
     public static void setMuteAllBGM(Boolean muteStatus) {
         mainPanelPlayer.setMute(muteStatus);
         zenPlayer.setMute(muteStatus);
+    }
+
+    public static Boolean isZenBGMPlaying(){
+        return zenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 }

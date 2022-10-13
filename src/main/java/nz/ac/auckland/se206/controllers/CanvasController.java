@@ -287,12 +287,13 @@ public class CanvasController {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
+        SoundsManager.playSFX(sfx.BUTTON2);
     SoundsManager.stopWinAndLoseSFX();
     SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       SoundsManager.stopAllBGM();
-      SoundsManager.playBGM(bgm.ZEN);
+      SoundsManager.playBGM(bgm.INGAME);
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Intiliase the canvas and reset the pie chart
@@ -325,7 +326,8 @@ public class CanvasController {
       backgroundSpeechThread.start();
     } else {
       model = new DoodlePrediction();
-
+      SoundsManager.stopWinAndLoseSFX();
+      SoundsManager.playBGM(bgm.MAINPANEL);
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
       saveDrawingButton.setDisable(true);
@@ -627,8 +629,10 @@ public class CanvasController {
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
+              //Stop all bgms and play failing sfx
               SoundsManager.stopAllBGM();
               SoundsManager.playSFX(sfx.FAIL);
+              //Stop the user from drawing on the canvas, and update the GUI
               readyButton.setDisable(false);
               readyButton.setText("Ready?");
               clearButton.setDisable(true);

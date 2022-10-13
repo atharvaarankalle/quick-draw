@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
 import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 public class MainPanel implements Initializable {
@@ -44,6 +45,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
    // enableButtons();
     //homeButton.setDisable(true);
   }
@@ -60,6 +63,8 @@ public class MainPanel implements Initializable {
     CurrentScene.setCenter(null);
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
     //gameButton.setDisable(true);
   }
@@ -75,6 +80,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("howtoplay");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
     //infoButton.setDisable(true);
   }
@@ -91,6 +98,8 @@ public class MainPanel implements Initializable {
     CurrentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
    // statsButton.setDisable(true);
   }
@@ -106,6 +115,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("gamesettings");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
    // enableButtons();
     //settingsButton.setDisable(true);
   }
@@ -115,6 +126,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("soundsettings");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
     //musicButton.setDisable(true);
   }
