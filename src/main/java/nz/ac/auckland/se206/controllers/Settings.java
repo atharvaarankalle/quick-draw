@@ -10,6 +10,12 @@ public class Settings {
 
   private double confidenceLevel = 0.0;
 
+  private double sfxVolume = 75.0;
+
+  private double bgmVolume = 75.0;
+
+  private int muteStatus = 0;
+
   private String currentUser = "";
 
   /**
@@ -47,12 +53,22 @@ public class Settings {
   public void setConfidenceLevel(double level) {
     this.confidenceLevel = level;
   }
-
   /**
    * Sets the current user that is logged in
    *
    * @param user The user to set.
    */
+  public void setSfxVolume(double sfxVolume) {
+      this.sfxVolume = sfxVolume;
+  }
+
+  public void setBgmVolume(double bgmVolume) {
+      this.bgmVolume = bgmVolume;
+  }
+
+  public void setMuteStatus(int muteStatus) {
+      this.muteStatus = muteStatus;
+  }
   public void setCurrentUser(String username) {
     this.currentUser = username;
   }
@@ -130,6 +146,18 @@ public class Settings {
    *
    * @return The time slider position
    */
+  public double getSfxVolume() {
+      return sfxVolume;
+  }
+
+  public double getBgmVolume() {
+      return bgmVolume;
+  }
+
+public int getMuteStatus() {
+    return muteStatus;
+}
+
   public double getTimeSliderPosition() {
     return this.timeLevel;
   }

@@ -16,34 +16,48 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 public class GameSettingsController implements Initializable {
 
-  @FXML private Pane settingsRoot;
+  @FXML
+  private Pane settingsRoot;
 
-  @FXML private Slider accuracySlider;
+  @FXML
+  private Slider accuracySlider;
 
-  @FXML private Label accuracyLabel;
+  @FXML
+  private Label accuracyLabel;
 
-  @FXML private Slider wordsSlider;
+  @FXML
+  private Slider wordsSlider;
 
-  @FXML private Label wordsLabel;
+  @FXML
+  private Label wordsLabel;
 
-  @FXML private Slider timeSlider;
+  @FXML
+  private Slider timeSlider;
 
-  @FXML private Label timeLabel;
+  @FXML
+  private Label timeLabel;
 
-  @FXML private Slider confidenceSlider;
+  @FXML
+  private Slider confidenceSlider;
 
-  @FXML private Label confidenceLabel;
+  @FXML
+  private Label confidenceLabel;
 
-  @FXML private Tooltip accuracyTooltip;
+  @FXML
+  private Tooltip accuracyTooltip;
 
-  @FXML private Tooltip wordsTooltip;
+  @FXML
+  private Tooltip wordsTooltip;
 
-  @FXML private Tooltip timeTooltip;
+  @FXML
+  private Tooltip timeTooltip;
 
-  @FXML private Tooltip confidenceTooltip;
+  @FXML
+  private Tooltip confidenceTooltip;
 
   private static String previousUserID = "";
 
@@ -396,7 +410,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-being-called-before-it-snaps-to-the-nearest-tick
+     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
+     * being-called-before-it-snaps-to-the-nearest-tick
      */
     accuracySlider
         .valueProperty()
@@ -407,6 +422,7 @@ public class GameSettingsController implements Initializable {
               if (newValue != null
                   && !newValue.equals(oldValue)
                   && !accuracySlider.isValueChanging()) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Set the accuracy level to the new slider value
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
@@ -426,7 +442,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -447,12 +469,14 @@ public class GameSettingsController implements Initializable {
                     accuracySlider.setStyle("-fx-control-inner-background: red");
                     break;
                 }
+
               }
             });
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-valuepropertys-changelistener-for-min-and-max-values
+     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-
+     * valuepropertys-changelistener-for-min-and-max-values
      */
     accuracySlider
         .valueChangingProperty()
@@ -460,17 +484,18 @@ public class GameSettingsController implements Initializable {
             (obs, oldValue, newValue) -> {
               double sliderValue = accuracySlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax =
-                  sliderValue == accuracySlider.getMin() || sliderValue == accuracySlider.getMax();
+              boolean isSliderValueAtMinOrMax = sliderValue == accuracySlider.getMin()
+                  || sliderValue == accuracySlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
 
                 Settings gameSettings = (Settings) stage.getUserData();
 
                 gameSettings.setAccuracyLevel(accuracySlider.getValue());
-
+                
                 stage.setUserData(gameSettings);
 
                 double sliderFinalValue = 0.0;
@@ -491,7 +516,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -527,7 +558,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-being-called-before-it-snaps-to-the-nearest-tick
+     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
+     * being-called-before-it-snaps-to-the-nearest-tick
      */
     wordsSlider
         .valueProperty()
@@ -537,6 +569,7 @@ public class GameSettingsController implements Initializable {
               if (newValue != null
                   && !newValue.equals(oldValue)
                   && !wordsSlider.isValueChanging()) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Set the words per minute level to the new slider value
                 Stage stage = (Stage) wordsLabel.getScene().getWindow();
@@ -556,7 +589,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -586,7 +625,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-valuepropertys-changelistener-for-min-and-max-values
+     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-
+     * valuepropertys-changelistener-for-min-and-max-values
      */
     wordsSlider
         .valueChangingProperty()
@@ -596,11 +636,12 @@ public class GameSettingsController implements Initializable {
               // Get the current slider value and check if the slider is no longer updating
               double sliderValue = wordsSlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax =
-                  sliderValue == wordsSlider.getMin() || sliderValue == wordsSlider.getMax();
+              boolean isSliderValueAtMinOrMax = sliderValue == wordsSlider.getMin()
+                  || sliderValue == wordsSlider.getMax();
 
               // If the slider is no longer updating and the slider value is at the minimum or
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Get the stage and the game settings
                 Stage stage = (Stage) wordsLabel.getScene().getWindow();
@@ -629,7 +670,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -664,7 +711,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-being-called-before-it-snaps-to-the-nearest-tick
+     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
+     * being-called-before-it-snaps-to-the-nearest-tick
      */
     timeSlider
         .valueProperty()
@@ -672,6 +720,7 @@ public class GameSettingsController implements Initializable {
             (obs, oldValue, newValue) -> {
               // If the slider is no longer sliding
               if (newValue != null && !newValue.equals(oldValue) && !timeSlider.isValueChanging()) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Set the time per minute level to the new slider value
                 Stage stage = (Stage) timeLabel.getScene().getWindow();
@@ -691,7 +740,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + newValue.toString()
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -721,7 +776,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-valuepropertys-changelistener-for-min-and-max-values
+     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-
+     * valuepropertys-changelistener-for-min-and-max-values
      */
     timeSlider
         .valueChangingProperty()
@@ -730,10 +786,11 @@ public class GameSettingsController implements Initializable {
               // Get the current slider value and check if the slider is no longer updating
               double sliderValue = timeSlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax =
-                  sliderValue == timeSlider.getMin() || sliderValue == timeSlider.getMax();
+              boolean isSliderValueAtMinOrMax = sliderValue == timeSlider.getMin()
+                  || sliderValue == timeSlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Get the stage and the game settings
                 Stage stage = (Stage) timeLabel.getScene().getWindow();
@@ -762,7 +819,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(sliderFinalValue)
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -797,7 +860,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-being-called-before-it-snaps-to-the-nearest-tick
+     * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
+     * being-called-before-it-snaps-to-the-nearest-tick
      */
     confidenceSlider
         .valueProperty()
@@ -807,6 +871,7 @@ public class GameSettingsController implements Initializable {
               if (newValue != null
                   && !newValue.equals(oldValue)
                   && !confidenceSlider.isValueChanging()) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Set the confidence level to the new slider value
                 Stage stage = (Stage) confidenceLabel.getScene().getWindow();
@@ -826,7 +891,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + newValue.toString();
+                          + newValue.toString()
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -856,7 +927,8 @@ public class GameSettingsController implements Initializable {
 
     /*
      * Code adapted from:
-     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-valuepropertys-changelistener-for-min-and-max-values
+     * https://stackoverflow.com/questions/51089812/javafx-slider-not-invoking-
+     * valuepropertys-changelistener-for-min-and-max-values
      */
     confidenceSlider
         .valueChangingProperty()
@@ -865,11 +937,11 @@ public class GameSettingsController implements Initializable {
               // Get the current slider value and check if the slider is no longer updating
               double sliderValue = confidenceSlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax =
-                  sliderValue == confidenceSlider.getMin()
-                      || sliderValue == confidenceSlider.getMax();
+              boolean isSliderValueAtMinOrMax = sliderValue == confidenceSlider.getMin()
+                  || sliderValue == confidenceSlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
+                SoundsManager.playSFX(sfx.TAP);
 
                 // Get the stage and the game settings and set the confidence level
                 Stage stage = (Stage) confidenceLabel.getScene().getWindow();
@@ -898,7 +970,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(sliderFinalValue);
+                          + Double.toString(sliderFinalValue)
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
