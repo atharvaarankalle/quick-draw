@@ -35,12 +35,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
+import javafx.animation.TranslateTransition;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -103,6 +105,18 @@ public class CanvasController {
   private Label leaderBoardLabel;
 
   @FXML
+  private Button arrowUp;
+
+  @FXML
+  private Button arrowDown;
+
+  @FXML
+  private ImageView imageUp;
+
+  @FXML
+  private ImageView imageDown;
+
+  @FXML
   private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
@@ -118,6 +132,10 @@ public class CanvasController {
   // mouse coordinates
   private double currentX;
   private double currentY;
+
+  TranslateTransition movementUp = new TranslateTransition();
+
+  TranslateTransition movementDown = new TranslateTransition();
 
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
@@ -169,6 +187,10 @@ public class CanvasController {
     modelResultsPieChart.setData(data);
     modelResultsPieChart.setLegendSide(Side.LEFT);
     modelResultsPieChart.setLegendVisible(false);
+    movementUp.setFromX(currentX);
+    imageUp.setVisible(false);
+    imageDown.setVisible(false);
+    resetArrow();
   }
 
   /** This method resets the pie chart to a blank state */
@@ -219,15 +241,15 @@ public class CanvasController {
           currentX = x;
           currentY = y;
         });
-    //Looping sound effects for pen/eraser
-    canvas.setOnDragDetected(e ->{
+    // Looping sound effects for pen/eraser
+    canvas.setOnDragDetected(e -> {
       if (penEraserButton.getText().equals("Pen")) {
         SoundsManager.playSFX(sfx.ERASER);
       } else {
         SoundsManager.playSFX(sfx.PENCIL);
       }
     });
-    canvas.setOnMouseReleased(e ->{
+    canvas.setOnMouseReleased(e -> {
       if (penEraserButton.getText().equals("Pen")) {
         SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
       } else {
@@ -242,6 +264,7 @@ public class CanvasController {
   private void onClear() {
     SoundsManager.playSFX(sfx.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    resetArrow();
   }
 
   /**
@@ -265,6 +288,8 @@ public class CanvasController {
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
         SoundsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.stopWinAndLoseSFX();
+    SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       SoundsManager.stopAllBGM();
@@ -281,6 +306,8 @@ public class CanvasController {
       clearButton.setDisable(false);
       pgbTimer.setVisible(true);
       modelResultsPieChart.setLegendVisible(true);
+      imageUp.setVisible(true);
+      imageDown.setVisible(true);
 
       // Disable leaderboard
       leaderBoardLabel.setVisible(false);
@@ -357,7 +384,8 @@ public class CanvasController {
   }
 
   /**
-   * This method generates a random word to draw, depending on the difficulty selected by the user
+   * This method generates a random word to draw, depending on the difficulty
+   * selected by the user
    *
    * @throws CsvException
    * @throws IOException
@@ -379,14 +407,15 @@ public class CanvasController {
 
     // Switch between the level chosen by the user
     switch (wordsLevel) {
-        // Easy mode: Choose only easy level words
+      // Easy mode: Choose only easy level words
       case 0:
         randomWord = categorySelector.getRandomCategory(Difficulty.E);
         break;
-        // Medium mode: Randomly choose easy or medium level words
+      // Medium mode: Randomly choose easy or medium level words
       case 1:
 
-        // Generate 0 or 1 randomly and choose an easy or medium word based on this result
+        // Generate 0 or 1 randomly and choose an easy or medium word based on this
+        // result
         randomNumber = (int) (Math.random() * (2 - 0) + 0);
 
         switch (randomNumber) {
@@ -398,10 +427,11 @@ public class CanvasController {
             break;
         }
         break;
-        // Hard mode: Randomly choose easy, medium or hard level words
+      // Hard mode: Randomly choose easy, medium or hard level words
       case 2:
 
-        // Generate 0, 1 or 2 randomly and choose an easy, medium or hard word based on this result
+        // Generate 0, 1 or 2 randomly and choose an easy, medium or hard word based on
+        // this result
         randomNumber = (int) (Math.random() * (3 - 0) + 0);
 
         switch (randomNumber) {
@@ -416,7 +446,7 @@ public class CanvasController {
             break;
         }
         break;
-        // Master mode: Choose only a hard word
+      // Master mode: Choose only a hard word
       case 3:
         randomWord = categorySelector.getRandomCategory(Difficulty.H);
         break;
@@ -431,7 +461,8 @@ public class CanvasController {
     }
     currentWord = randomWord;
 
-    // If all the words in the easy category have been played, reset the words seen and choose a
+    // If all the words in the easy category have been played, reset the words seen
+    // and choose a
     // random word
     if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
       text.clear();
@@ -472,7 +503,7 @@ public class CanvasController {
     return true;
   }
 
-   /**
+  /**
    * This method creates a background timing task and returns the task
    *
    * @return a Task<Void> object, the background timing task
@@ -501,6 +532,7 @@ public class CanvasController {
                 if (timeLeft.get() == 10) {
                   pgbTimer.setStyle("-fx-accent: red;");
                 }
+
                 // First check if the canvas is blank or not, if it's blank, reset the
                 // piechart
                 // Otherwise, carryout predictions and update piechart
@@ -514,14 +546,22 @@ public class CanvasController {
                    * that they have won and allow them to choose a
                    * new word if they wish
                    */
+                  if (insideTopPrediction()) {
+                    arrowMotionControlUp();
+                  }
+
+                  if (!insideTopPrediction()) {
+                    arrowMotionControlDown();
+                  }
 
                   if (isWordCorrect()) {
-                    //Stop bgms and paly victory sfx
+                    // Stop bgms and paly victory sfx
                     SoundsManager.stopAllBGM();
                     SoundsManager.playSFX(sfx.VICTORY);
                     // Update GUI elements
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
+                    resetArrow();
 
                     // Pass the current stage to the StatisticsManafer class
                     Stage stage = (Stage) root.getScene().getWindow();
@@ -535,7 +575,7 @@ public class CanvasController {
                       e1.printStackTrace();
                     }
 
-                    //Stop the user from drawing on the canvas, and update the GUI
+                    // Stop the user from drawing on the canvas, and update the GUI
                     canvas.setOnMouseDragged((canvasEvent) -> {
                     });
                     canvas.setDisable(true);
@@ -544,7 +584,7 @@ public class CanvasController {
                     readyButton.setText("Ready?");
                     clearButton.setDisable(true);
                     saveDrawingButton.setDisable(false);
-                    //Display and update the leader board
+                    // Display and update the leader board
                     updateLeaderBoard();
                   }
                 } else {
@@ -557,13 +597,13 @@ public class CanvasController {
         KeyFrame beepFrame = new KeyFrame(
             Duration.seconds(1),
             e -> {
-              if (timeLeft.get() <= 10&&timeLeft.get()>0) {
+              if (timeLeft.get() <= 10 && timeLeft.get() > 0) {
                 SoundsManager.playSFX(sfx.BEEP);
                 System.out.println("countdown");
               }
             });
         timeline.getKeyFrames().clear();
-        timeline.getKeyFrames().addAll(keyFrame,beepFrame);
+        timeline.getKeyFrames().addAll(keyFrame, beepFrame);
         timeline.setCycleCount(getMaximumTime());
 
         /*
@@ -575,6 +615,7 @@ public class CanvasController {
             event -> {
               // Stop the timeline and reset the GUI to its initial state
               timeline.stop();
+              resetArrow();
               Stage stage = (Stage) root.getScene().getWindow();
               StatisticsManager.setGameStage(stage);
 
@@ -621,8 +662,10 @@ public class CanvasController {
     };
     return backgroundTimingTask;
   }
+
   /**
-   * This method returns the current maximum allowable time based on the difficulty chosen by the
+   * This method returns the current maximum allowable time based on the
+   * difficulty chosen by the
    * user
    *
    * @return The maximum allowable time of type Integer
@@ -797,7 +840,8 @@ public class CanvasController {
   }
 
   /**
-   * This method writes the line for the game played to the corresponding user file
+   * This method writes the line for the game played to the corresponding user
+   * file
    *
    * @param result The outcome of the game, either "WON" or "LOST"
    * @throws IOException
@@ -811,12 +855,11 @@ public class CanvasController {
 
     String currentLine;
     String lastLine = "";
-    String[] separatedUserInfo = {""};
+    String[] separatedUserInfo = { "" };
 
     // Read the current user file
-    BufferedReader bufferedReader =
-        new BufferedReader(
-            new FileReader("DATABASE/usersettings/" + gameSettings.getCurrentUser()));
+    BufferedReader bufferedReader = new BufferedReader(
+        new FileReader("DATABASE/usersettings/" + gameSettings.getCurrentUser()));
 
     // Get the last line of the user file
     while ((currentLine = bufferedReader.readLine()) != null) {
@@ -855,14 +898,13 @@ public class CanvasController {
 
     // Format the line to be inputted into the file
     String linesCount = Files.readAllLines(path).get(size - 1);
-    String line =
-        currentWord
-            + " , "
-            + result
-            + " , "
-            + timerLabel.getText()
-            + " , "
-            + Integer.toString(maximumTime);
+    String line = currentWord
+        + " , "
+        + result
+        + " , "
+        + timerLabel.getText()
+        + " , "
+        + Integer.toString(maximumTime);
     FileWriter fileWriter;
 
     /*
@@ -883,7 +925,8 @@ public class CanvasController {
   }
 
   /**
-   * This method runs after the end of each round and auto-saves the drawing made by the user
+   * This method runs after the end of each round and auto-saves the drawing made
+   * by the user
    *
    * @throws IOException
    */
@@ -896,7 +939,8 @@ public class CanvasController {
       autoSaveDrawingsFolder.mkdir();
     }
 
-    // Create a new png file of the canvas screenshot and save it to the autosaves folder
+    // Create a new png file of the canvas screenshot and save it to the autosaves
+    // folder
     final File canvasScreenshot = new File(("DATABASE/autosaves/" + currentWord) + ".png");
 
     ImageIO.write(getCurrentSnapshot(), "png", canvasScreenshot);
@@ -931,7 +975,8 @@ public class CanvasController {
       if (i < allScores.size()) {
         currentScore = allScores.get(i);
 
-        // If the recorded time is equal to the maximum time, the game must have been lost
+        // If the recorded time is equal to the maximum time, the game must have been
+        // lost
         if (currentScore.getTime() == gameSettings.getTimeLevel() + 1) {
           leaderBoardList.getItems().add(currentScore.getID() + "  LOST");
         } else {
@@ -943,5 +988,115 @@ public class CanvasController {
         break;
       }
     }
+  }
+
+  // Resets the canvas automatically as well as the buttons
+  void reset() {
+    // Time stops, button enable/disabled, leaderboard and canvas update to new
+    // value
+    timeline.stop();
+    resetArrow();
+    readyButton.setDisable(false);
+    readyButton.setText("Ready?");
+    clearButton.setDisable(false);
+    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    canvas.setDisable(true);
+    saveDrawingButton.setDisable(false);
+    targetWordLabel.setText("Get a new word to begin drawing!");
+    timerLabel.setText("");
+    pgbTimer.setVisible(false);
+    leaderBoardLabel.setVisible(false);
+    leaderBoardList.setVisible(false);
+  }
+
+  private void arrowMotionControlUp() {
+    movementDown.jumpTo(Duration.seconds(0));
+    movementDown.stop();
+    movementUp.setDuration(Duration.seconds(3));
+    movementUp.setNode(arrowUp);
+    movementUp.setToY(-100);
+    movementUp.setAutoReverse(false);
+    movementUp.setCycleCount(15);
+    movementUp.play();
+  }
+
+  private void arrowMotionControlDown() {
+    movementUp.jumpTo(Duration.seconds(0));
+    movementUp.stop();
+    movementDown.setDuration(Duration.seconds(3));
+    movementDown.setNode(arrowDown);
+    movementDown.setToY(100);
+    movementDown.setAutoReverse(false);
+    movementDown.setCycleCount(15);
+    movementDown.play();
+  }
+
+  private void resetArrow() {
+    movementUp.jumpTo(Duration.seconds(0));
+    movementUp.stop();
+    movementDown.jumpTo(Duration.seconds(0));
+    movementDown.stop();
+  }
+
+  private boolean insideTopPrediction() {
+
+    // Get the uesr data and then get the current words difficulty
+    Stage stage = (Stage) root.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
+    int accuracyLevel = (int) gameSettings.getAccuracyLevel();
+
+    switch (accuracyLevel) {
+      case 0:
+
+        for (int i = 3; i < 10; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+    }
+
+    switch (accuracyLevel) {
+      case 1:
+
+        for (int i = 2; i < 10; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+    }
+
+    switch (accuracyLevel) {
+      case 0:
+
+        for (int i = 1; i < 10; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+    }
+    return false;
   }
 }

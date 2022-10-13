@@ -76,7 +76,7 @@
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onZenMode" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: white;" text="Zen Mode">
+                  <Button mnemonicParsing="false" onAction="#onZenMode" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Zen Mode" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -85,7 +85,7 @@
                         </ImageView>
                      </graphic>
                      <font>
-                        <Font name="Lucida Fax Demibold" size="10.0" />
+                        <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#onSoundSettings" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Sound">

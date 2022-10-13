@@ -197,12 +197,12 @@ public class ZenMode {
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+            graphic.setStroke(Color.rgb(getRed(), getGreen(), getBlue()));
           } catch (NumberFormatException | TranslateException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -333,12 +333,12 @@ public class ZenMode {
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+            graphic.setStroke(Color.rgb(getRed(), getGreen(), getBlue()));
           } catch (NumberFormatException | TranslateException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -374,19 +374,19 @@ public class ZenMode {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
+          final double size = 8;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(255, 255, 255));
+            graphic.setStroke(Color.rgb(255, 255, 255));
           } catch (NumberFormatException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
