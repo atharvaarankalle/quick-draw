@@ -588,8 +588,10 @@ public class CanvasController {
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
+              //Stop all bgms and play failing sfx
               SoundsManager.stopAllBGM();
               SoundsManager.playSFX(sfx.FAIL);
+              //Stop the user from drawing on the canvas, and update the GUI
               readyButton.setDisable(false);
               readyButton.setText("Ready?");
               clearButton.setDisable(true);
