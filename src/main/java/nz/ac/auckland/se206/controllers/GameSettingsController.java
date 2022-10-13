@@ -358,7 +358,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -404,7 +410,7 @@ public class GameSettingsController implements Initializable {
                 Settings gameSettings = (Settings) stage.getUserData();
 
                 gameSettings.setAccuracyLevel(accuracySlider.getValue());
-
+                
                 stage.setUserData(gameSettings);
 
                 double sliderFinalValue = 0.0;
@@ -423,7 +429,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -479,7 +491,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -547,7 +565,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -601,7 +625,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + newValue.toString()
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -669,7 +699,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(sliderFinalValue)
                           + " , "
-                          + Double.toString(confidenceSlider.getValue());
+                          + Double.toString(confidenceSlider.getValue())
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -725,7 +761,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + newValue.toString();
+                          + newValue.toString()
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
@@ -793,7 +835,13 @@ public class GameSettingsController implements Initializable {
                           + " , "
                           + Double.toString(timeSlider.getValue())
                           + " , "
-                          + Double.toString(sliderFinalValue);
+                          + Double.toString(sliderFinalValue)
+                          + " , "
+                          + Double.toString(gameSettings.getSfxVolume())
+                          + " , "
+                          + Double.toString(gameSettings.getBgmVolume())
+                          + " , "
+                          + Integer.toString(gameSettings.getMuteStatus());
                   bufferedWriter.write(line);
                   bufferedWriter.newLine();
                   bufferedWriter.flush();
