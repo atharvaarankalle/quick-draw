@@ -19,16 +19,25 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 
 public class MainPanel implements Initializable {
 
-  @FXML
-  private BorderPane CurrentScene;
+  @FXML private BorderPane CurrentScene;
 
-  @FXML
-  private Button GameButton;
+  @FXML private Button GameButton;
 
+  /**
+   * JavaFX calls this method once the GUI elements are loaded.
+   *
+   * @param location
+   * @param resources
+   */
   @Override
-  public void initialize(URL location, ResourceBundle resources) {
-  }
+  public void initialize(URL location, ResourceBundle resources) {}
 
+  /**
+   * This method is called when the user clicks the "Home" button. It switches the scene to the home
+   * scene on the same stage
+   *
+   * @param event
+   */
   @FXML
   private void onHome(ActionEvent event) throws IOException {
     Parent view = loadFxml("homepage");
@@ -36,6 +45,12 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(false);
   }
 
+  /**
+   * This method is called when the user clicks the "Game" button. It switches the scene to the
+   * canvas scene on the same stage
+   *
+   * @param event
+   */
   @FXML
   private void onGame(ActionEvent event) throws IOException {
     CurrentScene.setCenter(null);
@@ -44,6 +59,12 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(true);
   }
 
+  /**
+   * This method is called when the user clicks the "Info" button. It switches the scene to the how
+   * to play scene on the same stage
+   *
+   * @param event
+   */
   @FXML
   private void onInfo(ActionEvent event) throws IOException {
     Parent view = loadFxml("howtoplay");
@@ -51,6 +72,12 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(false);
   }
 
+  /**
+   * This method is called when the user clicks the "Statistics" button. It switches the scene to
+   * the stats scene on the same stage
+   *
+   * @param event
+   */
   @FXML
   private void onStatistic(ActionEvent event) throws IOException {
     CurrentScene.setCenter(null);
@@ -59,6 +86,12 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(false);
   }
 
+  /**
+   * This method is called when the user clicks the "Settings" button. It switches the scene to the
+   * game settings scene on the same stage
+   *
+   * @param event
+   */
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
     Parent view = loadFxml("gamesettings");
@@ -66,6 +99,12 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(false);
   }
 
+  /**
+   * This method is called when the user clicks the "Zen Mode" button. It switches the scene to the
+   * zen mode scene on the same stage
+   *
+   * @param event
+   */
   @FXML
   private void onZenMode(ActionEvent event) throws IOException {
     CurrentScene.setCenter(null);
@@ -75,9 +114,8 @@ public class MainPanel implements Initializable {
   }
 
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button.
-   * It loads and shows
-   * the "Main Menu" scene
+   * This method is invoked when the user clicks the "Log out" button. It loads and shows the "Main
+   * Menu" scene
    *
    * @param event The event that triggered this method.
    * @throws IOException
@@ -88,10 +126,15 @@ public class MainPanel implements Initializable {
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");
     Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
-    if (Files.exists(path) || Files.exists(guestSettingsPath)) {
+
+    // Delete the guest user file
+    if (Files.exists(path)) {
       Files.delete(path);
+    }
+
+    // Delete the guest user settings file
+    if (Files.exists(guestSettingsPath)) {
       Files.delete(guestSettingsPath);
-      System.exit(0);
     }
 
     // Switch to the "Main Menu" scene.
@@ -102,11 +145,23 @@ public class MainPanel implements Initializable {
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }
 
+  /**
+   * This method is called when the user clicks the "Exit" button. It exits the program
+   *
+   * @param event
+   */
   @FXML
   private void onExit(ActionEvent event) throws IOException {
     System.exit(0);
   }
 
+  /**
+   * This method loads an FXML file based on an input string, the file name
+   *
+   * @param fxml The name of the FXML file to load
+   * @return Parent the root node of the FXML file
+   * @throws IOException
+   */
   private static Parent loadFxml(final String fxml) throws IOException {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }

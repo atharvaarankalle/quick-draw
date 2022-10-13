@@ -16,15 +16,23 @@ public class LoginInformation extends ListCell<String> {
   private HBox hbox = new HBox();
   private Label label = new Label("Null");
   private Pane pane = new Pane();
-  // private Button button = new Button("Stats");
 
+  /**
+   * Constructor for the LoginInformation class. This class is used to display the user's
+   * information
+   */
   public LoginInformation() {
     super();
     hbox.getChildren().addAll(label, pane);
     HBox.setHgrow(pane, Priority.ALWAYS);
   }
 
-  // Override the updateItem method
+  /**
+   * This method is used to update the information of the user
+   *
+   * @param item The item to be updated
+   * @param empty Whether the item is empty
+   */
   @Override
   protected void updateItem(String item, boolean empty) {
     super.updateItem(item, empty);
