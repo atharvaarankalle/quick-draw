@@ -70,7 +70,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="musicButton" mnemonicParsing="false" onAction="#onSoundSettings" prefHeight="40.0" prefWidth="206.0" style="-fx-background-color: white;" text="Music">
+                  <Button fx:id="musicButton" mnemonicParsing="false" onAction="#onSoundSettings" prefHeight="40.0" prefWidth="206.0" style="-fx-background-color: white;" text="Sounds">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
