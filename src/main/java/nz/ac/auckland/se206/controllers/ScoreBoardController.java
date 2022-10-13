@@ -10,10 +10,10 @@ import java.util.Comparator;
 import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -79,25 +79,10 @@ public class ScoreBoardController {
     }
   }
 
-  /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
-   * the "Main Menu" scene
-   *
-   * @param event The event that triggered this method.
-   * @throws IOException
-   */
-  @FXML
-  private void onMain(ActionEvent event) throws IOException {
-
-    // Switch to the "Main Menu" scene.
-    Scene currentScene = ((Button) event.getSource()).getScene();
-    currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
-  }
-
   // Updates all the statistic details of the player won/loss
   private void updateStatistics(String currentID) {
     // Initally starts by taking in which player information/statistics to store
-    userNameLabel.setText(currentID + "'s stats");
+    userNameLabel.setText(currentID + "'s Stats");
     try {
       StatisticsManager.readUserStatistics(currentID);
       totalGamesLabel.setText(String.valueOf(StatisticsManager.getNumberOfGames()));
@@ -109,7 +94,7 @@ public class ScoreBoardController {
           if (record.getTime() == gameSettings.getTimeLevel() + 1) {
             scoreList.getItems().add(record.getWord() + "  LOST");
           } else {
-            scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds");
+            scoreList.getItems().add(record.getWord() + "  " + record.getTime() + " seconds ");
           }
         }
       }

@@ -21,7 +21,8 @@ import nz.ac.auckland.se206.controllers.SoundsManager;
 import nz.ac.auckland.se206.controllers.Settings;
 
 /**
- * This is the entry point of the JavaFX application, while you can change this class, it should
+ * This is the entry point of the JavaFX application, while you can change this
+ * class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
@@ -31,7 +32,8 @@ public class App extends Application {
     storageData.mkdir();
     FileWriter fileWriter;
     fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
-    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
+    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+    }
   }
 
   public static void main(final String[] args) throws IOException {
@@ -41,14 +43,17 @@ public class App extends Application {
 
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");
-    if (Files.exists(path)) {
+    Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
+    if (Files.exists(path) || Files.exists(guestSettingsPath)) {
       Files.delete(path);
+      Files.delete(guestSettingsPath);
       System.exit(0);
     }
   }
 
   /**
-   * Returns the node associated to the input file. The method expects that the file is located in
+   * Returns the node associated to the input file. The method expects that the
+   * file is located in
    * "src/main/resources/fxml".
    *
    * @param fxml The name of the FXML file (without extension).
@@ -62,7 +67,8 @@ public class App extends Application {
   private Scene scene;
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the
+   * "Canvas" scene.
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
@@ -84,7 +90,7 @@ public class App extends Application {
     Settings gameSettings = new Settings();
     
     // Set the current scene and show the stage
-    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 630);
+    scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 770);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
     stage.setUserData(gameSettings);
@@ -98,30 +104,34 @@ public class App extends Application {
     String currentID;
     String currentLine;
     String lastLine = "";
-    String[] separatedUserInfo = {""};
+    String[] separatedUserInfo = { "" };
     try {
       lineNumber = Files.lines(userDataPath).count();
 
       if (lineNumber > 0) {
         currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
 
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("DATABASE/" + currentID));
+        if (!currentID.equals("GUEST")) {
+          BufferedReader bufferedReader =
+              new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
 
-        while ((currentLine = bufferedReader.readLine()) != null) {
-          lastLine = currentLine;
+          while ((currentLine = bufferedReader.readLine()) != null) {
+            lastLine = currentLine;
+          }
+
+          bufferedReader.close();
+
+          separatedUserInfo = lastLine.split(" , ");
+
+          Settings gameSettings = (Settings) stage.getUserData();
+
+          gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[0]));
+          gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[1]));
+          gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[2]));
+          gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[3]));
         }
-
-        bufferedReader.close();
-
-        separatedUserInfo = lastLine.split(" , ");
-
-        Settings gameSettings = (Settings) stage.getUserData();
-
-        gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[3]));
-        gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[4]));
-        gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[5]));
-        gameSettings.setConfidenceLevel(Double.parseDouble(separatedUserInfo[6]));
       }
+
     } catch (IOException e) {
       e.printStackTrace();
     }

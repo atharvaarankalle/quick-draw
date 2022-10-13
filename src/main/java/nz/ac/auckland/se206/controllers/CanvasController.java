@@ -6,8 +6,10 @@ import ai.djl.translate.TranslateException;
 import com.opencsv.exceptions.CsvException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -746,6 +748,42 @@ public class CanvasController {
 
     Settings gameSettings = (Settings) stage.getUserData();
 
+    String currentLine;
+    String lastLine = "";
+    String[] separatedUserInfo = {""};
+
+    BufferedReader bufferedReader =
+        new BufferedReader(
+            new FileReader("DATABASE/usersettings/" + gameSettings.getCurrentUser()));
+
+    while ((currentLine = bufferedReader.readLine()) != null) {
+      lastLine = currentLine;
+    }
+
+    bufferedReader.close();
+
+    separatedUserInfo = lastLine.split(" , ");
+
+    int maximumTime = 60;
+
+    switch ((int) Double.parseDouble(separatedUserInfo[2])) {
+      case 0:
+        maximumTime = 60;
+        break;
+      case 1:
+        maximumTime = 45;
+        break;
+      case 2:
+        maximumTime = 30;
+        break;
+      case 3:
+        maximumTime = 15;
+        break;
+      default:
+        maximumTime = 60;
+        break;
+    }
+
     // Count the number of lines in the UserDatas.txt file
     Path path = Paths.get("DATABASE/UserDatas.txt");
     long count = Files.lines(path).count();
@@ -753,7 +791,14 @@ public class CanvasController {
 
     // Format the line to be inputted into the file
     String linesCount = Files.readAllLines(path).get(size - 1);
-    String line = currentWord + " , " + result + " , " + timerLabel.getText();
+    String line =
+        currentWord
+            + " , "
+            + result
+            + " , "
+            + timerLabel.getText()
+            + " , "
+            + Integer.toString(maximumTime);
     FileWriter fileWriter;
 
     /*
@@ -763,22 +808,7 @@ public class CanvasController {
     try {
       fileWriter = new FileWriter("DATABASE/" + linesCount, true);
       BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-      bufferedWriter.write(
-          line
-              + " , "
-              + gameSettings.getAccuracyLevel()
-              + " , "
-              + gameSettings.getWordsLevel()
-              + " , "
-              + gameSettings.getTimeSliderPosition()
-              + " , "
-              + gameSettings.getConfidenceSliderPosition()
-              +" , "
-              + gameSettings.getSfxVolume()
-              +" , "
-              +gameSettings.getBgmVolume()
-              +" , "
-              +gameSettings.getMuteStatus());
+      bufferedWriter.write(line);
       bufferedWriter.newLine();
       bufferedWriter.flush();
       bufferedWriter.close();
@@ -817,7 +847,7 @@ public class CanvasController {
     leaderBoardList.getItems().clear();
     leaderBoardLabel.setVisible(true);
     leaderBoardList.setVisible(true);
-    leaderBoardLabel.setText("Top artists of \n" + currentWord);
+    leaderBoardLabel.setText("Top artists");
     ArrayList<Score> allScores;
     allScores = StatisticsManager.getLeaderBoard(currentWord);
     Score currentScore;

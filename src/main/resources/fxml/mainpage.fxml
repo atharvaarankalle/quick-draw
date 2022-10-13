@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="630.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainPanel">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="900.0" stylesheets="@../css/mainpanel.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainPanel">
    <children>
       <AnchorPane layoutY="33.0" prefHeight="592.0" prefWidth="142.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0">
          <children>
-            <VBox layoutY="7.0" prefHeight="471.0" prefWidth="134.0" spacing="20.0" style="-fx-background-color: black;">
+            <VBox alignment="CENTER" layoutY="7.0" prefHeight="613.0" prefWidth="134.0" spacing="35.0" style="-fx-background-color: black;">
                <children>
-                  <Button fx:id="homeButton" mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="142.0" style="-fx-background-color: white;" text="Home">
+                  <Button mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Home">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -24,8 +24,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="gameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="165.0" style="-fx-background-color: white;" text="Game">
+                  <Button fx:id="GameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Game">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -33,8 +36,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="infoButton" mnemonicParsing="false" onAction="#onInfo" prefHeight="40.0" prefWidth="154.0" style="-fx-background-color: white;" text="Instruction">
+                  <Button mnemonicParsing="false" onAction="#onInfo" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Instructions">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -42,8 +48,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="11.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="statsButton" mnemonicParsing="false" onAction="#onStatistic" prefHeight="40.0" prefWidth="162.0" style="-fx-background-color: white;" text="Statistics">
+                  <Button mnemonicParsing="false" onAction="#onStatistic" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Statistics">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -51,8 +60,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onGameSettings" prefHeight="40.0" prefWidth="194.0" style="-fx-background-color: white;" text="Settings">
+                  <Button mnemonicParsing="false" onAction="#onGameSettings" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Settings">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -60,17 +72,23 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: white;" text="Download">
+                  <Button mnemonicParsing="false" onAction="#onZenMode" prefHeight="40.0" prefWidth="170.0" style="-fx-background-color: white;" text="Zen Mode">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/MAINBOARD/Download.png" />
+                              <Image url="@../images/MAINBOARD/zen%20mode.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="10.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="musicButton" mnemonicParsing="false" onAction="#onSoundSettings" prefHeight="40.0" prefWidth="206.0" style="-fx-background-color: white;" text="Sounds">
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Music">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -78,8 +96,11 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onExit" prefHeight="40.0" prefWidth="152.0" style="-fx-background-color: white;" text="Exit">
+                  <Button mnemonicParsing="false" onAction="#onExit" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Exit">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -87,10 +108,13 @@
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>
-            <AnchorPane layoutY="471.0" prefHeight="126.0" prefWidth="134.0" style="-fx-background-color: black;">
+            <AnchorPane layoutY="620.0" prefHeight="119.0" prefWidth="134.0" style="-fx-background-color: black;">
                <children>
                   <ImageView fitHeight="105.0" fitWidth="121.0" layoutX="11.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -103,57 +127,57 @@
       </AnchorPane>
       <BorderPane fx:id="CurrentScene" layoutX="134.0" prefHeight="591.0" prefWidth="766.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
          <center>
-            <Pane prefHeight="558.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
+            <Pane prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
-                  <ImageView fitHeight="265.0" fitWidth="387.0" layoutX="372.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="297.0" fitWidth="442.0" layoutX="331.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/signage.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="7.0" layoutY="14.0" prefHeight="85.0" prefWidth="361.0" text="Quick, Draw! SE206 Edition" textFill="#fff6f6">
-                     <font>
-                        <Font name="Calibri" size="32.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="7.0" layoutY="107.0" prefHeight="29.0" prefWidth="302.0" text="Challenge yourself to be the best drawing artist!" textFill="WHITE">
-                     <font>
-                        <Font name="Cooper Black" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="7.0" layoutY="143.0" prefHeight="29.0" prefWidth="302.0" text="Try to get into top three to become a winner!" textFill="WHITE">
-                     <font>
-                        <Font name="Cooper Black" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="7.0" layoutY="182.0" prefHeight="29.0" prefWidth="302.0" text="For further information, please click the" textFill="WHITE">
-                     <font>
-                        <Font name="Cooper Black" size="12.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="7.0" layoutY="220.0" prefHeight="29.0" prefWidth="302.0" text="instruction button on your left, else let's start!" textFill="WHITE">
-                     <font>
-                        <Font name="Cooper Black" size="12.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="330.0" fitWidth="760.0" layoutX="3.0" layoutY="274.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="319.0" fitWidth="807.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/teachers-day.gif" />
                      </image>
                   </ImageView>
+                  <Label contentDisplay="TOP" layoutX="7.0" layoutY="8.0" prefHeight="85.0" prefWidth="517.0" text="Quick, Draw! SE206 Edition" textFill="#fff6f6">
+                     <font>
+                        <Font name="Lucida Handwriting Italic" size="29.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="115.0" prefHeight="29.0" prefWidth="366.0" text="Challenge yourself to be the best drawing artist!" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="151.0" prefHeight="29.0" prefWidth="339.0" text="Try to get into top three to become a winner!" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="17.0" layoutY="190.0" prefHeight="29.0" prefWidth="345.0" text="For further information, please click the" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="17.0" layoutY="228.0" prefHeight="29.0" prefWidth="343.0" text="instruction button on your left, else let's start!" textFill="WHITE">
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </center>
       </BorderPane>
       <AnchorPane prefHeight="40.0" prefWidth="900.0" style="-fx-background-color: black;">
          <children>
-            <Label layoutX="14.0" layoutY="8.0" prefHeight="24.0" prefWidth="94.0" text="Dashboard" textFill="WHITE">
+            <Label layoutX="14.0" layoutY="3.0" prefHeight="35.0" prefWidth="383.0" text="Quick, Draw! SE206 Edition" textFill="WHITE">
                <font>
-                  <Font name="Cambria Bold" size="18.0" />
+                  <Font name="Lucida Handwriting Italic" size="21.0" />
                </font>
             </Label>
-            <Button fx:id="backToLoginPage" layoutX="797.0" layoutY="3.0" mnemonicParsing="false" onAction="#onLogOut" prefHeight="33.0" prefWidth="102.0" style="-fx-background-color: white;" text="Logout">
+            <Button fx:id="backToLoginPage" layoutX="792.0" layoutY="3.0" mnemonicParsing="false" onAction="#onLogOut" prefHeight="33.0" prefWidth="102.0" styleClass="menuButton" text="Logout">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Lucida Fax Demibold" size="14.0" />
                </font>
                <graphic>
                   <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">

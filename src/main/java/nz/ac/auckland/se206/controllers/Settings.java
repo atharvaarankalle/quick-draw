@@ -16,6 +16,8 @@ public class Settings {
 
   private int muteStatus = 0;
 
+  private String currentUser = "";
+
   public void setAccuracyLevel(double level) {
     this.accuracyLevel = level;
   }
@@ -42,6 +44,9 @@ public class Settings {
 
   public void setMuteStatus(int muteStatus) {
       this.muteStatus = muteStatus;
+
+  public void setCurrentUser(String username) {
+    this.currentUser = username;
   }
 
   public double getAccuracyLevel() {
@@ -100,5 +105,9 @@ public int getMuteStatus() {
 
   public double getConfidenceSliderPosition() {
     return this.confidenceLevel;
+  }
+
+  public String getCurrentUser() {
+    return this.currentUser;
   }
 }

@@ -1,5 +1,10 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -53,6 +58,8 @@ public class GameSettingsController implements Initializable {
 
   @FXML
   private Tooltip confidenceTooltip;
+
+  private static String previousUserID = "";
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -209,10 +216,43 @@ public class GameSettingsController implements Initializable {
 
           Settings gameSettings = (Settings) stage.getUserData();
 
-          accuracySlider.setValue(gameSettings.getAccuracyLevel());
-          wordsSlider.setValue(gameSettings.getWordsLevel());
-          timeSlider.setValue(gameSettings.getTimeSliderPosition());
-          confidenceSlider.setValue(gameSettings.getConfidenceSliderPosition());
+          if (!(previousUserID.equals(gameSettings.getCurrentUser()))) {
+            previousUserID = gameSettings.getCurrentUser();
+
+            String currentLine;
+            String lastLine = "";
+            String[] separatedUserInfo = {""};
+            try {
+              BufferedReader bufferedReader =
+                  new BufferedReader(new FileReader("DATABASE/usersettings/" + previousUserID));
+
+              while ((currentLine = bufferedReader.readLine()) != null) {
+                lastLine = currentLine;
+              }
+
+              bufferedReader.close();
+
+              separatedUserInfo = lastLine.split(" , ");
+
+              gameSettings.setAccuracyLevel(Double.valueOf(separatedUserInfo[0]));
+              gameSettings.setWordsLevel(Double.valueOf(separatedUserInfo[1]));
+              gameSettings.setTimeLevel(Double.valueOf(separatedUserInfo[2]));
+              gameSettings.setConfidenceLevel(Double.valueOf(separatedUserInfo[3]));
+
+              accuracySlider.setValue(Double.valueOf(separatedUserInfo[0]));
+              wordsSlider.setValue(Double.valueOf(separatedUserInfo[1]));
+              timeSlider.setValue(Double.valueOf(separatedUserInfo[2]));
+              confidenceSlider.setValue(Double.valueOf(separatedUserInfo[3]));
+
+            } catch (IOException e) {
+
+            }
+          } else {
+            accuracySlider.setValue(gameSettings.getAccuracyLevel());
+            wordsSlider.setValue(gameSettings.getWordsLevel());
+            timeSlider.setValue(gameSettings.getTimeSliderPosition());
+            confidenceSlider.setValue(gameSettings.getConfidenceSliderPosition());
+          }
 
           switch ((int) accuracySlider.getValue()) {
             case 0:
@@ -282,7 +322,12 @@ public class GameSettingsController implements Initializable {
   }
 
   @FXML
-  private void onAccuracyDragDetected() {
+  private void onAccuracyDragDetected() throws IOException {
+
+    FileWriter fileWriter = new FileWriter("DATABASE/usersettings/" + previousUserID, true);
+
+    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
     /*
      * Code adapted from:
      * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
@@ -304,6 +349,23 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setAccuracyLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                try {
+                  String line =
+                      newValue.toString()
+                          + " , "
+                          + Double.toString(wordsSlider.getValue())
+                          + " , "
+                          + Double.toString(timeSlider.getValue())
+                          + " , "
+                          + Double.toString(confidenceSlider.getValue());
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                } catch (IOException e) {
+
+                }
 
                 switch (newValue.intValue()) {
                   case 0:
@@ -345,6 +407,32 @@ public class GameSettingsController implements Initializable {
 
                 stage.setUserData(gameSettings);
 
+                double sliderFinalValue = 0.0;
+
+                if (sliderValue == accuracySlider.getMax()) {
+                  sliderFinalValue = accuracySlider.getMax();
+                } else if (sliderValue == accuracySlider.getMin()) {
+                  sliderFinalValue = accuracySlider.getMin();
+                }
+
+                try {
+                  String line =
+                      Double.toString(sliderFinalValue)
+                          + " , "
+                          + Double.toString(wordsSlider.getValue())
+                          + " , "
+                          + Double.toString(timeSlider.getValue())
+                          + " , "
+                          + Double.toString(confidenceSlider.getValue());
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
+
                 if (sliderValue == accuracySlider.getMin()) {
                   accuracySlider.setStyle("-fx-control-inner-background: green");
                 } else if (sliderValue == accuracySlider.getMax()) {
@@ -355,7 +443,12 @@ public class GameSettingsController implements Initializable {
   }
 
   @FXML
-  private void onWordsDragDetected() {
+  private void onWordsDragDetected() throws IOException {
+
+    FileWriter fileWriter = new FileWriter("DATABASE/usersettings/" + previousUserID, true);
+
+    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
     /*
      * Code adapted from:
      * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
@@ -377,6 +470,24 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setWordsLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                try {
+                  String line =
+                      Double.toString(accuracySlider.getValue())
+                          + " , "
+                          + newValue.toString()
+                          + " , "
+                          + Double.toString(timeSlider.getValue())
+                          + " , "
+                          + Double.toString(confidenceSlider.getValue());
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
 
                 switch (newValue.intValue()) {
                   case 0:
@@ -420,6 +531,32 @@ public class GameSettingsController implements Initializable {
 
                 stage.setUserData(gameSettings);
 
+                double sliderFinalValue = 0.0;
+
+                if (sliderValue == wordsSlider.getMax()) {
+                  sliderFinalValue = wordsSlider.getMax();
+                } else if (sliderValue == wordsSlider.getMin()) {
+                  sliderFinalValue = wordsSlider.getMin();
+                }
+
+                try {
+                  String line =
+                      Double.toString(accuracySlider.getValue())
+                          + " , "
+                          + Double.toString(sliderFinalValue)
+                          + " , "
+                          + Double.toString(timeSlider.getValue())
+                          + " , "
+                          + Double.toString(confidenceSlider.getValue());
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
+
                 if (sliderValue == wordsSlider.getMin()) {
                   wordsSlider.setStyle("-fx-control-inner-background: green");
                 } else if (sliderValue == wordsSlider.getMax()) {
@@ -430,7 +567,12 @@ public class GameSettingsController implements Initializable {
   }
 
   @FXML
-  private void onTimeDragDetected() {
+  private void onTimeDragDetected() throws IOException {
+
+    FileWriter fileWriter = new FileWriter("DATABASE/usersettings/" + previousUserID, true);
+
+    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
     /*
      * Code adapted from:
      * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
@@ -450,6 +592,24 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setTimeLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                try {
+                  String line =
+                      Double.toString(accuracySlider.getValue())
+                          + " , "
+                          + Double.toString(wordsSlider.getValue())
+                          + " , "
+                          + newValue.toString()
+                          + " , "
+                          + Double.toString(confidenceSlider.getValue());
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
 
                 switch (newValue.intValue()) {
                   case 0:
@@ -493,6 +653,32 @@ public class GameSettingsController implements Initializable {
 
                 stage.setUserData(gameSettings);
 
+                double sliderFinalValue = 0.0;
+
+                if (sliderValue == timeSlider.getMax()) {
+                  sliderFinalValue = timeSlider.getMax();
+                } else if (sliderValue == timeSlider.getMin()) {
+                  sliderFinalValue = timeSlider.getMin();
+                }
+
+                try {
+                  String line =
+                      Double.toString(accuracySlider.getValue())
+                          + " , "
+                          + Double.toString(wordsSlider.getValue())
+                          + " , "
+                          + Double.toString(sliderFinalValue)
+                          + " , "
+                          + Double.toString(confidenceSlider.getValue());
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
+
                 if (sliderValue == timeSlider.getMin()) {
                   timeSlider.setStyle("-fx-control-inner-background: green");
                 } else if (sliderValue == timeSlider.getMax()) {
@@ -503,7 +689,12 @@ public class GameSettingsController implements Initializable {
   }
 
   @FXML
-  private void onConfidenceDragDetected() {
+  private void onConfidenceDragDetected() throws IOException {
+
+    FileWriter fileWriter = new FileWriter("DATABASE/usersettings/" + previousUserID, true);
+
+    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
     /*
      * Code adapted from:
      * https://stackoverflow.com/questions/29637688/javafx-slider-event-listener-
@@ -525,6 +716,24 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setConfidenceLevel(newValue.doubleValue());
 
                 stage.setUserData(gameSettings);
+
+                try {
+                  String line =
+                      Double.toString(accuracySlider.getValue())
+                          + " , "
+                          + Double.toString(wordsSlider.getValue())
+                          + " , "
+                          + Double.toString(timeSlider.getValue())
+                          + " , "
+                          + newValue.toString();
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
 
                 switch (newValue.intValue()) {
                   case 0:
@@ -567,6 +776,32 @@ public class GameSettingsController implements Initializable {
                 gameSettings.setConfidenceLevel(confidenceSlider.getValue());
 
                 stage.setUserData(gameSettings);
+
+                double sliderFinalValue = 0.0;
+
+                if (sliderValue == confidenceSlider.getMax()) {
+                  sliderFinalValue = confidenceSlider.getMax();
+                } else if (sliderValue == confidenceSlider.getMin()) {
+                  sliderFinalValue = confidenceSlider.getMin();
+                }
+
+                try {
+                  String line =
+                      Double.toString(accuracySlider.getValue())
+                          + " , "
+                          + Double.toString(wordsSlider.getValue())
+                          + " , "
+                          + Double.toString(timeSlider.getValue())
+                          + " , "
+                          + Double.toString(sliderFinalValue);
+                  bufferedWriter.write(line);
+                  bufferedWriter.newLine();
+                  bufferedWriter.flush();
+                  bufferedWriter.close();
+                  fileWriter.close();
+                } catch (IOException e) {
+
+                }
 
                 if (sliderValue == confidenceSlider.getMin()) {
                   confidenceSlider.setStyle("-fx-control-inner-background: green");
