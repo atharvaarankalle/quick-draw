@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.SoundsManager;
 import nz.ac.auckland.se206.controllers.Settings;
 
 /**
@@ -24,20 +26,33 @@ import nz.ac.auckland.se206.controllers.Settings;
  */
 public class App extends Application {
 
+  /**
+   * This method is called when the app is first run, and is used to setup the app
+   *
+   * @throws IOException
+   */
   public static void initalize() throws IOException {
     File storageData = new File("DATABASE"); // Create a folder to store all user info
     storageData.mkdir();
     FileWriter fileWriter;
+
+    // Create a file to store the list of users logged in
     fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
     try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
   }
 
+  /**
+   * This method is the entry point to the entire JavaFX application
+   *
+   * @throws IOException
+   */
   public static void main(final String[] args) throws IOException {
 
+    // Initialize and launch the app
     initalize();
     launch();
 
-    // Check if GUEST exists, if does, then delete the file
+    // Check if GUEST exists, if does, then delete the file after the app is closed
     Path path = Paths.get("DATABASE/GUEST");
     Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
     if (Files.exists(path)) {
@@ -70,9 +85,10 @@ public class App extends Application {
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
+   * @throws URISyntaxException
    */
   @Override
-  public void start(final Stage stage) throws IOException {
+  public void start(final Stage stage) throws IOException, URISyntaxException {
 
     // Load the FXML files
     SceneManager.addUi(AppUi.HOME_PAGE, loadFxml("homepage"));
@@ -81,9 +97,12 @@ public class App extends Application {
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
+    //Initialize all sound effects
+    SoundsManager.loadSFX();
+    SoundsManager.loadBGM();
     Settings gameSettings = new Settings();
 
-    // Set the current scene and show the stage
+    // Set the current scene, set the title of the app and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 770);
     stage.setScene(scene);
     stage.setTitle("Quick, Draw! SE206 Edition");
@@ -92,6 +111,12 @@ public class App extends Application {
     stage.show();
   }
 
+  /**
+   * This method is used to set the slider positions to the last saved positions
+   *
+   * @param stage The primary stage of the application.
+   * @throws IOException
+   */
   private void setSliderPositions(Stage stage) {
     Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
     long lineNumber;
@@ -102,13 +127,16 @@ public class App extends Application {
     try {
       lineNumber = Files.lines(userDataPath).count();
 
+      // If no user has logged in before, then continue
       if (lineNumber > 0) {
         currentID = Files.readAllLines(userDataPath).get((int) lineNumber - 1);
 
+        // If the current ID does not equal "GUEST", then continue
         if (!currentID.equals("GUEST")) {
           BufferedReader bufferedReader =
               new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
 
+          // Read the last line of the file
           while ((currentLine = bufferedReader.readLine()) != null) {
             lastLine = currentLine;
           }
@@ -119,6 +147,7 @@ public class App extends Application {
 
           Settings gameSettings = (Settings) stage.getUserData();
 
+          // Set the slider positions in the game settings
           gameSettings.setAccuracyLevel(Double.parseDouble(separatedUserInfo[0]));
           gameSettings.setWordsLevel(Double.parseDouble(separatedUserInfo[1]));
           gameSettings.setTimeLevel(Double.parseDouble(separatedUserInfo[2]));

@@ -11,7 +11,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -19,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 public class ScoreBoardController {
   @FXML private Label userNameLabel;
@@ -32,8 +32,6 @@ public class ScoreBoardController {
   @FXML private Label bestRecordWordLabel;
 
   @FXML private Label bestRecordTimeLabel;
-
-  @FXML private Label noStatsLabel;
 
   @FXML private ListView<String> scoreList;
 
@@ -55,9 +53,11 @@ public class ScoreBoardController {
 
   private Settings gameSettings;
 
+  /** This method is called to initialize the scoreboard scene for the current user. */
   public void initialize() {
+
     try {
-      noStatsLabel.setVisible(false);
+      // Get the username of the latest user to log in
       // First read the current user id
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
       long lineNumber = Files.lines(userDataPath).count();
@@ -65,12 +65,15 @@ public class ScoreBoardController {
 
       Platform.runLater(
           () -> {
+
+            // Set the game stage in the StatisticsManager class
             Stage stage = (Stage) scoreList.getScene().getWindow();
 
             this.gameSettings = (Settings) stage.getUserData();
 
             StatisticsManager.setGameStage(stage);
 
+            // Update the statistics of the current user
             updateStatistics(currentID);
           });
     } catch (IOException e) {
@@ -78,18 +81,26 @@ public class ScoreBoardController {
     }
   }
 
-  // Updates all the statistic details of the player won/loss
+  /**
+   * This method is called to update the statistics of the current user.
+   *
+   * @param currentID The username of the current user
+   */
   private void updateStatistics(String currentID) {
     // Initally starts by taking in which player information/statistics to store
     userNameLabel.setText(currentID + "'s Stats");
     try {
+      // Get the statistics of the current user
       StatisticsManager.readUserStatistics(currentID);
       totalGamesLabel.setText(String.valueOf(StatisticsManager.getNumberOfGames()));
       List<Score> wonRecords = StatisticsManager.getRecords();
-      for (Score record :
-          wonRecords) { // Iterate the recorded play, and assign Lost or time remaining
+
+      // Iterate through every record for the current user
+      for (Score record : wonRecords) {
 
         if (!(record.getWord().equals("Initial Write"))) {
+
+          // If the time recorded is equal to the maximum time, the user must have lost the game
           if (record.getTime() == gameSettings.getTimeLevel() + 1) {
             scoreList.getItems().add(record.getWord() + "  LOST");
           } else {
@@ -98,9 +109,11 @@ public class ScoreBoardController {
         }
       }
       String topWord = StatisticsManager.getTopWord();
-      // After the scan, update all information
+      // After the scan, update all information in the GUI
       gamesWonLabel.setText(String.valueOf(StatisticsManager.getGameWon()));
       gamesLostLabel.setText(String.valueOf(StatisticsManager.getGameLost()));
+
+      // If the top word is not null, update the GUI
       if (topWord != null) {
         bestRecordWordLabel.setText(topWord + "!");
         bestRecordTimeLabel.setText(
@@ -112,6 +125,8 @@ public class ScoreBoardController {
 
       ObservableList<String> scoreListItems = scoreList.getItems();
       if (!scoreListItems.isEmpty()) {
+
+        // Iterate through the list of scores
         for (String string : scoreListItems) {
           // Only add records that aren't lost to the list to be sorted
           if (!string.split("  ")[1].equals("LOST")) {
@@ -119,6 +134,7 @@ public class ScoreBoardController {
           }
         }
         if (!scoreListSorted.isEmpty()) {
+          // Sort the list of scores
           Collections.sort(
               scoreListSorted,
               new Comparator<String>() {
@@ -129,6 +145,7 @@ public class ScoreBoardController {
                 }
               });
 
+          // Display the best drawing in the slideshow and set the slideshow heading
           imageView.setImage(
               new Image(
                   "file:DATABASE/autosaves/"
@@ -144,17 +161,16 @@ public class ScoreBoardController {
         imagePane.setVisible(false);
       }
     } catch (IOException e) {
-      ObservableList<Node> allNodes = backgroundPane.getChildren();
-      for (Node node : allNodes) {
-        node.setVisible(false);
-      }
-      noStatsLabel.setVisible(true);
+      textLabel1.setText("It seems you haven't tried any words yet...");
+      textLabel2.setVisible(false);
     }
   }
 
+  /** This method is called to display the next image in the slideshow. */
   @FXML
   private void onNextImage() {
-
+    //Play sound effect
+    SoundsManager.playSFX(sfx.BUTTON1);
     /*
      * Switch between the images displayed on the imageView
      * For each image, ensure it is able to handle the cases where
@@ -219,9 +235,11 @@ public class ScoreBoardController {
     }
   }
 
+  /** This method is called to display the previous image in the slideshow. */
   @FXML
   private void onPreviousImage() {
-
+    //Play sound effect
+    SoundsManager.playSFX(sfx.BUTTON1);
     /*
      * Switch between the images displayed on the imageView
      * For each image, ensure it is able to handle the cases where

@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
@@ -31,13 +30,13 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import javax.imageio.ImageIO;
 
+import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -94,6 +93,12 @@ public class ZenMode {
   @FXML
   private ColorPicker myColorPicker;
 
+  @FXML
+  private Button drawButton;
+
+  @FXML
+  private Button eraseButton;
+
   private GraphicsContext graphic;
 
   private DoodlePrediction model;
@@ -101,6 +106,8 @@ public class ZenMode {
   private String currentWord;
 
   private ObservableList<PieChart.Data> data;
+
+  private Boolean penOrEraser;
 
   // mouse coordinates
   private double currentX;
@@ -120,14 +127,21 @@ public class ZenMode {
    * @throws CsvException
    * @throws TranslateException
    */
-  public void initialize() throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
+  public void initialize()
+      throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
 
     // Initialise the canvas and disable it so users cannot draw on it
     initializeCanvas();
+
+    /*
+     * Set the initial visibilities of components and also set
+     * the initial interactability of buttons
+     */
     canvas.setDisable(true);
     saveDrawingButton.setDisable(true);
     targetWordLabel.setText("Get a new word to begin drawing!");
     readyButton.setText("Ready?");
+
     // Initialise the data list for the model results pie chart
     data = FXCollections.observableArrayList(
         new PieChart.Data("", 0),
@@ -147,6 +161,7 @@ public class ZenMode {
     modelResultsPieChart.setLegendVisible(false);
   }
 
+  /** This method resets the pie chart to a blank state */
   private void resetPieChart() {
     for (PieChart.Data data : modelResultsPieChart.getData()) {
       data.setName("");
@@ -156,13 +171,15 @@ public class ZenMode {
 
   /**
    * This method initialises the canvas at the start of the game
-   * 
+   *
    * @throws TranslateException
    */
   private void initializeCanvas() throws TranslateException {
 
     graphic = canvas.getGraphicsContext2D();
-
+    //Disable draw and erase button
+    drawButton.setDisable(true);
+    eraseButton.setDisable(true);
     // save coordinates when mouse is pressed on the canvas
     canvas.setOnMousePressed(
         e -> {
@@ -180,17 +197,33 @@ public class ZenMode {
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+            graphic.setStroke(Color.rgb(getRed(), getGreen(), getBlue()));
           } catch (NumberFormatException | TranslateException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
           currentY = y;
         });
+    penOrEraser = true;
+    // Looping sound effects for pen/eraser
+    canvas.setOnDragDetected(e -> {
+      if (penOrEraser) {
+        SoundsManager.playSFX(sfx.PENCIL);
+      } else {
+        SoundsManager.playSFX(sfx.ERASER);
+      }
+    });
+    canvas.setOnMouseReleased(e -> {
+      if (penOrEraser) {
+        SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
+      } else {
+        SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
+      }
+    });
 
     canvas.setDisable(false);
   }
@@ -198,6 +231,7 @@ public class ZenMode {
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
+    SoundsManager.playSFX(sfx.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
@@ -221,13 +255,19 @@ public class ZenMode {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
+    // Play pop button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       initializeCanvas();
+      //Enable the erase button, since the game is started with drawing ability
+      eraseButton.setDisable(false);
       resetPieChart();
-
+      // Play the senmode BGM
+      SoundsManager.stopBGM(bgm.MAINPANEL);
+      SoundsManager.playBGM(bgm.ZEN);
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
@@ -244,6 +284,11 @@ public class ZenMode {
       backgroundTask.start();
 
     } else {
+      SoundsManager.stopWinAndLoseSFX();
+      //If zen mode bgm is not playing, then its safe to interrupt and play mainpanel bgm
+      if (!SoundsManager.isZenBGMPlaying()) {
+        SoundsManager.playBGM(bgm.MAINPANEL);
+      }
       model = new DoodlePrediction();
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -253,12 +298,22 @@ public class ZenMode {
       readyButton.setText("Start!");
       text.add(currentWord); // Adds new randomWord, if current != random
     }
-
   }
 
+  /**
+   * This method is called when the user draws on the canvas It draws a line on
+   * the canvas based on
+   * the chosen colour
+   *
+   * @throws TranslateException
+   */
   @FXML
   private void onDraw() throws TranslateException {
-
+    // Play pop button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
+    drawButton.setDisable(true);
+    eraseButton.setDisable(false);
+    penOrEraser = true;
     graphic = canvas.getGraphicsContext2D();
 
     // save coordinates when mouse is pressed on the canvas
@@ -278,12 +333,12 @@ public class ZenMode {
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+            graphic.setStroke(Color.rgb(getRed(), getGreen(), getBlue()));
           } catch (NumberFormatException | TranslateException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -293,9 +348,20 @@ public class ZenMode {
     canvas.setDisable(false);
   }
 
+  /**
+   * This method is called when the user draws on the canvas in "Erase" mode It
+   * erases a line on the
+   * canvas based on the mouse position
+   *
+   * @throws TranslateException
+   */
   @FXML
   private void onErase() throws TranslateException {
-
+    // Play pop button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
+    drawButton.setDisable(false);
+    eraseButton.setDisable(true);
+    penOrEraser = false;
     graphic = canvas.getGraphicsContext2D();
 
     // save coordinates when mouse is pressed on the canvas
@@ -308,19 +374,19 @@ public class ZenMode {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
+          final double size = 8;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(255, 255, 255));
+            graphic.setStroke(Color.rgb(255, 255, 255));
           } catch (NumberFormatException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -352,7 +418,17 @@ public class ZenMode {
     return backgroundSpeechTask;
   }
 
+  /**
+   * This method generates a random word to draw, depending on the difficulty
+   * selected by the user
+   *
+   * @throws CsvException
+   * @throws IOException
+   * @throws URISyntaxException
+   */
   private void selectWord() throws CsvException, IOException, URISyntaxException {
+
+    // Get the user data and then get the current words difficulty
     Stage stage = (Stage) root.getScene().getWindow();
 
     Settings gameSettings = (Settings) stage.getUserData();
@@ -364,11 +440,16 @@ public class ZenMode {
     String randomWord = categorySelector.getRandomCategory(Difficulty.E);
     int randomNumber;
 
+    // Switch between the words level chosen by the user
     switch (wordsLevel) {
+      // Easy mode: Choose only easy level words
       case 0:
         randomWord = categorySelector.getRandomCategory(Difficulty.E);
         break;
+      // Medium mode: Randomly choose easy or medium level words
       case 1:
+        // Generate 0 or 1 randomly and choose an easy or medium word based on this
+        // result
         randomNumber = (int) (Math.random() * (2 - 0) + 0);
 
         switch (randomNumber) {
@@ -380,10 +461,12 @@ public class ZenMode {
             break;
         }
         break;
+      // Hard mode: Randomly choose easy, medium or hard level words
       case 2:
-        randomNumber = (int) (Math.random() * (3 - 0) + 0);
 
-        System.out.println(randomNumber);
+        // Generate 0, 1 or 2 randomly and choose an easy, medium or hard word based on
+        // this result
+        randomNumber = (int) (Math.random() * (3 - 0) + 0);
 
         switch (randomNumber) {
           case 0:
@@ -397,6 +480,7 @@ public class ZenMode {
             break;
         }
         break;
+      // Master mode: Choose only a hard word
       case 3:
         randomWord = categorySelector.getRandomCategory(Difficulty.H);
         break;
@@ -405,11 +489,15 @@ public class ZenMode {
         break;
     }
 
+    // If the chosen word has a prefix then remove this prefix
     if (randomWord.startsWith("\uFEFF")) {
       randomWord = randomWord.substring(1);
     }
     currentWord = randomWord;
 
+    // If all the words in the easy category have been played, reset the words seen
+    // and choose a
+    // random word
     if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
       text.clear();
       randomWord = categorySelector.getRandomCategory(Difficulty.E);
@@ -419,6 +507,7 @@ public class ZenMode {
       currentWord = randomWord;
     }
 
+    // If the randomly generated word has already been played, generate a new one
     while (text.contains(randomWord)) {
       randomWord = categorySelector.getRandomCategory(Difficulty.E);
       if (randomWord.startsWith("\uFEFF")) {
@@ -433,7 +522,10 @@ public class ZenMode {
    * blank, otherwise false
    */
   private Boolean isCanvasBlank() {
+    // Get a snapshot of the current canvas
     Image canvasContent = canvas.snapshot(null, null);
+
+    // Scan through pixels on canvas
     for (int i = 0; i < canvas.getHeight(); i++) {
       for (int j = 0; j < canvas.getWidth(); j++) {
         if (canvasContent.getPixelReader().getArgb(j, i) != -1) {
@@ -515,11 +607,20 @@ public class ZenMode {
     }
   }
 
-  // Resets the canvas automatically as well as the buttons
+  /**
+   * This method is called when the user clicks on the "Restart" button. It resets
+   * the canvas and
+   * the pie chart.
+   */
   @FXML
   private void onRestart() {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
+    // Play button sfx
+    SoundsManager.playSFX(sfx.BUTTON2);
+    //Disable both draw/erase buttons
+    drawButton.setDisable(true);
+    eraseButton.setDisable(true);
     readyButton.setDisable(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
@@ -529,12 +630,23 @@ public class ZenMode {
     targetWordLabel.setText("Get a new word to begin drawing!");
   }
 
+  /**
+   * This method is called to execute a background background task.
+   *
+   * @return The background task.
+   * @throws TranslateException
+   */
   private Task<Void> showPrediction() throws TranslateException {
 
     Task<Void> backgroundTask = new Task<Void>() {
 
       int clock = 1000000000;
 
+      /**
+       * This method is called when the background task is executed.
+       *
+       * @return null
+       */
       @Override
       protected Void call() throws Exception {
         Timeline time = new Timeline();
@@ -580,28 +692,59 @@ public class ZenMode {
     return backgroundTask;
   }
 
-  // A method that converts colour code into readable 6 digit hexadecimal code
-  // And Converts into R , G , B integer value
+  @FXML
+  private void onMouseClicked(){
+    SoundsManager.playSFX(sfx.BUTTON1);
+  }
+
+
+  /**
+   * This method converts the colour code into readable 6 digit hexadecimal code
+   * and converts it
+   * into R, G, B integer value.
+   *
+   * @return The hex value of the colour code
+   */
   private String colorToHex() throws TranslateException {
 
     String colourString = myColorPicker.getValue().toString();
     return colourString.substring(2, 8);
   }
 
+  /**
+   * This method gets the red component of the RGB colour code
+   *
+   * @return The red component of the colour code
+   * @throws NumberFormatException
+   * @throws TranslateException
+   */
   private int getRed() throws NumberFormatException, TranslateException {
 
     int r = Integer.valueOf(colorToHex().substring(0, 2), 16);
     return r;
   }
 
+  /**
+   * This method gets the green component of the RGB colour code
+   *
+   * @return The green component of the colour code
+   * @throws NumberFormatException
+   * @throws TranslateException
+   */
   private int getGreen() throws NumberFormatException, TranslateException {
     int g = Integer.valueOf(colorToHex().substring(2, 4), 16);
     return g;
   }
 
+  /**
+   * This method gets the blue component of the RGB colour code
+   *
+   * @return The blue component of the colour code
+   * @throws NumberFormatException
+   * @throws TranslateException
+   */
   private int getBlue() throws NumberFormatException, TranslateException {
     int b = Integer.valueOf(colorToHex().substring(4, 6), 16);
     return b;
   }
-
 }
