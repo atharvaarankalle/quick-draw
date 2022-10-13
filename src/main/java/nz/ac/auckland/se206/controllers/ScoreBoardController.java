@@ -57,7 +57,6 @@ public class ScoreBoardController {
   public void initialize() {
 
     try {
-      noStatsLabel.setVisible(false);
       // Get the username of the latest user to log in
       // First read the current user id
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");

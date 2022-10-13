@@ -472,13 +472,12 @@ public class CanvasController {
     return true;
   }
 
-  /**
+    /**
    * This method creates a background timing task and returns the task
    *
    * @return a Task<Void> object, the background timing task
    */
   private Task<Void> createNewTimingTask() {
-
     final AtomicInteger timeLeft = new AtomicInteger(getMaximumTime());
     Task<Void> backgroundTimingTask =
         new Task<Void>() {
@@ -517,6 +516,7 @@ public class CanvasController {
                            * that they have won and allow them to choose a
                            * new word if they wish
                            */
+
                           if (isWordCorrect()) {
                             // Update GUI elements
                             pgbTimer.setVisible(false);
@@ -554,7 +554,6 @@ public class CanvasController {
                         e1.printStackTrace();
                       }
                     });
-
             timeline.getKeyFrames().clear();
             timeline.getKeyFrames().addAll(keyFrame);
             timeline.setCycleCount(getMaximumTime());
@@ -570,7 +569,6 @@ public class CanvasController {
                   timeline.stop();
                   Stage stage = (Stage) root.getScene().getWindow();
                   StatisticsManager.setGameStage(stage);
-
                   // Unbind and set progress bar to invisible
                   pgbTimer.setVisible(false);
                   pgbTimer.progressProperty().unbind();
@@ -589,104 +587,25 @@ public class CanvasController {
                   canvas.setOnMouseDragged(e -> {});
                   canvas.setDisable(true);
                   saveDrawingButton.setDisable(false);
-
                   // Check if the user has won and update the GUI to communicate to the user
                   if (isWordCorrect()) {
-                    SoundsManager.stopAllBGM();
-                    SoundsManager.playSFX(sfx.VICTORY);
-                    pgbTimer.setVisible(false);
-                    pgbTimer.progressProperty().unbind();
-                    Stage stage = (Stage) root.getScene().getWindow();
-                    StatisticsManager.setGameStage(stage);
-                    timeline.stop();
+                    timerLabel.setText("Correct, well done!");
+                  } else {
+                    timerLabel.setText("Incorrect, better luck next time!");
+                    // Update leaderboard
                     try {
-                      addLine("WON");
-                      autoSaveDrawing();
+                      updateLeaderBoard();
                     } catch (IOException e1) {
                       e1.printStackTrace();
                     }
-                    canvas.setOnMouseDragged((canvasEvent) -> {
-                    });
-                    canvas.setDisable(true);
-                    timerLabel.setText("Correct, well done!");
-                    readyButton.setDisable(false);
-                    readyButton.setText("Ready?");
-                    clearButton.setDisable(true);
-                    saveDrawingButton.setDisable(false);
-                    updateLeaderBoard();
                   }
-                } else {
-                  resetPieChart();
-                }
-              } catch (TranslateException | IOException e1) {
-                e1.printStackTrace();
-              }
-            });
-        KeyFrame beepFrame = new KeyFrame(
-            Duration.seconds(1),
-            e -> {
-              if (timeLeft.get() <= 10&&timeLeft.get()>0) {
-                SoundsManager.playSFX(sfx.BEEP);
-                System.out.println("countdown");
-              }
-            });
-        timeline.getKeyFrames().clear();
-        timeline.getKeyFrames().addAll(keyFrame,beepFrame);
-        timeline.setCycleCount(getMaximumTime());
-
-        /*
-         * When the one minute timer elapses, stop the timeline, disable the canvas and
-         * drawing buttons, enable the save drawing button and check if the user
-         * has won the game
-         */
-        timeline.setOnFinished(
-            event -> {
-              // Stop the timeline and reset the GUI to its initial state
-              timeline.stop();
-              Stage stage = (Stage) root.getScene().getWindow();
-              StatisticsManager.setGameStage(stage);
-
-              // Unbind and set progress bar to invisible
-              pgbTimer.setVisible(false);
-              pgbTimer.progressProperty().unbind();
-              try {
-                addLine("LOST");
-                autoSaveDrawing();
-              } catch (IOException e1) {
-                e1.printStackTrace();
-              }
-              SoundsManager.stopAllBGM();
-              SoundsManager.playSFX(sfx.FAIL);
-              readyButton.setDisable(false);
-              readyButton.setText("Ready?");
-              clearButton.setDisable(true);
-              canvas.setOnMouseDragged(e -> {
-              });
-              canvas.setDisable(true);
-              saveDrawingButton.setDisable(false);
-
-              // Check if the user has won and update the GUI to communicate to the user
-              if (isWordCorrect()) {
-                timerLabel.setText("Correct, well done!");
-              } else {
-                timerLabel.setText("Incorrect, better luck next time!");
-                // Update leaderboard
-                try {
-                  updateLeaderBoard();
-                } catch (IOException e1) {
-                  e1.printStackTrace();
-                }
-              }
-            });
-
-        timeline.play();
-
-        return null;
-      }
-    };
+                });
+            timeline.play();
+            return null;
+          }
+        };
     return backgroundTimingTask;
   }
-
   /**
    * This method returns the current maximum allowable time based on the difficulty chosen by the
    * user
