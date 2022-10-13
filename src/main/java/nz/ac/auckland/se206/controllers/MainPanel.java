@@ -35,8 +35,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
-    enableButtons();
-    homeButton.setDisable(true);
+   // enableButtons();
+    //homeButton.setDisable(true);
   }
 
   @FXML
@@ -45,8 +45,8 @@ public class MainPanel implements Initializable {
     CurrentScene.setCenter(null);
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
-    enableButtons();
-    gameButton.setDisable(true);
+    //enableButtons();
+    //gameButton.setDisable(true);
   }
 
   @FXML
@@ -54,8 +54,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("howtoplay");
     CurrentScene.setCenter(view);
-    enableButtons();
-    infoButton.setDisable(true);
+    //enableButtons();
+    //infoButton.setDisable(true);
   }
 
   @FXML
@@ -64,8 +64,8 @@ public class MainPanel implements Initializable {
     CurrentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
     CurrentScene.setCenter(view);
-    enableButtons();
-    statsButton.setDisable(true);
+    //enableButtons();
+   // statsButton.setDisable(true);
   }
 
   @FXML
@@ -73,8 +73,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("gamesettings");
     CurrentScene.setCenter(view);
-    enableButtons();
-    settingsButton.setDisable(true);
+   // enableButtons();
+    //settingsButton.setDisable(true);
   }
 
   @FXML
@@ -82,8 +82,8 @@ public class MainPanel implements Initializable {
     SoundsManager.playSFX(sfx.BUTTON1);
     Parent view = loadFxml("soundsettings");
     CurrentScene.setCenter(view);
-    enableButtons();
-    musicButton.setDisable(true);
+    //enableButtons();
+    //musicButton.setDisable(true);
   }
 
   @FXML
@@ -120,7 +120,7 @@ public class MainPanel implements Initializable {
     // Switch to the "Main Menu" scene.
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
-    enableButtons();
+    //enableButtons();
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }
@@ -134,12 +134,12 @@ public class MainPanel implements Initializable {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
 
-  private void enableButtons(){
-    gameButton.setDisable(false);
-    homeButton.setDisable(false);
-    statsButton.setDisable(false);
-    infoButton.setDisable(false);
-    musicButton.setDisable(false);
-    settingsButton.setDisable(false);
-  }
+  // private void enableButtons(){
+  //   gameButton.setDisable(false);
+  //   homeButton.setDisable(false);
+  //   statsButton.setDisable(false);
+  //   infoButton.setDisable(false);
+  //   musicButton.setDisable(false);
+  //   settingsButton.setDisable(false);
+  // }
 }

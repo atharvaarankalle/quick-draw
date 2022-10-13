@@ -44,7 +44,7 @@ public class Settings {
 
   public void setMuteStatus(int muteStatus) {
       this.muteStatus = muteStatus;
-
+  }
   public void setCurrentUser(String username) {
     this.currentUser = username;
   }

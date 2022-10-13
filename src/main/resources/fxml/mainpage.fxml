@@ -88,7 +88,7 @@
                         <Font name="Lucida Fax Demibold" size="10.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Music">
+                  <Button mnemonicParsing="false" onAction="#onSoundSettings" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Sound">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
