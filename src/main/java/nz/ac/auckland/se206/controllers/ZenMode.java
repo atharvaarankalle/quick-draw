@@ -692,6 +692,12 @@ public class ZenMode {
     return backgroundTask;
   }
 
+  @FXML
+  private void onMouseClicked(){
+    SoundsManager.playSFX(sfx.BUTTON1);
+  }
+
+
   /**
    * This method converts the colour code into readable 6 digit hexadecimal code
    * and converts it

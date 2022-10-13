@@ -65,7 +65,7 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <ColorPicker fx:id="myColorPicker" style="-fx-background-color: white;">
+            <ColorPicker fx:id="myColorPicker" onMouseClicked="#onMouseClicked" style="-fx-background-color: white;">
                <value>
                   <Color />
                </value></ColorPicker>
