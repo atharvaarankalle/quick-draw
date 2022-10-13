@@ -35,6 +35,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -110,6 +111,12 @@ public class CanvasController {
   private Button arrowDown;
 
   @FXML
+  private ImageView imageUp;
+
+  @FXML
+  private ImageView imageDown;
+
+  @FXML
   private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
@@ -180,6 +187,9 @@ public class CanvasController {
     modelResultsPieChart.setData(data);
     modelResultsPieChart.setLegendSide(Side.LEFT);
     modelResultsPieChart.setLegendVisible(false);
+    movementUp.setFromX(currentX);
+    imageUp.setVisible(false);
+    imageDown.setVisible(false);
     resetArrow();
   }
 
@@ -295,6 +305,8 @@ public class CanvasController {
       clearButton.setDisable(false);
       pgbTimer.setVisible(true);
       modelResultsPieChart.setLegendVisible(true);
+      imageUp.setVisible(true);
+      imageDown.setVisible(true);
 
       // Disable leaderboard
       leaderBoardLabel.setVisible(false);

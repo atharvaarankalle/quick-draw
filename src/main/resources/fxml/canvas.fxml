@@ -78,7 +78,7 @@
          <children>
             <Button fx:id="arrowUp" layoutX="7.0" layoutY="123.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="57.0" style="-fx-background-color: #A7C7E7;">
                <graphic>
-                  <ImageView fitHeight="66.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageUp" fitHeight="66.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/baseline_north_black_24dp.png" />
                      </image>
@@ -87,7 +87,7 @@
             </Button>
             <Button fx:id="arrowDown" layoutX="7.0" layoutY="171.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="57.0" style="-fx-background-color: #A7C7E7;">
                <graphic>
-                  <ImageView fitHeight="66.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imageDown" fitHeight="66.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/down%20arrow.png" />
                      </image>
