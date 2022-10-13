@@ -249,6 +249,7 @@ public class CanvasController {
   private void onClear() {
     SoundsManager.playSFX(sfx.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    resetArrow();
   }
 
   /**
@@ -512,6 +513,7 @@ public class CanvasController {
                 if (timeLeft.get() == 10) {
                   pgbTimer.setStyle("-fx-accent: red;");
                 }
+
                 // First check if the canvas is blank or not, if it's blank, reset the
                 // piechart
                 // Otherwise, carryout predictions and update piechart
@@ -527,6 +529,8 @@ public class CanvasController {
                    */
                   if (insideTopPrediction()) {
                     arrowMotionControl();
+                  } else {
+                    resetArrow();
                   }
 
                   if (isWordCorrect()) {
@@ -536,6 +540,7 @@ public class CanvasController {
                     // Update GUI elements
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
+                    resetArrow();
 
                     // Pass the current stage to the StatisticsManafer class
                     Stage stage = (Stage) root.getScene().getWindow();
@@ -589,6 +594,7 @@ public class CanvasController {
             event -> {
               // Stop the timeline and reset the GUI to its initial state
               timeline.stop();
+              resetArrow();
               Stage stage = (Stage) root.getScene().getWindow();
               StatisticsManager.setGameStage(stage);
 
@@ -966,6 +972,7 @@ public class CanvasController {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
     timeline.stop();
+    resetArrow();
     readyButton.setDisable(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
@@ -982,21 +989,22 @@ public class CanvasController {
   private void arrowMotionControl() {
     movement.setDuration(Duration.seconds(3));
     movement.setNode(arrowUp);
-    movement.setToY(-100);
+    movement.setToY(-170);
     movement.setAutoReverse(false);
-    movement.setCycleCount(10);
+    movement.setCycleCount(15);
     movement.play();
   }
 
   private void resetArrow() {
-    movement.setDuration(Duration.seconds(0));
-    movement.setNode(arrowUp);
-    movement.setToY(0);
-    movement.setAutoReverse(false);
+    movement.jumpTo(Duration.seconds(0));
     movement.stop();
   }
 
   private boolean insideTopPrediction() {
+
+    if (isCanvasBlank()) {
+      return false;
+    }
 
     for (int i = 3; i < 10; i++) {
       if (!isCanvasBlank()
