@@ -40,38 +40,55 @@ import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /**
- * This is the controller of the canvas. You are free to modify this class and the corresponding
- * FXML file as you see fit. For example, you might no longer need the "Predict" button because the
+ * This is the controller of the canvas. You are free to modify this class and
+ * the corresponding
+ * FXML file as you see fit. For example, you might no longer need the "Predict"
+ * button because the
  * DL model should be automatically queried in the background every second.
  *
- * <p>!! IMPORTANT !!
+ * <p>
+ * !! IMPORTANT !!
  *
- * <p>Although we added the scale of the image, you need to be careful when changing the size of the
- * drawable canvas and the brush size. If you make the brush too big or too small with respect to
- * the canvas size, the ML model will not work correctly. So be careful. If you make some changes in
+ * <p>
+ * Although we added the scale of the image, you need to be careful when
+ * changing the size of the
+ * drawable canvas and the brush size. If you make the brush too big or too
+ * small with respect to
+ * the canvas size, the ML model will not work correctly. So be careful. If you
+ * make some changes in
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class ZenMode {
 
-  @FXML private Pane root;
+  @FXML
+  private Pane root;
 
-  @FXML private Canvas canvas;
+  @FXML
+  private Canvas canvas;
 
-  @FXML private Label targetWordLabel;
+  @FXML
+  private Label targetWordLabel;
 
-  @FXML private Button readyButton;
+  @FXML
+  private Button readyButton;
 
-  @FXML private Button clearButton;
+  @FXML
+  private Button clearButton;
 
-  @FXML private Button penEraserButton;
+  @FXML
+  private Button penEraserButton;
 
-  @FXML private Button saveDrawingButton;
+  @FXML
+  private Button saveDrawingButton;
 
-  @FXML private Button restartButton;
+  @FXML
+  private Button restartButton;
 
-  @FXML private PieChart modelResultsPieChart;
+  @FXML
+  private PieChart modelResultsPieChart;
 
-  @FXML private ColorPicker myColorPicker;
+  @FXML
+  private ColorPicker myColorPicker;
 
   private GraphicsContext graphic;
 
@@ -88,11 +105,13 @@ public class ZenMode {
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
+   * JavaFX calls this method once the GUI elements are loaded. In our case we
+   * create a listener for
    * the drawing, and we load the ML model.
    *
-   * @throws ModelException If there is an error in reading the input/output of the DL model.
-   * @throws IOException If the model cannot be found on the file system.
+   * @throws ModelException     If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws IOException        If the model cannot be found on the file system.
    * @throws URISyntaxException
    * @throws CsvException
    * @throws TranslateException
@@ -113,18 +132,17 @@ public class ZenMode {
     readyButton.setText("Ready?");
 
     // Initialise the data list for the model results pie chart
-    data =
-        FXCollections.observableArrayList(
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0),
-            new PieChart.Data("", 0));
+    data = FXCollections.observableArrayList(
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0),
+        new PieChart.Data("", 0));
 
     // Set the data list for the model results pie chart and initialise the legend
     modelResultsPieChart.setData(data);
@@ -166,12 +184,12 @@ public class ZenMode {
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+            graphic.setStroke(Color.rgb(getRed(), getGreen(), getBlue()));
           } catch (NumberFormatException | TranslateException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -188,14 +206,20 @@ public class ZenMode {
   }
 
   /**
-   * This method executes when the user clicks the "Ready" button. Every second, it gets the current
-   * drawing, queries the DL model and updates the pie chart with the top 10 predictions of the DL
+   * This method executes when the user clicks the "Ready" button. Every second,
+   * it gets the current
+   * drawing, queries the DL model and updates the pie chart with the top 10
+   * predictions of the DL
    * model along with the percentage certainty the model has in each prediction
    *
-   * @throws TranslateException If there is an error in reading the input/output of the DL model.
-   * @throws URISyntaxException If a string could not be parsed as a URI reference.
-   * @throws IOException If there is an error in reading the input/output of the DL model.
-   * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
+   * @throws TranslateException If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws URISyntaxException If a string could not be parsed as a URI
+   *                            reference.
+   * @throws IOException        If there is an error in reading the input/output
+   *                            of the DL model.
+   * @throws CsvException       If there is an error regarding the CSV files
+   *                            opened using OpenCSV
    * @throws ModelException
    */
   @FXML
@@ -236,7 +260,8 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user draws on the canvas It draws a line on the canvas based on
+   * This method is called when the user draws on the canvas It draws a line on
+   * the canvas based on
    * the chosen colour
    *
    * @throws TranslateException
@@ -263,12 +288,12 @@ public class ZenMode {
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(getRed(), getGreen(), getBlue()));
+            graphic.setStroke(Color.rgb(getRed(), getGreen(), getBlue()));
           } catch (NumberFormatException | TranslateException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -279,7 +304,8 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user draws on the canvas in "Erase" mode It erases a line on the
+   * This method is called when the user draws on the canvas in "Erase" mode It
+   * erases a line on the
    * canvas based on the mouse position
    *
    * @throws TranslateException
@@ -299,19 +325,19 @@ public class ZenMode {
     canvas.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
-          final double size = 6;
+          final double size = 8;
 
           final double x = e.getX() - size / 2;
           final double y = e.getY() - size / 2;
 
           // This is the colour of the brush.
           try {
-            graphic.setFill(Color.rgb(255, 255, 255));
+            graphic.setStroke(Color.rgb(255, 255, 255));
           } catch (NumberFormatException e1) {
             e1.printStackTrace();
           }
           graphic.setLineWidth(size);
-          graphic.fillRect(x, y, size, size);
+          graphic.strokeLine(currentX, currentY, x, y);
 
           // update the coordinates
           currentX = x;
@@ -327,25 +353,25 @@ public class ZenMode {
    * @return a Task<Void> object, the background speech task
    */
   private Task<Void> createNewSpeechTask() {
-    Task<Void> backgroundSpeechTask =
-        new Task<Void>() {
+    Task<Void> backgroundSpeechTask = new Task<Void>() {
 
-          @Override
-          protected Void call() throws Exception {
+      @Override
+      protected Void call() throws Exception {
 
-            // Use text to speech to communicate the current word to draw
-            TextToSpeech textToSpeech = new TextToSpeech();
-            textToSpeech.speak("The word to draw is" + currentWord);
+        // Use text to speech to communicate the current word to draw
+        TextToSpeech textToSpeech = new TextToSpeech();
+        textToSpeech.speak("The word to draw is" + currentWord);
 
-            return null;
-          }
-        };
+        return null;
+      }
+    };
 
     return backgroundSpeechTask;
   }
 
   /**
-   * This method generates a random word to draw, depending on the difficulty selected by the user
+   * This method generates a random word to draw, depending on the difficulty
+   * selected by the user
    *
    * @throws CsvException
    * @throws IOException
@@ -367,13 +393,14 @@ public class ZenMode {
 
     // Switch between the words level chosen by the user
     switch (wordsLevel) {
-        // Easy mode: Choose only easy level words
+      // Easy mode: Choose only easy level words
       case 0:
         randomWord = categorySelector.getRandomCategory(Difficulty.E);
         break;
-        // Medium mode: Randomly choose easy or medium level words
+      // Medium mode: Randomly choose easy or medium level words
       case 1:
-        // Generate 0 or 1 randomly and choose an easy or medium word based on this result
+        // Generate 0 or 1 randomly and choose an easy or medium word based on this
+        // result
         randomNumber = (int) (Math.random() * (2 - 0) + 0);
 
         switch (randomNumber) {
@@ -385,10 +412,11 @@ public class ZenMode {
             break;
         }
         break;
-        // Hard mode: Randomly choose easy, medium or hard level words
+      // Hard mode: Randomly choose easy, medium or hard level words
       case 2:
 
-        // Generate 0, 1 or 2 randomly and choose an easy, medium or hard word based on this result
+        // Generate 0, 1 or 2 randomly and choose an easy, medium or hard word based on
+        // this result
         randomNumber = (int) (Math.random() * (3 - 0) + 0);
 
         switch (randomNumber) {
@@ -403,7 +431,7 @@ public class ZenMode {
             break;
         }
         break;
-        // Master mode: Choose only a hard word
+      // Master mode: Choose only a hard word
       case 3:
         randomWord = categorySelector.getRandomCategory(Difficulty.H);
         break;
@@ -418,7 +446,8 @@ public class ZenMode {
     }
     currentWord = randomWord;
 
-    // If all the words in the easy category have been played, reset the words seen and choose a
+    // If all the words in the easy category have been played, reset the words seen
+    // and choose a
     // random word
     if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
       text.clear();
@@ -440,7 +469,8 @@ public class ZenMode {
   }
 
   /**
-   * This method scan through the pixels on canvas Return true when canvas is blank, otherwise false
+   * This method scan through the pixels on canvas Return true when canvas is
+   * blank, otherwise false
    */
   private Boolean isCanvasBlank() {
     // Get a snapshot of the current canvas
@@ -459,10 +489,12 @@ public class ZenMode {
   }
 
   /**
-   * This method queries the data learning model to make the predictions and updates the pie chart
+   * This method queries the data learning model to make the predictions and
+   * updates the pie chart
    * accordingly with the top 10 predictions made
    *
-   * @throws TranslateException If there is an error in reading the input/output of the DL model.
+   * @throws TranslateException If there is an error in reading the input/output
+   *                            of the DL model.
    */
   private void makePredictions() throws TranslateException {
     // Query the data learning model and get the top ten predictions
@@ -493,8 +525,8 @@ public class ZenMode {
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
 
     // Convert into a binary image.
-    final BufferedImage imageBinary =
-        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+    final BufferedImage imageBinary = new BufferedImage(image.getWidth(), image.getHeight(),
+        BufferedImage.TYPE_BYTE_BINARY);
 
     final Graphics2D graphics = imageBinary.createGraphics();
 
@@ -527,7 +559,8 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user clicks on the "Restart" button. It resets the canvas and
+   * This method is called when the user clicks on the "Restart" button. It resets
+   * the canvas and
    * the pie chart.
    */
   @FXML
@@ -551,64 +584,63 @@ public class ZenMode {
    */
   private Task<Void> showPrediction() throws TranslateException {
 
-    Task<Void> backgroundTask =
-        new Task<Void>() {
+    Task<Void> backgroundTask = new Task<Void>() {
 
-          int clock = 1000000000;
+      int clock = 1000000000;
 
-          /**
-           * This method is called when the background task is executed.
-           *
-           * @return null
-           */
-          @Override
-          protected Void call() throws Exception {
-            Timeline time = new Timeline();
-            KeyFrame frame =
-                new KeyFrame(
-                    Duration.seconds(1),
-                    new EventHandler<ActionEvent>() {
+      /**
+       * This method is called when the background task is executed.
+       *
+       * @return null
+       */
+      @Override
+      protected Void call() throws Exception {
+        Timeline time = new Timeline();
+        KeyFrame frame = new KeyFrame(
+            Duration.seconds(1),
+            new EventHandler<ActionEvent>() {
 
-                      /**
-                       * This method is invoked to activate the count down timer Every time seconds
-                       * --, the integer value is converted to text in GUI Also, the top 10
-                       * predictions and key features on button is disabled/enabled
-                       */
-                      public void handle(ActionEvent event) {
-                        clock--;
-                        try {
-                          makePredictions();
-                          colorToHex();
-                          if (isCanvasBlank()) {
-                            resetPieChart();
-                          }
-                        } catch (TranslateException e2) {
-                          e2.printStackTrace();
-                        }
+              /**
+               * This method is invoked to activate the count down timer Every time seconds
+               * --, the integer value is converted to text in GUI Also, the top 10
+               * predictions and key features on button is disabled/enabled
+               */
+              public void handle(ActionEvent event) {
+                clock--;
+                try {
+                  makePredictions();
+                  colorToHex();
+                  if (isCanvasBlank()) {
+                    resetPieChart();
+                  }
+                } catch (TranslateException e2) {
+                  e2.printStackTrace();
+                }
 
-                        if (clock == 0) { // Once counter reach 0, every feature disabled except
-                          time.stop();
-                        }
-                      }
-                    });
+                if (clock == 0) { // Once counter reach 0, every feature disabled except
+                  time.stop();
+                }
+              }
+            });
 
-            time.setCycleCount(Timeline.INDEFINITE);
-            time.getKeyFrames().add(frame);
-            if (time != null) {
-              time.stop();
-            }
-            time.play();
-            {
-              return null;
-            }
-          }
-        };
+        time.setCycleCount(Timeline.INDEFINITE);
+        time.getKeyFrames().add(frame);
+        if (time != null) {
+          time.stop();
+        }
+        time.play();
+        {
+          return null;
+        }
+      }
+    };
 
     return backgroundTask;
   }
 
   /**
-   * This method converts the colour code into readable 6 digit hexadecimal code and converts it
+   * This method converts the colour code into readable 6 digit hexadecimal code
+   * and converts it
    * into R, G, B integer value.
    *
    * @return The hex value of the colour code
