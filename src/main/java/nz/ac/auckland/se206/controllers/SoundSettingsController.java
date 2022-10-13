@@ -4,14 +4,9 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOError;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
@@ -117,11 +112,6 @@ public class SoundSettingsController implements Initializable {
                     });
                 });
     }
-
-    // private void updateVolumes() {
-    // SoundsManager.changeBGMVolume(gameSettings.getBgmVolume() / 100);
-    // SoundsManager.changeSFXVolume(gameSettings.getSfxVolume() / 100);
-    // }
 
     /*
      * Code adapted from: https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-dragging-mouse-button
