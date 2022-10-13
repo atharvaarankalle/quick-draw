@@ -40,6 +40,11 @@ public class SoundsManager {
         MAINPANEL, INGAME, ZEN, HIDDEN
     }
 
+    /**
+     * This method loads all the sfx .mp3 files required for the game
+     * 
+     * @throws URISyntaxException
+     */
     public static void loadSFX() throws URISyntaxException {
         buttonSound1 = new Media(App.class.getResource("/sounds/woodenButton.mp3").toURI().toString());
         buttonPlayer1 = new MediaPlayer(buttonSound1);
@@ -53,23 +58,32 @@ public class SoundsManager {
         beepPlayer = new MediaPlayer(beepSound);
         tapSound = new Media(App.class.getResource("/sounds/tap.mp3").toURI().toString());
         tapPlayer = new MediaPlayer(tapSound);
+        pencilSound = new Media(App.class.getResource("/sounds/pencil.mp3").toURI().toString());
+        pencilPlayer = new MediaPlayer(pencilSound);
+        eraserSound = new Media(App.class.getResource("/sounds/eraser.mp3").toURI().toString());
+        eraserPlayer = new MediaPlayer(eraserSound);
         loginSound = new Media(App.class.getResource("/sounds/successfulLogin.mp3").toURI().toString());
         loginPlayer = new MediaPlayer(loginSound);
     }
 
+    /**
+     * This method loads all the bgm .mp3 files required for the game
+     * 
+     * @throws URISyntaxException
+     */
     public static void loadBGM() throws URISyntaxException {
         mainPanelBGM = new Media(App.class.getResource("/sounds/pvzMainMenu.mp3").toURI().toString());
         mainPanelPlayer = new MediaPlayer(mainPanelBGM);
         zenBGM = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
         zenPlayer = new MediaPlayer(zenBGM);
-        pencilSound = new Media(App.class.getResource("/sounds/pencil.mp3").toURI().toString());
-        pencilPlayer = new MediaPlayer(pencilSound);
-        eraserSound = new Media(App.class.getResource("/sounds/eraser.mp3").toURI().toString());
-        eraserPlayer = new MediaPlayer(eraserSound);
     }
 
-    /*
+    /**
+     * Play the specific sfx correspond to the sfx enum input
+     * ERASER and PENCIL sfx will be played in loop
+     * All other sfx will be played once
      * 
+     * @param sfxType A sfx enum input, indicating the specific sfx wanted
      */
     public static void playSFX(sfx sfxType) {
         switch (sfxType) {
@@ -152,6 +166,12 @@ public class SoundsManager {
 
     }
 
+    /**
+     * Play the specific sfx correspond to the bgm enum input
+     * All bgms will be played in loop
+     * 
+     * @param bgmType a bgm enum input, indicating the bgm wanted
+     */
     public static void playBGM(bgm bgmType) {
         switch (bgmType) {
             case MAINPANEL:
@@ -191,11 +211,20 @@ public class SoundsManager {
         playBGM(bgm.MAINPANEL);
     }
 
+    /**
+     * This method stops the pencil or eraser sfx from playing.
+     * Error message will be printed in terminal if invalid input is given
+     * 
+     * @param pencilOrEraser a SFX input, indicating weather pencil or eraser is
+     *                       required to be stopped
+     */
     public static void stopPencilOrEraserSFX(sfx pencilOrEraser) {
         if (pencilOrEraser == sfx.PENCIL) {
             pencilPlayer.stop();
-        } else {
+        } else if (pencilOrEraser == sfx.ERASER) {
             eraserPlayer.stop();
+        } else {
+            System.out.println(pencilOrEraser + " is not accepted by stopPencilOrEraser method");
         }
     }
 
@@ -231,22 +260,65 @@ public class SoundsManager {
      * This method takes a double as input and change the volume level of all SFX to
      * corresponding value
      * 
-     * @param volume
+     * @param volume The disired volume level range from 0 to 100
      */
     public static void changeSFXVolume(double volume) {
-        buttonPlayer1.setVolume(volume);
-        buttonPlayer2.setVolume(volume);
-        victoryPlayer.setVolume(volume);
-        failurePlayer.setVolume(volume);
-        beepPlayer.setVolume(volume);
-        tapPlayer.setVolume(volume);
-        pencilPlayer.setVolume(volume);
-        eraserPlayer.setVolume(volume);
-        loginPlayer.setVolume(volume);
+        if (volume >= 0 && volume <= 100) {
+            buttonPlayer1.setVolume(volume);
+            buttonPlayer2.setVolume(volume);
+            victoryPlayer.setVolume(volume);
+            failurePlayer.setVolume(volume);
+            beepPlayer.setVolume(volume);
+            tapPlayer.setVolume(volume);
+            pencilPlayer.setVolume(volume);
+            eraserPlayer.setVolume(volume);
+            loginPlayer.setVolume(volume);
+        } else {
+            System.out.println(volume + " is a invalid sfx volume level");
+        }
     }
 
+    /**
+     * This method takes a double as input and change the volume level of all BGM to
+     * corresponding value
+     * 
+     * @param volume The disired volume level range from 0 to 100
+     */
     public static void changeBGMVolume(double volume) {
-        mainPanelPlayer.setVolume(volume);
-        zenPlayer.setVolume(volume);
+        if (volume >= 0 && volume <= 100) {
+            mainPanelPlayer.setVolume(volume);
+            zenPlayer.setVolume(volume);
+        } else {
+            System.out.println(volume + " is a invalid bgm volume level");
+        }
+    }
+
+    /**
+     * This method changes the mute status of all SFX, according to the boolean
+     * input
+     * 
+     * @param muteStatus boolean input, input false to unmute all
+     */
+    public static void setMuteAllSFX(Boolean muteStatus) {
+        buttonPlayer1.setMute(muteStatus);
+        buttonPlayer2.setMute(muteStatus);
+        victoryPlayer.setMute(muteStatus);
+        failurePlayer.setMute(muteStatus);
+        beepPlayer.setMute(muteStatus);
+        tapPlayer.setMute(muteStatus);
+        pencilPlayer.setMute(muteStatus);
+        eraserPlayer.setMute(muteStatus);
+        loginPlayer.setMute(muteStatus);
+    }
+
+    /**
+     * This method changes the mute status of all BGM, according to the boolean
+     * input
+     * 
+     * @param muteStatus boolean input, input false to unmute all
+     */
+    public static void setMuteAllBGM(Boolean muteStatus) {
+        mainPanelPlayer.setMute(muteStatus);
+        zenPlayer.setMute(muteStatus);
     }
 }

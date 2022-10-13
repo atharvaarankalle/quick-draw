@@ -49,7 +49,7 @@ public class SoundSettingsController implements Initializable {
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-
+                    
                     sfxSlider.setValue(gameSettings.getSfxVolume());
 
                     bgmSlider.setValue(gameSettings.getBgmVolume());
@@ -78,7 +78,6 @@ public class SoundSettingsController implements Initializable {
     }
 
     private void updateVolumes() {
-        System.out.println(bgmSlider.getValue());
         SoundsManager.changeBGMVolume(bgmSlider.getValue() / 100);
         SoundsManager.changeSFXVolume(sfxSlider.getValue() / 100);
     }
@@ -92,11 +91,13 @@ public class SoundSettingsController implements Initializable {
     private void onMute() throws URISyntaxException {
         if (gameSettings.getMuteStatus() == 0) {
             gameSettings.setMuteStatus(1);
-            SoundsManager.changeBGMVolume(0);
-            SoundsManager.changeSFXVolume(0);
+            SoundsManager.setMuteAllBGM(true);
+            SoundsManager.setMuteAllSFX(true);
             updateMuteImage(gameSettings.getMuteStatus());
         } else {
             gameSettings.setMuteStatus(0);
+            SoundsManager.setMuteAllBGM(false);
+            SoundsManager.setMuteAllSFX(false);
             updateVolumes();
             updateMuteImage(gameSettings.getMuteStatus());
         }

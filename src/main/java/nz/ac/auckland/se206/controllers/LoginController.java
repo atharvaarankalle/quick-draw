@@ -145,9 +145,9 @@ public class LoginController implements Initializable {
         msg.setTitle("Log In Successful!");
         msg.setHeaderText("Log In Successful!");
         msg.setContentText("You have successfully logged in as: " + userName);
-        if (checkMuteStatus(userName)==1) {
-          SoundsManager.changeBGMVolume(0);
-          SoundsManager.changeSFXVolume(0);
+        if (checkMuteStatus(userName) == 1) {
+          SoundsManager.setMuteAllBGM(true);
+          SoundsManager.setMuteAllSFX(true);
         }
         SoundsManager.playSFX(sfx.LOGIN);
         msg.showAndWait();
@@ -214,9 +214,9 @@ public class LoginController implements Initializable {
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
   }
 
-  private int checkMuteStatus(String userName) throws IOException{
+  private int checkMuteStatus(String userName) throws IOException {
     Path userStatsPath = Paths.get("DATABASE/" + userName);
-    List<String>userStats = Files.readAllLines(userStatsPath);
-    return Integer.valueOf(userStats.get(userStats.size()-1).split(" , ")[9]);
+    List<String> userStats = Files.readAllLines(userStatsPath);
+    return Integer.valueOf(userStats.get(userStats.size() - 1).split(" , ")[9]);
   }
 }
