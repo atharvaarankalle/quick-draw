@@ -24,8 +24,8 @@
             <Font size="40.0" />
          </font>
       </Label>
-      <Slider fx:id="bgmSlider" layoutX="234.0" layoutY="378.0" onDragDetected="#onDragDetected" prefHeight="14.0" prefWidth="283.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #bb98f1;" />
-      <Slider fx:id="sfxSlider" layoutX="234.0" layoutY="215.0" onDragDetected="#onDragDetected" prefHeight="14.0" prefWidth="283.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #bb98f1;" />
+      <Slider fx:id="bgmSlider" layoutX="234.0" layoutY="378.0" onDragDetected="#onBGMDragDetected" prefHeight="14.0" prefWidth="283.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #bb98f1;" />
+      <Slider fx:id="sfxSlider" layoutX="234.0" layoutY="215.0" onDragDetected="#onSFXDragDetected" prefHeight="14.0" prefWidth="283.0" showTickLabels="true" showTickMarks="true" style="-fx-control-inner-background: #bb98f1;" />
       <Button fx:id="muteButton" layoutX="304.0" layoutY="471.0" mnemonicParsing="false" onAction="#onMute" prefHeight="51.0" prefWidth="142.0" style="-fx-background-color: white;" text="Mute">
          <font>
             <Font name="System Bold" size="12.0" />

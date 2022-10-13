@@ -1,11 +1,23 @@
 package nz.ac.auckland.se206.controllers;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOError;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -36,6 +48,13 @@ public class SoundSettingsController implements Initializable {
 
     private Settings gameSettings;
 
+    private String previousUserID = "";
+
+    // SoundsManager.changeBGMVolume( Double.valueOf(userStats.get(userStats.size()
+    // - 1).split(" , ")[5])/ 100);
+    // SoundsManager.changeSFXVolume( Double.valueOf(userStats.get(userStats.size()
+    // - 1).split(" , ")[4])/ 100);
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(
@@ -44,18 +63,41 @@ public class SoundSettingsController implements Initializable {
 
                     gameSettings = (Settings) stage.getUserData();
 
+                    if (!(previousUserID.equals(gameSettings.getCurrentUser()))) {
+                        previousUserID = gameSettings.getCurrentUser();
+
+                        String currentLine;
+                        String lastLine = "";
+                        String[] separatedUserInfo = { "" };
+                        try {
+                            BufferedReader bufferedReader = new BufferedReader(
+                                    new FileReader("DATABASE/usersettings/" + previousUserID));
+
+                            while ((currentLine = bufferedReader.readLine()) != null) {
+                                lastLine = currentLine;
+                            }
+
+                            bufferedReader.close();
+
+                            separatedUserInfo = lastLine.split(" , ");
+
+                            gameSettings.setSfxVolume(Double.valueOf(separatedUserInfo[4]));
+                            gameSettings.setBgmVolume(Double.valueOf(separatedUserInfo[5]));
+                            gameSettings.setMuteStatus(Integer.valueOf(separatedUserInfo[6]));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                     try {
                         updateMuteImage(gameSettings.getMuteStatus());
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-                    
+
                     sfxSlider.setValue(gameSettings.getSfxVolume());
 
                     bgmSlider.setValue(gameSettings.getBgmVolume());
-                    if (gameSettings.getMuteStatus() == 0) {
-                        updateVolumes();
-                    }
 
                     sfxSlider.valueProperty().addListener(new InvalidationListener() {
                         @Override
@@ -72,34 +114,72 @@ public class SoundSettingsController implements Initializable {
                             SoundsManager.changeBGMVolume(bgmSlider.getValue() / 100);
                             gameSettings.setBgmVolume(bgmSlider.getValue());
                         }
-
                     });
                 });
     }
 
-    private void updateVolumes() {
-        SoundsManager.changeBGMVolume(bgmSlider.getValue() / 100);
-        SoundsManager.changeSFXVolume(sfxSlider.getValue() / 100);
+    // private void updateVolumes() {
+    // SoundsManager.changeBGMVolume(gameSettings.getBgmVolume() / 100);
+    // SoundsManager.changeSFXVolume(gameSettings.getSfxVolume() / 100);
+    // }
+
+    /*
+     * Code adapted from: https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-dragging-mouse-button
+     */
+    @FXML
+    private void onSFXDragDetected() {
+        sfxSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasChanging, Boolean isNowChanging) {
+                if(!isNowChanging){
+                    SoundsManager.playSFX(sfx.TAP);
+                    try {
+                        addSettingsLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            
+        });
+    }
+    /*
+     * Code adapted from: https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-dragging-mouse-button
+     */
+    @FXML
+    private void onBGMDragDetected() {
+        bgmSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observable, Boolean wasChanging, Boolean isNowChanging) {
+                if(!isNowChanging){
+                    SoundsManager.playSFX(sfx.TAP);
+                    try {
+                        addSettingsLine();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            
+        });
     }
 
     @FXML
-    private void onDragDetected() {
-        SoundsManager.playSFX(sfx.TAP);
-    }
-
-    @FXML
-    private void onMute() throws URISyntaxException {
+    private void onMute() throws URISyntaxException, IOException {
         if (gameSettings.getMuteStatus() == 0) {
             gameSettings.setMuteStatus(1);
             SoundsManager.setMuteAllBGM(true);
             SoundsManager.setMuteAllSFX(true);
             updateMuteImage(gameSettings.getMuteStatus());
+            addSettingsLine();
         } else {
             gameSettings.setMuteStatus(0);
             SoundsManager.setMuteAllBGM(false);
             SoundsManager.setMuteAllSFX(false);
-            updateVolumes();
             updateMuteImage(gameSettings.getMuteStatus());
+            addSettingsLine();
         }
     }
 
@@ -112,6 +192,34 @@ public class SoundSettingsController implements Initializable {
         } else {
             muteImageView.setImage(muteImage);
             muteButton.setText("MUTE");
+        }
+    }
+
+    private void addSettingsLine() throws IOException {
+        FileWriter fileWriter = new FileWriter("DATABASE/usersettings/" + previousUserID, true);
+
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+        try {
+            String line = Double.toString(gameSettings.getAccuracyLevel())
+                    + " , "
+                    + Double.toString(gameSettings.getWordsLevel())
+                    + " , "
+                    + Double.toString(gameSettings.getTimeSliderPosition())
+                    + " , "
+                    + Double.toString(gameSettings.getConfidenceSliderPosition())
+                    + " , "
+                    + Double.toString(sfxSlider.getValue())
+                    + " , "
+                    + Double.toString(bgmSlider.getValue())
+                    + " , "
+                    + Integer.toString(gameSettings.getMuteStatus());
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
+            bufferedWriter.close();
+        } catch (IOException e) {
+
         }
     }
 }

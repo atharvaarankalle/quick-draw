@@ -145,7 +145,8 @@ public class ScoreBoardController {
         imagePane.setVisible(false);
       }
     } catch (IOException e) {
-      e.printStackTrace();
+      textLabel1.setText("It seems you haven't tried any words yet...");
+      textLabel2.setVisible(false);
     }
   }
 
