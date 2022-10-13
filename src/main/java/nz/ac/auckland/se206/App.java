@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,6 +17,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.SoundsManager;
 import nz.ac.auckland.se206.controllers.Settings;
 
 /**
@@ -70,9 +72,10 @@ public class App extends Application {
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
+   * @throws URISyntaxException
    */
   @Override
-  public void start(final Stage stage) throws IOException {
+  public void start(final Stage stage) throws IOException, URISyntaxException {
 
     // Load the FXML files
     SceneManager.addUi(AppUi.HOME_PAGE, loadFxml("homepage"));
@@ -81,8 +84,11 @@ public class App extends Application {
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
+    //Initialize all sound effects
+    SoundsManager.loadSFX();
+    SoundsManager.loadBGM();
     Settings gameSettings = new Settings();
-
+    
     // Set the current scene and show the stage
     scene = new Scene(SceneManager.getUiRoot(AppUi.LOGIN), 900, 770);
     stage.setScene(scene);
