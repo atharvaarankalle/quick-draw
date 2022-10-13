@@ -45,12 +45,12 @@
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onDraw" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Draw">
+            <Button fx:id="drawButton" mnemonicParsing="false" onAction="#onDraw" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Draw">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onErase" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Erase">
+            <Button fx:id="eraseButton" mnemonicParsing="false" onAction="#onErase" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Erase">
                <font>
                   <Font name="Arial Black" size="12.0" />
                </font>
