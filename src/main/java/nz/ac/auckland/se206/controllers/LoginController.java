@@ -27,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 // Author : Ash, Nov 2, 2018 at 22:58, StackOverflow
 // https://stackoverflow.com/questions/53020451/how-to-create-javafx-save-read-information-from-text-file-and-letting-user-to-e
@@ -114,6 +115,7 @@ public class LoginController implements Initializable {
       msg.setContentText("Successfully created new user with username: " + line);
       msg.getButtonTypes().clear();
       msg.getButtonTypes().addAll(ButtonType.OK);
+      SoundsManager.playSFX(sfx.LOGIN);
       msg.showAndWait();
       addLine(line);
       SoundsManager.playBGM(bgm.MAINPANEL);
@@ -143,11 +145,12 @@ public class LoginController implements Initializable {
         msg.setTitle("Log In Successful!");
         msg.setHeaderText("Log In Successful!");
         msg.setContentText("You have successfully logged in as: " + userName);
-        msg.showAndWait();
         if (checkMuteStatus(userName)==1) {
           SoundsManager.changeBGMVolume(0);
           SoundsManager.changeSFXVolume(0);
         }
+        SoundsManager.playSFX(sfx.LOGIN);
+        msg.showAndWait();
         SoundsManager.playBGM(bgm.MAINPANEL);
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));

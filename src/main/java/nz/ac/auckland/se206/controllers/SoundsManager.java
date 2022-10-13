@@ -24,15 +24,16 @@ public class SoundsManager {
     private static MediaPlayer pencilPlayer;
     private static Media eraserSound;
     private static MediaPlayer eraserPlayer;
+    private static Media loginSound;
+    private static MediaPlayer loginPlayer;
 
     private static Media mainPanelBGM; // Currently PVZ
     private static MediaPlayer mainPanelPlayer;
     private static Media zenBGM; // Currently PVZ
     private static MediaPlayer zenPlayer;
 
-
     public enum sfx {
-        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP,PENCIL, ERASER
+        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP, PENCIL, ERASER, LOGIN;
     }
 
     public enum bgm {
@@ -52,6 +53,8 @@ public class SoundsManager {
         beepPlayer = new MediaPlayer(beepSound);
         tapSound = new Media(App.class.getResource("/sounds/tap.mp3").toURI().toString());
         tapPlayer = new MediaPlayer(tapSound);
+        loginSound = new Media(App.class.getResource("/sounds/successfulLogin.mp3").toURI().toString());
+        loginPlayer = new MediaPlayer(loginSound);
     }
 
     public static void loadBGM() throws URISyntaxException {
@@ -87,9 +90,9 @@ public class SoundsManager {
                     victoryPlayer.stop();
                 }
                 victoryPlayer.play();
-                victoryPlayer.setOnEndOfMedia(new Runnable(){
+                victoryPlayer.setOnEndOfMedia(new Runnable() {
                     @Override
-                    public void run(){
+                    public void run() {
                         playBGM(bgm.MAINPANEL);
                     }
                 });
@@ -99,9 +102,9 @@ public class SoundsManager {
                     failurePlayer.stop();
                 }
                 failurePlayer.play();
-                failurePlayer.setOnEndOfMedia(new Runnable(){
+                failurePlayer.setOnEndOfMedia(new Runnable() {
                     @Override
-                    public void run(){
+                    public void run() {
                         playBGM(bgm.MAINPANEL);
                     }
                 });
@@ -118,7 +121,7 @@ public class SoundsManager {
                 }
                 tapPlayer.play();
                 break;
-                case PENCIL:
+            case PENCIL:
                 pencilPlayer.play();
                 pencilPlayer.setOnEndOfMedia(new Runnable() {
                     @Override
@@ -138,6 +141,13 @@ public class SoundsManager {
                     }
                 });
                 break;
+            case LOGIN:
+                if (loginPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
+                    loginPlayer.stop();
+                }
+                loginPlayer.play();
+                break;
+
         }
 
     }
@@ -170,22 +180,25 @@ public class SoundsManager {
                 break;
         }
     }
+
     /**
-     * This method stops the win/lose sfx, and resume to the looping of main panel bgm after stopping
+     * This method stops the win/lose sfx, and resume to the looping of main panel
+     * bgm after stopping
      */
-    public static void stopWinAndLoseSFX(){
+    public static void stopWinAndLoseSFX() {
         victoryPlayer.stop();
         failurePlayer.stop();
         playBGM(bgm.MAINPANEL);
     }
 
-    public static void stopPencilOrEraserSFX(sfx pencilOrEraser){
-        if(pencilOrEraser == sfx.PENCIL){
+    public static void stopPencilOrEraserSFX(sfx pencilOrEraser) {
+        if (pencilOrEraser == sfx.PENCIL) {
             pencilPlayer.stop();
         } else {
             eraserPlayer.stop();
         }
     }
+
     /**
      * This method stops all curretly playing bgm
      */
@@ -193,8 +206,10 @@ public class SoundsManager {
         zenPlayer.stop();
         mainPanelPlayer.stop();
     }
+
     /**
      * This method stops a specific BGM
+     * 
      * @param bgmType The specific BGM to be terminated
      */
     public static void stopBGM(bgm bgmType) {
@@ -211,8 +226,11 @@ public class SoundsManager {
                 break;
         }
     }
+
     /**
-     * This method takes a double as input and change the volume level of all SFX to corresponding value
+     * This method takes a double as input and change the volume level of all SFX to
+     * corresponding value
+     * 
      * @param volume
      */
     public static void changeSFXVolume(double volume) {
@@ -224,7 +242,7 @@ public class SoundsManager {
         tapPlayer.setVolume(volume);
         pencilPlayer.setVolume(volume);
         eraserPlayer.setVolume(volume);
-
+        loginPlayer.setVolume(volume);
     }
 
     public static void changeBGMVolume(double volume) {

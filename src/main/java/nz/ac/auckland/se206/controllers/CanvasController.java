@@ -513,6 +513,7 @@ public class CanvasController {
             e -> {
               if (timeLeft.get() <= 10&&timeLeft.get()>0) {
                 SoundsManager.playSFX(sfx.BEEP);
+                System.out.println("countdown");
               }
             });
         timeline.getKeyFrames().clear();
