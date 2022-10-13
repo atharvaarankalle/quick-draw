@@ -167,6 +167,7 @@ public class CanvasController {
     modelResultsPieChart.setData(data);
     modelResultsPieChart.setLegendSide(Side.LEFT);
     modelResultsPieChart.setLegendVisible(false);
+    resetArrow();
   }
 
   private void resetPieChart() {
@@ -253,6 +254,7 @@ public class CanvasController {
       // button
       initializeCanvas();
       resetPieChart();
+      resetArrow();
       readyButton.setDisable(true);
       saveDrawingButton.setDisable(true);
       clearButton.setDisable(false);
@@ -453,8 +455,6 @@ public class CanvasController {
                 if (!isCanvasBlank()) {
                   // Query the DL model to make the predictions and update the pie chart
                   makePredictions();
-                  arrowSpeed();
-                  arrowMotionControl();
                   /*
                    * If at any point the word to draw is in the top three
                    * predictions, the user has won the game. In this case
@@ -462,19 +462,21 @@ public class CanvasController {
                    * that they have won and allow them to choose a
                    * new word if they wish
                    */
+                  if (insideTopPrediction()) {
+                    arrowMotionControl();
+                  }
 
                   if (isWordCorrect()) {
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
                     Stage stage = (Stage) root.getScene().getWindow();
                     StatisticsManager.setGameStage(stage);
-                    movement.setNode(arrowUp);
-                    movement.setByY(0);
-                    movement.setCycleCount(0);
-                    timeline.stop();
+                    movement.stop();
+
                     try {
                       addLine("WON");
                       autoSaveDrawing();
+                      resetArrow();
                     } catch (IOException e1) {
                       e1.printStackTrace();
                     }
@@ -490,6 +492,7 @@ public class CanvasController {
                   }
                 } else {
                   resetPieChart();
+                  resetArrow();
                 }
               } catch (TranslateException | IOException e1) {
                 e1.printStackTrace();
@@ -509,6 +512,7 @@ public class CanvasController {
             event -> {
               // Stop the timeline and reset the GUI to its initial state
               timeline.stop();
+              movement.stop();
               Stage stage = (Stage) root.getScene().getWindow();
               StatisticsManager.setGameStage(stage);
 
@@ -518,6 +522,7 @@ public class CanvasController {
               try {
                 addLine("LOST");
                 autoSaveDrawing();
+                resetArrow();
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
@@ -846,9 +851,6 @@ public class CanvasController {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
     timeline.stop();
-    movement.setNode(arrowUp);
-    movement.setByY(0);
-    movement.setCycleCount(0);
     readyButton.setDisable(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
@@ -863,7 +865,7 @@ public class CanvasController {
   }
 
   private void arrowMotionControl() {
-    movement.setDuration(Duration.seconds(arrowSpeed()));
+    movement.setDuration(Duration.seconds(3));
     movement.setNode(arrowUp);
     movement.setToY(-100);
     movement.setAutoReverse(false);
@@ -871,8 +873,17 @@ public class CanvasController {
     movement.play();
   }
 
-  private int arrowSpeed() {
-    for (int i = 7; i < 10; i++) {
+  private void resetArrow() {
+    movement.setDuration(Duration.seconds(0));
+    movement.setNode(arrowUp);
+    movement.setToY(0);
+    movement.setAutoReverse(false);
+    movement.stop();
+  }
+
+  private boolean insideTopPrediction() {
+
+    for (int i = 3; i < 10; i++) {
       if (!isCanvasBlank()
           && modelResultsPieChart
               .getData()
@@ -880,31 +891,9 @@ public class CanvasController {
               .getName()
               .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
               .equals(currentWord)) {
-        return 3;
+        return true;
       }
     }
-    for (int i = 4; i < 7; i++) {
-      if (!isCanvasBlank()
-          && modelResultsPieChart
-              .getData()
-              .get(i)
-              .getName()
-              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-              .equals(currentWord)) {
-        return 2;
-      }
-    }
-    for (int i = 0; i <= 4; i++) {
-      if (!isCanvasBlank()
-          && modelResultsPieChart
-              .getData()
-              .get(i)
-              .getName()
-              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-              .equals(currentWord)) {
-        return 1;
-      }
-    }
-    return 0;
+    return false;
   }
 }
