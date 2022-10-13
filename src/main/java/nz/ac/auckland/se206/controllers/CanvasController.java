@@ -46,6 +46,8 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
+import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and
@@ -216,13 +218,28 @@ public class CanvasController {
           currentX = x;
           currentY = y;
         });
-
+    // Looping sound effects for pen/eraser
+    canvas.setOnDragDetected(e -> {
+      if (penEraserButton.getText().equals("Pen")) {
+        SoundsManager.playSFX(sfx.ERASER);
+      } else {
+        SoundsManager.playSFX(sfx.PENCIL);
+      }
+    });
+    canvas.setOnMouseReleased(e -> {
+      if (penEraserButton.getText().equals("Pen")) {
+        SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
+      } else {
+        SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
+      }
+    });
     canvas.setDisable(false);
   }
 
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
+    SoundsManager.playSFX(sfx.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
   }
 
@@ -246,8 +263,12 @@ public class CanvasController {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
+    SoundsManager.stopWinAndLoseSFX();
+    SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
+      SoundsManager.stopAllBGM();
+      SoundsManager.playBGM(bgm.ZEN);
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
@@ -295,6 +316,7 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBetweenPenAndEraser() {
+    SoundsManager.playSFX(sfx.BUTTON2);
     // If the current tool is pen, change the text to reflect eraser and set the
     // current tool to
     // eraser and vice versa
@@ -449,6 +471,8 @@ public class CanvasController {
                 if (timeLeft.get() == 10) {
                   pgbTimer.setStyle("-fx-accent: red;");
                 }
+                // If game reaches last 10 second, start playing beep sfx
+
                 // First check if the canvas is blank or not, if it's blank, reset the
                 // piechart
                 // Otherwise, carryout predictions and update piechart
@@ -471,12 +495,10 @@ public class CanvasController {
                     pgbTimer.progressProperty().unbind();
                     Stage stage = (Stage) root.getScene().getWindow();
                     StatisticsManager.setGameStage(stage);
-                    movement.stop();
-
+                    timeline.stop();
                     try {
                       addLine("WON");
                       autoSaveDrawing();
-                      resetArrow();
                     } catch (IOException e1) {
                       e1.printStackTrace();
                     }
@@ -492,15 +514,21 @@ public class CanvasController {
                   }
                 } else {
                   resetPieChart();
-                  resetArrow();
                 }
               } catch (TranslateException | IOException e1) {
                 e1.printStackTrace();
               }
             });
-
+        KeyFrame beepFrame = new KeyFrame(
+            Duration.seconds(1),
+            e -> {
+              if (timeLeft.get() <= 10 && timeLeft.get() > 0) {
+                SoundsManager.playSFX(sfx.BEEP);
+                System.out.println("countdown");
+              }
+            });
         timeline.getKeyFrames().clear();
-        timeline.getKeyFrames().addAll(keyFrame);
+        timeline.getKeyFrames().addAll(keyFrame, beepFrame);
         timeline.setCycleCount(getMaximumTime());
 
         /*
@@ -512,7 +540,6 @@ public class CanvasController {
             event -> {
               // Stop the timeline and reset the GUI to its initial state
               timeline.stop();
-              movement.stop();
               Stage stage = (Stage) root.getScene().getWindow();
               StatisticsManager.setGameStage(stage);
 
@@ -522,10 +549,11 @@ public class CanvasController {
               try {
                 addLine("LOST");
                 autoSaveDrawing();
-                resetArrow();
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
+              SoundsManager.stopAllBGM();
+              SoundsManager.playSFX(sfx.FAIL);
               readyButton.setDisable(false);
               readyButton.setText("Ready?");
               clearButton.setDisable(true);

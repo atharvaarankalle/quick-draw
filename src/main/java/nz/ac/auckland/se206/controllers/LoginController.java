@@ -8,6 +8,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +28,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
+import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 // Author : Ash, Nov 2, 2018 at 22:58, StackOverflow
 // https://stackoverflow.com/questions/53020451/how-to-create-javafx-save-read-information-from-text-file-and-letting-user-to-e
@@ -37,12 +40,15 @@ public class LoginController implements Initializable {
 
   @FXML private TextField emailTextField;
 
-  @FXML private ListView<String> usersListView = new ListView<String>();
+  @FXML
+  private ListView<String> usersListView = new ListView<String>();
 
-  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML
+  private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we create a login page
+   * JavaFX calls this method once the GUI elements are loaded. In our case we
+   * create a login page
    * and brings users details
    */
   @Override
@@ -51,8 +57,7 @@ public class LoginController implements Initializable {
     emailTextField.getText();
     usersListView.setItems(usersList);
     usersListView.setCellFactory(
-        new Callback<
-            ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
+        new Callback<ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
           // to work parallel for login/register/storing datas
           @Override
           public ListCell<String> call(ListView<String> param) {
@@ -113,8 +118,10 @@ public class LoginController implements Initializable {
       msg.setContentText("Successfully created new user with username: " + line);
       msg.getButtonTypes().clear();
       msg.getButtonTypes().addAll(ButtonType.OK);
+      SoundsManager.playSFX(sfx.LOGIN);
       msg.showAndWait();
       addLine(line);
+      SoundsManager.playBGM(bgm.MAINPANEL);
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
       usersList.add(emailTextField.getText());
@@ -141,7 +148,16 @@ public class LoginController implements Initializable {
         msg.setTitle("Log In Successful!");
         msg.setHeaderText("Log In Successful!");
         msg.setContentText("You have successfully logged in as: " + userName);
+        if (updateVolumeStatus(userName) == 1) {
+          SoundsManager.setMuteAllBGM(true);
+          SoundsManager.setMuteAllSFX(true);
+        } else {
+          SoundsManager.setMuteAllBGM(false);
+          SoundsManager.setMuteAllSFX(false);
+        }
+        SoundsManager.playSFX(sfx.LOGIN);
         msg.showAndWait();
+        SoundsManager.playBGM(bgm.MAINPANEL);
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
         break;
@@ -192,7 +208,7 @@ public class LoginController implements Initializable {
       if (!userFileExists) {
         fileWriterUserFile = new FileWriter("DATABASE/usersettings/" + line, true);
         BufferedWriter bufferedWriterUserFile = new BufferedWriter(fileWriterUserFile);
-        bufferedWriterUserFile.write("0.0 , 0.0 , 0.0 , 0.0");
+        bufferedWriterUserFile.write("0.0 , 0.0 , 0.0 , 0.0 , 75.0 , 75.0 , 0");
         bufferedWriterUserFile.newLine();
         bufferedWriterUserFile.flush();
         bufferedWriterUserFile.close();
@@ -215,7 +231,17 @@ public class LoginController implements Initializable {
     String line = "GUEST";
     gameSettings.setCurrentUser(line);
     addLine(line);
+    // Start playing background bgm
+    SoundsManager.playBGM(bgm.MAINPANEL);
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
+  }
+
+  private int updateVolumeStatus(String userName) throws IOException {
+    Path userStatsPath = Paths.get("DATABASE/usersettings/" + userName);
+    List<String> userStats = Files.readAllLines(userStatsPath);
+    SoundsManager.changeBGMVolume( Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[5])/ 100);
+    SoundsManager.changeSFXVolume( Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[4])/ 100);
+    return Integer.valueOf(userStats.get(userStats.size() - 1).split(" , ")[6]);
   }
 }

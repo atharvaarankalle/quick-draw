@@ -10,6 +10,12 @@ public class Settings {
 
   private double confidenceLevel = 0.0;
 
+  private double sfxVolume = 75.0;
+
+  private double bgmVolume = 75.0;
+
+  private int muteStatus = 0;
+
   private String currentUser = "";
 
   public void setAccuracyLevel(double level) {
@@ -28,6 +34,17 @@ public class Settings {
     this.confidenceLevel = level;
   }
 
+  public void setSfxVolume(double sfxVolume) {
+      this.sfxVolume = sfxVolume;
+  }
+
+  public void setBgmVolume(double bgmVolume) {
+      this.bgmVolume = bgmVolume;
+  }
+
+  public void setMuteStatus(int muteStatus) {
+      this.muteStatus = muteStatus;
+  }
   public void setCurrentUser(String username) {
     this.currentUser = username;
   }
@@ -69,6 +86,18 @@ public class Settings {
         return 0.01;
     }
   }
+
+  public double getSfxVolume() {
+      return sfxVolume;
+  }
+
+  public double getBgmVolume() {
+      return bgmVolume;
+  }
+
+public int getMuteStatus() {
+    return muteStatus;
+}
 
   public double getTimeSliderPosition() {
     return this.timeLevel;

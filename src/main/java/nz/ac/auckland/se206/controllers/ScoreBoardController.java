@@ -11,7 +11,6 @@ import java.util.List;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -19,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 public class ScoreBoardController {
   @FXML private Label userNameLabel;
@@ -32,8 +32,6 @@ public class ScoreBoardController {
   @FXML private Label bestRecordWordLabel;
 
   @FXML private Label bestRecordTimeLabel;
-
-  @FXML private Label noStatsLabel;
 
   @FXML private ListView<String> scoreList;
 
@@ -57,7 +55,6 @@ public class ScoreBoardController {
 
   public void initialize() {
     try {
-      noStatsLabel.setVisible(false);
       // First read the current user id
       Path userDataPath = Paths.get("DATABASE/UserDatas.txt");
       long lineNumber = Files.lines(userDataPath).count();
@@ -144,17 +141,15 @@ public class ScoreBoardController {
         imagePane.setVisible(false);
       }
     } catch (IOException e) {
-      ObservableList<Node> allNodes = backgroundPane.getChildren();
-      for (Node node : allNodes) {
-        node.setVisible(false);
-      }
-      noStatsLabel.setVisible(true);
+      textLabel1.setText("It seems you haven't tried any words yet...");
+      textLabel2.setVisible(false);
     }
   }
 
   @FXML
   private void onNextImage() {
-
+    //Play sound effect
+    SoundsManager.playSFX(sfx.BUTTON1);
     /*
      * Switch between the images displayed on the imageView
      * For each image, ensure it is able to handle the cases where
@@ -221,7 +216,8 @@ public class ScoreBoardController {
 
   @FXML
   private void onPreviousImage() {
-
+    //Play sound effect
+    SoundsManager.playSFX(sfx.BUTTON1);
     /*
      * Switch between the images displayed on the imageView
      * For each image, ensure it is able to handle the cases where
