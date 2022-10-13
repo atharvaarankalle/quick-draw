@@ -301,7 +301,7 @@ public class GameSettingsController implements Initializable {
               confidenceSlider.setValue(Double.valueOf(separatedUserInfo[3]));
 
             } catch (IOException e) {
-
+              e.printStackTrace();
             }
           } else {
             accuracySlider.setValue(gameSettings.getAccuracyLevel());
@@ -432,7 +432,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.flush();
                   bufferedWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -498,7 +498,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider
@@ -563,7 +563,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -636,7 +636,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -698,7 +698,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -769,7 +769,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -833,7 +833,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -905,7 +905,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-
+                  e.printStackTrace();
                 }
 
                 // Set the background colour of the slider depending on the user setting
