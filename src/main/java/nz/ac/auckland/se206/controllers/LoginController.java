@@ -74,9 +74,11 @@ public class LoginController implements Initializable {
       for (int i = 0; i < count; i++) {
         String currentUser = Files.readAllLines(path).get(i);
 
+        // If the user is not already in the list, add them
         if (!usersList.contains(currentUser)) {
           usersList.add(currentUser);
 
+          // If the user list contains "GUEST" remove it
           if (usersList.contains("GUEST")) {
             usersList.remove("GUEST");
           }
@@ -87,6 +89,12 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * This method is called when the user clicks the sign up button. It will add a new user and
+   * automatically log them in
+   *
+   * @param event
+   */
   @FXML
   private void onSignUp(ActionEvent event) throws IOException {
 
@@ -103,6 +111,8 @@ public class LoginController implements Initializable {
       if (redundant.equals(line) || line.isBlank()) { // Cannot process registeration
         num++;
         Alert msg = new Alert(AlertType.ERROR);
+
+        // Update the user of the status of the log in
         msg.setTitle("Error creating user");
         msg.setHeaderText("Error Creating User");
         msg.setContentText("The username you entered is either blank or already exists!");
@@ -111,6 +121,7 @@ public class LoginController implements Initializable {
       }
     }
 
+    // Add the user to the UserDatas.txt file and log them in
     if (num == 0 && !line.isBlank()) { // Process registeration
       Alert msg = new Alert(AlertType.INFORMATION);
       msg.setTitle("Sign Up Successful");
@@ -121,6 +132,8 @@ public class LoginController implements Initializable {
       SoundsManager.playSFX(sfx.LOGIN);
       msg.showAndWait();
       addLine(line);
+
+      // Change the scene to the main scene
       SoundsManager.playBGM(bgm.MAINPANEL);
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
@@ -129,6 +142,12 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * This method is called when the user selects their username from the ListView. It will log the
+   * user in
+   *
+   * @param event
+   */
   @FXML
   private void onUserSelected(MouseEvent event) throws IOException {
     int num = 0;
@@ -144,6 +163,8 @@ public class LoginController implements Initializable {
       if (vertification.equals(userName)) { // Confirmation of valid user
         addLine(userName);
         Alert msg = new Alert(AlertType.INFORMATION);
+
+        // Update the user of the status of the log in
         num += 1;
         msg.setTitle("Log In Successful!");
         msg.setHeaderText("Log In Successful!");
@@ -157,6 +178,8 @@ public class LoginController implements Initializable {
         }
         SoundsManager.playSFX(sfx.LOGIN);
         msg.showAndWait();
+
+        // Change the scene to the main scene
         SoundsManager.playBGM(bgm.MAINPANEL);
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
@@ -166,6 +189,8 @@ public class LoginController implements Initializable {
 
     if (num == 0) { // Error showing mismatch
       Alert msg = new Alert(AlertType.ERROR);
+
+      // Update the user of the status of the log in
       msg.setTitle(usersListView.getSelectionModel().getSelectedItem());
       msg.setContentText(
           "No such Username : " + usersListView.getSelectionModel().getSelectedItem());
@@ -175,8 +200,14 @@ public class LoginController implements Initializable {
     usersListView.getSelectionModel().clearSelection();
   }
 
+  /**
+   * This method is called to add a line to the UserDatas.txt file
+   *
+   * @param event
+   */
   private void addLine(String line) throws IOException {
 
+    // Get the user data
     Stage stage = (Stage) loginRoot.getScene().getWindow();
 
     Settings gameSettings = (Settings) stage.getUserData();
@@ -201,10 +232,12 @@ public class LoginController implements Initializable {
 
       final File userSettingsFolder = new File("DATABASE/usersettings");
 
+      // Create the folder if it doesn't exist
       if (!userSettingsFolder.exists()) {
         userSettingsFolder.mkdir();
       }
 
+      // Create the user file if it doesn't exist
       if (!userFileExists) {
         fileWriterUserFile = new FileWriter("DATABASE/usersettings/" + line, true);
         BufferedWriter bufferedWriterUserFile = new BufferedWriter(fileWriterUserFile);
@@ -221,6 +254,11 @@ public class LoginController implements Initializable {
     }
   }
 
+  /**
+   * This method is called when the user clicks the guest button. It will log the user in as a guest
+   *
+   * @param event
+   */
   @FXML
   private void onGuestMode(ActionEvent event) throws IOException {
 

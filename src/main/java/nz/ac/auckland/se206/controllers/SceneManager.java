@@ -16,7 +16,7 @@ public class SceneManager {
   private static HashMap<AppUi, Parent> sceneMap = new HashMap<AppUi, Parent>();
 
   /**
-   * Loads the specified scene into the sceneMap.
+   * Loads the specified scene into the sceneMap. The sceneMap stores the scene and it's root
    *
    * @param appUi The AppUi enum value of the scene to load.
    * @param uiRoot The root node of the scene to load.
@@ -26,7 +26,7 @@ public class SceneManager {
   }
 
   /**
-   * Returns the root node of the specified scene.
+   * Returns the root node of the specified scene. The sceneMap stores the scene and it's root
    *
    * @param appUi The AppUi enum value of the scene to return.
    * @return The root node of the specified scene.
