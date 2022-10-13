@@ -107,6 +107,9 @@ public class CanvasController {
   private Button arrowUp;
 
   @FXML
+  private Button arrowDown;
+
+  @FXML
   private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
@@ -123,7 +126,9 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
-  TranslateTransition movement = new TranslateTransition();
+  TranslateTransition movementUp = new TranslateTransition();
+
+  TranslateTransition movementDown = new TranslateTransition();
 
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
@@ -528,9 +533,11 @@ public class CanvasController {
                    * new word if they wish
                    */
                   if (insideTopPrediction()) {
-                    arrowMotionControl();
-                  } else {
-                    resetArrow();
+                    arrowMotionControlUp();
+                  }
+
+                  if (!insideTopPrediction()) {
+                    arrowMotionControlDown();
                   }
 
                   if (isWordCorrect()) {
@@ -986,36 +993,93 @@ public class CanvasController {
     leaderBoardList.setVisible(false);
   }
 
-  private void arrowMotionControl() {
-    movement.setDuration(Duration.seconds(3));
-    movement.setNode(arrowUp);
-    movement.setToY(-170);
-    movement.setAutoReverse(false);
-    movement.setCycleCount(15);
-    movement.play();
+  private void arrowMotionControlUp() {
+    movementDown.jumpTo(Duration.seconds(0));
+    movementDown.stop();
+    movementUp.setDuration(Duration.seconds(3));
+    movementUp.setNode(arrowUp);
+    movementUp.setToY(-100);
+    movementUp.setAutoReverse(false);
+    movementUp.setCycleCount(15);
+    movementUp.play();
+  }
+
+  private void arrowMotionControlDown() {
+    movementUp.jumpTo(Duration.seconds(0));
+    movementUp.stop();
+    movementDown.setDuration(Duration.seconds(3));
+    movementDown.setNode(arrowDown);
+    movementDown.setToY(100);
+    movementDown.setAutoReverse(false);
+    movementDown.setCycleCount(15);
+    movementDown.play();
   }
 
   private void resetArrow() {
-    movement.jumpTo(Duration.seconds(0));
-    movement.stop();
+    movementUp.jumpTo(Duration.seconds(0));
+    movementUp.stop();
+    movementDown.jumpTo(Duration.seconds(0));
+    movementDown.stop();
   }
 
   private boolean insideTopPrediction() {
 
-    if (isCanvasBlank()) {
-      return false;
+    // Get the uesr data and then get the current words difficulty
+    Stage stage = (Stage) root.getScene().getWindow();
+
+    Settings gameSettings = (Settings) stage.getUserData();
+
+    int accuracyLevel = (int) gameSettings.getAccuracyLevel();
+
+    switch (accuracyLevel) {
+      case 0:
+
+        for (int i = 3; i < 10; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
     }
 
-    for (int i = 3; i < 10; i++) {
-      if (!isCanvasBlank()
-          && modelResultsPieChart
-              .getData()
-              .get(i)
-              .getName()
-              .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
-              .equals(currentWord)) {
-        return true;
-      }
+    switch (accuracyLevel) {
+      case 1:
+
+        for (int i = 2; i < 10; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
+    }
+
+    switch (accuracyLevel) {
+      case 0:
+
+        for (int i = 1; i < 10; i++) {
+          if (!isCanvasBlank()
+              && modelResultsPieChart
+                  .getData()
+                  .get(i)
+                  .getName()
+                  .substring(0, modelResultsPieChart.getData().get(i).getName().indexOf(":"))
+                  .equals(currentWord)) {
+            return true;
+          }
+        }
+        return false;
     }
     return false;
   }
