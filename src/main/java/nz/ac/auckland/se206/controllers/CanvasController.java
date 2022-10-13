@@ -472,138 +472,151 @@ public class CanvasController {
     return true;
   }
 
-    /**
+   /**
    * This method creates a background timing task and returns the task
    *
    * @return a Task<Void> object, the background timing task
    */
   private Task<Void> createNewTimingTask() {
+
     final AtomicInteger timeLeft = new AtomicInteger(getMaximumTime());
-    Task<Void> backgroundTimingTask =
-        new Task<Void>() {
-          @Override
-          protected Void call() throws Exception {
+    Task<Void> backgroundTimingTask = new Task<Void>() {
+      @Override
+      protected Void call() throws Exception {
 
-            // Update the task progress
-            updateProgress(0, getMaximumTime() - 1);
+        // Update the task progress
+        updateProgress(0, getMaximumTime() - 1);
+        /*
+         * Initialise a timeline. This will be used to decrement the
+         * timer every second, query the data learning
+         * model and update the pie chart accordingly
+         */
+        KeyFrame keyFrame = new KeyFrame(
+            Duration.seconds(1),
+            e -> {
+              try {
+                timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
+                updateProgress(getMaximumTime() - timeLeft.get(), getMaximumTime() - 1);
+                // If game reaches last 10 second, change progress bar to red
+                if (timeLeft.get() == 10) {
+                  pgbTimer.setStyle("-fx-accent: red;");
+                }
+                // First check if the canvas is blank or not, if it's blank, reset the
+                // piechart
+                // Otherwise, carryout predictions and update piechart
+                if (!isCanvasBlank()) {
+                  // Query the DL model to make the predictions and update the pie chart
+                  makePredictions();
+                  /*
+                   * If at any point the word to draw is in the top three
+                   * predictions, the user has won the game. In this case
+                   * stop the timeline, communicate to the user
+                   * that they have won and allow them to choose a
+                   * new word if they wish
+                   */
 
-            /*
-             * Initialise a timeline. This will be used to decrement the
-             * timer every second, query the data learning
-             * model and update the pie chart accordingly
-             */
-            KeyFrame keyFrame =
-                new KeyFrame(
-                    Duration.seconds(1),
-                    e -> {
-                      try {
-                        timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
-                        updateProgress(getMaximumTime() - timeLeft.get(), getMaximumTime() - 1);
-                        // If game reaches last 10 second, change progress bar to red
-                        if (timeLeft.get() == 10) {
-                          pgbTimer.setStyle("-fx-accent: red;");
-                        }
-                        // First check if the canvas is blank or not, if it's blank, reset the
-                        // piechart
-                        // Otherwise, carryout predictions and update piechart
-                        if (!isCanvasBlank()) {
-                          // Query the DL model to make the predictions and update the pie chart
-                          makePredictions();
-                          /*
-                           * If at any point the word to draw is in the top three
-                           * predictions, the user has won the game. In this case
-                           * stop the timeline, communicate to the user
-                           * that they have won and allow them to choose a
-                           * new word if they wish
-                           */
-
-                          if (isWordCorrect()) {
-                            // Update GUI elements
-                            pgbTimer.setVisible(false);
-                            pgbTimer.progressProperty().unbind();
-
-                            // Pass the current stage to the StatisticsManager class
-                            Stage stage = (Stage) root.getScene().getWindow();
-                            StatisticsManager.setGameStage(stage);
-                            timeline.stop();
-
-                            try {
-                              // Record a won game and auto-save the drawing
-                              addLine("WON");
-                              autoSaveDrawing();
-                            } catch (IOException e1) {
-                              e1.printStackTrace();
-                            }
-
-                            // Stop the user from drawing on the canvas, and update the GUI
-                            canvas.setOnMouseDragged((canvasEvent) -> {});
-                            canvas.setDisable(true);
-                            timerLabel.setText("Correct, well done!");
-                            readyButton.setDisable(false);
-                            readyButton.setText("Ready?");
-                            clearButton.setDisable(true);
-                            saveDrawingButton.setDisable(false);
-
-                            // Display and update the leaderboard
-                            updateLeaderBoard();
-                          }
-                        } else {
-                          resetPieChart();
-                        }
-                      } catch (TranslateException | IOException e1) {
-                        e1.printStackTrace();
-                      }
-                    });
-            timeline.getKeyFrames().clear();
-            timeline.getKeyFrames().addAll(keyFrame);
-            timeline.setCycleCount(getMaximumTime());
-
-            /*
-             * When the maximum time elapses, stop the timeline, disable the canvas and
-             * drawing buttons, enable the save drawing button and check if the user
-             * has won the game
-             */
-            timeline.setOnFinished(
-                event -> {
-                  // Stop the timeline and reset the GUI to its initial state
-                  timeline.stop();
-                  Stage stage = (Stage) root.getScene().getWindow();
-                  StatisticsManager.setGameStage(stage);
-                  // Unbind and set progress bar to invisible
-                  pgbTimer.setVisible(false);
-                  pgbTimer.progressProperty().unbind();
-                  try {
-                    // Record a won game and auto-save the drawing
-                    addLine("LOST");
-                    autoSaveDrawing();
-                  } catch (IOException e1) {
-                    e1.printStackTrace();
-                  }
-
-                  // Stop the user from drawing on the canvas, and update the GUI
-                  readyButton.setDisable(false);
-                  readyButton.setText("Ready?");
-                  clearButton.setDisable(true);
-                  canvas.setOnMouseDragged(e -> {});
-                  canvas.setDisable(true);
-                  saveDrawingButton.setDisable(false);
-                  // Check if the user has won and update the GUI to communicate to the user
                   if (isWordCorrect()) {
-                    timerLabel.setText("Correct, well done!");
-                  } else {
-                    timerLabel.setText("Incorrect, better luck next time!");
-                    // Update leaderboard
+                    //Stop bgms and paly victory sfx
+                    SoundsManager.stopAllBGM();
+                    SoundsManager.playSFX(sfx.VICTORY);
+                    // Update GUI elements
+                    pgbTimer.setVisible(false);
+                    pgbTimer.progressProperty().unbind();
+
+                    // Pass the current stage to the StatisticsManafer class
+                    Stage stage = (Stage) root.getScene().getWindow();
+                    StatisticsManager.setGameStage(stage);
+                    timeline.stop();
                     try {
-                      updateLeaderBoard();
+                      // Record a won game and auto-save the drawing
+                      addLine("WON");
+                      autoSaveDrawing();
                     } catch (IOException e1) {
                       e1.printStackTrace();
                     }
+
+                    //Stop the user from drawing on the canvas, and update the GUI
+                    canvas.setOnMouseDragged((canvasEvent) -> {
+                    });
+                    canvas.setDisable(true);
+                    timerLabel.setText("Correct, well done!");
+                    readyButton.setDisable(false);
+                    readyButton.setText("Ready?");
+                    clearButton.setDisable(true);
+                    saveDrawingButton.setDisable(false);
+                    //Display and update the leader board
+                    updateLeaderBoard();
                   }
-                });
-            timeline.play();
-            return null;
-          }
-        };
+                } else {
+                  resetPieChart();
+                }
+              } catch (TranslateException | IOException e1) {
+                e1.printStackTrace();
+              }
+            });
+        KeyFrame beepFrame = new KeyFrame(
+            Duration.seconds(1),
+            e -> {
+              if (timeLeft.get() <= 10&&timeLeft.get()>0) {
+                SoundsManager.playSFX(sfx.BEEP);
+                System.out.println("countdown");
+              }
+            });
+        timeline.getKeyFrames().clear();
+        timeline.getKeyFrames().addAll(keyFrame,beepFrame);
+        timeline.setCycleCount(getMaximumTime());
+
+        /*
+         * When the maximum time elapses, stop the timeline, disable the canvas and
+         * drawing buttons, enable the save drawing button and check if the user
+         * has won the game
+         */
+        timeline.setOnFinished(
+            event -> {
+              // Stop the timeline and reset the GUI to its initial state
+              timeline.stop();
+              Stage stage = (Stage) root.getScene().getWindow();
+              StatisticsManager.setGameStage(stage);
+
+              // Unbind and set progress bar to invisible
+              pgbTimer.setVisible(false);
+              pgbTimer.progressProperty().unbind();
+              try {
+                // Record a won game and auto-save the drawing
+                addLine("LOST");
+                autoSaveDrawing();
+              } catch (IOException e1) {
+                e1.printStackTrace();
+              }
+              SoundsManager.stopAllBGM();
+              SoundsManager.playSFX(sfx.FAIL);
+              readyButton.setDisable(false);
+              readyButton.setText("Ready?");
+              clearButton.setDisable(true);
+              canvas.setOnMouseDragged(e -> {
+              });
+              canvas.setDisable(true);
+              saveDrawingButton.setDisable(false);
+
+              // Check if the user has won and update the GUI to communicate to the user
+              if (isWordCorrect()) {
+                timerLabel.setText("Correct, well done!");
+              } else {
+                timerLabel.setText("Incorrect, better luck next time!");
+                // Update leaderboard
+                try {
+                  updateLeaderBoard();
+                } catch (IOException e1) {
+                  e1.printStackTrace();
+                }
+              }
+            });
+
+        timeline.play();
+
+        return null;
+      }
+    };
     return backgroundTimingTask;
   }
   /**
