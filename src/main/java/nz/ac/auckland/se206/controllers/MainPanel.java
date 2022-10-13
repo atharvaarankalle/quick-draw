@@ -146,9 +146,17 @@ public class MainPanel implements Initializable {
     GameButton.setDisable(false);
   }
 
+  @FXML
+  private void onBadgesClicked(ActionEvent event) throws IOException {
+    CurrentScene.setCenter(null);
+    Parent view = loadFxml("badges");
+    CurrentScene.setCenter(view);
+    GameButton.setDisable(false);
+  }
+
   /**
-   * This method is invoked when the user clicks the "Log out" button. It loads and shows the "Main
-   * Menu" scene
+   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
+   * the "Main Menu" scene
    *
    * @param event The event that triggered this method.
    * @throws IOException
@@ -162,10 +170,12 @@ public class MainPanel implements Initializable {
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");
     Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
-
-    // Delete the guest user file
     if (Files.exists(path)) {
       Files.delete(path);
+    }
+
+    if (Files.exists(guestSettingsPath)) {
+      Files.delete(guestSettingsPath);
     }
 
     // Delete the guest user settings file
@@ -188,6 +198,18 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onExit(ActionEvent event) throws IOException {
+
+    // Check if GUEST exists, if does, then delete the file
+    Path path = Paths.get("DATABASE/GUEST");
+    Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
+    if (Files.exists(path)) {
+      Files.delete(path);
+    }
+
+    if (Files.exists(guestSettingsPath)) {
+      Files.delete(guestSettingsPath);
+    }
+
     System.exit(0);
   }
 

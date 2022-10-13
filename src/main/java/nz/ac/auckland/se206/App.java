@@ -55,11 +55,15 @@ public class App extends Application {
     // Check if GUEST exists, if does, then delete the file after the app is closed
     Path path = Paths.get("DATABASE/GUEST");
     Path guestSettingsPath = Paths.get("DATABASE/usersettings/GUEST");
-    if (Files.exists(path) || Files.exists(guestSettingsPath)) {
+    if (Files.exists(path)) {
       Files.delete(path);
-      Files.delete(guestSettingsPath);
-      System.exit(0);
     }
+
+    if (Files.exists(guestSettingsPath)) {
+      Files.delete(guestSettingsPath);
+    }
+
+    System.exit(0);
   }
 
   /**

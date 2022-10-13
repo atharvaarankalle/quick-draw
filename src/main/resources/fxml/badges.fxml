@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="badgesRoot" prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/gamesettings.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.BadgesController">
+   <children>
+      <Pane layoutY="541.0" prefHeight="200.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" />
+      <GridPane alignment="CENTER" layoutX="74.0" layoutY="155.0" prefHeight="566.0" prefWidth="619.0">
+        <columnConstraints>
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <ImageView fx:id="quickDrawerIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/badgeIcons/QuickDrawerIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="speedDemonIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1">
+               <image>
+                  <Image url="@../images/badgeIcons/SpeedDemonIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="speedySketcherIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+               <image>
+                  <Image url="@../images/badgeIcons/SpeedySketcherIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="heatingUpIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/badgeIcons/HeatingUpIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="hereComesTheHeatIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/badgeIcons/HereComesTheHeatIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="onFireIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/badgeIcons/OnFireIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="aBuddingArtistIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/badgeIcons/ABuddingArtistIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="seriousSkillsIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/badgeIcons/SeriousSkillsIcon.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="masterArtistIcon" fitHeight="152.0" fitWidth="206.0" opacity="0.5" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/badgeIcons/MasterArtistIcon.png" />
+               </image>
+            </ImageView>
+         </children>
+      </GridPane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="191.0" layoutY="31.0" text="Badges Earned" textAlignment="CENTER">
+         <font>
+            <Font name="Lucida Handwriting Italic" size="45.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>

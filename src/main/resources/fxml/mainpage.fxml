@@ -14,7 +14,7 @@
    <children>
       <AnchorPane layoutY="33.0" prefHeight="592.0" prefWidth="142.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0">
          <children>
-            <VBox alignment="CENTER" layoutY="7.0" prefHeight="613.0" prefWidth="134.0" spacing="35.0" style="-fx-background-color: black;">
+            <VBox alignment="CENTER" layoutY="7.0" prefHeight="613.0" prefWidth="134.0" spacing="31.0" style="-fx-background-color: black;">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Home">
                      <graphic>
@@ -99,6 +99,18 @@
                      <font>
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
+                  </Button>
+                  <Button fx:id="badgesButton" mnemonicParsing="false" onAction="#onBadgesClicked" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Badges">
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/MAINBOARD/badgesIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#onExit" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Exit">
                      <graphic>
