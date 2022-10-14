@@ -132,7 +132,7 @@ public class ZenMode {
 
     // Initialise the canvas and disable it so users cannot draw on it
     initializeCanvas();
-
+    model = new DoodlePrediction();
     /*
      * Set the initial visibilities of components and also set
      * the initial interactability of buttons

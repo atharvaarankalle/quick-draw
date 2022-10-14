@@ -154,7 +154,7 @@ public class CanvasController {
 
     // Initialise the canvas and disable it so users cannot draw on it
     initializeCanvas();
-
+    model = new DoodlePrediction();
     /*
      * Set the initial visibilities of components and also set
      * the initial interactability of buttons
@@ -325,7 +325,6 @@ public class CanvasController {
       backgroundSpeechThread.setDaemon(true);
       backgroundSpeechThread.start();
     } else {
-      model = new DoodlePrediction();
       SoundsManager.stopWinAndLoseSFX();
       SoundsManager.playBGM(bgm.MAINPANEL);
       // Clear the canvas, disable the save drawing button and clear the pie chart
