@@ -19,7 +19,7 @@
       <PieChart fx:id="modelResultsPieChart" layoutX="70.0" layoutY="394.0" legendSide="LEFT" prefHeight="341.0" prefWidth="696.0" style="-fx-background-color: #A7C7E7;" />
       <AnchorPane layoutY="-6.0" prefHeight="91.0" prefWidth="766.0">
          <children>
-            <Label fx:id="targetWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutY="30.0" prefHeight="32.0" prefWidth="766.0" textAlignment="CENTER">
+            <Label fx:id="targetWordLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="13.0" layoutY="14.0" prefHeight="80.0" prefWidth="741.0" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Lucida Fax Regular" size="25.0" />
                </font>
@@ -29,7 +29,7 @@
       <AnchorPane layoutY="75.0" prefHeight="65.0" prefWidth="766.0">
          <children>
             <ProgressBar fx:id="pgbTimer" layoutX="256.0" layoutY="36.0" prefHeight="30.0" prefWidth="254.0" progress="0.0" />
-            <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="237.0" layoutY="-1.0" prefHeight="30.0" prefWidth="292.0" textAlignment="CENTER">
+            <Label fx:id="timerLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="55.0" layoutY="-1.0" prefHeight="30.0" prefWidth="674.0" textAlignment="CENTER">
                <font>
                   <Font name="Lucida Fax Regular" size="20.0" />
                </font>
