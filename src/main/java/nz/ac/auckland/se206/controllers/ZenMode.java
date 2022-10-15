@@ -125,7 +125,8 @@ public class ZenMode {
    * @throws IOException        If the model cannot be found on the file system.
    * @throws URISyntaxException
    * @throws CsvException
-   * @throws TranslateException
+   * @throws TranslateException It there is an error during processing of the
+   *                            input or output.
    */
   public void initialize()
       throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
@@ -172,12 +173,14 @@ public class ZenMode {
   /**
    * This method initialises the canvas at the start of the game
    *
-   * @throws TranslateException
+   * @throws TranslateException It there is an error during processing of reading
+   *                            the input or output.
+   * 
    */
   private void initializeCanvas() throws TranslateException {
 
     graphic = canvas.getGraphicsContext2D();
-    //Disable draw and erase button
+    // Disable draw and erase button
     drawButton.setDisable(true);
     eraseButton.setDisable(true);
     // save coordinates when mouse is pressed on the canvas
@@ -262,7 +265,7 @@ public class ZenMode {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       initializeCanvas();
-      //Enable the erase button, since the game is started with drawing ability
+      // Enable the erase button, since the game is started with drawing ability
       eraseButton.setDisable(false);
       resetPieChart();
       // Play the senmode BGM
@@ -285,7 +288,8 @@ public class ZenMode {
 
     } else {
       SoundsManager.stopWinAndLoseSFX();
-      //If zen mode bgm is not playing, then its safe to interrupt and play mainpanel bgm
+      // If zen mode bgm is not playing, then its safe to interrupt and play mainpanel
+      // bgm
       if (!SoundsManager.isZenBGMPlaying()) {
         SoundsManager.playBGM(bgm.MAINPANEL);
       }
@@ -353,7 +357,9 @@ public class ZenMode {
    * erases a line on the
    * canvas based on the mouse position
    *
-   * @throws TranslateException
+   * @throws TranslateException It there is an error during processing of reading
+   *                            the
+   *                            input or output of canvas position
    */
   @FXML
   private void onErase() throws TranslateException {
@@ -422,7 +428,8 @@ public class ZenMode {
    * This method generates a random word to draw, depending on the difficulty
    * selected by the user
    *
-   * @throws CsvException
+   * @throws CsvException       Base class for all the exceptions for opencsv
+   *                            related work
    * @throws IOException
    * @throws URISyntaxException
    */
@@ -591,6 +598,7 @@ public class ZenMode {
    *
    * @return The file of the saved image.
    * @throws IOException If the image cannot be saved.
+   * 
    */
   @FXML
   private void onSaveCurrentSnapshotOnFile() throws IOException {
@@ -618,7 +626,7 @@ public class ZenMode {
     // value
     // Play button sfx
     SoundsManager.playSFX(sfx.BUTTON2);
-    //Disable both draw/erase buttons
+    // Disable both draw/erase buttons
     drawButton.setDisable(true);
     eraseButton.setDisable(true);
     readyButton.setDisable(false);
@@ -693,10 +701,9 @@ public class ZenMode {
   }
 
   @FXML
-  private void onMouseClicked(){
+  private void onMouseClicked() {
     SoundsManager.playSFX(sfx.BUTTON1);
   }
-
 
   /**
    * This method converts the colour code into readable 6 digit hexadecimal code
@@ -716,7 +723,10 @@ public class ZenMode {
    *
    * @return The red component of the colour code
    * @throws NumberFormatException
-   * @throws TranslateException
+   * @throws TranslateException    It there is an error during processing of
+   *                               reading the
+   *                               input or output of hexadecimal code converting
+   *                               to red.
    */
   private int getRed() throws NumberFormatException, TranslateException {
 
@@ -728,7 +738,10 @@ public class ZenMode {
    * This method gets the green component of the RGB colour code
    *
    * @return The green component of the colour code
-   * @throws NumberFormatException
+   * @throws NumberFormatException An error the application has attempted to
+   *                               convert
+   *                               a string to one of the numeric types, but
+   *                               string didn't had appropriate type.
    * @throws TranslateException
    */
   private int getGreen() throws NumberFormatException, TranslateException {
