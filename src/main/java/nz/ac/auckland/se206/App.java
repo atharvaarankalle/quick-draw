@@ -21,7 +21,8 @@ import nz.ac.auckland.se206.controllers.Settings;
 import nz.ac.auckland.se206.controllers.SoundsManager;
 
 /**
- * This is the entry point of the JavaFX application, while you can change this class, it should
+ * This is the entry point of the JavaFX application, while you can change this
+ * class, it should
  * remain as the class that runs the JavaFX application.
  */
 public class App extends Application {
@@ -38,7 +39,8 @@ public class App extends Application {
 
     // Create a file to store the list of users logged in
     fileWriter = new FileWriter("DATABASE/UserDatas.txt", true);
-    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {}
+    try (BufferedWriter bufferedWriter = new BufferedWriter(fileWriter)) {
+    }
   }
 
   /**
@@ -67,7 +69,8 @@ public class App extends Application {
   }
 
   /**
-   * Returns the node associated to the input file. The method expects that the file is located in
+   * Returns the node associated to the input file. The method expects that the
+   * file is located in
    * "src/main/resources/fxml".
    *
    * @param fxml The name of the FXML file (without extension).
@@ -81,10 +84,12 @@ public class App extends Application {
   private Scene scene;
 
   /**
-   * This method is invoked when the application starts. It loads and shows the "Canvas" scene.
+   * This method is invoked when the application starts. It loads and shows the
+   * "Canvas" scene.
    *
    * @param stage The primary stage of the application.
-   * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
+   * @throws IOException        If "src/main/resources/fxml/canvas.fxml" is not
+   *                            found.
    * @throws URISyntaxException If a string cannot be parsed as a URI reference.
    */
   @Override
@@ -95,7 +100,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.CANVAS, loadFxml("canvas"));
     SceneManager.addUi(AppUi.HOW_TO_PLAY, loadFxml("howtoplay"));
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
-    SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
+    SceneManager.addUi(AppUi.MAIN, loadFxml("mainpanel"));
 
     // Initialize all sound effects
     SoundsManager.loadSoundEffects();
@@ -123,7 +128,7 @@ public class App extends Application {
     String currentID;
     String currentLine;
     String lastLine = "";
-    String[] separatedUserInfo = {""};
+    String[] separatedUserInfo = { "" };
     try {
       lineNumber = Files.lines(userDataPath).count();
 
@@ -133,8 +138,7 @@ public class App extends Application {
 
         // If the current ID does not equal "GUEST", then continue
         if (!currentID.equals("GUEST")) {
-          BufferedReader bufferedReader =
-              new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
+          BufferedReader bufferedReader = new BufferedReader(new FileReader("DATABASE/usersettings/" + currentID));
 
           // Read the last line of the file
           while ((currentLine = bufferedReader.readLine()) != null) {

@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="900.0" stylesheets="@../css/mainpanel.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainPanel">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="900.0" stylesheets="@../css/mainpanel.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainPanelController">
    <children>
       <AnchorPane layoutY="33.0" prefHeight="592.0" prefWidth="142.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0">
          <children>
@@ -28,7 +28,7 @@
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
-                  <Button fx:id="GameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Game">
+                  <Button fx:id="gameButton" mnemonicParsing="false" onAction="#onGame" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Game">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -40,7 +40,7 @@
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onInfo" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Instructions">
+                  <Button mnemonicParsing="false" onAction="#onSwitchToInfo" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Instructions">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -52,7 +52,7 @@
                         <Font name="Lucida Fax Demibold" size="11.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onStatistic" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Statistics">
+                  <Button mnemonicParsing="false" onAction="#onSwitchToStatistic" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Statistics">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -76,7 +76,7 @@
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#onZenMode" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Zen Mode" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#onSwitchToZenMode" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Zen Mode" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -149,7 +149,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <BorderPane fx:id="CurrentScene" layoutX="134.0" prefHeight="591.0" prefWidth="766.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
+      <BorderPane fx:id="currentScene" layoutX="134.0" prefHeight="591.0" prefWidth="766.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
          <center>
             <Pane prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
