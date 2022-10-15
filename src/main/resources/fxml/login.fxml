@@ -64,7 +64,7 @@
                                     <Font name="Baskerville Old Face" size="20.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="signupButton11" layoutX="107.0" layoutY="200.0" mnemonicParsing="false" onAction="#onGuestMode" prefHeight="37.0" prefWidth="174.0" style="-fx-background-color: #000080;" text="Guest" textAlignment="CENTER" textFill="WHITE">
+                              <Button fx:id="signupButton11" layoutX="107.0" layoutY="200.0" mnemonicParsing="false" onAction="#onSwitchToGuestMode" prefHeight="37.0" prefWidth="174.0" style="-fx-background-color: #000080;" text="Guest" textAlignment="CENTER" textFill="WHITE">
                                  <font>
                                     <Font name="Baskerville Old Face" size="19.0" />
                                  </font>
