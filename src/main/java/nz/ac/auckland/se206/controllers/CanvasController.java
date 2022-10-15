@@ -372,7 +372,6 @@ public class CanvasController {
         targetWordLabel.setTextAlignment(TextAlignment.CENTER);
         timerLabel.setText("Press Start to start drawing!");
       } else {
-        System.out.println(currentWord);
         Task<Void> getDefinition = new Task<Void>() {
           @Override
           protected Void call() throws Exception {
@@ -404,7 +403,6 @@ public class CanvasController {
       }
       hint1Label.setVisible(false);
       hint2Label.setVisible(false);
-      System.out.println("Word is: " + currentWord);
       readyButton.setText("Start!");
       text.add(currentWord); // Adds new randomWord, if current != random
     }
