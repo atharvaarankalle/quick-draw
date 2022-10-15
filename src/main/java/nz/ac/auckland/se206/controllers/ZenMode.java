@@ -35,8 +35,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
 
-import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
+import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
@@ -219,16 +219,16 @@ public class ZenMode {
     // Looping sound effects for pen/eraser
     drawingBoard.setOnDragDetected(e -> {
       if (penOrEraser) {
-        SoundsManager.playSFX(sfx.PENCIL);
+        SoundsManager.playSoundEffects(SoundEffects.PENCIL);
       } else {
-        SoundsManager.playSFX(sfx.ERASER);
+        SoundsManager.playSoundEffects(SoundEffects.ERASER);
       }
     });
     drawingBoard.setOnMouseReleased(e -> {
       if (penOrEraser) {
-        SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
+        SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.PENCIL);
       } else {
-        SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
+        SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.ERASER);
       }
     });
 
@@ -238,7 +238,7 @@ public class ZenMode {
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
-    SoundsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
   }
 
@@ -262,8 +262,8 @@ public class ZenMode {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
-    // Play pop button sfx
-    SoundsManager.playSFX(sfx.BUTTON2);
+    // Play pop button SoundEffects;
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     // If the user is ready to draw, enable the drawingBoard and save drawing button
     if (readyButton.getText().equals("Start!")) {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
@@ -273,8 +273,8 @@ public class ZenMode {
       eraseButton.setDisable(false);
       resetPieChart();
       // Play the senmode BGM
-      SoundsManager.stopBGM(bgm.MAINPANEL);
-      SoundsManager.playBGM(bgm.ZEN);
+      SoundsManager.stopBackgroundMusic(BackgroundMusic.MAINPANEL);
+      SoundsManager.playBackgroundMusic(BackgroundMusic.ZEN);
       readyButton.setDisable(true);
       saveButton.setDisable(true);
       clearButton.setDisable(false);
@@ -291,11 +291,11 @@ public class ZenMode {
       backgroundTask.start();
 
     } else {
-      SoundsManager.stopWinAndLoseSFX();
+      SoundsManager.stopWinAndLoseSoundEffects();
       // If zen mode bgm is not playing, then its safe to interrupt and play mainpanel
       // bgm
-      if (!SoundsManager.isZenBGMPlaying()) {
-        SoundsManager.playBGM(bgm.MAINPANEL);
+      if (!SoundsManager.isZenBackgroundMusicPlaying()) {
+        SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
       }
       
       // Clear the canvas, disable the save drawing button and clear the pie chart
@@ -318,8 +318,8 @@ public class ZenMode {
    */
   @FXML
   private void onDraw() throws TranslateException {
-    // Play pop button sfx
-    SoundsManager.playSFX(sfx.BUTTON2);
+    // Play pop button SoundEffects;
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     drawButton.setDisable(true);
     eraseButton.setDisable(false);
     penOrEraser = true;
@@ -369,8 +369,8 @@ public class ZenMode {
    */
   @FXML
   private void onErase() throws TranslateException {
-    // Play pop button sfx
-    SoundsManager.playSFX(sfx.BUTTON2);
+    // Play pop button SoundEffects;
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     drawButton.setDisable(false);
     eraseButton.setDisable(true);
     penOrEraser = false;
@@ -626,8 +626,8 @@ public class ZenMode {
   private void onRestart() {
     // Time stops, button enable/disabled, leaderboard and canvas update to new
     // value
-    // Play button sfx
-    SoundsManager.playSFX(sfx.BUTTON2);
+    // Play button SoundEffects;
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     // Disable both draw/erase buttons
     drawButton.setDisable(true);
     eraseButton.setDisable(true);
@@ -704,7 +704,7 @@ public class ZenMode {
 
   @FXML
   private void onMouseClicked() {
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
   }
 
   /**

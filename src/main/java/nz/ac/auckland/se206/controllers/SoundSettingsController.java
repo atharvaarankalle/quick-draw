@@ -22,13 +22,13 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.App;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class SoundSettingsController implements Initializable {
     @FXML
     private Pane soundSettingsRoot;
     @FXML
-    private Slider sfxSlider;
+    private Slider SoundEffectsSlider;
     @FXML
     private Slider bgmSlider;
     @FXML
@@ -47,7 +47,7 @@ public class SoundSettingsController implements Initializable {
 
     // SoundsManager.changeBGMVolume( Double.valueOf(userStats.get(userStats.size()
     // - 1).split(" , ")[5])/ 100);
-    // SoundsManager.changeSFXVolume( Double.valueOf(userStats.get(userStats.size()
+    // SoundsManager.changeSoundEffectsVolume( Double.valueOf(userStats.get(userStats.size()
     // - 1).split(" , ")[4])/ 100);
 
     @Override
@@ -90,15 +90,15 @@ public class SoundSettingsController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    sfxSlider.setValue(gameSettings.getSfxVolume());
+                    SoundEffectsSlider.setValue(gameSettings.getSfxVolume());
 
                     bgmSlider.setValue(gameSettings.getBgmVolume());
 
-                    sfxSlider.valueProperty().addListener(new InvalidationListener() {
+                    SoundEffectsSlider.valueProperty().addListener(new InvalidationListener() {
                         @Override
                         public void invalidated(Observable observable) {
-                            SoundsManager.changeSFXVolume(sfxSlider.getValue() / 100);
-                            gameSettings.setSfxVolume(sfxSlider.getValue());
+                            SoundsManager.changeSoundEffectsVolume(SoundEffectsSlider.getValue() / 100);
+                            gameSettings.setSfxVolume(SoundEffectsSlider.getValue());
                         }
 
                     });
@@ -106,7 +106,7 @@ public class SoundSettingsController implements Initializable {
 
                         @Override
                         public void invalidated(Observable observable) {
-                            SoundsManager.changeBGMVolume(bgmSlider.getValue() / 100);
+                            SoundsManager.changeBackgroundMusicVolume(bgmSlider.getValue() / 100);
                             gameSettings.setBgmVolume(bgmSlider.getValue());
                         }
                     });
@@ -117,13 +117,13 @@ public class SoundSettingsController implements Initializable {
      * Code adapted from: https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-dragging-mouse-button
      */
     @FXML
-    private void onSFXDragDetected() {
-        sfxSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+    private void onSoundEffectsDragDetected() {
+        SoundEffectsSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean wasChanging, Boolean isNowChanging) {
                 if(!isNowChanging){
-                    SoundsManager.playSFX(sfx.TAP);
+                    SoundsManager.playSoundEffects(SoundEffects.TAP);
                     try {
                         addSettingsLine();
                     } catch (IOException e) {
@@ -144,7 +144,7 @@ public class SoundSettingsController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean wasChanging, Boolean isNowChanging) {
                 if(!isNowChanging){
-                    SoundsManager.playSFX(sfx.TAP);
+                    SoundsManager.playSoundEffects(SoundEffects.TAP);
                     try {
                         addSettingsLine();
                     } catch (IOException e) {
@@ -160,14 +160,14 @@ public class SoundSettingsController implements Initializable {
     private void onMute() throws URISyntaxException, IOException {
         if (gameSettings.getMuteStatus() == 0) {
             gameSettings.setMuteStatus(1);
-            SoundsManager.setMuteAllBGM(true);
-            SoundsManager.setMuteAllSFX(true);
+            SoundsManager.setMuteAllBackgroundMusic(true);
+            SoundsManager.setMuteAllSoundEffects(true);
             updateMuteImage(gameSettings.getMuteStatus());
             addSettingsLine();
         } else {
             gameSettings.setMuteStatus(0);
-            SoundsManager.setMuteAllBGM(false);
-            SoundsManager.setMuteAllSFX(false);
+            SoundsManager.setMuteAllBackgroundMusic(false);
+            SoundsManager.setMuteAllSoundEffects(false);
             updateMuteImage(gameSettings.getMuteStatus());
             addSettingsLine();
         }
@@ -199,7 +199,7 @@ public class SoundSettingsController implements Initializable {
                     + " , "
                     + Double.toString(gameSettings.getConfidenceSliderPosition())
                     + " , "
-                    + Double.toString(sfxSlider.getValue())
+                    + Double.toString(SoundEffectsSlider.getValue())
                     + " , "
                     + Double.toString(bgmSlider.getValue())
                     + " , "

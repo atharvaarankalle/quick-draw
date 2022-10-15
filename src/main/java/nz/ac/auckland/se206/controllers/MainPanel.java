@@ -16,8 +16,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import nz.ac.auckland.se206.App;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
-import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class MainPanel implements Initializable {
 
@@ -44,13 +44,13 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onHome(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
    // enableButtons();
     //homeButton.setDisable(true);
   }
@@ -63,14 +63,14 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onGame(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     CurrentScene.setCenter(null);
     HiddenWordFunctions.leaveHiddenMode();
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     //enableButtons();
     //gameButton.setDisable(true);
   }
@@ -83,13 +83,13 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onInfo(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("howtoplay");
     CurrentScene.setCenter(view);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     //enableButtons();
     //infoButton.setDisable(true);
   }
@@ -102,14 +102,14 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onStatistic(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
     CurrentScene.setCenter(view);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     //enableButtons();
    // statsButton.setDisable(true);
   }
@@ -122,26 +122,26 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("gamesettings");
     CurrentScene.setCenter(view);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
    // enableButtons();
     //settingsButton.setDisable(true);
   }
 
   @FXML
   private void onSoundSettings(ActionEvent event) throws IOException{
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("soundsettings");
     CurrentScene.setCenter(view);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     //enableButtons();
     //musicButton.setDisable(true);
   }
@@ -154,9 +154,9 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onZenMode(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
-    SoundsManager.stopBGM(bgm.HIDDEN);
-    SoundsManager.stopBGM(bgm.INGAME);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("zenmode");
     CurrentScene.setCenter(view);
@@ -165,10 +165,10 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onHiddenMode(ActionEvent event) throws IOException{
-    SoundsManager.playSFX(sfx.BUTTON1);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     CurrentScene.setCenter(null);
     HiddenWordFunctions.toHiddenMode();
     Parent view = loadFxml("canvas");
@@ -178,10 +178,10 @@ public class MainPanel implements Initializable {
 
   @FXML
   private void onBadgesClicked(ActionEvent event) throws IOException {
-    SoundsManager.playSFX(sfx.BUTTON1);
-    SoundsManager.stopBGM(bgm.INGAME);
-    SoundsManager.stopBGM(bgm.ZEN);
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("badges");
     CurrentScene.setCenter(view);
@@ -198,8 +198,8 @@ public class MainPanel implements Initializable {
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
 
-    SoundsManager.stopWinAndLoseSFX();
-    SoundsManager.stopAllBGM();
+    SoundsManager.stopWinAndLoseSoundEffects();
+    SoundsManager.stopAllBackgroundMusic();
 
     // Check if GUEST exists, if does, then delete the file
     Path path = Paths.get("DATABASE/GUEST");

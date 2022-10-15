@@ -98,8 +98,8 @@ public class App extends Application {
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
     // Initialize all sound effects
-    SoundsManager.loadSFX();
-    SoundsManager.loadBGM();
+    SoundsManager.loadSoundEffects();
+    SoundsManager.loadBackgroundMusic();
     Settings gameSettings = new Settings();
 
     // Set the current scene, set the title of the app and show the stage

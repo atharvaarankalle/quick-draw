@@ -16,7 +16,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class GameSettingsController implements Initializable {
 
@@ -404,7 +404,7 @@ public class GameSettingsController implements Initializable {
               if (newValue != null
                   && !newValue.equals(oldValue)
                   && !accuracySlider.isValueChanging()) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Set the accuracy level to the new slider value
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
@@ -469,7 +469,7 @@ public class GameSettingsController implements Initializable {
                   sliderValue == accuracySlider.getMin() || sliderValue == accuracySlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 Stage stage = (Stage) accuracyLabel.getScene().getWindow();
 
@@ -550,7 +550,7 @@ public class GameSettingsController implements Initializable {
               if (newValue != null
                   && !newValue.equals(oldValue)
                   && !wordsSlider.isValueChanging()) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Set the words per minute level to the new slider value
                 Stage stage = (Stage) wordsLabel.getScene().getWindow();
@@ -622,7 +622,7 @@ public class GameSettingsController implements Initializable {
 
               // If the slider is no longer updating and the slider value is at the minimum or
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Get the stage and the game settings
                 Stage stage = (Stage) wordsLabel.getScene().getWindow();
@@ -701,7 +701,7 @@ public class GameSettingsController implements Initializable {
             (obs, oldValue, newValue) -> {
               // If the slider is no longer sliding
               if (newValue != null && !newValue.equals(oldValue) && !timeSlider.isValueChanging()) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Set the time per minute level to the new slider value
                 Stage stage = (Stage) timeLabel.getScene().getWindow();
@@ -771,7 +771,7 @@ public class GameSettingsController implements Initializable {
                   sliderValue == timeSlider.getMin() || sliderValue == timeSlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Get the stage and the game settings
                 Stage stage = (Stage) timeLabel.getScene().getWindow();
@@ -852,7 +852,7 @@ public class GameSettingsController implements Initializable {
               if (newValue != null
                   && !newValue.equals(oldValue)
                   && !confidenceSlider.isValueChanging()) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Set the confidence level to the new slider value
                 Stage stage = (Stage) confidenceLabel.getScene().getWindow();
@@ -923,7 +923,7 @@ public class GameSettingsController implements Initializable {
                       || sliderValue == confidenceSlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
-                SoundsManager.playSFX(sfx.TAP);
+                SoundsManager.playSoundEffects(SoundEffects.TAP);
 
                 // Get the stage and the game settings and set the confidence level
                 Stage stage = (Stage) confidenceLabel.getScene().getWindow();
