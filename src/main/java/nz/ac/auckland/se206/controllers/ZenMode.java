@@ -132,6 +132,7 @@ public class ZenMode {
       throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
 
     // Initialise the canvas and disable it so users cannot draw on it
+    model = new DoodlePrediction();
     loadCanvas();
 
     /*
@@ -296,7 +297,7 @@ public class ZenMode {
       if (!SoundsManager.isZenBGMPlaying()) {
         SoundsManager.playBGM(bgm.MAINPANEL);
       }
-      model = new DoodlePrediction();
+      
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
       saveButton.setDisable(true);

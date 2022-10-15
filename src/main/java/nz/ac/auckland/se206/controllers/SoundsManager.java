@@ -33,6 +33,8 @@ public class SoundsManager {
     private static MediaPlayer zenPlayer;
     private static Media ingameBGM;
     private static MediaPlayer ingamePlayer;
+    private static Media hiddenBGM;
+    private static MediaPlayer hiddenPlayer;
 
     public enum sfx {
         BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP, PENCIL, ERASER, LOGIN;
@@ -80,6 +82,8 @@ public class SoundsManager {
         zenPlayer = new MediaPlayer(zenBGM);
         ingameBGM = new Media(App.class.getResource("/sounds/ingame.mp3").toURI().toString());
         ingamePlayer = new MediaPlayer(ingameBGM);
+        hiddenBGM = new Media(App.class.getResource("/sounds/hidden.mp3").toURI().toString());
+        hiddenPlayer = new MediaPlayer(hiddenBGM);
     }
 
     /**
@@ -199,6 +203,14 @@ public class SoundsManager {
                 });
                 break;
             case HIDDEN:
+                hiddenPlayer.play();
+                hiddenPlayer.setOnEndOfMedia(new Runnable() {
+                    @Override
+                    public void run() {
+                        hiddenPlayer.seek(Duration.ZERO);
+                        hiddenPlayer.play();
+                    }
+                });
                 break;
             case INGAME:
                 ingamePlayer.play();
@@ -246,6 +258,7 @@ public class SoundsManager {
         zenPlayer.stop();
         mainPanelPlayer.stop();
         ingamePlayer.stop();
+        hiddenPlayer.stop();
     }
 
     /**
@@ -262,6 +275,7 @@ public class SoundsManager {
                 zenPlayer.stop();
                 break;
             case HIDDEN:
+                hiddenPlayer.stop();
                 break;
             case INGAME:
                 ingamePlayer.stop();
@@ -301,6 +315,8 @@ public class SoundsManager {
         if (volume >= 0 && volume <= 100) {
             mainPanelPlayer.setVolume(volume);
             zenPlayer.setVolume(volume);
+            hiddenPlayer.setVolume(volume);
+            ingamePlayer.setVolume(volume);
         } else {
             System.out.println(volume + " is a invalid bgm volume level");
         }
@@ -333,9 +349,15 @@ public class SoundsManager {
     public static void setMuteAllBGM(Boolean muteStatus) {
         mainPanelPlayer.setMute(muteStatus);
         zenPlayer.setMute(muteStatus);
+        ingamePlayer.setMute(muteStatus);
+        hiddenPlayer.setMute(muteStatus);
     }
 
-    public static Boolean isZenBGMPlaying(){
+    public static Boolean isZenBGMPlaying() {
         return zenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
+    }
+
+    public static Boolean ishiddenBGMPlaying() {
+        return hiddenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 }
