@@ -19,11 +19,11 @@ import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
 import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
 import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
-public class MainPanel implements Initializable {
-
-  @FXML private BorderPane CurrentScene;
-
-  @FXML private Button GameButton;
+public class MainPanelController implements Initializable {
+  @FXML
+  private Button gameButton;
+  @FXML
+  private BorderPane currentScene;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -37,143 +37,137 @@ public class MainPanel implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Home" button. It switches the scene to the home
+   * This method is called when the user clicks the "Home" button. It switches the
+   * scene to the home
    * scene on the same stage
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
   private void onHome(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("homepage");
-    CurrentScene.setCenter(view);
+    currentScene.setCenter(view);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-   // enableButtons();
-    //homeButton.setDisable(true);
   }
 
   /**
-   * This method is called when the user clicks the "Game" button. It switches the scene to the
+   * This method is called when the user clicks the "Game" button. It switches the
+   * scene to the
    * canvas scene on the same stage
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
   private void onGame(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    CurrentScene.setCenter(null);
+    currentScene.setCenter(null);
     HiddenWordFunctions.leaveHiddenMode();
     Parent view = loadFxml("canvas");
-    CurrentScene.setCenter(view);
+    currentScene.setCenter(view);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    //enableButtons();
-    //gameButton.setDisable(true);
   }
 
   /**
-   * This method is called when the user clicks the "Info" button. It switches the scene to the how
+   * This method is called when the user clicks the "Info" button. It switches the
+   * scene to the how
    * to play scene on the same stage
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
-  private void onInfo(ActionEvent event) throws IOException {
+  private void onSwitchToInfo(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("howtoplay");
-    CurrentScene.setCenter(view);
+    currentScene.setCenter(view);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    //enableButtons();
-    //infoButton.setDisable(true);
   }
 
   /**
-   * This method is called when the user clicks the "Statistics" button. It switches the scene to
+   * This method is called when the user clicks the "Statistics" button. It
+   * switches the scene to
    * the stats scene on the same stage
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
-  private void onStatistic(ActionEvent event) throws IOException {
+  private void onSwitchToStatistic(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    CurrentScene.setCenter(null);
+    currentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
-    CurrentScene.setCenter(view);
+    currentScene.setCenter(view);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    //enableButtons();
-   // statsButton.setDisable(true);
   }
 
   /**
-   * This method is called when the user clicks the "Settings" button. It switches the scene to the
+   * This method is called when the user clicks the "Settings" button. It switches
+   * the scene to the
    * game settings scene on the same stage
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("gamesettings");
-    CurrentScene.setCenter(view);
+    currentScene.setCenter(view);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-   // enableButtons();
-    //settingsButton.setDisable(true);
   }
 
   @FXML
-  private void onSoundSettings(ActionEvent event) throws IOException{
+  private void onSoundSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     Parent view = loadFxml("soundsettings");
-    CurrentScene.setCenter(view);
+    currentScene.setCenter(view);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    //enableButtons();
-    //musicButton.setDisable(true);
   }
 
   /**
-   * This method is called when the user clicks the "Zen Mode" button. It switches the scene to the
+   * This method is called when the user clicks the "Zen Mode" button. It switches
+   * the scene to the
    * zen mode scene on the same stage
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
-  private void onZenMode(ActionEvent event) throws IOException {
+  private void onSwitchToZenMode(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
-    CurrentScene.setCenter(null);
+    currentScene.setCenter(null);
     Parent view = loadFxml("zenmode");
-    CurrentScene.setCenter(view);
-    GameButton.setDisable(false);
+    currentScene.setCenter(view);
+    gameButton.setDisable(false);
   }
 
   @FXML
-  private void onHiddenMode(ActionEvent event) throws IOException{
+  private void onHiddenMode(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    CurrentScene.setCenter(null);
+    currentScene.setCenter(null);
     HiddenWordFunctions.toHiddenMode();
     Parent view = loadFxml("canvas");
-    CurrentScene.setCenter(view);
-    GameButton.setDisable(false);
+    currentScene.setCenter(view);
+    gameButton.setDisable(false);
   }
 
   @FXML
@@ -182,18 +176,19 @@ public class MainPanel implements Initializable {
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    CurrentScene.setCenter(null);
+    currentScene.setCenter(null);
     Parent view = loadFxml("badges");
-    CurrentScene.setCenter(view);
-    GameButton.setDisable(false);
+    currentScene.setCenter(view);
+    gameButton.setDisable(false);
   }
 
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
+   * This method is invoked when the user clicks the "Back to Main Menu" button.
+   * It loads and shows
    * the "Main Menu" scene
    *
    * @param event The event that triggered this method.
-   * @throws IOException
+   * @throws IOException The event Failed to get sources.
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
@@ -216,19 +211,19 @@ public class MainPanel implements Initializable {
     if (Files.exists(guestSettingsPath)) {
       Files.delete(guestSettingsPath);
     }
-    
+
     // Switch to the "Main Menu" scene.
     Parent view = loadFxml("homepage");
-    CurrentScene.setCenter(view);
-    //enableButtons();
+    currentScene.setCenter(view);
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.LOGIN));
   }
 
   /**
-   * This method is called when the user clicks the "Exit" button. It exits the program
+   * This method is called when the user clicks the "Exit" button. It exits the
+   * program
    *
-   * @param event
+   * @param event Retrieving information from the event stage to produce scene
    */
   @FXML
   private void onExit(ActionEvent event) throws IOException {
