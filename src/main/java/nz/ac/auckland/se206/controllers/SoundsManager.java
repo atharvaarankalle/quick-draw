@@ -8,10 +8,18 @@ import javafx.util.Duration;
 import nz.ac.auckland.se206.App;
 
 public class SoundsManager {
-    public static Media buttonSound1; // Wooden click sound
-    public static MediaPlayer buttonPlayer1;
-    public static Media buttonSound2; // Pop sound
-    public static MediaPlayer buttonPlayer2;
+    public enum SoundEffects {
+        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP, PENCIL, ERASER, LOGIN;
+    }
+
+    public enum BackgroundMusic {
+        MAINPANEL, INGAME, ZEN, HIDDEN
+    }
+    
+    private static Media buttonSound1; // Wooden click sound
+    private static MediaPlayer buttonPlayer1;
+    private static Media buttonSound2; // Pop sound
+    private static MediaPlayer buttonPlayer2;
     private static Media victorySound;
     private static MediaPlayer victoryPlayer;
     private static Media failureSound;
@@ -35,14 +43,6 @@ public class SoundsManager {
     private static MediaPlayer ingamePlayer;
     private static Media hiddenBackgroundMusic;
     private static MediaPlayer hiddenPlayer;
-
-    public enum SoundEffects {
-        BUTTON1, BUTTON2, VICTORY, FAIL, BEEP, TAP, PENCIL, ERASER, LOGIN;
-    }
-
-    public enum BackgroundMusic {
-        MAINPANEL, INGAME, ZEN, HIDDEN
-    }
 
     /**
      * This method loads all the SoundEffects .mp3 files required for the game
