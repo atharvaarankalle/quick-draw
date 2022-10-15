@@ -17,8 +17,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SceneManager;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
-import nz.ac.auckland.se206.controllers.SoundsManager;
 import nz.ac.auckland.se206.controllers.Settings;
+import nz.ac.auckland.se206.controllers.SoundsManager;
 
 /**
  * This is the entry point of the JavaFX application, while you can change this class, it should
@@ -85,7 +85,7 @@ public class App extends Application {
    *
    * @param stage The primary stage of the application.
    * @throws IOException If "src/main/resources/fxml/canvas.fxml" is not found.
-   * @throws URISyntaxException
+   * @throws URISyntaxException If a string cannot be parsed as a URI reference.
    */
   @Override
   public void start(final Stage stage) throws IOException, URISyntaxException {
@@ -97,7 +97,7 @@ public class App extends Application {
     SceneManager.addUi(AppUi.LOGIN, loadFxml("login"));
     SceneManager.addUi(AppUi.MAIN, loadFxml("mainpage"));
 
-    //Initialize all sound effects
+    // Initialize all sound effects
     SoundsManager.loadSFX();
     SoundsManager.loadBGM();
     Settings gameSettings = new Settings();
