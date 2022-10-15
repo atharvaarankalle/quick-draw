@@ -67,7 +67,7 @@ public class ZenMode {
   private Pane root;
 
   @FXML
-  private Canvas canvas;
+  private Canvas drawingBoard;
 
   @FXML
   private Label targetWordLabel;
@@ -82,13 +82,13 @@ public class ZenMode {
   private Button penEraserButton;
 
   @FXML
-  private Button saveDrawingButton;
+  private Button saveButton;
 
   @FXML
   private Button restartButton;
 
   @FXML
-  private PieChart modelResultsPieChart;
+  private PieChart pieChartDisplay;
 
   @FXML
   private ColorPicker myColorPicker;
@@ -125,21 +125,25 @@ public class ZenMode {
    * @throws IOException        If the model cannot be found on the file system.
    * @throws URISyntaxException
    * @throws CsvException
-   * @throws TranslateException
+   * @throws TranslateException It there is an error during processing of the
+   *                            input or output.
    */
   public void initialize()
       throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
 
     // Initialise the canvas and disable it so users cannot draw on it
-    initializeCanvas();
     model = new DoodlePrediction();
+    loadCanvas();
+
     /*
      * Set the initial visibilities of components and also set
      * the initial interactability of buttons
      */
-    canvas.setDisable(true);
-    saveDrawingButton.setDisable(true);
+    drawingBoard.setDisable(true);
     targetWordLabel.setText("Get a new word to begin drawing!");
+
+    // Setting the buttons ready
+    saveButton.setDisable(true);
     readyButton.setText("Ready?");
 
     // Initialise the data list for the model results pie chart
@@ -156,14 +160,16 @@ public class ZenMode {
         new PieChart.Data("", 0));
 
     // Set the data list for the model results pie chart and initialise the legend
-    modelResultsPieChart.setData(data);
-    modelResultsPieChart.setLegendSide(Side.LEFT);
-    modelResultsPieChart.setLegendVisible(false);
+    pieChartDisplay.setData(data);
+    // Setting the Legend of pieChart
+    pieChartDisplay.setLegendVisible(false);
+    pieChartDisplay.setLegendSide(Side.LEFT);
   }
 
   /** This method resets the pie chart to a blank state */
   private void resetPieChart() {
-    for (PieChart.Data data : modelResultsPieChart.getData()) {
+    for (PieChart.Data data : pieChartDisplay.getData()) { // Retrieve all the pieChart display from last played and set
+                                                           // to 0
       data.setName("");
       data.setPieValue(0);
     }
@@ -171,23 +177,24 @@ public class ZenMode {
 
   /**
    * This method initialises the canvas at the start of the game
-   *
-   * @throws TranslateException
+   * 
+   * @throws TranslateException It there is an error during processing of reading
+   *                            the input or output.
    */
-  private void initializeCanvas() throws TranslateException {
+  private void loadCanvas() throws TranslateException {
 
-    graphic = canvas.getGraphicsContext2D();
-    //Disable draw and erase button
+    graphic = drawingBoard.getGraphicsContext2D();
+    // Disable draw and erase button
     drawButton.setDisable(true);
     eraseButton.setDisable(true);
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
+    // save coordinates when mouse is pressed on the drawingBoard
+    drawingBoard.setOnMousePressed(
         e -> {
           currentX = e.getX();
           currentY = e.getY();
         });
 
-    canvas.setOnMouseDragged(
+    drawingBoard.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
           final double size = 6;
@@ -210,14 +217,14 @@ public class ZenMode {
         });
     penOrEraser = true;
     // Looping sound effects for pen/eraser
-    canvas.setOnDragDetected(e -> {
+    drawingBoard.setOnDragDetected(e -> {
       if (penOrEraser) {
         SoundsManager.playSFX(sfx.PENCIL);
       } else {
         SoundsManager.playSFX(sfx.ERASER);
       }
     });
-    canvas.setOnMouseReleased(e -> {
+    drawingBoard.setOnMouseReleased(e -> {
       if (penOrEraser) {
         SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
       } else {
@@ -225,14 +232,14 @@ public class ZenMode {
       }
     });
 
-    canvas.setDisable(false);
+    drawingBoard.setDisable(false);
   }
 
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
     SoundsManager.playSFX(sfx.BUTTON2);
-    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
   }
 
   /**
@@ -257,24 +264,24 @@ public class ZenMode {
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
     // Play pop button sfx
     SoundsManager.playSFX(sfx.BUTTON2);
-    // If the user is ready to draw, enable the canvas and save drawing button
+    // If the user is ready to draw, enable the drawingBoard and save drawing button
     if (readyButton.getText().equals("Start!")) {
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
-      initializeCanvas();
-      //Enable the erase button, since the game is started with drawing ability
+      loadCanvas();
+      // Enable the erase button, since the game is started with drawing ability
       eraseButton.setDisable(false);
       resetPieChart();
       // Play the senmode BGM
       SoundsManager.stopBGM(bgm.MAINPANEL);
       SoundsManager.playBGM(bgm.ZEN);
       readyButton.setDisable(true);
-      saveDrawingButton.setDisable(true);
+      saveButton.setDisable(true);
       clearButton.setDisable(false);
-      modelResultsPieChart.setLegendVisible(true);
+      pieChartDisplay.setLegendVisible(true);
 
       // Delegate the background tasks to different threads and execute these
-      Thread backgroundSpeechThread = new Thread(createNewSpeechTask());
+      Thread backgroundSpeechThread = new Thread(generateNewSpeechTask());
       backgroundSpeechThread.setDaemon(true);
       backgroundSpeechThread.start();
 
@@ -285,15 +292,16 @@ public class ZenMode {
 
     } else {
       SoundsManager.stopWinAndLoseSFX();
-      //If zen mode bgm is not playing, then its safe to interrupt and play mainpanel bgm
+      // If zen mode bgm is not playing, then its safe to interrupt and play mainpanel
+      // bgm
       if (!SoundsManager.isZenBGMPlaying()) {
         SoundsManager.playBGM(bgm.MAINPANEL);
       }
-      model = new DoodlePrediction();
+      
       // Clear the canvas, disable the save drawing button and clear the pie chart
-      graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-      saveDrawingButton.setDisable(true);
-      selectWord();
+      graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
+      saveButton.setDisable(true);
+      randomWord();
       targetWordLabel.setText("The word to draw is: " + currentWord);
       readyButton.setText("Start!");
       text.add(currentWord); // Adds new randomWord, if current != random
@@ -301,8 +309,9 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user draws on the canvas It draws a line on
-   * the canvas based on
+   * This method is called when the user draws on the drawingBoard It draws a line
+   * on
+   * the drawingBoard based on
    * the chosen colour
    *
    * @throws TranslateException
@@ -314,16 +323,16 @@ public class ZenMode {
     drawButton.setDisable(true);
     eraseButton.setDisable(false);
     penOrEraser = true;
-    graphic = canvas.getGraphicsContext2D();
+    graphic = drawingBoard.getGraphicsContext2D();
 
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
+    // save coordinates when mouse is pressed on the drawingBoard
+    drawingBoard.setOnMousePressed(
         e -> {
           currentX = e.getX();
           currentY = e.getY();
         });
 
-    canvas.setOnMouseDragged(
+    drawingBoard.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
           final double size = 6;
@@ -345,15 +354,18 @@ public class ZenMode {
           currentY = y;
         });
 
-    canvas.setDisable(false);
+    drawingBoard.setDisable(false);
   }
 
   /**
-   * This method is called when the user draws on the canvas in "Erase" mode It
+   * This method is called when the user draws on the drawingBoard in "Erase" mode
+   * It
    * erases a line on the
-   * canvas based on the mouse position
+   * drawingBoard based on the mouse position
    *
-   * @throws TranslateException
+   * @throws TranslateException It there is an error during processing of reading
+   *                            the
+   *                            input or output of drawingBoard position
    */
   @FXML
   private void onErase() throws TranslateException {
@@ -362,16 +374,16 @@ public class ZenMode {
     drawButton.setDisable(false);
     eraseButton.setDisable(true);
     penOrEraser = false;
-    graphic = canvas.getGraphicsContext2D();
+    graphic = drawingBoard.getGraphicsContext2D();
 
-    // save coordinates when mouse is pressed on the canvas
-    canvas.setOnMousePressed(
+    // save coordinates when mouse is pressed on the drawingBoard
+    drawingBoard.setOnMousePressed(
         e -> {
           currentX = e.getX();
           currentY = e.getY();
         });
 
-    canvas.setOnMouseDragged(
+    drawingBoard.setOnMouseDragged(
         e -> {
           // Brush size (you can change this, it should not be too small or too large).
           final double size = 8;
@@ -393,7 +405,7 @@ public class ZenMode {
           currentY = y;
         });
 
-    canvas.setDisable(false);
+    drawingBoard.setDisable(false);
   }
 
   /**
@@ -401,7 +413,7 @@ public class ZenMode {
    *
    * @return a Task<Void> object, the background speech task
    */
-  private Task<Void> createNewSpeechTask() {
+  private Task<Void> generateNewSpeechTask() {
     Task<Void> backgroundSpeechTask = new Task<Void>() {
 
       @Override
@@ -422,29 +434,28 @@ public class ZenMode {
    * This method generates a random word to draw, depending on the difficulty
    * selected by the user
    *
-   * @throws CsvException
+   * @throws CsvException       Base class for all the exceptions for opencsv
+   *                            related work
    * @throws IOException
    * @throws URISyntaxException
    */
-  private void selectWord() throws CsvException, IOException, URISyntaxException {
+  private void randomWord() throws CsvException, IOException, URISyntaxException {
 
     // Get the user data and then get the current words difficulty
     Stage stage = (Stage) root.getScene().getWindow();
-
     Settings gameSettings = (Settings) stage.getUserData();
-
     int wordsLevel = (int) gameSettings.getWordsLevel();
 
     // Get a random new word to draw, set the target world label and update the GUI
-    CategorySelector categorySelector = new CategorySelector();
-    String randomWord = categorySelector.getRandomCategory(Difficulty.E);
+    CategorySelector categoryPlatform = new CategorySelector();
+    String randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
     int randomNumber;
 
     // Switch between the words level chosen by the user
     switch (wordsLevel) {
       // Easy mode: Choose only easy level words
       case 0:
-        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
         break;
       // Medium mode: Randomly choose easy or medium level words
       case 1:
@@ -454,10 +465,10 @@ public class ZenMode {
 
         switch (randomNumber) {
           case 0:
-            randomWord = categorySelector.getRandomCategory(Difficulty.E);
+            randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
             break;
           case 1:
-            randomWord = categorySelector.getRandomCategory(Difficulty.M);
+            randomWord = categoryPlatform.getRandomCategory(Difficulty.M);
             break;
         }
         break;
@@ -470,22 +481,22 @@ public class ZenMode {
 
         switch (randomNumber) {
           case 0:
-            randomWord = categorySelector.getRandomCategory(Difficulty.E);
+            randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
             break;
           case 1:
-            randomWord = categorySelector.getRandomCategory(Difficulty.M);
+            randomWord = categoryPlatform.getRandomCategory(Difficulty.M);
             break;
           case 2:
-            randomWord = categorySelector.getRandomCategory(Difficulty.H);
+            randomWord = categoryPlatform.getRandomCategory(Difficulty.H);
             break;
         }
         break;
       // Master mode: Choose only a hard word
       case 3:
-        randomWord = categorySelector.getRandomCategory(Difficulty.H);
+        randomWord = categoryPlatform.getRandomCategory(Difficulty.H);
         break;
       default:
-        randomWord = categorySelector.getRandomCategory(Difficulty.E);
+        randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
         break;
     }
 
@@ -498,9 +509,9 @@ public class ZenMode {
     // If all the words in the easy category have been played, reset the words seen
     // and choose a
     // random word
-    if (text.size() == categorySelector.getDifficultyMap().get(Difficulty.E).size()) {
+    if (text.size() == categoryPlatform.getDifficultyMap().get(Difficulty.E).size()) {
       text.clear();
-      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
       if (randomWord.startsWith("\uFEFF")) {
         randomWord = randomWord.substring(1);
       }
@@ -509,7 +520,7 @@ public class ZenMode {
 
     // If the randomly generated word has already been played, generate a new one
     while (text.contains(randomWord)) {
-      randomWord = categorySelector.getRandomCategory(Difficulty.E);
+      randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
       if (randomWord.startsWith("\uFEFF")) {
         randomWord = randomWord.substring(1);
       }
@@ -523,11 +534,11 @@ public class ZenMode {
    */
   private Boolean isCanvasBlank() {
     // Get a snapshot of the current canvas
-    Image canvasContent = canvas.snapshot(null, null);
+    Image canvasContent = drawingBoard.snapshot(null, null);
 
     // Scan through pixels on canvas
-    for (int i = 0; i < canvas.getHeight(); i++) {
-      for (int j = 0; j < canvas.getWidth(); j++) {
+    for (int i = 0; i < drawingBoard.getHeight(); i++) {
+      for (int j = 0; j < drawingBoard.getWidth(); j++) {
         if (canvasContent.getPixelReader().getArgb(j, i) != -1) {
           // If there is pixels that isn't blank, return false
           return false;
@@ -545,44 +556,42 @@ public class ZenMode {
    * @throws TranslateException If there is an error in reading the input/output
    *                            of the DL model.
    */
-  private void makePredictions() throws TranslateException {
+  private void createPredictions() throws TranslateException {
     // Query the data learning model and get the top ten predictions
-    List<Classification> predictionResults = model.getPredictions(getCurrentSnapshot(), 10);
+    List<Classification> predictionData = model.getPredictions(getImage(), 10);
 
     /*
      * Update the pie chart with the top ten predictions
      * Format the labels and values to be displayed in the pie chart
      * in a way that is more readable for users
      */
-    for (int i = 0; i < predictionResults.size(); i++) {
+    for (int i = 0; i < predictionData.size(); i++) {
       data.get(i)
           .setName(
-              predictionResults.get(i).getClassName().replace("_", " ")
+              predictionData.get(i).getClassName().replace("_", " ")
                   + ": "
-                  + String.format("%.2f%%", 100 * predictionResults.get(i).getProbability()));
-      data.get(i).setPieValue(predictionResults.get(i).getProbability());
+                  + String.format("%.2f%%", 100 * predictionData.get(i).getProbability()));
+      data.get(i).setPieValue(predictionData.get(i).getProbability());
     }
   }
 
   /**
-   * Get the current snapshot of the canvas.
+   * Get the current image of the player's drawed on drawingBoard
    *
    * @return The BufferedImage corresponding to the current canvas content.
    */
-  private BufferedImage getCurrentSnapshot() {
-    final Image snapshot = canvas.snapshot(null, null);
-    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
+  private BufferedImage getImage() {
 
+    // Got a snapshot view of the drawed image
+    final Image snapshot = drawingBoard.snapshot(null, null);
+    final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
     // Convert into a binary image.
     final BufferedImage imageBinary = new BufferedImage(image.getWidth(), image.getHeight(),
         BufferedImage.TYPE_BYTE_BINARY);
-
     final Graphics2D graphics = imageBinary.createGraphics();
 
     graphics.drawImage(image, 0, 0, null);
-
     graphics.dispose();
-
     return imageBinary;
   }
 
@@ -591,6 +600,7 @@ public class ZenMode {
    *
    * @return The file of the saved image.
    * @throws IOException If the image cannot be saved.
+   * 
    */
   @FXML
   private void onSaveCurrentSnapshotOnFile() throws IOException {
@@ -600,10 +610,10 @@ public class ZenMode {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Drawing");
     fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Bitmap", "*.bmp"));
-    File file = fileChooser.showSaveDialog(canvas.getScene().getWindow());
+    File file = fileChooser.showSaveDialog(drawingBoard.getScene().getWindow());
 
     if (file != null) {
-      ImageIO.write(getCurrentSnapshot(), "bmp", file);
+      ImageIO.write(getImage(), "bmp", file);
     }
   }
 
@@ -618,15 +628,15 @@ public class ZenMode {
     // value
     // Play button sfx
     SoundsManager.playSFX(sfx.BUTTON2);
-    //Disable both draw/erase buttons
+    // Disable both draw/erase buttons
     drawButton.setDisable(true);
     eraseButton.setDisable(true);
     readyButton.setDisable(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
-    graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-    canvas.setDisable(true);
-    saveDrawingButton.setDisable(false);
+    graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
+    drawingBoard.setDisable(true);
+    saveButton.setDisable(false);
     targetWordLabel.setText("Get a new word to begin drawing!");
   }
 
@@ -662,7 +672,7 @@ public class ZenMode {
               public void handle(ActionEvent event) {
                 clock--;
                 try {
-                  makePredictions();
+                  createPredictions();
                   colorToHex();
                   if (isCanvasBlank()) {
                     resetPieChart();
@@ -693,10 +703,9 @@ public class ZenMode {
   }
 
   @FXML
-  private void onMouseClicked(){
+  private void onMouseClicked() {
     SoundsManager.playSFX(sfx.BUTTON1);
   }
-
 
   /**
    * This method converts the colour code into readable 6 digit hexadecimal code
@@ -716,7 +725,10 @@ public class ZenMode {
    *
    * @return The red component of the colour code
    * @throws NumberFormatException
-   * @throws TranslateException
+   * @throws TranslateException    It there is an error during processing of
+   *                               reading the
+   *                               input or output of hexadecimal code converting
+   *                               to red.
    */
   private int getRed() throws NumberFormatException, TranslateException {
 
@@ -728,7 +740,10 @@ public class ZenMode {
    * This method gets the green component of the RGB colour code
    *
    * @return The green component of the colour code
-   * @throws NumberFormatException
+   * @throws NumberFormatException An error the application has attempted to
+   *                               convert
+   *                               a string to one of the numeric types, but
+   *                               string didn't had appropriate type.
    * @throws TranslateException
    */
   private int getGreen() throws NumberFormatException, TranslateException {

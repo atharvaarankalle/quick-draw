@@ -20,46 +20,33 @@ import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
 
 public class GameSettingsController implements Initializable {
 
-  @FXML
-  private Pane settingsRoot;
-
-  @FXML
-  private Slider accuracySlider;
-
-  @FXML
-  private Label accuracyLabel;
-
-  @FXML
-  private Slider wordsSlider;
-
-  @FXML
-  private Label wordsLabel;
-
-  @FXML
-  private Slider timeSlider;
-
-  @FXML
-  private Label timeLabel;
-
-  @FXML
-  private Slider confidenceSlider;
-
-  @FXML
-  private Label confidenceLabel;
-
-  @FXML
-  private Tooltip accuracyTooltip;
-
-  @FXML
-  private Tooltip wordsTooltip;
-
-  @FXML
-  private Tooltip timeTooltip;
-
-  @FXML
-  private Tooltip confidenceTooltip;
-
   private static String previousUserID = "";
+
+  @FXML private Pane settingsRoot;
+
+  @FXML private Slider accuracySlider;
+
+  @FXML private Label accuracyLabel;
+
+  @FXML private Slider wordsSlider;
+
+  @FXML private Label wordsLabel;
+
+  @FXML private Slider timeSlider;
+
+  @FXML private Label timeLabel;
+
+  @FXML private Slider confidenceSlider;
+
+  @FXML private Label confidenceLabel;
+
+  @FXML private Tooltip accuracyTooltip;
+
+  @FXML private Tooltip wordsTooltip;
+
+  @FXML private Tooltip timeTooltip;
+
+  @FXML private Tooltip confidenceTooltip;
 
   /**
    * This method is called when the scene is initialized. In this method, the tooltips for the
@@ -88,7 +75,7 @@ public class GameSettingsController implements Initializable {
           /**
            * This method converts the double value of the slider to a string
            *
-           * @param sliderValue
+           * @param sliderValue The value of the slider
            * @return String representation of the slider value
            */
           @Override
@@ -96,22 +83,21 @@ public class GameSettingsController implements Initializable {
             if (sliderValue < 0.5) {
               return "Easy";
             }
-
             if (sliderValue < 1.5) {
               return "Medium";
             }
-
             return "Hard";
           }
 
           /**
            * This method converts the string value of the slider to a double
            *
-           * @param string
+           * @param string The string value of the slider
            * @return Double representation of the slider value
            */
           @Override
           public Double fromString(String string) {
+            // Switch statement to convert the string to a double
             switch (string) {
               case "Easy":
                 return 1d;
@@ -131,34 +117,33 @@ public class GameSettingsController implements Initializable {
           /**
            * This method converts the double value of the slider to a string
            *
-           * @param sliderValue
+           * @param sliderValue The value of the slider
            * @return String representation of the slider value
            */
           @Override
           public String toString(Double sliderValue) {
+            // Switch statement to convert the double value of the slider to a string
             if (sliderValue < 0.5) {
               return "Easy";
             }
-
             if (sliderValue < 1.5) {
               return "Medium";
             }
-
             if (sliderValue < 2.5) {
               return "Hard";
             }
-
             return "Master";
           }
 
           /**
            * This method converts the string value of the slider to a double
            *
-           * @param string
+           * @param string The string value of the slider
            * @return Double representation of the slider value
            */
           @Override
           public Double fromString(String string) {
+            // Switch statement to convert the string value of the slider to a double
             switch (string) {
               case "Easy":
                 return 1d;
@@ -180,30 +165,28 @@ public class GameSettingsController implements Initializable {
           /**
            * This method converts the double value of the slider to a string
            *
-           * @param sliderValue
+           * @param sliderValue The value of the slider
            * @return String representation of the slider value
            */
           @Override
           public String toString(Double sliderValue) {
+            // Switch statement to convert the double value of the slider to a string
             if (sliderValue < 0.5) {
               return "Easy";
             }
-
             if (sliderValue < 1.5) {
               return "Medium";
             }
-
             if (sliderValue < 2.5) {
               return "Hard";
             }
-
             return "Master";
           }
 
           /**
            * This method converts the string value of the slider to a double
            *
-           * @param string
+           * @param string The string value of the slider
            * @return Double representation of the slider value
            */
           @Override
@@ -229,34 +212,33 @@ public class GameSettingsController implements Initializable {
           /**
            * This method converts the double value of the slider to a string
            *
-           * @param sliderValue
+           * @param sliderValue The value of the slider
            * @return String representation of the slider value
            */
           @Override
           public String toString(Double sliderValue) {
+            // Switch statement to convert the double value of the slider to a string
             if (sliderValue < 0.5) {
               return "Easy";
             }
-
             if (sliderValue < 1.5) {
               return "Medium";
             }
-
             if (sliderValue < 2.5) {
               return "Hard";
             }
-
             return "Master";
           }
 
           /**
            * This method converts the string value of the slider to a double
            *
-           * @param string
+           * @param string The string value of the slider
            * @return Double representation of the slider value
            */
           @Override
           public Double fromString(String string) {
+            // Switch statement to convert the string value of the slider to a double
             switch (string) {
               case "Easy":
                 return 1d;
@@ -315,7 +297,7 @@ public class GameSettingsController implements Initializable {
               confidenceSlider.setValue(Double.valueOf(separatedUserInfo[3]));
 
             } catch (IOException e) {
-              e.printStackTrace();
+              // Ignore ...
             }
           } else {
             accuracySlider.setValue(gameSettings.getAccuracyLevel());
@@ -399,7 +381,7 @@ public class GameSettingsController implements Initializable {
    * This method is called when the user drags the accuracy slider It updates the value of the
    * slider and saves this to the user settings file
    *
-   * @throws IOException
+   * @throws IOException if the file writer cannot be used to write to the user settings file
    */
   @FXML
   private void onAccuracyDragDetected() throws IOException {
@@ -454,7 +436,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.flush();
                   bufferedWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -469,7 +451,6 @@ public class GameSettingsController implements Initializable {
                     accuracySlider.setStyle("-fx-control-inner-background: red");
                     break;
                 }
-
               }
             });
 
@@ -484,8 +465,8 @@ public class GameSettingsController implements Initializable {
             (obs, oldValue, newValue) -> {
               double sliderValue = accuracySlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax = sliderValue == accuracySlider.getMin()
-                  || sliderValue == accuracySlider.getMax();
+              boolean isSliderValueAtMinOrMax =
+                  sliderValue == accuracySlider.getMin() || sliderValue == accuracySlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
                 SoundsManager.playSFX(sfx.TAP);
@@ -495,7 +476,7 @@ public class GameSettingsController implements Initializable {
                 Settings gameSettings = (Settings) stage.getUserData();
 
                 gameSettings.setAccuracyLevel(accuracySlider.getValue());
-                
+
                 stage.setUserData(gameSettings);
 
                 double sliderFinalValue = 0.0;
@@ -529,7 +510,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider
@@ -546,7 +527,7 @@ public class GameSettingsController implements Initializable {
    * This method is called when the user drags the words slider It updates the value of the slider
    * and saves this to the user settings file
    *
-   * @throws IOException
+   * @throws IOException if the file writer cannot be used to write to the user settings file
    */
   @FXML
   private void onWordsDragDetected() throws IOException {
@@ -602,7 +583,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -636,8 +617,8 @@ public class GameSettingsController implements Initializable {
               // Get the current slider value and check if the slider is no longer updating
               double sliderValue = wordsSlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax = sliderValue == wordsSlider.getMin()
-                  || sliderValue == wordsSlider.getMax();
+              boolean isSliderValueAtMinOrMax =
+                  sliderValue == wordsSlider.getMin() || sliderValue == wordsSlider.getMax();
 
               // If the slider is no longer updating and the slider value is at the minimum or
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
@@ -683,7 +664,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -700,7 +681,7 @@ public class GameSettingsController implements Initializable {
    * This method is called when the user drags the time slider It updates the value of the slider
    * and saves this to the user settings file
    *
-   * @throws IOException
+   * @throws IOException if the file writer cannot be used to write to the user settings file
    */
   @FXML
   private void onTimeDragDetected() throws IOException {
@@ -753,7 +734,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -786,8 +767,8 @@ public class GameSettingsController implements Initializable {
               // Get the current slider value and check if the slider is no longer updating
               double sliderValue = timeSlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax = sliderValue == timeSlider.getMin()
-                  || sliderValue == timeSlider.getMax();
+              boolean isSliderValueAtMinOrMax =
+                  sliderValue == timeSlider.getMin() || sliderValue == timeSlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
                 SoundsManager.playSFX(sfx.TAP);
@@ -832,7 +813,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -849,7 +830,7 @@ public class GameSettingsController implements Initializable {
    * This method is called when the user drags the confidence slider It updates the value of the
    * slider and saves this to the user settings file
    *
-   * @throws IOException
+   * @throws IOException if the file writer cannot be used to write to the user settings file
    */
   @FXML
   private void onConfidenceDragDetected() throws IOException {
@@ -904,7 +885,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
@@ -937,8 +918,9 @@ public class GameSettingsController implements Initializable {
               // Get the current slider value and check if the slider is no longer updating
               double sliderValue = confidenceSlider.getValue();
               boolean stoppedUpdating = oldValue && !newValue;
-              boolean isSliderValueAtMinOrMax = sliderValue == confidenceSlider.getMin()
-                  || sliderValue == confidenceSlider.getMax();
+              boolean isSliderValueAtMinOrMax =
+                  sliderValue == confidenceSlider.getMin()
+                      || sliderValue == confidenceSlider.getMax();
 
               if (stoppedUpdating && isSliderValueAtMinOrMax) {
                 SoundsManager.playSFX(sfx.TAP);
@@ -983,7 +965,7 @@ public class GameSettingsController implements Initializable {
                   bufferedWriter.close();
                   fileWriter.close();
                 } catch (IOException e) {
-                  e.printStackTrace();
+                  // Ignore ...
                 }
 
                 // Set the background colour of the slider depending on the user setting
