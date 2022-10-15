@@ -21,44 +21,31 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class ScoreBoardController {
-  @FXML
-  private Label userNameLabel;
+  @FXML private Label userNameLabel;
 
-  @FXML
-  private Label totalGamesLabel;
+  @FXML private Label totalGamesLabel;
 
-  @FXML
-  private Label gamesWonLabel;
+  @FXML private Label gamesWonLabel;
 
-  @FXML
-  private Label gamesLostLabel;
+  @FXML private Label gamesLostLabel;
 
-  @FXML
-  private Label bestRecordWordLabel;
+  @FXML private Label bestRecordWordLabel;
 
-  @FXML
-  private Label bestRecordTimeLabel;
+  @FXML private Label bestRecordTimeLabel;
 
-  @FXML
-  private ListView<String> scoreList;
+  @FXML private ListView<String> scoreList;
 
-  @FXML
-  private AnchorPane backgroundPane;
+  @FXML private AnchorPane backgroundPane;
 
-  @FXML
-  private Label textLabel1;
+  @FXML private Label textLabel1;
 
-  @FXML
-  private Label textLabel2;
+  @FXML private Label textLabel2;
 
-  @FXML
-  private ImageView imageView;
+  @FXML private ImageView imageView;
 
-  @FXML
-  private Label imageDescriptorLabel;
+  @FXML private Label imageDescriptorLabel;
 
-  @FXML
-  private Pane imagePane;
+  @FXML private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
@@ -66,10 +53,7 @@ public class ScoreBoardController {
 
   private Settings gameSettings;
 
-  /**
-   * This method is called to initialize the scoreboard scene for the current
-   * user.
-   */
+  /** This method is called to initialize the scoreboard scene for the current user. */
   public void initialize() {
 
     try {
@@ -303,9 +287,9 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
-      // Set the image to the second image in the case that the third image is already
-      // being
-      // displayed
+        // Set the image to the second image in the case that the third image is already
+        // being
+        // displayed
       case 2:
         imageView.setImage(
             new Image(

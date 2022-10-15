@@ -20,10 +20,8 @@ import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
 import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class MainPanelController implements Initializable {
-  @FXML
-  private Button gameButton;
-  @FXML
-  private BorderPane currentScene;
+  @FXML private Button gameButton;
+  @FXML private BorderPane currentScene;
 
   /**
    * JavaFX calls this method once the GUI elements are loaded.
@@ -37,8 +35,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Home" button. It switches the
-   * scene to the home
+   * This method is called when the user clicks the "Home" button. It switches the scene to the home
    * scene on the same stage
    *
    * @param event Retrieving information from the event stage to produce scene
@@ -55,8 +52,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Game" button. It switches the
-   * scene to the
+   * This method is called when the user clicks the "Game" button. It switches the scene to the
    * canvas scene on the same stage
    *
    * @param event Retrieving information from the event stage to produce scene
@@ -74,8 +70,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Info" button. It switches the
-   * scene to the how
+   * This method is called when the user clicks the "Info" button. It switches the scene to the how
    * to play scene on the same stage
    *
    * @param event Retrieving information from the event stage to produce scene
@@ -92,8 +87,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Statistics" button. It
-   * switches the scene to
+   * This method is called when the user clicks the "Statistics" button. It switches the scene to
    * the stats scene on the same stage
    *
    * @param event Retrieving information from the event stage to produce scene
@@ -111,8 +105,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Settings" button. It switches
-   * the scene to the
+   * This method is called when the user clicks the "Settings" button. It switches the scene to the
    * game settings scene on the same stage
    *
    * @param event Retrieving information from the event stage to produce scene
@@ -140,8 +133,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Zen Mode" button. It switches
-   * the scene to the
+   * This method is called when the user clicks the "Zen Mode" button. It switches the scene to the
    * zen mode scene on the same stage
    *
    * @param event Retrieving information from the event stage to produce scene
@@ -183,8 +175,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is invoked when the user clicks the "Back to Main Menu" button.
-   * It loads and shows
+   * This method is invoked when the user clicks the "Back to Main Menu" button. It loads and shows
    * the "Main Menu" scene
    *
    * @param event The event that triggered this method.
@@ -220,8 +211,7 @@ public class MainPanelController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the "Exit" button. It exits the
-   * program
+   * This method is called when the user clicks the "Exit" button. It exits the program
    *
    * @param event Retrieving information from the event stage to produce scene
    */

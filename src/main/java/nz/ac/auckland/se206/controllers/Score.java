@@ -10,7 +10,7 @@ public class Score implements Comparable<Score> {
    *
    * @param word The word that was guessed.
    * @param time The time it took to guess the word.
-   * @param id   The id of the user.
+   * @param id The id of the user.
    */
   public Score(String word, int time, String id) {
     this.word = word;
