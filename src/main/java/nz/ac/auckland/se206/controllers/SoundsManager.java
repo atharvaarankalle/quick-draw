@@ -47,7 +47,7 @@ public class SoundsManager {
      * 
      * @throws URISyntaxException
      */
-    public static void loadSFX() throws URISyntaxException {
+    public static void loadSoundEffects() throws URISyntaxException {
         buttonSound1 = new Media(App.class.getResource("/sounds/woodenButton.mp3").toURI().toString());
         buttonPlayer1 = new MediaPlayer(buttonSound1);
         buttonSound2 = new Media(App.class.getResource("/sounds/popButton.mp3").toURI().toString());
@@ -73,7 +73,7 @@ public class SoundsManager {
      * 
      * @throws URISyntaxException
      */
-    public static void loadBGM() throws URISyntaxException {
+    public static void loadBackgroundMusic() throws URISyntaxException {
         mainPanelBGM = new Media(App.class.getResource("/sounds/pvzMainMenu.mp3").toURI().toString());
         mainPanelPlayer = new MediaPlayer(mainPanelBGM);
         zenBGM = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
@@ -89,7 +89,7 @@ public class SoundsManager {
      * 
      * @param sfxType A sfx enum input, indicating the specific sfx wanted
      */
-    public static void playSFX(sfx sfxType) {
+    public static void playSoundEffects(sfx sfxType) {
         switch (sfxType) {
             case BUTTON1:
                 if (buttonPlayer1.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -176,7 +176,7 @@ public class SoundsManager {
      * 
      * @param bgmType a bgm enum input, indicating the bgm wanted
      */
-    public static void playBGM(bgm bgmType) {
+    public static void playBackgroundMusic(bgm bgmType) {
         switch (bgmType) {
             case MAINPANEL:
                 mainPanelPlayer.play();
@@ -217,7 +217,7 @@ public class SoundsManager {
      * This method stops the win/lose sfx, and resume to the looping of main panel
      * bgm after stopping
      */
-    public static void stopWinAndLoseSFX() {
+    public static void stopWinAndLoseSoundEffects() {
         victoryPlayer.stop();
         failurePlayer.stop();
     }
@@ -229,7 +229,7 @@ public class SoundsManager {
      * @param pencilOrEraser a SFX input, indicating weather pencil or eraser is
      *                       required to be stopped
      */
-    public static void stopPencilOrEraserSFX(sfx pencilOrEraser) {
+    public static void stopPencilOrEraserSoundEffects(sfx pencilOrEraser) {
         if (pencilOrEraser == sfx.PENCIL) {
             pencilPlayer.stop();
         } else if (pencilOrEraser == sfx.ERASER) {
@@ -242,7 +242,7 @@ public class SoundsManager {
     /**
      * This method stops all curretly playing bgm
      */
-    public static void stopAllBGM() {
+    public static void stopAllBackgroundMusic() {
         zenPlayer.stop();
         mainPanelPlayer.stop();
         ingamePlayer.stop();
@@ -253,7 +253,7 @@ public class SoundsManager {
      * 
      * @param bgmType The specific BGM to be terminated
      */
-    public static void stopBGM(bgm bgmType) {
+    public static void stopBackgroundMusic(bgm bgmType) {
         switch (bgmType) {
             case MAINPANEL:
                 mainPanelPlayer.stop();
@@ -275,7 +275,7 @@ public class SoundsManager {
      * 
      * @param volume The disired volume level range from 0 to 100
      */
-    public static void changeSFXVolume(double volume) {
+    public static void changeSoundEffectsVolume(double volume) {
         if (volume >= 0 && volume <= 100) {
             buttonPlayer1.setVolume(volume);
             buttonPlayer2.setVolume(volume);
@@ -297,7 +297,7 @@ public class SoundsManager {
      * 
      * @param volume The disired volume level range from 0 to 100
      */
-    public static void changeBGMVolume(double volume) {
+    public static void changeBackgroundMusicVolume(double volume) {
         if (volume >= 0 && volume <= 100) {
             mainPanelPlayer.setVolume(volume);
             zenPlayer.setVolume(volume);
@@ -312,7 +312,7 @@ public class SoundsManager {
      * 
      * @param muteStatus boolean input, input false to unmute all
      */
-    public static void setMuteAllSFX(Boolean muteStatus) {
+    public static void setMuteAllSoundEffects(Boolean muteStatus) {
         buttonPlayer1.setMute(muteStatus);
         buttonPlayer2.setMute(muteStatus);
         victoryPlayer.setMute(muteStatus);
@@ -330,12 +330,12 @@ public class SoundsManager {
      * 
      * @param muteStatus boolean input, input false to unmute all
      */
-    public static void setMuteAllBGM(Boolean muteStatus) {
+    public static void setMuteAllBackgroundMusic(Boolean muteStatus) {
         mainPanelPlayer.setMute(muteStatus);
         zenPlayer.setMute(muteStatus);
     }
 
-    public static Boolean isZenBGMPlaying(){
+    public static Boolean isZenBackgroundMusicPlaying(){
         return zenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
     }
 }
