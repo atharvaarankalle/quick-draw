@@ -47,7 +47,8 @@ public class SoundsManager {
      * 
      * @throws URISyntaxException
      */
-    public static void loadSoundEffects() throws URISyntaxException {
+    public static void loadSoundEffects() throws URISyntaxException { 
+        //Initilize each Meida field and load the media instance in to its corresponding mediaplayer field
         buttonSound1 = new Media(App.class.getResource("/sounds/woodenButton.mp3").toURI().toString());
         buttonPlayer1 = new MediaPlayer(buttonSound1);
         buttonSound2 = new Media(App.class.getResource("/sounds/popButton.mp3").toURI().toString());
@@ -90,6 +91,7 @@ public class SoundsManager {
      * @param sfxType A sfx enum input, indicating the specific sfx wanted
      */
     public static void playSoundEffects(sfx sfxType) {
+        //Play the specific sfx based on the SoundEffects enum input
         switch (sfxType) {
             case BUTTON1:
                 if (buttonPlayer1.getStatus() == MediaPlayer.Status.PLAYING) {
@@ -108,10 +110,11 @@ public class SoundsManager {
                     victoryPlayer.stop();
                 }
                 victoryPlayer.play();
+                //The victory sfx is always supposed to followed up by main panel bgm
                 victoryPlayer.setOnEndOfMedia(new Runnable() {
                     @Override
                     public void run() {
-                        playBGM(bgm.MAINPANEL);
+                        playBackgroundMusic(bgm.MAINPANEL);
                     }
                 });
                 break;
@@ -120,10 +123,11 @@ public class SoundsManager {
                     failurePlayer.stop();
                 }
                 failurePlayer.play();
+                //The failure sfx is always supposed to followed up by main panel bgm
                 failurePlayer.setOnEndOfMedia(new Runnable() {
                     @Override
                     public void run() {
-                        playBGM(bgm.MAINPANEL);
+                        playBackgroundMusic(bgm.MAINPANEL);
                     }
                 });
                 break;
@@ -141,6 +145,7 @@ public class SoundsManager {
                 break;
             case PENCIL:
                 pencilPlayer.play();
+                //pencil sfx is supposed to be played in endless loop
                 pencilPlayer.setOnEndOfMedia(new Runnable() {
                     @Override
                     public void run() {
@@ -151,6 +156,7 @@ public class SoundsManager {
                 break;
             case ERASER:
                 eraserPlayer.play();
+                //Eraser sfx is supposed to be played in endless loop
                 eraserPlayer.setOnEndOfMedia(new Runnable() {
                     @Override
                     public void run() {
@@ -177,6 +183,8 @@ public class SoundsManager {
      * @param bgmType a bgm enum input, indicating the bgm wanted
      */
     public static void playBackgroundMusic(bgm bgmType) {
+        //Play the specific bgm corresponding to the BackgroundMusic enum input
+        //All bgms are expected to play in endless loop
         switch (bgmType) {
             case MAINPANEL:
                 mainPanelPlayer.play();
@@ -231,10 +239,13 @@ public class SoundsManager {
      */
     public static void stopPencilOrEraserSoundEffects(sfx pencilOrEraser) {
         if (pencilOrEraser == sfx.PENCIL) {
+            //If passed in SoundEffect enum is PENCIL, stop the pencil sfx
             pencilPlayer.stop();
         } else if (pencilOrEraser == sfx.ERASER) {
+            //If the passed in SoundEffect enum is ERASER, stop the eraser sfx
             eraserPlayer.stop();
         } else {
+            //If the passed in SoundEffect enum isn't ERASER or PENCIL, print a error message
             System.out.println(pencilOrEraser + " is not accepted by stopPencilOrEraser method");
         }
     }
@@ -254,6 +265,7 @@ public class SoundsManager {
      * @param bgmType The specific BGM to be terminated
      */
     public static void stopBackgroundMusic(bgm bgmType) {
+        //Stop the specific bgm player corresponding to the BackgroundMusic enum input
         switch (bgmType) {
             case MAINPANEL:
                 mainPanelPlayer.stop();
@@ -276,6 +288,7 @@ public class SoundsManager {
      * @param volume The disired volume level range from 0 to 100
      */
     public static void changeSoundEffectsVolume(double volume) {
+        //If volume input is valid, apply changes to all sfx players
         if (volume >= 0 && volume <= 100) {
             buttonPlayer1.setVolume(volume);
             buttonPlayer2.setVolume(volume);
@@ -287,6 +300,7 @@ public class SoundsManager {
             eraserPlayer.setVolume(volume);
             loginPlayer.setVolume(volume);
         } else {
+            //Otherwise print error message.
             System.out.println(volume + " is a invalid sfx volume level");
         }
     }
@@ -299,9 +313,11 @@ public class SoundsManager {
      */
     public static void changeBackgroundMusicVolume(double volume) {
         if (volume >= 0 && volume <= 100) {
+            //If volume input is valid, apply changes to all bgm players
             mainPanelPlayer.setVolume(volume);
             zenPlayer.setVolume(volume);
         } else {
+            //Otherwise print error message.
             System.out.println(volume + " is a invalid bgm volume level");
         }
     }
@@ -313,6 +329,7 @@ public class SoundsManager {
      * @param muteStatus boolean input, input false to unmute all
      */
     public static void setMuteAllSoundEffects(Boolean muteStatus) {
+        //Set the mute status of all sfx players
         buttonPlayer1.setMute(muteStatus);
         buttonPlayer2.setMute(muteStatus);
         victoryPlayer.setMute(muteStatus);
@@ -331,6 +348,7 @@ public class SoundsManager {
      * @param muteStatus boolean input, input false to unmute all
      */
     public static void setMuteAllBackgroundMusic(Boolean muteStatus) {
+        //Set mute status of all bgm players
         mainPanelPlayer.setMute(muteStatus);
         zenPlayer.setMute(muteStatus);
     }
