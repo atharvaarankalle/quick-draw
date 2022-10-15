@@ -88,6 +88,18 @@
                         <Font name="Lucida Fax Demibold" size="13.0" />
                      </font>
                   </Button>
+                  <Button fx:id="hiddenModeButton" mnemonicParsing="false" onAction="#onHiddenMode" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Hidden">
+                     <font>
+                        <Font name="Lucida Fax Demibold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/hiddenIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#onSoundSettings" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Sound">
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">

@@ -32,7 +32,9 @@ public class MainPanel implements Initializable {
    * @param resources
    */
   @Override
-  public void initialize(URL location, ResourceBundle resources) {}
+  public void initialize(URL location, ResourceBundle resources) {
+    HiddenWordFunctions.leaveHiddenMode();
+  }
 
   /**
    * This method is called when the user clicks the "Home" button. It switches the scene to the home
@@ -46,6 +48,8 @@ public class MainPanel implements Initializable {
     Parent view = loadFxml("homepage");
     CurrentScene.setCenter(view);
     SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.stopBGM(bgm.HIDDEN);
+    SoundsManager.stopBGM(bgm.INGAME);
     SoundsManager.playBGM(bgm.MAINPANEL);
    // enableButtons();
     //homeButton.setDisable(true);
@@ -61,8 +65,10 @@ public class MainPanel implements Initializable {
   private void onGame(ActionEvent event) throws IOException {
     SoundsManager.playSFX(sfx.BUTTON1);
     CurrentScene.setCenter(null);
+    HiddenWordFunctions.leaveHiddenMode();
     Parent view = loadFxml("canvas");
     CurrentScene.setCenter(view);
+    SoundsManager.stopBGM(bgm.HIDDEN);
     SoundsManager.stopBGM(bgm.ZEN);
     SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
@@ -81,6 +87,8 @@ public class MainPanel implements Initializable {
     Parent view = loadFxml("howtoplay");
     CurrentScene.setCenter(view);
     SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.stopBGM(bgm.HIDDEN);
+    SoundsManager.stopBGM(bgm.INGAME);
     SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
     //infoButton.setDisable(true);
@@ -99,6 +107,8 @@ public class MainPanel implements Initializable {
     Parent view = loadFxml("scoreboard");
     CurrentScene.setCenter(view);
     SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.stopBGM(bgm.HIDDEN);
+    SoundsManager.stopBGM(bgm.INGAME);
     SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
    // statsButton.setDisable(true);
@@ -116,6 +126,8 @@ public class MainPanel implements Initializable {
     Parent view = loadFxml("gamesettings");
     CurrentScene.setCenter(view);
     SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.stopBGM(bgm.HIDDEN);
+    SoundsManager.stopBGM(bgm.INGAME);
     SoundsManager.playBGM(bgm.MAINPANEL);
    // enableButtons();
     //settingsButton.setDisable(true);
@@ -127,6 +139,8 @@ public class MainPanel implements Initializable {
     Parent view = loadFxml("soundsettings");
     CurrentScene.setCenter(view);
     SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.stopBGM(bgm.HIDDEN);
+    SoundsManager.stopBGM(bgm.INGAME);
     SoundsManager.playBGM(bgm.MAINPANEL);
     //enableButtons();
     //musicButton.setDisable(true);
@@ -140,6 +154,9 @@ public class MainPanel implements Initializable {
    */
   @FXML
   private void onZenMode(ActionEvent event) throws IOException {
+    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.stopBGM(bgm.HIDDEN);
+    SoundsManager.stopBGM(bgm.INGAME);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("zenmode");
     CurrentScene.setCenter(view);
@@ -147,7 +164,24 @@ public class MainPanel implements Initializable {
   }
 
   @FXML
+  private void onHiddenMode(ActionEvent event) throws IOException{
+    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.stopBGM(bgm.INGAME);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
+    CurrentScene.setCenter(null);
+    HiddenWordFunctions.toHiddenMode();
+    Parent view = loadFxml("canvas");
+    CurrentScene.setCenter(view);
+    GameButton.setDisable(false);
+  }
+
+  @FXML
   private void onBadgesClicked(ActionEvent event) throws IOException {
+    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.stopBGM(bgm.INGAME);
+    SoundsManager.stopBGM(bgm.ZEN);
+    SoundsManager.playBGM(bgm.MAINPANEL);
     CurrentScene.setCenter(null);
     Parent view = loadFxml("badges");
     CurrentScene.setCenter(view);
@@ -223,13 +257,4 @@ public class MainPanel implements Initializable {
   private static Parent loadFxml(final String fxml) throws IOException {
     return new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml")).load();
   }
-
-  // private void enableButtons(){
-  //   gameButton.setDisable(false);
-  //   homeButton.setDisable(false);
-  //   statsButton.setDisable(false);
-  //   infoButton.setDisable(false);
-  //   musicButton.setDisable(false);
-  //   settingsButton.setDisable(false);
-  // }
 }
