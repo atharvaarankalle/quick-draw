@@ -3,6 +3,8 @@ package nz.ac.auckland.se206.controllers;
 import ai.djl.ModelException;
 import ai.djl.modality.Classifications.Classification;
 import ai.djl.translate.TranslateException;
+
+import javafx.application.Platform;
 import com.opencsv.exceptions.CsvException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -122,6 +124,15 @@ public class CanvasController {
   private ImageView imageDown;
 
   @FXML
+  private Label hint1Label;
+
+  @FXML
+  private Label hint2Label;
+
+  @FXML
+  private Button hintButton;
+
+  @FXML
   private ListView<String> leaderBoardList;
 
   private GraphicsContext graphic;
@@ -164,6 +175,10 @@ public class CanvasController {
      * Set the initial visibilities of components and also set
      * the initial interactability of buttons
      */
+    hintButton.setVisible(HiddenWordFunctions.isHiddenMode());
+    hintButton.setDisable(true);
+    hint1Label.setVisible(false);
+    hint2Label.setVisible(false);
     pgbTimer.setVisible(false);
     pgbTimer.setStyle("-fx-accent: green;");
     canvas.setDisable(true);
@@ -302,10 +317,11 @@ public class CanvasController {
     SoundsManager.playSFX(sfx.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
+      hintButton.setDisable(false);
       targetWordLabel.setVisible(true);
       SoundsManager.stopAllBGM();
-      if(!HiddenWordFunctions.isHiddenMode()){
-      SoundsManager.playBGM(bgm.INGAME);
+      if (!HiddenWordFunctions.isHiddenMode()) {
+        SoundsManager.playBGM(bgm.INGAME);
       } else {
         SoundsManager.playBGM(bgm.HIDDEN);
       }
@@ -343,6 +359,7 @@ public class CanvasController {
     } else {
       SoundsManager.stopWinAndLoseSFX();
       SoundsManager.playBGM(bgm.MAINPANEL);
+      hintButton.setText("Hint 1?");
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
       saveDrawingButton.setDisable(true);
@@ -353,16 +370,41 @@ public class CanvasController {
         // Update the GUI to communicate the word to draw with the user
         targetWordLabel.setFont(Font.font("Lucida Fax Regular", FontWeight.NORMAL, 25));
         targetWordLabel.setTextAlignment(TextAlignment.CENTER);
+        timerLabel.setText("Press Start to start drawing!");
       } else {
         System.out.println(currentWord);
-        String def = HiddenWordFunctions.searchWordDefinetion(currentWord).get(0);
-        targetWordLabel.setFont(Font.font("Lucida Fax Regular", FontWeight.NORMAL, 15));
-        targetWordLabel.setTextAlignment(TextAlignment.LEFT);
-        targetWordLabel.setText(def);
+        Task<Void> getDefinition = new Task<Void>() {
+          @Override
+          protected Void call() throws Exception {
+            String def = HiddenWordFunctions.searchWordDefinetion(currentWord).get(0);
+            Platform.runLater(() -> {
+            targetWordLabel.setFont(Font.font("Lucida Fax Regular", FontWeight.NORMAL, 15));
+            targetWordLabel.setTextAlignment(TextAlignment.LEFT);
+            targetWordLabel.setText(def);
+            });
+            return null;
+          }
+        };
+        getDefinition.setOnScheduled(e -> {
+          Platform.runLater(() -> {
+            timerLabel.setText("Preparing the word definitions for you...");
+            readyButton.setDisable(true);
+          });
+        });
+        getDefinition.setOnSucceeded(e -> {
+          Platform.runLater(() -> {
+          readyButton.setDisable(false);
+          timerLabel.setText("Press Start to start drawing!");
+          });
+        });
+        Thread backgroundDefinitionSearch = new Thread(getDefinition);
+        backgroundDefinitionSearch.setDaemon(true);
+        backgroundDefinitionSearch.start();
         targetWordLabel.setVisible(false);
       }
+      hint1Label.setVisible(false);
+      hint2Label.setVisible(false);
       System.out.println("Word is: " + currentWord);
-      timerLabel.setText("Press Start to start drawing!");
       readyButton.setText("Start!");
       text.add(currentWord); // Adds new randomWord, if current != random
     }
@@ -526,6 +568,19 @@ public class CanvasController {
       }
     }
     return true;
+  }
+
+  @FXML
+  private void onHint() {
+    if (hintButton.getText().equals("Hint 1?")) {
+      hintButton.setText("Hint 2?");
+      hint1Label.setVisible(true);
+      hint1Label.setText("The word is " + currentWord.length() + " letters long");
+    } else {
+      hint2Label.setVisible(true);
+      hint2Label.setText("The word begins with letter " + currentWord.charAt(0));
+      hintButton.setDisable(true);
+    }
   }
 
   /**
