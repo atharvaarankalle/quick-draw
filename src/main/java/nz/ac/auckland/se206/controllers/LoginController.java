@@ -28,8 +28,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import nz.ac.auckland.se206.controllers.SceneManager.AppUi;
-import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 // Author : Ash, Nov 2, 2018 at 22:58, StackOverflow
 // https://stackoverflow.com/questions/53020451/how-to-create-javafx-save-read-information-from-text-file-and-letting-user-to-e
@@ -129,12 +129,12 @@ public class LoginController implements Initializable {
       msg.setContentText("Successfully created new user with username: " + line);
       msg.getButtonTypes().clear();
       msg.getButtonTypes().addAll(ButtonType.OK);
-      SoundsManager.playSFX(sfx.LOGIN);
+      SoundsManager.playSoundEffects(SoundEffects.LOGIN);
       msg.showAndWait();
       addLine(line);
 
       // Change the scene to the main scene
-      SoundsManager.playBGM(bgm.MAINPANEL);
+      SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
       Scene currentScene = ((Button) event.getSource()).getScene();
       currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
       usersList.add(emailTextField.getText());
@@ -170,17 +170,17 @@ public class LoginController implements Initializable {
         msg.setHeaderText("Log In Successful!");
         msg.setContentText("You have successfully logged in as: " + userName);
         if (updateVolumeStatus(userName) == 1) {
-          SoundsManager.setMuteAllBGM(true);
-          SoundsManager.setMuteAllSFX(true);
+          SoundsManager.setMuteAllBackgroundMusic(true);
+          SoundsManager.setMuteAllSoundEffects(true);
         } else {
-          SoundsManager.setMuteAllBGM(false);
-          SoundsManager.setMuteAllSFX(false);
+          SoundsManager.setMuteAllBackgroundMusic(false);
+          SoundsManager.setMuteAllSoundEffects(false);
         }
-        SoundsManager.playSFX(sfx.LOGIN);
+        SoundsManager.playSoundEffects(SoundEffects.LOGIN);
         msg.showAndWait();
 
         // Change the scene to the main scene
-        SoundsManager.playBGM(bgm.MAINPANEL);
+        SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
         Scene currentScene = ((ListView) event.getSource()).getScene();
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
         break;
@@ -269,8 +269,8 @@ public class LoginController implements Initializable {
     String line = "GUEST";
     gameSettings.setCurrentUser(line);
     addLine(line);
-    // Start playing background bgm
-    SoundsManager.playBGM(bgm.MAINPANEL);
+    // Start playing background BackgroundMusic
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     Scene currentScene = ((Button) event.getSource()).getScene();
     currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
   }
@@ -278,8 +278,8 @@ public class LoginController implements Initializable {
   private int updateVolumeStatus(String userName) throws IOException {
     Path userStatsPath = Paths.get("DATABASE/usersettings/" + userName);
     List<String> userStats = Files.readAllLines(userStatsPath);
-    SoundsManager.changeBGMVolume( Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[5])/ 100);
-    SoundsManager.changeSFXVolume( Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[4])/ 100);
+    SoundsManager.changeBackgroundMusicVolume( Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[5])/ 100);
+    SoundsManager.changeSoundEffectsVolume( Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[4])/ 100);
     return Integer.valueOf(userStats.get(userStats.size() - 1).split(" , ")[6]);
   }
 }

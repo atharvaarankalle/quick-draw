@@ -53,8 +53,8 @@ import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
-import nz.ac.auckland.se206.controllers.SoundsManager.bgm;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 /**
  * This is the controller of the canvas. You are free to modify this class and
@@ -268,16 +268,16 @@ public class CanvasController {
     // Looping sound effects for pen/eraser
     canvas.setOnDragDetected(e -> {
       if (penEraserButton.getText().equals("Pen")) {
-        SoundsManager.playSFX(sfx.ERASER);
+        SoundsManager.playSoundEffects(SoundEffects.ERASER);
       } else {
-        SoundsManager.playSFX(sfx.PENCIL);
+        SoundsManager.playSoundEffects(SoundEffects.PENCIL);
       }
     });
     canvas.setOnMouseReleased(e -> {
       if (penEraserButton.getText().equals("Pen")) {
-        SoundsManager.stopPencilOrEraserSFX(sfx.ERASER);
+        SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.ERASER);
       } else {
-        SoundsManager.stopPencilOrEraserSFX(sfx.PENCIL);
+        SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.PENCIL);
       }
     });
     canvas.setDisable(false);
@@ -286,7 +286,7 @@ public class CanvasController {
   /** This method is called when the "Clear" button is pressed. */
   @FXML
   private void onClear() {
-    SoundsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     resetArrow();
   }
@@ -311,18 +311,18 @@ public class CanvasController {
   @FXML
   private void onReady()
       throws TranslateException, CsvException, IOException, URISyntaxException, ModelException {
-    SoundsManager.playSFX(sfx.BUTTON2);
-    SoundsManager.stopWinAndLoseSFX();
-    SoundsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
+    SoundsManager.stopWinAndLoseSoundEffects();
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
       hintButton.setDisable(false);
       targetWordLabel.setVisible(true);
-      SoundsManager.stopAllBGM();
+      SoundsManager.stopAllBackgroundMusic();
       if (!HiddenWordFunctions.isHiddenMode()) {
-        SoundsManager.playBGM(bgm.INGAME);
+        SoundsManager.playBackgroundMusic(BackgroundMusic.INGAME);
       } else {
-        SoundsManager.playBGM(bgm.HIDDEN);
+        SoundsManager.playBackgroundMusic(BackgroundMusic.HIDDEN);
       }
       // Always make sure progressbar is green at the start
       pgbTimer.setStyle("-fx-accent: green;");
@@ -356,8 +356,8 @@ public class CanvasController {
         backgroundSpeechThread.start();
       }
     } else {
-      SoundsManager.stopWinAndLoseSFX();
-      SoundsManager.playBGM(bgm.MAINPANEL);
+      SoundsManager.stopWinAndLoseSoundEffects();
+      SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
       hintButton.setText("Hint 1?");
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -415,7 +415,7 @@ public class CanvasController {
    */
   @FXML
   private void onSwitchBetweenPenAndEraser() {
-    SoundsManager.playSFX(sfx.BUTTON2);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     // If the current tool is pen, change the text to reflect eraser and set the
     // current tool to
     // eraser and vice versa
@@ -633,9 +633,9 @@ public class CanvasController {
                   }
 
                   if (isWordCorrect()) {
-                    // Stop bgms and paly victory sfx
-                    SoundsManager.stopAllBGM();
-                    SoundsManager.playSFX(sfx.VICTORY);
+                    // Stop BackgroundMusics and paly victory SoundEffects
+                    SoundsManager.stopAllBackgroundMusic();
+                    SoundsManager.playSoundEffects(SoundEffects.VICTORY);
                     // Update GUI elements
                     pgbTimer.setVisible(false);
                     pgbTimer.progressProperty().unbind();
@@ -680,7 +680,7 @@ public class CanvasController {
             Duration.seconds(1),
             e -> {
               if (timeLeft.get() <= 10 && timeLeft.get() > 0) {
-                SoundsManager.playSFX(sfx.BEEP);
+                SoundsManager.playSoundEffects(SoundEffects.BEEP);
               }
             });
         timeline.getKeyFrames().clear();
@@ -710,9 +710,9 @@ public class CanvasController {
               } catch (IOException e1) {
                 e1.printStackTrace();
               }
-              // Stop all bgms and play failing sfx
-              SoundsManager.stopAllBGM();
-              SoundsManager.playSFX(sfx.FAIL);
+              // Stop all BackgroundMusics and play failing SoundEffects
+              SoundsManager.stopAllBackgroundMusic();
+              SoundsManager.playSoundEffects(SoundEffects.FAIL);
               // Stop the user from drawing on the canvas, and update the GUI
               readyButton.setDisable(false);
               readyButton.setText("Ready?");
