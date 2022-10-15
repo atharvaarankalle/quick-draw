@@ -368,6 +368,7 @@ public class CanvasController {
       if (!HiddenWordFunctions.isHiddenMode()) {
         // Update the GUI to communicate the word to draw with the user
         targetWordLabel.setFont(Font.font("Lucida Fax Regular", FontWeight.NORMAL, 25));
+        targetWordLabel.setText("The word to draw is: " + currentWord);
         targetWordLabel.setTextAlignment(TextAlignment.CENTER);
         timerLabel.setText("Press Start to start drawing!");
       } else {
