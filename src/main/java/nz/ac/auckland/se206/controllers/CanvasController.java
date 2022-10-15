@@ -47,7 +47,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
-import javax.swing.GroupLayout.Alignment;
 
 import javafx.animation.TranslateTransition;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
