@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -30,6 +31,43 @@ public class BadgesController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
+
+    Tooltip quickDrawerTooltip = new Tooltip("Win a game in under 30 seconds");
+    quickDrawerTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(quickDrawerIcon, quickDrawerTooltip);
+
+    Tooltip speedDemonTooltip = new Tooltip("Win a game in under 15 seconds");
+    speedDemonTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(speedDemonIcon, speedDemonTooltip);
+
+    Tooltip speedySketcherTooltip = new Tooltip("Win a game in under 10 seconds");
+    speedySketcherTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(speedySketcherIcon, speedySketcherTooltip);
+
+    Tooltip heatingUpTooltip = new Tooltip("Win 3 games in a row");
+    heatingUpTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(heatingUpIcon, heatingUpTooltip);
+
+    Tooltip hereComesTheHeatTooltip = new Tooltip("Win 5 games in a row");
+    hereComesTheHeatTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(hereComesTheHeatIcon, hereComesTheHeatTooltip);
+
+    Tooltip onFireTooltip = new Tooltip("Win 10 games in a row");
+    onFireTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(onFireIcon, onFireTooltip);
+
+    Tooltip aBuddingArtistTooltip = new Tooltip("Win 10 games in total");
+    aBuddingArtistTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(aBuddingArtistIcon, aBuddingArtistTooltip);
+
+    Tooltip seriousSkillsTooltip =
+        new Tooltip("Win 20 games in total on Medium or Hard time difficulty");
+    seriousSkillsTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(seriousSkillsIcon, seriousSkillsTooltip);
+
+    Tooltip masterArtistTooltip = new Tooltip("Win 30 games in total on Master time difficulty");
+    masterArtistTooltip.setStyle("-fx-font-size: 15px;");
+    Tooltip.install(masterArtistIcon, masterArtistTooltip);
 
     Platform.runLater(
         () -> {
