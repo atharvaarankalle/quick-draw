@@ -59,16 +59,17 @@ public class Settings {
    * @param user The user to set.
    */
   public void setSfxVolume(double sfxVolume) {
-      this.sfxVolume = sfxVolume;
+    this.sfxVolume = sfxVolume;
   }
 
   public void setBgmVolume(double bgmVolume) {
-      this.bgmVolume = bgmVolume;
+    this.bgmVolume = bgmVolume;
   }
 
   public void setMuteStatus(int muteStatus) {
-      this.muteStatus = muteStatus;
+    this.muteStatus = muteStatus;
   }
+
   public void setCurrentUser(String username) {
     this.currentUser = username;
   }
@@ -147,16 +148,16 @@ public class Settings {
    * @return The time slider position
    */
   public double getSfxVolume() {
-      return sfxVolume;
+    return sfxVolume;
   }
 
   public double getBgmVolume() {
-      return bgmVolume;
+    return bgmVolume;
   }
 
-public int getMuteStatus() {
+  public int getMuteStatus() {
     return muteStatus;
-}
+  }
 
   public double getTimeSliderPosition() {
     return this.timeLevel;

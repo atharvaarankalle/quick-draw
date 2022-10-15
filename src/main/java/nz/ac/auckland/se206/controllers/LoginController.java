@@ -36,21 +36,16 @@ import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class LoginController implements Initializable {
 
-  @FXML
-  private AnchorPane loginRoot;
+  @FXML private AnchorPane loginRoot;
 
-  @FXML
-  private TextField emailTextField;
+  @FXML private TextField emailTextField;
 
-  @FXML
-  private ListView<String> usersListView;
+  @FXML private ListView<String> usersListView;
 
-  @FXML
-  private ObservableList<String> usersList = FXCollections.observableArrayList();
+  @FXML private ObservableList<String> usersList = FXCollections.observableArrayList();
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we
-   * create a login page
+   * JavaFX calls this method once the GUI elements are loaded. In our case we create a login page
    * and brings users details
    */
   @Override
@@ -59,7 +54,8 @@ public class LoginController implements Initializable {
     emailTextField.getText();
     usersListView.setItems(usersList);
     usersListView.setCellFactory(
-        new Callback<ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
+        new Callback<
+            ListView<String>, ListCell<String>>() { // Process for calling LoginInformation class
           // to work parallel for login/register/storing datas
           @Override
           public ListCell<String> call(ListView<String> param) {
@@ -92,12 +88,10 @@ public class LoginController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the sign up button. It will add a
-   * new user and
+   * This method is called when the user clicks the sign up button. It will add a new user and
    * automatically log them in
    *
-   * @param event Brings the information from the stage to display different scene
-   *              event
+   * @param event Brings the information from the stage to display different scene event
    */
   @FXML
   private void onSignUp(ActionEvent event) throws IOException {
@@ -147,12 +141,10 @@ public class LoginController implements Initializable {
   }
 
   /**
-   * This method is called when the user selects their username from the ListView.
-   * It will log the
+   * This method is called when the user selects their username from the ListView. It will log the
    * user in
    *
-   * @param event Brings the information from the stage to display different scene
-   *              event
+   * @param event Brings the information from the stage to display different scene event
    */
   @FXML
   private void onUserSelected(MouseEvent event) throws IOException {
@@ -209,8 +201,7 @@ public class LoginController implements Initializable {
   /**
    * This method is called to add a line to the UserDatas.txt file
    *
-   * @param event Brings the information from the stage to display different scene
-   *              event
+   * @param event Brings the information from the stage to display different scene event
    */
   private void addLine(String line) throws IOException {
 
@@ -262,11 +253,9 @@ public class LoginController implements Initializable {
   }
 
   /**
-   * This method is called when the user clicks the guest button. It will log the
-   * user in as a guest
+   * This method is called when the user clicks the guest button. It will log the user in as a guest
    *
-   * @param event Brings the information from the stage to display different scene
-   *              event
+   * @param event Brings the information from the stage to display different scene event
    */
   @FXML
   private void onSwitchToGuestMode(ActionEvent event) throws IOException {
@@ -287,9 +276,10 @@ public class LoginController implements Initializable {
   private int updateVolumeStatus(String userName) throws IOException {
     Path userStatsPath = Paths.get("DATABASE/usersettings/" + userName);
     List<String> userStats = Files.readAllLines(userStatsPath);
-    SoundsManager
-        .changeBackgroundMusicVolume(Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[5]) / 100);
-    SoundsManager.changeSoundEffectsVolume(Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[4]) / 100);
+    SoundsManager.changeBackgroundMusicVolume(
+        Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[5]) / 100);
+    SoundsManager.changeSoundEffectsVolume(
+        Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[4]) / 100);
     return Integer.valueOf(userStats.get(userStats.size() - 1).split(" , ")[6]);
   }
 }

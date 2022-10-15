@@ -24,8 +24,7 @@ public class StatisticsManager {
   private static String previousUserID = "";
 
   /**
-   * This method gets all the users that have registered and compiles their
-   * usernames into a list
+   * This method gets all the users that have registered and compiles their usernames into a list
    *
    * @return A list of usernames
    * @throws IOException
@@ -45,8 +44,7 @@ public class StatisticsManager {
   }
 
   /**
-   * This method initializes the variables needed to start reading and updating
-   * the user statistics
+   * This method initializes the variables needed to start reading and updating the user statistics
    * on the scoreboard page
    *
    * @param currentID The username of the current user logged in
@@ -66,8 +64,7 @@ public class StatisticsManager {
   }
 
   /**
-   * This method reads the game history for a user from the database and updates
-   * the user statistics
+   * This method reads the game history for a user from the database and updates the user statistics
    * in the GUI
    *
    * @param currentID The username of the current user logged in
@@ -141,10 +138,8 @@ public class StatisticsManager {
   }
 
   /**
-   * Differ from get records, which returns all record of the current user This
-   * method returns the
-   * record corresponding to a specific word of the current user if he/she has it
-   * Return null if the
+   * Differ from get records, which returns all record of the current user This method returns the
+   * record corresponding to a specific word of the current user if he/she has it Return null if the
    * user doesn't have that record
    *
    * @param word the specific word
@@ -191,8 +186,7 @@ public class StatisticsManager {
   }
 
   /**
-   * This method returns the number of games played by the currently logged in
-   * user
+   * This method returns the number of games played by the currently logged in user
    *
    * @return The number of games played by the user as type Integer
    */

@@ -34,70 +34,50 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javax.imageio.ImageIO;
-
-import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 import nz.ac.auckland.se206.controllers.SoundsManager.BackgroundMusic;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 import nz.ac.auckland.se206.ml.DoodlePrediction;
 import nz.ac.auckland.se206.speech.TextToSpeech;
 import nz.ac.auckland.se206.words.CategorySelector;
 import nz.ac.auckland.se206.words.CategorySelector.Difficulty;
 
 /**
- * This is the controller of the canvas. You are free to modify this class and
- * the corresponding
- * FXML file as you see fit. For example, you might no longer need the "Predict"
- * button because the
+ * This is the controller of the canvas. You are free to modify this class and the corresponding
+ * FXML file as you see fit. For example, you might no longer need the "Predict" button because the
  * DL model should be automatically queried in the background every second.
  *
- * <p>
- * !! IMPORTANT !!
+ * <p>!! IMPORTANT !!
  *
- * <p>
- * Although we added the scale of the image, you need to be careful when
- * changing the size of the
- * drawable canvas and the brush size. If you make the brush too big or too
- * small with respect to
- * the canvas size, the ML model will not work correctly. So be careful. If you
- * make some changes in
+ * <p>Although we added the scale of the image, you need to be careful when changing the size of the
+ * drawable canvas and the brush size. If you make the brush too big or too small with respect to
+ * the canvas size, the ML model will not work correctly. So be careful. If you make some changes in
  * the canvas and brush sizes, make sure that the prediction works fine.
  */
 public class ZenMode {
 
-  @FXML
-  private Pane root;
+  @FXML private Pane root;
 
-  @FXML
-  private Canvas drawingBoard;
+  @FXML private Canvas drawingBoard;
 
-  @FXML
-  private Label targetWordLabel;
+  @FXML private Label targetWordLabel;
 
-  @FXML
-  private Button readyButton;
+  @FXML private Button readyButton;
 
-  @FXML
-  private Button clearButton;
+  @FXML private Button clearButton;
 
-  @FXML
-  private Button penEraserButton;
+  @FXML private Button penEraserButton;
 
-  @FXML
-  private Button saveButton;
+  @FXML private Button saveButton;
 
-  @FXML
-  private Button restartButton;
+  @FXML private Button restartButton;
 
-  @FXML
-  private PieChart pieChartDisplay;
+  @FXML private PieChart pieChartDisplay;
 
-  @FXML
-  private ColorPicker myColorPicker;
+  @FXML private ColorPicker myColorPicker;
 
-  @FXML
-  private Button drawButton;
+  @FXML private Button drawButton;
 
-  @FXML
-  private Button eraseButton;
+  @FXML private Button eraseButton;
 
   private GraphicsContext graphic;
 
@@ -116,17 +96,14 @@ public class ZenMode {
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
   /**
-   * JavaFX calls this method once the GUI elements are loaded. In our case we
-   * create a listener for
+   * JavaFX calls this method once the GUI elements are loaded. In our case we create a listener for
    * the drawing, and we load the ML model.
    *
-   * @throws ModelException     If there is an error in reading the input/output
-   *                            of the DL model.
-   * @throws IOException        If the model cannot be found on the file system.
+   * @throws ModelException If there is an error in reading the input/output of the DL model.
+   * @throws IOException If the model cannot be found on the file system.
    * @throws URISyntaxException
    * @throws CsvException
-   * @throws TranslateException It there is an error during processing of the
-   *                            input or output.
+   * @throws TranslateException It there is an error during processing of the input or output.
    */
   public void initialize()
       throws ModelException, IOException, CsvException, URISyntaxException, TranslateException {
@@ -147,17 +124,18 @@ public class ZenMode {
     readyButton.setText("Ready?");
 
     // Initialise the data list for the model results pie chart
-    data = FXCollections.observableArrayList(
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0),
-        new PieChart.Data("", 0));
+    data =
+        FXCollections.observableArrayList(
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0),
+            new PieChart.Data("", 0));
 
     // Set the data list for the model results pie chart and initialise the legend
     pieChartDisplay.setData(data);
@@ -168,8 +146,9 @@ public class ZenMode {
 
   /** This method resets the pie chart to a blank state */
   private void resetPieChart() {
-    for (PieChart.Data data : pieChartDisplay.getData()) { // Retrieve all the pieChart display from last played and set
-                                                           // to 0
+    for (PieChart.Data data :
+        pieChartDisplay.getData()) { // Retrieve all the pieChart display from last played and set
+      // to 0
       data.setName("");
       data.setPieValue(0);
     }
@@ -177,9 +156,9 @@ public class ZenMode {
 
   /**
    * This method initialises the canvas at the start of the game
-   * 
-   * @throws TranslateException It there is an error during processing of reading
-   *                            the input or output.
+   *
+   * @throws TranslateException It there is an error during processing of reading the input or
+   *     output.
    */
   private void loadCanvas() throws TranslateException {
 
@@ -217,20 +196,22 @@ public class ZenMode {
         });
     penOrEraser = true;
     // Looping sound effects for pen/eraser
-    drawingBoard.setOnDragDetected(e -> {
-      if (penOrEraser) {
-        SoundsManager.playSoundEffects(SoundEffects.PENCIL);
-      } else {
-        SoundsManager.playSoundEffects(SoundEffects.ERASER);
-      }
-    });
-    drawingBoard.setOnMouseReleased(e -> {
-      if (penOrEraser) {
-        SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.PENCIL);
-      } else {
-        SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.ERASER);
-      }
-    });
+    drawingBoard.setOnDragDetected(
+        e -> {
+          if (penOrEraser) {
+            SoundsManager.playSoundEffects(SoundEffects.PENCIL);
+          } else {
+            SoundsManager.playSoundEffects(SoundEffects.ERASER);
+          }
+        });
+    drawingBoard.setOnMouseReleased(
+        e -> {
+          if (penOrEraser) {
+            SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.PENCIL);
+          } else {
+            SoundsManager.stopPencilOrEraserSoundEffects(SoundEffects.ERASER);
+          }
+        });
 
     drawingBoard.setDisable(false);
   }
@@ -243,20 +224,14 @@ public class ZenMode {
   }
 
   /**
-   * This method executes when the user clicks the "Ready" button. Every second,
-   * it gets the current
-   * drawing, queries the DL model and updates the pie chart with the top 10
-   * predictions of the DL
+   * This method executes when the user clicks the "Ready" button. Every second, it gets the current
+   * drawing, queries the DL model and updates the pie chart with the top 10 predictions of the DL
    * model along with the percentage certainty the model has in each prediction
    *
-   * @throws TranslateException If there is an error in reading the input/output
-   *                            of the DL model.
-   * @throws URISyntaxException If a string could not be parsed as a URI
-   *                            reference.
-   * @throws IOException        If there is an error in reading the input/output
-   *                            of the DL model.
-   * @throws CsvException       If there is an error regarding the CSV files
-   *                            opened using OpenCSV
+   * @throws TranslateException If there is an error in reading the input/output of the DL model.
+   * @throws URISyntaxException If a string could not be parsed as a URI reference.
+   * @throws IOException If there is an error in reading the input/output of the DL model.
+   * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
    * @throws ModelException
    */
   @FXML
@@ -297,7 +272,7 @@ public class ZenMode {
       if (!SoundsManager.isZenBackgroundMusicPlaying()) {
         SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
       }
-      
+
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
       saveButton.setDisable(true);
@@ -309,10 +284,8 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user draws on the drawingBoard It draws a line
-   * on
-   * the drawingBoard based on
-   * the chosen colour
+   * This method is called when the user draws on the drawingBoard It draws a line on the
+   * drawingBoard based on the chosen colour
    *
    * @throws TranslateException
    */
@@ -358,14 +331,11 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user draws on the drawingBoard in "Erase" mode
-   * It
-   * erases a line on the
-   * drawingBoard based on the mouse position
+   * This method is called when the user draws on the drawingBoard in "Erase" mode It erases a line
+   * on the drawingBoard based on the mouse position
    *
-   * @throws TranslateException It there is an error during processing of reading
-   *                            the
-   *                            input or output of drawingBoard position
+   * @throws TranslateException It there is an error during processing of reading the input or
+   *     output of drawingBoard position
    */
   @FXML
   private void onErase() throws TranslateException {
@@ -414,28 +384,27 @@ public class ZenMode {
    * @return a Task<Void> object, the background speech task
    */
   private Task<Void> generateNewSpeechTask() {
-    Task<Void> backgroundSpeechTask = new Task<Void>() {
+    Task<Void> backgroundSpeechTask =
+        new Task<Void>() {
 
-      @Override
-      protected Void call() throws Exception {
+          @Override
+          protected Void call() throws Exception {
 
-        // Use text to speech to communicate the current word to draw
-        TextToSpeech textToSpeech = new TextToSpeech();
-        textToSpeech.speak("The word to draw is" + currentWord);
+            // Use text to speech to communicate the current word to draw
+            TextToSpeech textToSpeech = new TextToSpeech();
+            textToSpeech.speak("The word to draw is" + currentWord);
 
-        return null;
-      }
-    };
+            return null;
+          }
+        };
 
     return backgroundSpeechTask;
   }
 
   /**
-   * This method generates a random word to draw, depending on the difficulty
-   * selected by the user
+   * This method generates a random word to draw, depending on the difficulty selected by the user
    *
-   * @throws CsvException       Base class for all the exceptions for opencsv
-   *                            related work
+   * @throws CsvException Base class for all the exceptions for opencsv related work
    * @throws IOException
    * @throws URISyntaxException
    */
@@ -453,11 +422,11 @@ public class ZenMode {
 
     // Switch between the words level chosen by the user
     switch (wordsLevel) {
-      // Easy mode: Choose only easy level words
+        // Easy mode: Choose only easy level words
       case 0:
         randomWord = categoryPlatform.getRandomCategory(Difficulty.E);
         break;
-      // Medium mode: Randomly choose easy or medium level words
+        // Medium mode: Randomly choose easy or medium level words
       case 1:
         // Generate 0 or 1 randomly and choose an easy or medium word based on this
         // result
@@ -472,7 +441,7 @@ public class ZenMode {
             break;
         }
         break;
-      // Hard mode: Randomly choose easy, medium or hard level words
+        // Hard mode: Randomly choose easy, medium or hard level words
       case 2:
 
         // Generate 0, 1 or 2 randomly and choose an easy, medium or hard word based on
@@ -491,7 +460,7 @@ public class ZenMode {
             break;
         }
         break;
-      // Master mode: Choose only a hard word
+        // Master mode: Choose only a hard word
       case 3:
         randomWord = categoryPlatform.getRandomCategory(Difficulty.H);
         break;
@@ -529,8 +498,7 @@ public class ZenMode {
   }
 
   /**
-   * This method scan through the pixels on canvas Return true when canvas is
-   * blank, otherwise false
+   * This method scan through the pixels on canvas Return true when canvas is blank, otherwise false
    */
   private Boolean isCanvasBlank() {
     // Get a snapshot of the current canvas
@@ -549,12 +517,10 @@ public class ZenMode {
   }
 
   /**
-   * This method queries the data learning model to make the predictions and
-   * updates the pie chart
+   * This method queries the data learning model to make the predictions and updates the pie chart
    * accordingly with the top 10 predictions made
    *
-   * @throws TranslateException If there is an error in reading the input/output
-   *                            of the DL model.
+   * @throws TranslateException If there is an error in reading the input/output of the DL model.
    */
   private void createPredictions() throws TranslateException {
     // Query the data learning model and get the top ten predictions
@@ -586,8 +552,8 @@ public class ZenMode {
     final Image snapshot = drawingBoard.snapshot(null, null);
     final BufferedImage image = SwingFXUtils.fromFXImage(snapshot, null);
     // Convert into a binary image.
-    final BufferedImage imageBinary = new BufferedImage(image.getWidth(), image.getHeight(),
-        BufferedImage.TYPE_BYTE_BINARY);
+    final BufferedImage imageBinary =
+        new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
     final Graphics2D graphics = imageBinary.createGraphics();
 
     graphics.drawImage(image, 0, 0, null);
@@ -600,7 +566,6 @@ public class ZenMode {
    *
    * @return The file of the saved image.
    * @throws IOException If the image cannot be saved.
-   * 
    */
   @FXML
   private void onSaveCurrentSnapshotOnFile() throws IOException {
@@ -618,8 +583,7 @@ public class ZenMode {
   }
 
   /**
-   * This method is called when the user clicks on the "Restart" button. It resets
-   * the canvas and
+   * This method is called when the user clicks on the "Restart" button. It resets the canvas and
    * the pie chart.
    */
   @FXML
@@ -648,56 +612,58 @@ public class ZenMode {
    */
   private Task<Void> showPrediction() throws TranslateException {
 
-    Task<Void> backgroundTask = new Task<Void>() {
+    Task<Void> backgroundTask =
+        new Task<Void>() {
 
-      int clock = 1000000000;
+          int clock = 1000000000;
 
-      /**
-       * This method is called when the background task is executed.
-       *
-       * @return null
-       */
-      @Override
-      protected Void call() throws Exception {
-        Timeline time = new Timeline();
-        KeyFrame frame = new KeyFrame(
-            Duration.seconds(1),
-            new EventHandler<ActionEvent>() {
+          /**
+           * This method is called when the background task is executed.
+           *
+           * @return null
+           */
+          @Override
+          protected Void call() throws Exception {
+            Timeline time = new Timeline();
+            KeyFrame frame =
+                new KeyFrame(
+                    Duration.seconds(1),
+                    new EventHandler<ActionEvent>() {
 
-              /**
-               * This method is invoked to activate the count down timer Every time seconds
-               * --, the integer value is converted to text in GUI Also, the top 10
-               * predictions and key features on button is disabled/enabled
-               */
-              public void handle(ActionEvent event) {
-                clock--;
-                try {
-                  createPredictions();
-                  colorToHex();
-                  if (isCanvasBlank()) {
-                    resetPieChart();
-                  }
-                } catch (TranslateException e2) {
-                  e2.printStackTrace();
-                }
+                      /**
+                       * This method is invoked to activate the count down timer Every time seconds
+                       * --, the integer value is converted to text in GUI Also, the top 10
+                       * predictions and key features on button is disabled/enabled
+                       */
+                      public void handle(ActionEvent event) {
+                        clock--;
+                        try {
+                          createPredictions();
+                          colorToHex();
+                          if (isCanvasBlank()) {
+                            resetPieChart();
+                          }
+                        } catch (TranslateException e2) {
+                          e2.printStackTrace();
+                        }
 
-                if (clock == 0) { // Once counter reach 0, every feature disabled except
-                  time.stop();
-                }
-              }
-            });
+                        if (clock == 0) { // Once counter reach 0, every feature disabled except
+                          time.stop();
+                        }
+                      }
+                    });
 
-        time.setCycleCount(Timeline.INDEFINITE);
-        time.getKeyFrames().add(frame);
-        if (time != null) {
-          time.stop();
-        }
-        time.play();
-        {
-          return null;
-        }
-      }
-    };
+            time.setCycleCount(Timeline.INDEFINITE);
+            time.getKeyFrames().add(frame);
+            if (time != null) {
+              time.stop();
+            }
+            time.play();
+            {
+              return null;
+            }
+          }
+        };
 
     return backgroundTask;
   }
@@ -708,8 +674,7 @@ public class ZenMode {
   }
 
   /**
-   * This method converts the colour code into readable 6 digit hexadecimal code
-   * and converts it
+   * This method converts the colour code into readable 6 digit hexadecimal code and converts it
    * into R, G, B integer value.
    *
    * @return The hex value of the colour code
@@ -725,10 +690,8 @@ public class ZenMode {
    *
    * @return The red component of the colour code
    * @throws NumberFormatException
-   * @throws TranslateException    It there is an error during processing of
-   *                               reading the
-   *                               input or output of hexadecimal code converting
-   *                               to red.
+   * @throws TranslateException It there is an error during processing of reading the input or
+   *     output of hexadecimal code converting to red.
    */
   private int getRed() throws NumberFormatException, TranslateException {
 
@@ -740,10 +703,8 @@ public class ZenMode {
    * This method gets the green component of the RGB colour code
    *
    * @return The green component of the colour code
-   * @throws NumberFormatException An error the application has attempted to
-   *                               convert
-   *                               a string to one of the numeric types, but
-   *                               string didn't had appropriate type.
+   * @throws NumberFormatException An error the application has attempted to convert a string to one
+   *     of the numeric types, but string didn't had appropriate type.
    * @throws TranslateException
    */
   private int getGreen() throws NumberFormatException, TranslateException {
