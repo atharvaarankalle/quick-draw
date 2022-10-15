@@ -35,7 +35,7 @@
       </AnchorPane>
       <VBox layoutX="602.0" layoutY="111.0" prefHeight="316.0" prefWidth="122.0" spacing="20.0">
          <children>
-            <Button fx:id="readyButton" mnemonicParsing="false" onAction="#onReady" prefHeight="28.0" prefWidth="106.0" styleClass="gameButtons" text="Ready" textFill="WHITE">
+            <Button fx:id="readyButton" mnemonicParsing="false" onAction="#onReady" prefHeight="28.0" prefWidth="106.0" styleClass="gameButtons" text="Ready" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font name="Lucida Fax Demibold" size="14.0" />
                </font>
