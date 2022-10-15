@@ -18,7 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import nz.ac.auckland.se206.controllers.SoundsManager.sfx;
+import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class ScoreBoardController {
   @FXML private Label userNameLabel;
@@ -170,7 +170,7 @@ public class ScoreBoardController {
   @FXML
   private void onNextImage() {
     //Play sound effect
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     /*
      * Switch between the images displayed on the imageView
      * For each image, ensure it is able to handle the cases where
@@ -239,7 +239,7 @@ public class ScoreBoardController {
   @FXML
   private void onPreviousImage() {
     //Play sound effect
-    SoundsManager.playSFX(sfx.BUTTON1);
+    SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
     /*
      * Switch between the images displayed on the imageView
      * For each image, ensure it is able to handle the cases where
