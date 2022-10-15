@@ -14,7 +14,7 @@
 
 <Pane fx:id="root" prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ZenMode">
    <children>
-      <PieChart fx:id="modelResultsPieChart" layoutX="66.0" layoutY="441.0" prefHeight="276.0" prefWidth="612.0" title="DL Model Top Predictions" />
+      <PieChart fx:id="pieChartDisplay" layoutX="66.0" layoutY="441.0" prefHeight="276.0" prefWidth="612.0" title="DL Model Top Predictions" />
       <AnchorPane layoutX="-11.0" layoutY="14.0" prefHeight="42.0" prefWidth="766.0">
          <children>
             <Label layoutX="232.0" layoutY="6.0" prefHeight="27.0" prefWidth="301.0" text="Quick, Draw! SE206 Edition" textAlignment="CENTER">
@@ -40,17 +40,17 @@
                   <Font name="Lucida Fax Demibold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="saveDrawingButton" mnemonicParsing="false" onAction="#onSaveCurrentSnapshotOnFile" prefHeight="28.0" prefWidth="106.0" styleClass="gameButtons" text="Save" textFill="WHITE">
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveCurrentSnapshotOnFile" prefHeight="28.0" prefWidth="106.0" styleClass="gameButtons" text="Save" textFill="WHITE">
                <font>
                   <Font name="Lucida Fax Demibold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="drawButton" mnemonicParsing="false" onAction="#onDraw" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Draw">
+            <Button fx:id="drawButton" mnemonicParsing="false" onAction="#onDraw" prefHeight="28.0" prefWidth="106.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Draw" textFill="WHITE">
                <font>
                   <Font name="Lucida Fax Demibold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="eraseButton" mnemonicParsing="false" onAction="#onErase" prefHeight="25.0" prefWidth="67.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Erase">
+            <Button fx:id="eraseButton" mnemonicParsing="false" onAction="#onErase" prefHeight="28.0" prefWidth="106.0" styleClass="gameButtons" stylesheets="@../css/canvas.css" text="Erase" textFill="WHITE">
                <font>
                   <Font name="Lucida Fax Demibold" size="14.0" />
                </font>
@@ -73,7 +73,7 @@
       </VBox>
       <Pane layoutX="129.0" layoutY="111.0" prefHeight="243.0" prefWidth="400.0" style="-fx-background-color: white;">
          <children>
-            <Canvas fx:id="canvas" height="243.0" width="400.0">
+            <Canvas fx:id="drawingBoard" height="243.0" width="400.0">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
