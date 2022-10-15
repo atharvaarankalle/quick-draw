@@ -376,9 +376,9 @@ public class CanvasController {
           protected Void call() throws Exception {
             String def = HiddenWordFunctions.searchWordDefinetion(currentWord).get(0);
             Platform.runLater(() -> {
-            targetWordLabel.setFont(Font.font("Lucida Fax Regular", FontWeight.NORMAL, 15));
-            targetWordLabel.setTextAlignment(TextAlignment.LEFT);
-            targetWordLabel.setText(def);
+              targetWordLabel.setFont(Font.font("Lucida Fax Regular", FontWeight.NORMAL, 15));
+              targetWordLabel.setTextAlignment(TextAlignment.LEFT);
+              targetWordLabel.setText(def);
             });
             return null;
           }
@@ -391,8 +391,8 @@ public class CanvasController {
         });
         getDefinition.setOnSucceeded(e -> {
           Platform.runLater(() -> {
-          readyButton.setDisable(false);
-          timerLabel.setText("Press Start to start drawing!");
+            readyButton.setDisable(false);
+            timerLabel.setText("Press Start to start drawing!");
           });
         });
         Thread backgroundDefinitionSearch = new Thread(getDefinition);
@@ -1066,11 +1066,11 @@ public class CanvasController {
         // If the recorded time is equal to the maximum time, the game must have been
         // lost
         if (currentScore.getTime() == gameSettings.getTimeLevel() + 1) {
-          leaderBoardList.getItems().add(currentScore.getID() + "  LOST");
+          leaderBoardList.getItems().add(currentScore.getUsername() + "  LOST");
         } else {
           leaderBoardList
               .getItems()
-              .add(currentScore.getID() + "  " + currentScore.getTime() + " s");
+              .add(currentScore.getUsername() + "  " + currentScore.getTime() + " s");
         }
       } else {
         break;
