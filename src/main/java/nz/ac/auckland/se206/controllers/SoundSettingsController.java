@@ -28,7 +28,7 @@ public class SoundSettingsController implements Initializable {
     @FXML
     private Pane soundSettingsRoot;
     @FXML
-    private Slider SoundEffectsSlider;
+    private Slider soundEffectSlider;
     @FXML
     private Slider bgmSlider;
     @FXML
@@ -90,15 +90,15 @@ public class SoundSettingsController implements Initializable {
                         e.printStackTrace();
                     }
 
-                    SoundEffectsSlider.setValue(gameSettings.getSfxVolume());
+                    soundEffectSlider.setValue(gameSettings.getSfxVolume());
 
                     bgmSlider.setValue(gameSettings.getBgmVolume());
 
-                    SoundEffectsSlider.valueProperty().addListener(new InvalidationListener() {
+                    soundEffectSlider.valueProperty().addListener(new InvalidationListener() {
                         @Override
                         public void invalidated(Observable observable) {
-                            SoundsManager.changeSoundEffectsVolume(SoundEffectsSlider.getValue() / 100);
-                            gameSettings.setSfxVolume(SoundEffectsSlider.getValue());
+                            SoundsManager.changeSoundEffectsVolume(soundEffectSlider.getValue() / 100);
+                            gameSettings.setSfxVolume(soundEffectSlider.getValue());
                         }
 
                     });
@@ -118,7 +118,7 @@ public class SoundSettingsController implements Initializable {
      */
     @FXML
     private void onSoundEffectsDragDetected() {
-        SoundEffectsSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
+        soundEffectSlider.valueChangingProperty().addListener(new ChangeListener<Boolean>() {
 
             @Override
             public void changed(ObservableValue<? extends Boolean> observable, Boolean wasChanging, Boolean isNowChanging) {
@@ -199,7 +199,7 @@ public class SoundSettingsController implements Initializable {
                     + " , "
                     + Double.toString(gameSettings.getConfidenceSliderPosition())
                     + " , "
-                    + Double.toString(SoundEffectsSlider.getValue())
+                    + Double.toString(soundEffectSlider.getValue())
                     + " , "
                     + Double.toString(bgmSlider.getValue())
                     + " , "
