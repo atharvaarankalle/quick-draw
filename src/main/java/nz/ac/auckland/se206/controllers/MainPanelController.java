@@ -57,12 +57,14 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onHome(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
     // Set the scene to the home scene
     Parent view = loadFxml("homepage");
     currentScene.setCenter(view);
 
     // Stop background music for all modes and play the main menu music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -78,12 +80,14 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onGame(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
     // Set the scene to the canvas scene and leave hidden mode
     currentScene.setCenter(null);
     HiddenWordFunctions.leaveHiddenMode();
     Parent view = loadFxml("canvas");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
 
     // Stop background music for all modes and play the main menu music
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
@@ -100,12 +104,15 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToInfo(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the how to play scene
     Parent view = loadFxml("howtoplay");
     currentScene.setCenter(view);
 
     // Stop background music for all modes and play the main menu music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -121,6 +128,8 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToStatistic(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the stats scene
     currentScene.setCenter(null);
@@ -128,6 +137,7 @@ public class MainPanelController implements Initializable {
     currentScene.setCenter(view);
 
     // Stop background music for all modes and play the main menu music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -143,12 +153,15 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the game settings scene
     Parent view = loadFxml("gamesettings");
     currentScene.setCenter(view);
 
     // Stop background music for all modes and play the main menu music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -158,12 +171,15 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSoundSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the sound settings scene
     Parent view = loadFxml("soundsettings");
     currentScene.setCenter(view);
 
     // Stop background music for all modes and play the main menu music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -180,15 +196,17 @@ public class MainPanelController implements Initializable {
   private void onSwitchToZenMode(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
 
-    // Stop the main menu music and play the zen mode music
+    // Stop the main menu music and play the mainPanel mode music
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
-
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
+    SoundsManager.stopWinAndLoseSoundEffects();
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
     // Set the scene to the zen mode scene
     currentScene.setCenter(null);
     Parent view = loadFxml("zenmode");
     currentScene.setCenter(view);
-    gameButton.setDisable(false);
   }
 
   /**
@@ -202,16 +220,17 @@ public class MainPanelController implements Initializable {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
 
     // Stop the music for all modes and play the hidden mode music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
     // Set the scene to the hidden mode scene and enter hidden mode
     currentScene.setCenter(null);
     HiddenWordFunctions.toHiddenMode();
     Parent view = loadFxml("canvas");
     currentScene.setCenter(view);
-    gameButton.setDisable(false);
   }
 
   /**
@@ -225,15 +244,16 @@ public class MainPanelController implements Initializable {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
 
     // Stop the music for all modes and play the main menu music
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
     // Set the scene to the badges scene
     currentScene.setCenter(null);
     Parent view = loadFxml("badges");
     currentScene.setCenter(view);
-    gameButton.setDisable(false);
   }
 
   /**
@@ -245,6 +265,8 @@ public class MainPanelController implements Initializable {
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
+    // Update ingame status
+    InGameStatusManager.setInGameStatus(false);
 
     // Stop all the background music
     SoundsManager.stopWinAndLoseSoundEffects();

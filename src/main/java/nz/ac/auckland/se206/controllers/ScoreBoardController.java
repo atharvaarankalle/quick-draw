@@ -113,12 +113,14 @@ public class ScoreBoardController {
       // After the scan, update all information in the GUI
       gamesWonLabel.setText(String.valueOf(StatisticsManager.getGameWon()));
       gamesLostLabel.setText(String.valueOf(StatisticsManager.getGameLost()));
-
-      // If the top word is not null, update the GUI
+      // // If the top word is not null, update the GUI
       if (topWord != null) {
-        bestRecordWordLabel.setText(topWord + "!");
-        bestRecordTimeLabel.setText(
-            String.valueOf(StatisticsManager.getTopScore()) + " seconds to draw one!");
+        textLabel2.setText(
+            "It only took you "
+                + String.valueOf(StatisticsManager.getTopScore())
+                + " seconds to draw a "
+                + topWord
+                + "!");
       } else {
         textLabel1.setText("Oops, seems like you haven't won any games yet...");
         textLabel2.setText("But don't give up! Let's try again!");

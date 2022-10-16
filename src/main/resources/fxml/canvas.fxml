@@ -100,12 +100,12 @@
                </graphic>
             </Button>
          </children></Pane>
-      <Label fx:id="hint1Label" layoutX="183.0" layoutY="408.0" prefHeight="20.0" prefWidth="186.0" text="The word is 5 letters long">
+      <Label fx:id="hint1Label" alignment="TOP_CENTER" layoutX="129.0" layoutY="408.0" prefHeight="20.0" prefWidth="254.0" text="The word is 5 letters long" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="hint2Label" layoutX="383.0" layoutY="408.0" prefHeight="20.0" prefWidth="211.0" text="The word starts with letter A">
+      <Label fx:id="hint2Label" alignment="TOP_CENTER" layoutX="382.0" layoutY="408.0" prefHeight="20.0" prefWidth="254.0" text="The word starts with letter A" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>

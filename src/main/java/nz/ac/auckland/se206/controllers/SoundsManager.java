@@ -400,22 +400,4 @@ public class SoundsManager {
     ingamePlayer.setMute(muteStatus);
     hiddenPlayer.setMute(muteStatus);
   }
-
-  /**
-   * This method checks if the zen mode background music is currently playing
-   *
-   * @return true if the zen mode background music is currently playing, false otherwise
-   */
-  public static Boolean isZenBackgroundMusicPlaying() {
-    return zenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
-  }
-
-  /**
-   * This method checks if the hidden mode background music is currently playing
-   *
-   * @return true if the hidden mode background music is currently playing, false otherwise
-   */
-  public static Boolean ishiddenBackgroundMusicPlaying() {
-    return hiddenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
-  }
 }

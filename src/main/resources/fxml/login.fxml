@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="loginRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="900.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
+<AnchorPane fx:id="loginRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="821.0" prefWidth="900.0" style="-fx-background-color: #A7C7E7;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.LoginController">
    <children>
       <Pane layoutX="14.0" layoutY="225.0" prefHeight="502.0" prefWidth="548.0">
          <children>
@@ -79,7 +79,7 @@
       </Pane>
       <ListView fx:id="usersListView" fixedCellSize="50.0" layoutX="567.0" layoutY="225.0" onMouseClicked="#onUserSelected" prefHeight="502.0" prefWidth="332.0" style="-fx-background-color: #A7C7E7;" />
       <AnchorPane layoutX="-1.0" prefHeight="36.0" prefWidth="900.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" />
-      <AnchorPane layoutX="-3.0" layoutY="738.0" prefHeight="36.0" prefWidth="908.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-3.0" />
+      <AnchorPane layoutX="-3.0" layoutY="789.0" prefHeight="36.0" prefWidth="908.0" style="-fx-background-color: black;" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="-3.0" />
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="67.0" text="Welcome to Quick, Draw SE206 Edition!" textAlignment="CENTER">
          <font>
             <Font name="Lucida Handwriting Italic" size="35.0" />
