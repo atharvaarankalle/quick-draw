@@ -14,7 +14,7 @@
    <children>
       <AnchorPane layoutY="33.0" prefHeight="592.0" prefWidth="142.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0">
          <children>
-            <VBox alignment="CENTER" layoutY="7.0" prefHeight="786.0" prefWidth="134.0" spacing="31.0" style="-fx-background-color: black;">
+            <VBox alignment="CENTER" layoutY="7.0" prefHeight="614.0" prefWidth="134.0" spacing="22.3" style="-fx-background-color: black;">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Home">
                      <graphic>
