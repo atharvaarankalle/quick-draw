@@ -29,7 +29,7 @@ public class App extends Application {
   /**
    * This method is called when the app is first run, and is used to setup the app
    *
-   * @throws IOException
+   * @throws IOException if the file cannot be read
    */
   public static void initalize() throws IOException {
     File storageData = new File("DATABASE"); // Create a folder to store all user info
@@ -44,7 +44,7 @@ public class App extends Application {
   /**
    * This method is the entry point to the entire JavaFX application
    *
-   * @throws IOException
+   * @throws IOException if the file cannot be read
    */
   public static void main(final String[] args) throws IOException {
 
@@ -115,7 +115,7 @@ public class App extends Application {
    * This method is used to set the slider positions to the last saved positions
    *
    * @param stage The primary stage of the application.
-   * @throws IOException
+   * @throws IOException If the file cannot be read
    */
   private void setSliderPositions(Stage stage) {
     Path userDataPath = Paths.get("DATABASE/UserDatas.txt");

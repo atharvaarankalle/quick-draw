@@ -101,8 +101,8 @@ public class ZenMode {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws URISyntaxException
-   * @throws CsvException
+   * @throws URISyntaxException If a string cannot be converted to a URI reference
+   * @throws CsvException If there is an error in reading the input/output of the CSV file
    * @throws TranslateException It there is an error during processing of the input or output.
    */
   public void initialize()
@@ -232,7 +232,7 @@ public class ZenMode {
    * @throws URISyntaxException If a string could not be parsed as a URI reference.
    * @throws IOException If there is an error in reading the input/output of the DL model.
    * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
-   * @throws ModelException
+   * @throws ModelException If there is an error in reading the input/output of the DL model.
    */
   @FXML
   private void onReady()
@@ -287,7 +287,7 @@ public class ZenMode {
    * This method is called when the user draws on the drawingBoard It draws a line on the
    * drawingBoard based on the chosen colour
    *
-   * @throws TranslateException
+   * @throws TranslateException If there is an error in reading the input/output of the DL model.
    */
   @FXML
   private void onDraw() throws TranslateException {
@@ -405,8 +405,8 @@ public class ZenMode {
    * This method generates a random word to draw, depending on the difficulty selected by the user
    *
    * @throws CsvException Base class for all the exceptions for opencsv related work
-   * @throws IOException
-   * @throws URISyntaxException
+   * @throws IOException If there is an error during processing of reading the input or output
+   * @throws URISyntaxException If a string could not be parsed as a URI reference
    */
   private void randomWord() throws CsvException, IOException, URISyntaxException {
 
@@ -668,6 +668,7 @@ public class ZenMode {
     return backgroundTask;
   }
 
+  /** This method is called when the user clicks the mouse. It plays a click sound effect */
   @FXML
   private void onMouseClicked() {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
@@ -689,7 +690,8 @@ public class ZenMode {
    * This method gets the red component of the RGB colour code
    *
    * @return The red component of the colour code
-   * @throws NumberFormatException
+   * @throws NumberFormatException An error the application has attempted to convert a string to one
+   *     of the numeric types, but string didn't had appropriate type.
    * @throws TranslateException It there is an error during processing of reading the input or
    *     output of hexadecimal code converting to red.
    */
@@ -705,7 +707,7 @@ public class ZenMode {
    * @return The green component of the colour code
    * @throws NumberFormatException An error the application has attempted to convert a string to one
    *     of the numeric types, but string didn't had appropriate type.
-   * @throws TranslateException
+   * @throws TranslateException If there is an error during processing of reading input or output
    */
   private int getGreen() throws NumberFormatException, TranslateException {
     int g = Integer.valueOf(colorToHex().substring(2, 4), 16);
@@ -716,8 +718,9 @@ public class ZenMode {
    * This method gets the blue component of the RGB colour code
    *
    * @return The blue component of the colour code
-   * @throws NumberFormatException
-   * @throws TranslateException
+   * @throws NumberFormatException An error the application has attempted to convert a string to one
+   *     of the numeric types, but string didn't had appropriate type.
+   * @throws TranslateException If there is an error during processing of reading input or output
    */
   private int getBlue() throws NumberFormatException, TranslateException {
     int b = Integer.valueOf(colorToHex().substring(4, 6), 16);

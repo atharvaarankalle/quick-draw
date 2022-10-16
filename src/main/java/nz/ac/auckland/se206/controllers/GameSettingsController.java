@@ -53,8 +53,10 @@ public class GameSettingsController implements Initializable {
    * settings are set, the sliders are formatted and the values for the sliders are read from the
    * user settings file and set
    *
-   * @param location
-   * @param resources
+   * @param location The location used to resolve relative paths for the root object, or null if the
+   *     location is not known.
+   * @param resources The resources used to localize the root object, or null if the root object was
+   *     not localized.
    */
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -80,6 +82,7 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public String toString(Double sliderValue) {
+            // Switch statement to convert the double value to a string
             if (sliderValue < 0.5) {
               return "Easy";
             }
@@ -97,7 +100,12 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public Double fromString(String string) {
-            // Switch statement to convert the string to a double
+            /*
+             * Switch statement to convert the string to a double value
+             * Easy mode returns 0.0
+             * Medium mode returns 1.0
+             * Hard mode returns 2.0
+             */
             switch (string) {
               case "Easy":
                 return 1d;
@@ -122,7 +130,13 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public String toString(Double sliderValue) {
-            // Switch statement to convert the double value of the slider to a string
+            /*
+             * Switch statement to convert the double value of the slider to a string
+             * A slider value less than 0.5 returns "Easy"
+             * A slider value less than 1.5 returns "Medium"
+             * A slider value less than 2.5 returns "Hard"
+             * Any other value returns "Master"
+             */
             if (sliderValue < 0.5) {
               return "Easy";
             }
@@ -143,7 +157,13 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public Double fromString(String string) {
-            // Switch statement to convert the string value of the slider to a double
+            /*
+             * Switch statement to convert the string value of the slider to a double
+             * "Easy" returns 0.0
+             * "Medium" returns 1.0
+             * "Hard" returns 2.0
+             * "Master" returns 3.0
+             */
             switch (string) {
               case "Easy":
                 return 1d;
@@ -170,7 +190,13 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public String toString(Double sliderValue) {
-            // Switch statement to convert the double value of the slider to a string
+            /*
+             * Switch statement to convert the double value of the slider to a string
+             * A slider value less than 0.5 returns "Easy"
+             * A slider value less than 1.5 returns "Medium"
+             * A slider value less than 2.5 returns "Hard"
+             * Any other value returns "Master"
+             */
             if (sliderValue < 0.5) {
               return "Easy";
             }
@@ -191,6 +217,13 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public Double fromString(String string) {
+            /*
+             * Switch statement to convert the string value of the slider to a double
+             * "Easy" returns 0.0
+             * "Medium" returns 1.0
+             * "Hard" returns 2.0
+             * "Master" returns 3.0
+             */
             switch (string) {
               case "Easy":
                 return 1d;
@@ -217,7 +250,13 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public String toString(Double sliderValue) {
-            // Switch statement to convert the double value of the slider to a string
+            /*
+             * Switch statement to convert the double value of the slider to a string
+             * A slider value less than 0.5 returns "Easy"
+             * A slider value less than 1.5 returns "Medium"
+             * A slider value less than 2.5 returns "Hard"
+             * Any other value returns "Master"
+             */
             if (sliderValue < 0.5) {
               return "Easy";
             }
@@ -238,7 +277,13 @@ public class GameSettingsController implements Initializable {
            */
           @Override
           public Double fromString(String string) {
-            // Switch statement to convert the string value of the slider to a double
+            /*
+             * Switch statement to convert the string value of the slider to a double
+             * "Easy" returns 0.0
+             * "Medium" returns 1.0
+             * "Hard" returns 2.0
+             * "Master" returns 3.0
+             */
             switch (string) {
               case "Easy":
                 return 1d;

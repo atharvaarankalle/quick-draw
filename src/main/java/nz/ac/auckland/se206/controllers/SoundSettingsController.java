@@ -112,13 +112,18 @@ public class SoundSettingsController implements Initializable {
         });
   }
 
-  /*
-   * Code adapted from:
-   * https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-
-   * dragging-mouse-button
+  /**
+   * This method is called when the user drags the sound effects slider It changes the volume of the
+   * sound effects
    */
   @FXML
   private void onSoundEffectsDragDetected() {
+    /*
+     * Code adapted from:
+     * https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-
+     * dragging-mouse-button
+     */
+
     // Add listed to sound effect slider, if the slider is moved to a new position, record new
     // settings value and play sfx
     soundEffectSlider
@@ -135,6 +140,7 @@ public class SoundSettingsController implements Initializable {
                 if (!isNowChanging) {
                   SoundsManager.playSoundEffects(SoundEffects.TAP);
                   try {
+                    // Call the method to update the user settings file
                     addSettingsLine();
                   } catch (IOException e) {
                     e.printStackTrace();
@@ -144,13 +150,18 @@ public class SoundSettingsController implements Initializable {
             });
   }
 
-  /*
-   * Code adapted from:
-   * https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-
-   * dragging-mouse-button
+  /**
+   * This method is called when the user drags the background music slider It changes the volume of
+   * the background music
    */
   @FXML
   private void onBackgroundMusicDragDetected() {
+    /*
+     * Code adapted from:
+     * https://stackoverflow.com/questions/26552495/javafx-set-slider-value-after-
+     * dragging-mouse-button
+     */
+
     // Add listed to background music slider, if the slider is moved to a new position, record new
     // settings value and play sfx
     backgroundMusicSlider
@@ -167,6 +178,7 @@ public class SoundSettingsController implements Initializable {
                 if (!isNowChanging) {
                   SoundsManager.playSoundEffects(SoundEffects.TAP);
                   try {
+                    // Call the method to update the user settings file
                     addSettingsLine();
                   } catch (IOException e) {
                     e.printStackTrace();
@@ -176,6 +188,9 @@ public class SoundSettingsController implements Initializable {
             });
   }
 
+  /**
+   * This method is called when the user clicks the mute button It mutes all the sounds in the game
+   */
   @FXML
   private void onMute() throws URISyntaxException, IOException {
     // If the mute status setting is 0, clicking the mute button should mute the game and change
@@ -187,7 +202,7 @@ public class SoundSettingsController implements Initializable {
       updateMuteImage(gameSettings.getMuteStatus());
       addSettingsLine();
     } else {
-      // Other wise if mute status is 1, clicking the mute button should unmute the game and change
+      // Otherwise if mute status is 1, clicking the mute button should unmute the game and change
       // the mute status to 0
       gameSettings.setMuteStatus(0);
       SoundsManager.setMuteAllBackgroundMusic(false);
@@ -197,13 +212,23 @@ public class SoundSettingsController implements Initializable {
     }
   }
 
+  /**
+   * This method is called to update the mute button image based on the mute status
+   *
+   * @param status The current status of the mute setting
+   * @throws URISyntaxException If the string could not be parsed as a URI reference
+   */
   private void updateMuteImage(int status) throws URISyntaxException {
+    // Load the mute and unmute button images
     muteImage = new Image(App.class.getResource("/images/mute.png").toURI().toString());
     unmuteImage = new Image(App.class.getResource("/images/unmute.png").toURI().toString());
+
+    // If the mute status is 1, set the button image to the unmute image
     if (status == 1) {
       muteImageView.setImage(unmuteImage);
       muteButton.setText("UNMUTE");
     } else {
+      // Otherwise set the button image to the mute image
       muteImageView.setImage(muteImage);
       muteButton.setText("MUTE");
     }
@@ -216,6 +241,11 @@ public class SoundSettingsController implements Initializable {
     BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
     // Add a line recording all the current user settings value
     try {
+      /*
+       * Set the format of the line to be written to the file
+       * The format consists of the current game setting values and
+       * music settings with each value seperated by a comma
+       */
       String line =
           Double.toString(gameSettings.getAccuracyLevel())
               + " , "
@@ -230,6 +260,8 @@ public class SoundSettingsController implements Initializable {
               + Double.toString(backgroundMusicSlider.getValue())
               + " , "
               + Integer.toString(gameSettings.getMuteStatus());
+
+      // Write the line
       bufferedWriter.write(line);
       bufferedWriter.newLine();
       bufferedWriter.flush();

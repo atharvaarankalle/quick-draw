@@ -27,7 +27,7 @@ public class StatisticsManager {
    * This method gets all the users that have registered and compiles their usernames into a list
    *
    * @return A list of usernames
-   * @throws IOException
+   * @throws IOException if the file cannot be read
    */
   public static ArrayList<String> getUserList() throws IOException {
     // Collects all the user information from specific stored
@@ -48,7 +48,7 @@ public class StatisticsManager {
    * on the scoreboard page
    *
    * @param currentID The username of the current user logged in
-   * @throws IOException
+   * @throws IOException if the file cannot be read
    */
   public static void readUserInformation(String currentID) throws IOException {
     // Set up path and start reading user stats, save stats line by line into a list
@@ -159,7 +159,7 @@ public class StatisticsManager {
    *
    * @param word the specific word
    * @return an ArrayList of Scores that are stored on the current leader board
-   * @throws IOException
+   * @throws IOException if the file cannot be read
    */
   public static ArrayList<Score> getLeaderBoard(String word) throws IOException {
     // Initialise lists that are read from and written to

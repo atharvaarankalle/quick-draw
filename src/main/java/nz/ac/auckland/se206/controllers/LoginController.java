@@ -260,13 +260,13 @@ public class LoginController implements Initializable {
   @FXML
   private void onSwitchToGuestMode(ActionEvent event) throws IOException {
 
+    // Get the user data from the stage and set the current user to guest
     Stage stage = (Stage) loginRoot.getScene().getWindow();
-
     Settings gameSettings = (Settings) stage.getUserData();
-
     String line = "GUEST";
     gameSettings.setCurrentUser(line);
     addLine(line);
+
     // Start playing background BackgroundMusic
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     Scene currentScene = ((Button) event.getSource()).getScene();
@@ -274,8 +274,11 @@ public class LoginController implements Initializable {
   }
 
   private int updateVolumeStatus(String userName) throws IOException {
+    // Get the user data from the current user file
     Path userStatsPath = Paths.get("DATABASE/usersettings/" + userName);
     List<String> userStats = Files.readAllLines(userStatsPath);
+
+    // Update the volume of the music and sound effects based on the user's settings
     SoundsManager.changeBackgroundMusicVolume(
         Double.valueOf(userStats.get(userStats.size() - 1).split(" , ")[5]) / 100);
     SoundsManager.changeSoundEffectsVolume(
