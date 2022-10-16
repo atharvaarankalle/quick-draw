@@ -160,13 +160,6 @@ public class LoginController implements Initializable {
       String vertification = Files.readAllLines(path).get(i);
       if (vertification.equals(userName)) { // Confirmation of valid user
         addLine(userName);
-        Alert msg = new Alert(AlertType.INFORMATION);
-
-        // Update the user of the status of the log in
-        num += 1;
-        msg.setTitle("Log In Successful!");
-        msg.setHeaderText("Log In Successful!");
-        msg.setContentText("You have successfully logged in as: " + userName);
         if (updateVolumeStatus(userName) == 1) {
           SoundsManager.setMuteAllBackgroundMusic(true);
           SoundsManager.setMuteAllSoundEffects(true);
@@ -175,7 +168,7 @@ public class LoginController implements Initializable {
           SoundsManager.setMuteAllSoundEffects(false);
         }
         SoundsManager.playSoundEffects(SoundEffects.LOGIN);
-        msg.showAndWait();
+        // msg.showAndWait();
 
         // Change the scene to the main scene
         SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
@@ -183,16 +176,6 @@ public class LoginController implements Initializable {
         currentScene.setRoot(SceneManager.getUiRoot(AppUi.MAIN));
         break;
       }
-    }
-
-    if (num == 0) { // Error showing mismatch
-      Alert msg = new Alert(AlertType.ERROR);
-
-      // Update the user of the status of the log in
-      msg.setTitle(usersListView.getSelectionModel().getSelectedItem());
-      msg.setContentText(
-          "No such Username : " + usersListView.getSelectionModel().getSelectedItem());
-      msg.showAndWait();
     }
 
     usersListView.getSelectionModel().clearSelection();
