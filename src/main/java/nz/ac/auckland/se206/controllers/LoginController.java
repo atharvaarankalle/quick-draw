@@ -20,6 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -110,6 +111,10 @@ public class LoginController implements Initializable {
         num++;
         Alert msg = new Alert(AlertType.ERROR);
 
+        DialogPane alertMessage = msg.getDialogPane();
+        alertMessage.setStyle("-fx-background-color: #a7c7e7;");
+        alertMessage.getStyleClass().remove("alert");
+        alertMessage.lookup(".header-panel").setStyle("-fx-background-color: #a7c7e7;");
         // Update the user of the status of the log in
         msg.setTitle("Error creating user");
         msg.setHeaderText("Error Creating User");
@@ -127,6 +132,10 @@ public class LoginController implements Initializable {
       msg.setContentText("Successfully created new user with username: " + line);
       msg.getButtonTypes().clear();
       msg.getButtonTypes().addAll(ButtonType.OK);
+      DialogPane alertMessage = msg.getDialogPane();
+      alertMessage.setStyle("-fx-background-color: #a7c7e7;");
+      alertMessage.getStyleClass().remove("alert");
+      alertMessage.lookup(".header-panel").setStyle("-fx-background-color: #a7c7e7;");
       SoundsManager.playSoundEffects(SoundEffects.LOGIN);
       msg.showAndWait();
       addLine(line);
@@ -148,8 +157,6 @@ public class LoginController implements Initializable {
    */
   @FXML
   private void onUserSelected(MouseEvent event) throws IOException {
-    int num = 0;
-
     // Process in which, UserData information being received
     String userName = usersListView.getSelectionModel().getSelectedItem();
     Path path = Paths.get("DATABASE/UserDatas.txt");
@@ -168,7 +175,6 @@ public class LoginController implements Initializable {
           SoundsManager.setMuteAllSoundEffects(false);
         }
         SoundsManager.playSoundEffects(SoundEffects.LOGIN);
-        // msg.showAndWait();
 
         // Change the scene to the main scene
         SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
