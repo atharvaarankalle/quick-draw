@@ -53,23 +53,39 @@ public class Settings {
   public void setConfidenceLevel(double level) {
     this.confidenceLevel = level;
   }
+
   /**
-   * Sets the current user that is logged in
+   * Sets the SFX volume for the current user that is logged in
    *
-   * @param user The user to set.
+   * @param volume The SFX volume to set.
    */
   public void setSfxVolume(double sfxVolume) {
     this.sfxVolume = sfxVolume;
   }
 
+  /**
+   * Sets the background music volume for the current user that is logged in
+   *
+   * @param volume The background music volume to set.
+   */
   public void setBgmVolume(double bgmVolume) {
     this.bgmVolume = bgmVolume;
   }
 
+  /**
+   * Sets the mute status for the current user that is logged in
+   *
+   * @param status The mute status to set.
+   */
   public void setMuteStatus(int muteStatus) {
     this.muteStatus = muteStatus;
   }
 
+  /**
+   * Sets the current user that is logged into the game
+   *
+   * @param user The username of the user logged in
+   */
   public void setCurrentUser(String username) {
     this.currentUser = username;
   }
@@ -143,22 +159,37 @@ public class Settings {
   }
 
   /**
-   * Get the current time slider position for the current user that is logged in
+   * Returns the sound effects volume for the current user that is logged in
    *
-   * @return The time slider position
+   * @return The sound effects volume.
    */
   public double getSfxVolume() {
     return sfxVolume;
   }
 
+  /**
+   * Returns the background music volume for the current user that is logged in
+   *
+   * @return The background music volume.
+   */
   public double getBgmVolume() {
     return bgmVolume;
   }
 
+  /**
+   * Returns the mute status for the current user that is logged in
+   *
+   * @return The mute status.
+   */
   public int getMuteStatus() {
     return muteStatus;
   }
 
+  /**
+   * Get the current time slider position for the current user that is logged in
+   *
+   * @return The time slider position
+   */
   public double getTimeSliderPosition() {
     return this.timeLevel;
   }

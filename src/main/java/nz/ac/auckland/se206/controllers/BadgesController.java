@@ -86,7 +86,6 @@ public class BadgesController implements Initializable {
 
           // Get the user settings data
           Stage stage = (Stage) badgesRoot.getScene().getWindow();
-
           Settings gameSettings = (Settings) stage.getUserData();
 
           // Call the updateBadgeStatus to update the badges

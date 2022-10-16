@@ -60,7 +60,7 @@ public class SoundsManager {
    * @throws URISyntaxException If there is a error in the .mp3 files name
    */
   public static void loadSoundEffects() throws URISyntaxException {
-    // Initilize each Meida field and load the media instance in to its corresponding mediaplayer
+    // Initilize each Media field and load the media instance in to its corresponding mediaplayer
     // field
     buttonSound1 = new Media(App.class.getResource("/sounds/woodenButton.mp3").toURI().toString());
     buttonPlayer1 = new MediaPlayer(buttonSound1);
@@ -88,14 +88,21 @@ public class SoundsManager {
    * @throws URISyntaxException If there is a error in the .mp3 files name
    */
   public static void loadBackgroundMusic() throws URISyntaxException {
+    // Load the main menu background music
     mainPanelBackgroundMusic =
         new Media(App.class.getResource("/sounds/pvzMainMenu.mp3").toURI().toString());
     mainPanelPlayer = new MediaPlayer(mainPanelBackgroundMusic);
+
+    // Load the zen mode background music
     zenBackgroundMusic = new Media(App.class.getResource("/sounds/zen.mp3").toURI().toString());
     zenPlayer = new MediaPlayer(zenBackgroundMusic);
+
+    // Load the ingame background music
     ingameBackgroundMusic =
         new Media(App.class.getResource("/sounds/ingame.mp3").toURI().toString());
     ingamePlayer = new MediaPlayer(ingameBackgroundMusic);
+
+    // Load the hidden mode background music
     hiddenBackgroundMusic =
         new Media(App.class.getResource("/sounds/hidden.mp3").toURI().toString());
     hiddenPlayer = new MediaPlayer(hiddenBackgroundMusic);
@@ -105,11 +112,11 @@ public class SoundsManager {
    * Play the specific SoundEffects correspond to the SoundEffects enum input ERASER and PENCIL
    * SoundEffects will be played in loop All other SoundEffects will be played once
    *
-   * @param SoundEffectsType A SoundEffects enum input, indicating the specific SoundEffects wanted
+   * @param soundEffectsType A SoundEffects enum input, indicating the specific SoundEffects wanted
    */
-  public static void playSoundEffects(SoundEffects SoundEffectsType) {
+  public static void playSoundEffects(SoundEffects soundEffectsType) {
     // Play the specific SoundEffects based on the SoundEffects enum input
-    switch (SoundEffectsType) {
+    switch (soundEffectsType) {
       case BUTTON1:
         if (buttonPlayer1.getStatus() == MediaPlayer.Status.PLAYING) {
           buttonPlayer1.stop();
@@ -199,51 +206,59 @@ public class SoundsManager {
    * Play the specific SoundEffects correspond to the BackgroundMusic enum input All
    * BackgroundMusics will be played in loop
    *
-   * @param BackgroundMusicType a BackgroundMusic enum input, indicating the BackgroundMusic wanted
+   * @param backgroundMusicType a BackgroundMusic enum input, indicating the BackgroundMusic wanted
    */
-  public static void playBackgroundMusic(BackgroundMusic BackgroundMusicType) {
+  public static void playBackgroundMusic(BackgroundMusic backgroundMusicType) {
     // Play the specific BackgroundMusic corresponding to the BackgroundMusic enum input
     // All BackgroundMusics are expected to play in endless loop
-    switch (BackgroundMusicType) {
+    switch (backgroundMusicType) {
+        // For the main panel case, play the main panel BackgroundMusic
       case MAINPANEL:
         mainPanelPlayer.play();
         mainPanelPlayer.setOnEndOfMedia(
             new Runnable() {
               @Override
               public void run() {
+                // Play the music from the beginning
                 mainPanelPlayer.seek(Duration.ZERO);
                 mainPanelPlayer.play();
               }
             });
         break;
+        // For the zen mode case, play the zen mode BackgroundMusic
       case ZEN:
         zenPlayer.play();
         zenPlayer.setOnEndOfMedia(
             new Runnable() {
               @Override
               public void run() {
+                // Play the music from the beginning
                 zenPlayer.seek(Duration.ZERO);
                 zenPlayer.play();
               }
             });
         break;
+        // For the hidden mode case, play the hidden mode BackgroundMusic
       case HIDDEN:
         hiddenPlayer.play();
         hiddenPlayer.setOnEndOfMedia(
             new Runnable() {
               @Override
               public void run() {
+                // Play the music from the beginning
                 hiddenPlayer.seek(Duration.ZERO);
                 hiddenPlayer.play();
               }
             });
         break;
+        // For the ingame case, play the ingame BackgroundMusic
       case INGAME:
         ingamePlayer.play();
         ingamePlayer.setOnEndOfMedia(
             new Runnable() {
               @Override
               public void run() {
+                // Play the music from the beginning
                 ingamePlayer.seek(Duration.ZERO);
                 ingamePlayer.play();
               }
@@ -292,11 +307,11 @@ public class SoundsManager {
   /**
    * This method stops a specific BackgroundMusic
    *
-   * @param BackgroundMusicType The specific BackgroundMusic to be terminated
+   * @param backgroundMusicType The specific BackgroundMusic to be terminated
    */
-  public static void stopBackgroundMusic(BackgroundMusic BackgroundMusicType) {
+  public static void stopBackgroundMusic(BackgroundMusic backgroundMusicType) {
     // Stop the specific BackgroundMusic player corresponding to the BackgroundMusic enum input
-    switch (BackgroundMusicType) {
+    switch (backgroundMusicType) {
       case MAINPANEL:
         mainPanelPlayer.stop();
         break;
@@ -386,10 +401,20 @@ public class SoundsManager {
     hiddenPlayer.setMute(muteStatus);
   }
 
+  /**
+   * This method checks if the zen mode background music is currently playing
+   *
+   * @return true if the zen mode background music is currently playing, false otherwise
+   */
   public static Boolean isZenBackgroundMusicPlaying() {
     return zenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
   }
 
+  /**
+   * This method checks if the hidden mode background music is currently playing
+   *
+   * @return true if the hidden mode background music is currently playing, false otherwise
+   */
   public static Boolean ishiddenBackgroundMusicPlaying() {
     return hiddenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
   }
