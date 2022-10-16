@@ -560,7 +560,7 @@ public class CanvasController {
       hint1Label.setVisible(true);
 
       // The first hint is the length of the word
-      hint1Label.setText("The word is " + currentWord.length() + " letters long");
+      hint1Label.setText("The word is " + currentWord.replace(" ", "").length() + " letters long");
     } else {
       // If the user has used the first hint, display the second hint
       hint2Label.setVisible(true);
