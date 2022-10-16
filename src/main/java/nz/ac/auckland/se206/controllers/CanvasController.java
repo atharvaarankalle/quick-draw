@@ -120,9 +120,9 @@ public class CanvasController {
   private double currentX;
   private double currentY;
 
-  TranslateTransition movementUp = new TranslateTransition();
+  private TranslateTransition movementUp = new TranslateTransition();
 
-  TranslateTransition movementDown = new TranslateTransition();
+  private TranslateTransition movementDown = new TranslateTransition();
 
   private ArrayList<String> text = new ArrayList<String>(); // Create an ArrayList object
 
@@ -132,11 +132,10 @@ public class CanvasController {
    *
    * @throws ModelException If there is an error in reading the input/output of the DL model.
    * @throws IOException If the model cannot be found on the file system.
-   * @throws URISyntaxException
-   * @throws CsvException
+   * @throws URISyntaxException If a string cannot be parsed as a URI reference.
+   * @throws CsvException If there is an error in reading the input/output of the CSV file.
    */
   public void initialize() throws ModelException, IOException, CsvException, URISyntaxException {
-
     // Initialise the canvas and disable it so users cannot draw on it
     initializeCanvas();
     model = new DoodlePrediction();
@@ -273,7 +272,7 @@ public class CanvasController {
    * @throws URISyntaxException If a string could not be parsed as a URI reference.
    * @throws IOException If there is an error in reading the input/output of the DL model.
    * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
-   * @throws ModelException
+   * @throws ModelException If there is an error in reading the input/output of the DL model.
    */
   @FXML
   private void onReady()
@@ -345,9 +344,12 @@ public class CanvasController {
             new Task<Void>() {
               @Override
               protected Void call() throws Exception {
+
+                // Search for the definition of the word and store it in a variable
                 String def = HiddenWordFunctions.searchWordDefinetion(currentWord).get(0);
                 Platform.runLater(
                     () -> {
+                      // Update the GUI to communicate the definition of the word to the user
                       targetWordLabel.setFont(
                           Font.font("Lucida Fax Regular", FontWeight.NORMAL, 15));
                       targetWordLabel.setTextAlignment(TextAlignment.LEFT);
@@ -360,6 +362,7 @@ public class CanvasController {
             e -> {
               Platform.runLater(
                   () -> {
+                    // Update the GUI to communicate that the definition is currently being searched
                     timerLabel.setText("Preparing the word definitions for you...");
                     readyButton.setDisable(true);
                   });
@@ -368,10 +371,13 @@ public class CanvasController {
             e -> {
               Platform.runLater(
                   () -> {
+                    // Update the GUI to communicate that the definition has been found and is ready
                     readyButton.setDisable(false);
                     timerLabel.setText("Press Start to start drawing!");
                   });
             });
+
+        // Delegate background definition to a thread and execute this task
         Thread backgroundDefinitionSearch = new Thread(getDefinition);
         backgroundDefinitionSearch.setDaemon(true);
         backgroundDefinitionSearch.start();
@@ -427,9 +433,9 @@ public class CanvasController {
   /**
    * This method generates a random word to draw, depending on the difficulty selected by the user
    *
-   * @throws CsvException
-   * @throws IOException
-   * @throws URISyntaxException
+   * @throws CsvException If there is an error regarding the CSV files opened using OpenCSV
+   * @throws IOException If there is an error reading the CSV files
+   * @throws URISyntaxException If a string cannot be parsed as a URI reference
    */
   private void selectWord() throws CsvException, IOException, URISyntaxException {
 
@@ -542,14 +548,24 @@ public class CanvasController {
     return true;
   }
 
+  /**
+   * This method is called when the user clicks on the hint button It displays a hint to the user
+   * and updates the hint label
+   */
   @FXML
   private void onHint() {
+    // If the user has not used any hints yet, display the first hint
     if (hintButton.getText().equals("Hint 1?")) {
       hintButton.setText("Hint 2?");
       hint1Label.setVisible(true);
+
+      // The first hint is the length of the word
       hint1Label.setText("The word is " + currentWord.length() + " letters long");
     } else {
+      // If the user has used the first hint, display the second hint
       hint2Label.setVisible(true);
+
+      // The second hint is the first letter of the word
       hint2Label.setText("The word begins with letter " + currentWord.charAt(0));
       hintButton.setDisable(true);
     }
@@ -558,7 +574,7 @@ public class CanvasController {
   /**
    * This method creates a background timing task and returns the task
    *
-   * @return a Task<Void> object, the background timing task
+   * @return The background timing task of type Task<Void>
    */
   private Task<Void> createNewTimingTask() {
 
@@ -915,7 +931,7 @@ public class CanvasController {
    * This method writes the line for the game played to the corresponding user file
    *
    * @param result The outcome of the game, either "WON" or "LOST"
-   * @throws IOException
+   * @throws IOException If there is an error in writing to the file
    */
   private void addLine(String result) throws IOException {
 
@@ -1061,10 +1077,13 @@ public class CanvasController {
     }
   }
 
-  // Resets the canvas automatically as well as the buttons
+  /** This method resets the canvas automatically as well as the buttons */
   void reset() {
-    // Time stops, button enable/disabled, leaderboard and canvas update to new
-    // value
+    /*
+     * Stop the timer, reset the arrows to their original positions
+     * and update the GUI buttons and text to their original initialization
+     * values
+     */
     timeline.stop();
     resetArrow();
     readyButton.setDisable(false);
@@ -1080,9 +1099,13 @@ public class CanvasController {
     leaderBoardList.setVisible(false);
   }
 
+  /** This method is used to control the movement of the upward arrow */
   private void arrowMotionControlUp() {
+    // Stop the movement down and reset the arrow to the original position
     movementDown.jumpTo(Duration.seconds(0));
     movementDown.stop();
+
+    // Set the movement up to move the arrow up
     movementUp.setDuration(Duration.seconds(3));
     movementUp.setNode(arrowUp);
     movementUp.setToY(-100);
@@ -1091,9 +1114,13 @@ public class CanvasController {
     movementUp.play();
   }
 
+  /** This method is used to control the movement of the downward arrow */
   private void arrowMotionControlDown() {
+    // Stop the movement up and reset the arrow to the original position
     movementUp.jumpTo(Duration.seconds(0));
     movementUp.stop();
+
+    // Set the movement down to move the arrow down
     movementDown.setDuration(Duration.seconds(3));
     movementDown.setNode(arrowDown);
     movementDown.setToY(100);
@@ -1102,6 +1129,7 @@ public class CanvasController {
     movementDown.play();
   }
 
+  /** This method is used to reset the arrows to their original positions */
   private void resetArrow() {
     movementUp.jumpTo(Duration.seconds(0));
     movementUp.stop();
@@ -1109,15 +1137,19 @@ public class CanvasController {
     movementDown.stop();
   }
 
+  /**
+   * This method is called to verify the target word to draw is in the top predictions based on the
+   * difficulty setting chosen by the user
+   *
+   * @return true if the target word is in the top predictions, false otherwise
+   */
   private boolean insideTopPrediction() {
-
-    // Get the uesr data and then get the current words difficulty
+    // Get the user data and then get the current words difficulty
     Stage stage = (Stage) root.getScene().getWindow();
-
     Settings gameSettings = (Settings) stage.getUserData();
-
     int accuracyLevel = (int) gameSettings.getAccuracyLevel();
 
+    // Check if the word is in the top three predictions for easy mode
     switch (accuracyLevel) {
       case 0:
         for (int i = 3; i < 10; i++) {
@@ -1134,6 +1166,7 @@ public class CanvasController {
         return false;
     }
 
+    // Check if the word is in the top two predictions for medium mode
     switch (accuracyLevel) {
       case 1:
         for (int i = 2; i < 10; i++) {
@@ -1150,6 +1183,7 @@ public class CanvasController {
         return false;
     }
 
+    // Check if the word is the top prediction for hard mode
     switch (accuracyLevel) {
       case 0:
         for (int i = 1; i < 10; i++) {
