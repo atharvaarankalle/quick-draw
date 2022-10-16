@@ -282,7 +282,7 @@ public class CanvasController {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     // If the user is ready to draw, enable the canvas and save drawing button
     if (readyButton.getText().equals("Start!")) {
-      //Update the ingame status
+      // Update the ingame status
       InGameStatusManager.setInGameStatus(true);
       hintButton.setDisable(false);
       targetWordLabel.setVisible(true);
@@ -595,10 +595,10 @@ public class CanvasController {
                 new KeyFrame(
                     Duration.seconds(1),
                     e -> {
-                      //If no longer in game (i.e: switched to other scene), stop the timeline
-                        if(!InGameStatusManager.isInGame()){
-                          timeline.stop();
-                        }
+                      // If no longer in game (i.e: switched to other scene), stop the timeline
+                      if (!InGameStatusManager.isInGame()) {
+                        timeline.stop();
+                      }
                       try {
                         timerLabel.setText(timeLeft.decrementAndGet() + " seconds left");
                         updateProgress(getMaximumTime() - timeLeft.get(), getMaximumTime() - 1);
@@ -632,7 +632,7 @@ public class CanvasController {
                             // Stop BackgroundMusics and paly victory SoundEffects
                             SoundsManager.stopAllBackgroundMusic();
                             SoundsManager.playSoundEffects(SoundEffects.VICTORY);
-                            //Update the ingame status
+                            // Update the ingame status
                             InGameStatusManager.setInGameStatus(false);
                             // Update GUI elements
                             pgbTimer.setVisible(false);
@@ -695,7 +695,7 @@ public class CanvasController {
                 event -> {
                   // Stop the timeline and reset the GUI to its initial state
                   timeline.stop();
-                  //Update the ingame status
+                  // Update the ingame status
                   InGameStatusManager.setInGameStatus(false);
                   resetArrow();
                   Stage stage = (Stage) root.getScene().getWindow();

@@ -106,7 +106,7 @@ public class StatisticsManager {
           // record
           topScore = timesTaken.get(i);
           topWord = seperatedStats[0];
-        } 
+        }
 
         // Update the current best word and time if a record has been broken.
         if (wordAndRecord.containsKey(seperatedStats[0])) {

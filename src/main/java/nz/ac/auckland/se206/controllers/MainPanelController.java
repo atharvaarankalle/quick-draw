@@ -57,7 +57,7 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onHome(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
     // Set the scene to the home scene
     Parent view = loadFxml("homepage");
@@ -80,7 +80,7 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onGame(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
     // Set the scene to the canvas scene and leave hidden mode
     currentScene.setCenter(null);
@@ -104,7 +104,7 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToInfo(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the how to play scene
@@ -128,7 +128,7 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToStatistic(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the stats scene
@@ -153,7 +153,7 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the game settings scene
@@ -171,7 +171,7 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSoundSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
 
     // Set the scene to the sound settings scene
@@ -201,7 +201,7 @@ public class MainPanelController implements Initializable {
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
     SoundsManager.stopWinAndLoseSoundEffects();
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
     // Set the scene to the zen mode scene
     currentScene.setCenter(null);
@@ -224,7 +224,7 @@ public class MainPanelController implements Initializable {
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
     // Set the scene to the hidden mode scene and enter hidden mode
     currentScene.setCenter(null);
@@ -248,7 +248,7 @@ public class MainPanelController implements Initializable {
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
     // Set the scene to the badges scene
     currentScene.setCenter(null);
@@ -265,7 +265,7 @@ public class MainPanelController implements Initializable {
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
-    //Update ingame status
+    // Update ingame status
     InGameStatusManager.setInGameStatus(false);
 
     // Stop all the background music
