@@ -113,7 +113,6 @@ public class ScoreBoardController {
       // After the scan, update all information in the GUI
       gamesWonLabel.setText(String.valueOf(StatisticsManager.getGameWon()));
       gamesLostLabel.setText(String.valueOf(StatisticsManager.getGameLost()));
-      System.out.println("Update, topword is : " + topWord);
       // // If the top word is not null, update the GUI
       if (topWord != null) {
         textLabel2.setText(

@@ -76,7 +76,6 @@ public class StatisticsManager {
     records = new ArrayList<Score>();
     String[] seperatedStats;
     Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
-    System.out.println("Entered");
     // If a different user has logged in, clear the statistics of the previous user
     if (!(previousUserID.equals(currentID))) {
       timesTaken.clear();
