@@ -43,8 +43,10 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onHome(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    InGameStatusManager.setInGameStatus(false);
     Parent view = loadFxml("homepage");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -60,10 +62,12 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onGame(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    InGameStatusManager.setInGameStatus(false);
     currentScene.setCenter(null);
     HiddenWordFunctions.leaveHiddenMode();
     Parent view = loadFxml("canvas");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
@@ -78,8 +82,10 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToInfo(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    InGameStatusManager.setInGameStatus(false);
     Parent view = loadFxml("howtoplay");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -95,9 +101,11 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToStatistic(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    InGameStatusManager.setInGameStatus(false);
     currentScene.setCenter(null);
     Parent view = loadFxml("scoreboard");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -113,8 +121,10 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onGameSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    InGameStatusManager.setInGameStatus(false);
     Parent view = loadFxml("gamesettings");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -124,8 +134,10 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSoundSettings(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    InGameStatusManager.setInGameStatus(false);
     Parent view = loadFxml("soundsettings");
     currentScene.setCenter(view);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
@@ -141,8 +153,11 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onSwitchToZenMode(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.HIDDEN);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
+    SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
+    InGameStatusManager.setInGameStatus(false);
     currentScene.setCenter(null);
     Parent view = loadFxml("zenmode");
     currentScene.setCenter(view);
@@ -152,9 +167,11 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onHiddenMode(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
+    InGameStatusManager.setInGameStatus(false);
     currentScene.setCenter(null);
     HiddenWordFunctions.toHiddenMode();
     Parent view = loadFxml("canvas");
@@ -165,9 +182,11 @@ public class MainPanelController implements Initializable {
   @FXML
   private void onBadgesClicked(ActionEvent event) throws IOException {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON1);
+    SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopBackgroundMusic(BackgroundMusic.INGAME);
     SoundsManager.stopBackgroundMusic(BackgroundMusic.ZEN);
     SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
+    InGameStatusManager.setInGameStatus(false);
     currentScene.setCenter(null);
     Parent view = loadFxml("badges");
     currentScene.setCenter(view);
@@ -183,7 +202,7 @@ public class MainPanelController implements Initializable {
    */
   @FXML
   private void onLogOut(ActionEvent event) throws IOException {
-
+    InGameStatusManager.setInGameStatus(false);
     SoundsManager.stopWinAndLoseSoundEffects();
     SoundsManager.stopAllBackgroundMusic();
 

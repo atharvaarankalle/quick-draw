@@ -385,12 +385,4 @@ public class SoundsManager {
     ingamePlayer.setMute(muteStatus);
     hiddenPlayer.setMute(muteStatus);
   }
-
-  public static Boolean isZenBackgroundMusicPlaying() {
-    return zenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
-  }
-
-  public static Boolean ishiddenBackgroundMusicPlaying() {
-    return hiddenPlayer.getStatus() == MediaPlayer.Status.PLAYING;
-  }
 }

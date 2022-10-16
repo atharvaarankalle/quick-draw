@@ -241,6 +241,7 @@ public class ZenMode {
     SoundsManager.playSoundEffects(SoundEffects.BUTTON2);
     // If the user is ready to draw, enable the drawingBoard and save drawing button
     if (readyButton.getText().equals("Start!")) {
+      InGameStatusManager.setInGameStatus(true);
       // Intiliase the canvas, enable the drawing buttons and disable the save drawing
       // button
       loadCanvas();
@@ -266,12 +267,12 @@ public class ZenMode {
       backgroundTask.start();
 
     } else {
-      SoundsManager.stopWinAndLoseSoundEffects();
-      // If zen mode bgm is not playing, then its safe to interrupt and play mainpanel
-      // bgm
-      if (!SoundsManager.isZenBackgroundMusicPlaying()) {
-        SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
-      }
+      // SoundsManager.stopWinAndLoseSoundEffects();
+      // // If zen mode bgm is not playing, then its safe to interrupt and play mainpanel
+      // // bgm
+      // if (!SoundsManager.isZenBackgroundMusicPlaying()) {
+      //   SoundsManager.playBackgroundMusic(BackgroundMusic.MAINPANEL);
+      // }
 
       // Clear the canvas, disable the save drawing button and clear the pie chart
       graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
@@ -596,6 +597,7 @@ public class ZenMode {
     drawButton.setDisable(true);
     eraseButton.setDisable(true);
     readyButton.setDisable(false);
+    InGameStatusManager.setInGameStatus(false);
     readyButton.setText("Ready?");
     clearButton.setDisable(false);
     graphic.clearRect(0, 0, drawingBoard.getWidth(), drawingBoard.getHeight());
@@ -627,6 +629,7 @@ public class ZenMode {
             Timeline time = new Timeline();
             KeyFrame frame =
                 new KeyFrame(
+                    
                     Duration.seconds(1),
                     new EventHandler<ActionEvent>() {
 
@@ -636,6 +639,10 @@ public class ZenMode {
                        * predictions and key features on button is disabled/enabled
                        */
                       public void handle(ActionEvent event) {
+                        //Check the zen mode ingame status, if not, stop time line
+                        if(!InGameStatusManager.isInGame()){
+                          time.stop();
+                        }
                         clock--;
                         try {
                           createPredictions();
