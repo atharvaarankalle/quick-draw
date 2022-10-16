@@ -21,31 +21,44 @@ import javafx.stage.Stage;
 import nz.ac.auckland.se206.controllers.SoundsManager.SoundEffects;
 
 public class ScoreBoardController {
-  @FXML private Label userNameLabel;
+  @FXML
+  private Label userNameLabel;
 
-  @FXML private Label totalGamesLabel;
+  @FXML
+  private Label totalGamesLabel;
 
-  @FXML private Label gamesWonLabel;
+  @FXML
+  private Label gamesWonLabel;
 
-  @FXML private Label gamesLostLabel;
+  @FXML
+  private Label gamesLostLabel;
 
-  @FXML private Label bestRecordWordLabel;
+  @FXML
+  private Label bestRecordWordLabel;
 
-  @FXML private Label bestRecordTimeLabel;
+  @FXML
+  private Label bestRecordTimeLabel;
 
-  @FXML private ListView<String> scoreList;
+  @FXML
+  private ListView<String> scoreList;
 
-  @FXML private AnchorPane backgroundPane;
+  @FXML
+  private AnchorPane backgroundPane;
 
-  @FXML private Label textLabel1;
+  @FXML
+  private Label textLabel1;
 
-  @FXML private Label textLabel2;
+  @FXML
+  private Label textLabel2;
 
-  @FXML private ImageView imageView;
+  @FXML
+  private ImageView imageView;
 
-  @FXML private Label imageDescriptorLabel;
+  @FXML
+  private Label imageDescriptorLabel;
 
-  @FXML private Pane imagePane;
+  @FXML
+  private Pane imagePane;
 
   private List<String> scoreListSorted = new ArrayList<String>();
 
@@ -53,7 +66,10 @@ public class ScoreBoardController {
 
   private Settings gameSettings;
 
-  /** This method is called to initialize the scoreboard scene for the current user. */
+  /**
+   * This method is called to initialize the scoreboard scene for the current
+   * user.
+   */
   public void initialize() {
 
     try {
@@ -113,12 +129,11 @@ public class ScoreBoardController {
       // After the scan, update all information in the GUI
       gamesWonLabel.setText(String.valueOf(StatisticsManager.getGameWon()));
       gamesLostLabel.setText(String.valueOf(StatisticsManager.getGameLost()));
-
-      // If the top word is not null, update the GUI
+      System.out.println("Update, topword is : " + topWord);
+      // // If the top word is not null, update the GUI
       if (topWord != null) {
-        bestRecordWordLabel.setText(topWord + "!");
-        bestRecordTimeLabel.setText(
-            String.valueOf(StatisticsManager.getTopScore()) + " seconds to draw one!");
+        textLabel2.setText("It only took you " +
+            String.valueOf(StatisticsManager.getTopScore()) + " seconds to draw a " + topWord + "!");
       } else {
         textLabel1.setText("Oops, seems like you haven't won any games yet...");
         textLabel2.setText("But don't give up! Let's try again!");
@@ -287,9 +302,9 @@ public class ScoreBoardController {
         imageDescriptorLabel.setText(
             "Your best drawing: " + scoreListSorted.get(0).split("[0-9]")[0].strip());
         break;
-        // Set the image to the second image in the case that the third image is already
-        // being
-        // displayed
+      // Set the image to the second image in the case that the third image is already
+      // being
+      // displayed
       case 2:
         imageView.setImage(
             new Image(

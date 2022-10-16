@@ -55,11 +55,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="bestRecordWordLabel" layoutX="350.0" layoutY="234.0" prefHeight="25.0" prefWidth="181.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
+      
       <Label layoutX="601.0" layoutY="61.0" text="Your scores">
          <font>
             <Font size="19.0" />
@@ -70,12 +66,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="textLabel2" layoutX="13.0" layoutY="235.0" prefHeight="24.0" prefWidth="326.0" text="It only took you">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="bestRecordTimeLabel" layoutX="180.0" layoutY="289.0" prefHeight="25.0" prefWidth="340.0">
+      <Label fx:id="textLabel2" alignment="TOP_LEFT" layoutX="13.0" layoutY="235.0" prefHeight="99.0" prefWidth="526.0" text="It only took you" wrapText="true">
          <font>
             <Font size="20.0" />
          </font>

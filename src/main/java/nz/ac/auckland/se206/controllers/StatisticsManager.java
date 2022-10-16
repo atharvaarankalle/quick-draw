@@ -76,7 +76,7 @@ public class StatisticsManager {
     records = new ArrayList<Score>();
     String[] seperatedStats;
     Map<String, Integer> wordAndRecord = new HashMap<String, Integer>();
-
+    System.out.println("Entered");
     // If a different user has logged in, clear the statistics of the previous user
     if (!(previousUserID.equals(currentID))) {
       timesTaken.clear();
@@ -99,15 +99,14 @@ public class StatisticsManager {
           timesTaken.add(
               Integer.valueOf(seperatedStats[3])
                   - Integer.valueOf(seperatedStats[2].split(" ")[0]));
-
-          // If the user has broken their record, set the current statistic as the new
-          // record
-          if (timesTaken.get(i) <= topScore && timesTaken.get(i) >= 0) {
-            topScore = timesTaken.get(i);
-            topWord = seperatedStats[0];
-          }
           seenWords.add(seperatedStats[0]);
         }
+        if (timesTaken.get(i) <= topScore && timesTaken.get(i) >= 0) {
+          // If the user has broken their record, set the current statistic as the new
+          // record
+          topScore = timesTaken.get(i);
+          topWord = seperatedStats[0];
+        } 
 
         // Update the current best word and time if a record has been broken.
         if (wordAndRecord.containsKey(seperatedStats[0])) {
