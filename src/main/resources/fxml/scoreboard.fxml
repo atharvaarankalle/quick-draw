@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
+<AnchorPane fx:id="backgroundPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="786.0" prefWidth="766.0" style="-fx-background-color: #A7C7E7;" stylesheets="@css/canvas.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.ScoreBoardController">
    <children>
       <Pane layoutY="-5.0" prefHeight="45.0" prefWidth="766.0" style="-fx-background-color: #055C9D;" styleClass="headerPane" stylesheets="@css/canvas.css">
          <children>

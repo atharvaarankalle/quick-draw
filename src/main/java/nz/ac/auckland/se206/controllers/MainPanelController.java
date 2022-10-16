@@ -161,7 +161,6 @@ public class MainPanelController implements Initializable {
     currentScene.setCenter(null);
     Parent view = loadFxml("zenmode");
     currentScene.setCenter(view);
-    gameButton.setDisable(false);
   }
 
   @FXML
@@ -176,7 +175,6 @@ public class MainPanelController implements Initializable {
     HiddenWordFunctions.toHiddenMode();
     Parent view = loadFxml("canvas");
     currentScene.setCenter(view);
-    gameButton.setDisable(false);
   }
 
   @FXML
@@ -190,7 +188,6 @@ public class MainPanelController implements Initializable {
     currentScene.setCenter(null);
     Parent view = loadFxml("badges");
     currentScene.setCenter(view);
-    gameButton.setDisable(false);
   }
 
   /**

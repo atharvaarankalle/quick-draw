@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="770.0" prefWidth="900.0" stylesheets="@../css/mainpanel.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="821.0" prefWidth="900.0" stylesheets="@../css/mainpanel.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nz.ac.auckland.se206.controllers.MainPanelController">
    <children>
       <AnchorPane layoutY="33.0" prefHeight="592.0" prefWidth="142.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="33.0">
          <children>
-            <VBox alignment="CENTER" layoutY="7.0" prefHeight="613.0" prefWidth="134.0" spacing="31.0" style="-fx-background-color: black;">
+            <VBox alignment="CENTER" layoutY="7.0" prefHeight="786.0" prefWidth="134.0" spacing="31.0" style="-fx-background-color: black;">
                <children>
                   <Button mnemonicParsing="false" onAction="#onHome" prefHeight="40.0" prefWidth="125.0" styleClass="menuButton" text="Home">
                      <graphic>
@@ -138,7 +138,7 @@
                   </Button>
                </children>
             </VBox>
-            <AnchorPane layoutY="620.0" prefHeight="119.0" prefWidth="134.0" style="-fx-background-color: black;">
+            <AnchorPane layoutY="620.0" prefHeight="169.0" prefWidth="134.0" style="-fx-background-color: black;">
                <children>
                   <ImageView fitHeight="105.0" fitWidth="121.0" layoutX="11.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -149,16 +149,16 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <BorderPane fx:id="currentScene" layoutX="134.0" prefHeight="591.0" prefWidth="766.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
+      <BorderPane fx:id="currentScene" layoutX="134.0" prefHeight="786.0" prefWidth="766.0" AnchorPane.leftAnchor="134.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.6">
          <center>
-            <Pane prefHeight="735.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
+            <Pane prefHeight="638.0" prefWidth="766.0" style="-fx-background-color: #5885AF;" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="297.0" fitWidth="442.0" layoutX="331.0" layoutY="61.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/signage.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="319.0" fitWidth="807.0" layoutY="416.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="319.0" fitWidth="807.0" layoutY="467.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/teachers-day.gif" />
                      </image>
